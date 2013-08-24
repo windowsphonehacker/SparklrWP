@@ -90,9 +90,15 @@ namespace SparklrWP
         }
         private bool loadCallback(string result)
         {
+            if (result == null || result == "")
+            {
+                GlobalLoading.Instance.IsLoading = false;
+                return false;
+            }
             JToken token = JObject.Parse(result).SelectToken("data");
             if (token == null)
             {
+                GlobalLoading.Instance.IsLoading = false;
                 return true;
             }
             int count = (int)token.SelectToken("length");

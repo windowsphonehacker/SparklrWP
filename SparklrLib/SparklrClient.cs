@@ -143,7 +143,7 @@ namespace SparklrLib
         {
             BeginRequest((string str) =>
             {
-                if (str.ToLower().Contains("error"))
+                if (str.ToLower().Contains("error") || this.LoginToken == null)
                 {
                     IsLoggedIn = false;
                 }
