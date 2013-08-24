@@ -11,6 +11,8 @@ using System.Text;
 using System.IO;
 using SparklrLib;
 using Microsoft.Phone.Tasks;
+using System.IO.IsolatedStorage;
+using System.Security.Cryptography;
 
 namespace SparklrWP
 {
@@ -20,6 +22,20 @@ namespace SparklrWP
         {
             InitializeComponent();
             App.Client = new SparklrClient();
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
+            {
+                string username = "";
+                IsolatedStorageSettings.ApplicationSettings.TryGetValue<string>("username", out username);
+                usernameBox.Text = username;
+            }
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("password"))
+            {
+                byte[] passbyte = null;
+                IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out passbyte);
+                passbyte = ProtectedData.Unprotect(passbyte, null);
+                passwordBox.Password = Encoding.UTF8.GetString(passbyte, 0, passbyte.Length);
+                rememberBox.IsChecked = true;
+            }
         }
 
         private bool postcallback(string jsonData)
@@ -49,6 +65,20 @@ namespace SparklrWP
                 }
                 else
                 {
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
+                    {
+                        IsolatedStorageSettings.ApplicationSettings.Remove("username");
+                    }
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("password"))
+                    {
+                        IsolatedStorageSettings.ApplicationSettings.Remove("password");
+                    }
+                    if (rememberBox.IsChecked == true)
+                    {
+                        IsolatedStorageSettings.ApplicationSettings.Add("password", ProtectedData.Protect(Encoding.UTF8.GetBytes(passwordBox.Password), null));
+                        IsolatedStorageSettings.ApplicationSettings.Add("username", usernameBox.Text);
+                    }
+                    IsolatedStorageSettings.ApplicationSettings.Save();
                     NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
                 }
             });
