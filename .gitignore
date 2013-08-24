@@ -116,3 +116,7 @@ App_Data/*.ldf
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
