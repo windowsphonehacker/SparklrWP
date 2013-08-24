@@ -51,9 +51,6 @@
   <ItemGroup>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Interop" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -109,15 +106,15 @@
     <Content Include="ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-	<Content Include="SplashScreenImage.jpg" />
+    <Content Include="SplashScreenImage.jpg" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SparklrLib\SparklrLib.csproj">
-      <Project>{ACE8C69F-6016-407E-8232-3027DF9CD9F2}</Project>
-      <Name>SparklrLib</Name>
+    <ProjectReference Include="..\PhoneClassLibrary1\Sparklrlib.csproj">
+      <Project>{7CE670AF-67C9-4577-946C-9ED3D82A8F70}</Project>
+      <Name>Sparklrlib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
