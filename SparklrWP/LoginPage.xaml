@@ -28,10 +28,12 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,82">
-            <phone:WebBrowser Navigating="loginBrowser_Navigating" Navigated="loginBrowser_Navigated" Name="loginBrowser" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="571" Width="436" IsScriptEnabled="True" IsGeolocationEnabled="True"/>
+            <TextBox Name="usernameBox" HorizontalAlignment="Left" Height="72" Margin="10,55,-10,0" TextWrapping="Wrap" Text="User" VerticalAlignment="Top" Width="456"/>
+            <PasswordBox Name="passwordBox" HorizontalAlignment="Left" Margin="10,132,-10,0" VerticalAlignment="Top" Width="456"/>
+            <Button Content="Post test" Click="Button_Click" HorizontalAlignment="Left" Margin="144,417,0,0" VerticalAlignment="Top" Height="77"/>
+            <Button Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="116,209,0,0" VerticalAlignment="Top" Click="loginButton_Click"/>
 
         </Grid>
-        <Button Content="Post test" Click="Button_Click" HorizontalAlignment="Left" Margin="168,530,0,0" Grid.Row="1" VerticalAlignment="Top" Height="77"/>
     </Grid>
 
 </phone:PhoneApplicationPage>

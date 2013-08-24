@@ -12,6 +12,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using SparklrLib;
 
 namespace SparklrWP
 {
@@ -19,6 +20,7 @@ namespace SparklrWP
     {
         private static MainViewModel viewModel = null;
 
+        public static SparklrClient Client;
         /// <summary>
         /// A static ViewModel used by the views to bind against.
         /// </summary>
