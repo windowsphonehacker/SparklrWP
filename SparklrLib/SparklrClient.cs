@@ -24,7 +24,11 @@ namespace SparklrLib
             // Create a HttpWebRequest.
             Uri uri = new Uri(BaseURI + url);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            request.Method = "POST";
+            if (postData != "")
+            {
+                request.Method = "POST";
+                request.ContentType = "application/json";
+            }
             request.Headers["User-Agent"] = "Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0";
             //request.Headers["Referer"] = loginBrowser.Source.ToString();
             if (Cookies != null)
@@ -38,7 +42,6 @@ namespace SparklrLib
             {
                 request.Headers["X-X"] = LoginToken;
             }
-            request.ContentType = "application/json";
             if (postData != "")
             {
                 request.BeginGetRequestStream(new AsyncCallback(GetRequestStreamCallback), new object[] { request, callback, postData });
@@ -131,7 +134,8 @@ namespace SparklrLib
         public event LoggedInEvent LoggedIn;
         public delegate void LoggedInEvent(object sender, LoggedInEventArgs e);
         public bool IsLoggedIn { get; set; }
-        public class LoggedInEventArgs : EventArgs{
+        public class LoggedInEventArgs : EventArgs
+        {
             public bool Error { get; set; }
         }
 
