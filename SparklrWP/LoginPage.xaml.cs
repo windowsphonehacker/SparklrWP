@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Text;
 using System.IO;
+using Microsoft.Phone.Tasks;
 
 namespace SparklrWP
 {
@@ -17,9 +18,11 @@ namespace SparklrWP
         public LoginPage()
         {
             InitializeComponent();
+            
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+ 
             loginBrowser.Navigate(new Uri("https://sparklr.me/#/signin"), new byte[] { }, "User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0)");
         }
         string Cookies = "";
@@ -101,12 +104,41 @@ namespace SparklrWP
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        //private void Button_Click(object sender, RoutedEventArgs e)
+       // {
+          //  if (MessageBox.Show("Would you like to post a test message?", "Question", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+           // {
+           //     requestTest("http://sparklr.me/work/post", "{\"body\":\"Testing from SparklrWP\"}");
+          //  }
+       // }
+
+        private void Login_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            Login_Tap.Begin();
+
+        }
+
+        private void SignIp_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var wbt = new WebBrowserTask();
+            wbt.URL = "http://www.sparklr.me/#/Signup";
+            wbt.Show();
+        }
+
+        private void About_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            MessageBox.Show("SparklrWP Version 1.0 (Pre-Release)\n\n Sparklr Brand Name And Branding Is Copyright Jonathan Warner (Jaxbot)\n\n App (C) Jessinc And TheInterframe! \n Big Thanks To Jonathan!", "About SparklrWP", MessageBoxButton.OK);
+
+        }
+
+        private void Posttest(object sender, System.Windows.RoutedEventArgs e)
+        {
+        	
             if (MessageBox.Show("Would you like to post a test message?", "Question", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 requestTest("http://sparklr.me/work/post", "{\"body\":\"Testing from SparklrWP\"}");
             }
+        
         }
     }
 }

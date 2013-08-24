@@ -11,7 +11,20 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True" d:DesignHeight="768" d:DesignWidth="480">
+	<phone:PhoneApplicationPage.Resources>
+		<Storyboard x:Name="Login_Tap">
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.GlobalOffsetY)" Storyboard.TargetName="ContentPanel">
+				<EasingDoubleKeyFrame KeyTime="0" Value="797"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="60"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ContentPanel1">
+				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0.41"/>
+				<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+	</phone:PhoneApplicationPage.Resources>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
@@ -21,17 +34,50 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="MY APPLICATION" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock Text="page name" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
 
         <!--ContentPanel - place additional content here-->
+        <Grid x:Name="LayoutRoot_Copy" Grid.RowSpan="2">
+        	<Grid.Background>
+        		<ImageBrush Stretch="UniformToFill" ImageSource="bg.jpg"/>
+        	</Grid.Background>
+        	<Grid.RowDefinitions>
+        		<RowDefinition Height="Auto"/>
+        		<RowDefinition Height="*"/>
+        	</Grid.RowDefinitions>
+		
+		<!--TitlePanel contains the name of the application and page title-->
+        	<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+        		<TextBlock Text="Sparklr*WP" Style="{StaticResource PhoneTextNormalStyle}"/>
+        		<TextBlock x:Name="PageTitle" Text="Sparklr" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="Segoe WP Light" FontSize="64"/>
+        	</StackPanel>
+
+		<!--ContentPanel - place additional content here-->
+        	<Grid x:Name="ContentPanel1" Grid.Row="1" Margin="12,0,12,0">
+        		<Button Content="Login" Margin="22,232,43,221" FontFamily="Segoe WP Light" FontSize="64" Background="#FF1BA1E2" BorderBrush="{x:Null}" Click="Login_Click"/>
+        		<Button Content="Sign Up" HorizontalAlignment="Left" Margin="24,0,0,36" Width="196" Height="190" VerticalAlignment="Bottom" FontSize="32" FontFamily="Segoe WP Light" BorderBrush="{x:Null}" Click="SignIp_Click">
+        			<Button.Background>
+        				<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+        			</Button.Background>
+        		</Button>
+        		<Button Content="About" Margin="221,0,44,36" Height="186" VerticalAlignment="Bottom" FontFamily="Segoe WP Light" FontSize="32" BorderBrush="{x:Null}" Click="About_Click">
+        			<Button.Background>
+        				<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+        			</Button.Background>
+        		</Button>
+        	</Grid>
+        </Grid>
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,82">
-            <phone:WebBrowser Navigating="loginBrowser_Navigating" Navigated="loginBrowser_Navigated" Name="loginBrowser" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="571" Width="436" IsScriptEnabled="True" IsGeolocationEnabled="True"/>
+        	<Grid.Projection>
+        		<PlaneProjection GlobalOffsetY="797"/>
+        	</Grid.Projection>
+        	<phone:WebBrowser Navigating="loginBrowser_Navigating" Navigated="loginBrowser_Navigated" x:Name="loginBrowser" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="571" Width="436" IsScriptEnabled="True" IsGeolocationEnabled="True"/>
+        	<Button x:Name="button" Content="Post Test" Height="95" Margin="145,0,126,10" VerticalAlignment="Bottom" RenderTransformOrigin="0.5,0.5" Click="Posttest">
+        		<Button.RenderTransform>
+        			<CompositeTransform/>
+        		</Button.RenderTransform>
+        	</Button>
 
         </Grid>
-        <Button Content="Post test" Click="Button_Click" HorizontalAlignment="Left" Margin="168,530,0,0" Grid.Row="1" VerticalAlignment="Top" Height="77"/>
     </Grid>
 
 </phone:PhoneApplicationPage>
