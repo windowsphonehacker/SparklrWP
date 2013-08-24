@@ -58,8 +58,4 @@ namespace SparklrWP_EOC
             });
         }
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> master
