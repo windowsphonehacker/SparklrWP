@@ -21,14 +21,6 @@ namespace SparklrWP
             App.Client = new SparklrClient();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (MessageBox.Show("Would you like to post a test message?", "Question", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-            {
-                App.Client.BeginRequest(postcallback, "work/post", "{\"body\":\"Testing from SparklrWP\"}");
-            }
-        }
-
         private bool postcallback(string jsonData)
         {
             Dispatcher.BeginInvoke(() =>
@@ -40,7 +32,24 @@ namespace SparklrWP
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
+            App.Client.LoggedIn += Client_LoggedIn;
             App.Client.Login(usernameBox.Text, passwordBox.Password);
+        }
+
+        void Client_LoggedIn(object sender, SparklrClient.LoggedInEventArgs e)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                if (e.Error)
+                {
+                    MessageBox.Show("Error");
+                }
+                else
+                {
+                    NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                }
+            });
+
         }
     }
 }

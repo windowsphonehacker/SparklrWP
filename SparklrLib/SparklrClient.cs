@@ -100,10 +100,31 @@ namespace SparklrLib
         }
 
         //TODO: Separate these:
+        public event LoggedInEvent LoggedIn;
+        public delegate void LoggedInEvent(object sender, LoggedInEventArgs e);
+        public bool IsLoggedIn { get; set; }
+        public class LoggedInEventArgs : EventArgs{
+            public bool Error { get; set; }
+        }
 
         public void Login(string username, string password)
         {
-            BeginRequest((string str) => { System.Diagnostics.Debug.WriteLine(str); return true; }, "work/signin/" + username + "/" + password + "/");
+            BeginRequest((string str) =>
+            {
+                if (str.ToLower().Contains("error"))
+                {
+                    IsLoggedIn = false;
+                }
+                else
+                {
+                    IsLoggedIn = true;
+                }
+                if (LoggedIn != null)
+                {
+                    LoggedIn.Invoke(this, new LoggedInEventArgs() { Error = !IsLoggedIn });
+                }
+                return true;
+            }, "work/signin/" + username + "/" + password + "/");
         }
     }
 }
