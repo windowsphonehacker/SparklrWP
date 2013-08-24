@@ -19,7 +19,7 @@ namespace SparklrLib
         {
         }
 
-        public void BeginRequest(Func<string, bool> callback, string url, string data = "")
+        public void BeginRequest(Func<string, bool> callback, string url, string data = "", string postData = "")
         {
             // Create a HttpWebRequest.
             Uri uri = new Uri(BaseURI + url);
@@ -38,9 +38,37 @@ namespace SparklrLib
             {
                 request.Headers["X-X"] = LoginToken;
             }
-            // Send the request.
-            request.BeginGetResponse(new AsyncCallback(ReadCallback), new object[] { request, callback });
+            request.ContentType = "application/json";
+            if (postData != "")
+            {
+                request.BeginGetRequestStream(new AsyncCallback(GetRequestStreamCallback), new object[] { request, callback, postData });
+            }
+            else
+            {
+                // Send the request.
+                request.BeginGetResponse(new AsyncCallback(ReadCallback), new object[] { request, callback });
+            }
         }
+
+        void GetRequestStreamCallback(IAsyncResult ar)
+        {
+            HttpWebRequest request = (HttpWebRequest)((object[])ar.AsyncState)[0];
+            // End the stream request operation
+            using (Stream postStream = request.EndGetRequestStream(ar))
+            {
+                // Create the post data
+                string postData = (string)((object[])ar.AsyncState)[2];
+                ((object[])ar.AsyncState)[2] = "";
+                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+
+                // Add the post data to the web request
+                postStream.Write(byteArray, 0, byteArray.Length);
+            }
+
+            // Send the request.
+            request.BeginGetResponse(new AsyncCallback(ReadCallback), ar.AsyncState);
+        }
+
 
         private void ReadCallback(IAsyncResult ar)
         {
