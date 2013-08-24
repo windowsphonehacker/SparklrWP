@@ -11,7 +11,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="True" d:DesignHeight="696" d:DesignWidth="480">
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="#FF454050">
@@ -23,19 +23,19 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <TextBlock Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-            <TextBlock Text="New post" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+            <TextBlock Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="Segoe WP Light" Text="New Post"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <TextBox x:Name="messageBox" HorizontalAlignment="Left" Height="227" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="456" InputScope="Text" HorizontalScrollBarVisibility="Auto"/>
+            <TextBox x:Name="messageBox" HorizontalAlignment="Left" TextWrapping="Wrap" Width="456" InputScope="Text" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,206"/>
+            <Button Content="Post" HorizontalAlignment="Right" Margin="0,0,8,126" Width="184" Click="postButton_Click" Height="76" VerticalAlignment="Bottom"/>
 
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton x:Name="postButton" IconUri="/Assets/AppBar/appbar.add.rest.png" Text="Post" Click="postButton_Click"/>
-            <shell:ApplicationBarIconButton x:Name="attachButton" IconUri="/Assets/AppBar/appbar.feature.camera.rest.png" Text="Attach" Click="attachButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="attachButton" IconUri="/Assets/AppBar/appbar.feature.camera.rest.png" Text="Picture" Click="attachButton_Click"/>
             <shell:ApplicationBar.MenuItems>
       
             </shell:ApplicationBar.MenuItems>

@@ -48,7 +48,7 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <Button x:Name="button" Content="Login" Margin="46,228,48,205" Grid.Row="1" BorderBrush="Transparent" FontFamily="Segoe WP Light" FontSize="48" Click="Login_Click">
+        <Button x:Name="button" Margin="46,228,48,205" Grid.Row="1" BorderBrush="Transparent" FontFamily="Segoe WP Light" FontSize="48" Click="Login_Click">
         	<Button.Background>
         		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
         	</Button.Background>
@@ -66,7 +66,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="sparklr*" Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" TextAlignment="Center"/>
+            <TextBlock Text="sparklr*" Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="Ccc" TextAlignment="Center" FontSize="96"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -77,8 +77,9 @@
             <ProgressBar HorizontalAlignment="Left" Height="10" VerticalAlignment="Top" Width="100" Foreground="{StaticResource PhoneAccentBrush}" Background="#001BA1E2"/>
             <TextBox x:Name="usernameBox" HorizontalAlignment="Left" Height="72" Margin="0,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" ToolTipService.ToolTip="user" CacheMode="BitmapCache"/>
             <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="0,127,0,0" VerticalAlignment="Top" Width="456" ToolTipService.ToolTip="password" CacheMode="BitmapCache"/>
-            <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="0,199,0,0" VerticalAlignment="Top" Click="loginButton_Click" Width="456"/>
-            <TextBlock HorizontalAlignment="Left" Height="51" Margin="0,276,0,0" TextWrapping="Wrap" Text="Please login" VerticalAlignment="Top" Width="456" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+            <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="0,259,0,0" VerticalAlignment="Top" Click="loginButton_Click" Width="456"/>
+            <TextBlock HorizontalAlignment="Left" Height="51" Margin="9,37,0,0" TextWrapping="Wrap" Text="Please login" VerticalAlignment="Top" Width="456" FontFamily="Courgette" d:LayoutOverrides="VerticalAlignment"/>
+            <CheckBox Content="Save My Info" Margin="3,178,112,0" Height="77" VerticalAlignment="Top"/>
         </Grid>
     </Grid>
 
