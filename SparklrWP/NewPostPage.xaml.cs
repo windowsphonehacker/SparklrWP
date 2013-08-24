@@ -46,7 +46,12 @@ namespace SparklrWP
                     }
                 });
                 return true;
-            }, "work/post", "{\"body\":\"" + messageBox.Text + "\"" + (PhotoStr == null ? "" : ",\"img\":true") + "}", PhotoStr); //TODO: use JSON.NET for this
+            }, "work/post",
+            "{\"body\":\"" + messageBox.Text + "\"" + (PhotoStr == null ? "" : ",\"img\":true") +
+#if DEBUG
+ ",\"network\":2" + //Development network
+#endif
+ "}", PhotoStr); //TODO: use JSON.NET for this
         }
 
         private void attachButton_Click(object sender, EventArgs e)

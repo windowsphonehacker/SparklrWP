@@ -63,7 +63,13 @@ namespace SparklrWP
         /// </summary>
         public void LoadData()
         {
-            App.Client.BeginRequest(loadCallback, "beacon/stream/0?since=1377357375&n=0"); //TODO: fix this hack
+            App.Client.BeginRequest(loadCallback,
+#if DEBUG
+ "beacon/stream/2?since=1377357375&n=0&network=1" //Development network
+#else
+ "beacon/stream/0?since=1377357375&n=0"
+#endif
+                ); //TODO: fix this hack
         }
 
         private bool loadCallback(string result)
