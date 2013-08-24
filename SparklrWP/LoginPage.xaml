@@ -75,11 +75,6 @@
         	<Grid.Projection>
         		<PlaneProjection GlobalOffsetY="692"/>
         	</Grid.Projection>
-            <Button Content="Post test" Click="Button_Click" HorizontalAlignment="Left" Margin="164,-137,0,0" VerticalAlignment="Top" Height="77" d:LayoutOverrides="VerticalAlignment">
-            	<Button.Projection>
-            		<PlaneProjection GlobalOffsetX="-1" GlobalOffsetZ="-41" GlobalOffsetY="692"/>
-            	</Button.Projection>
-            </Button>
             <TextBox Name="usernameBox" HorizontalAlignment="Left" Height="72" Margin="0,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" ToolTipService.ToolTip="user"/>
             <PasswordBox Name="passwordBox" HorizontalAlignment="Left" Margin="0,127,0,0" VerticalAlignment="Top" Width="456" ToolTipService.ToolTip="password"/>
             <Button Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="0,199,0,0" VerticalAlignment="Top" Click="loginButton_Click" Width="456"/>
