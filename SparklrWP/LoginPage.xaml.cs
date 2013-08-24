@@ -10,6 +10,7 @@ using Microsoft.Phone.Shell;
 using System.Text;
 using System.IO;
 using SparklrLib;
+using Microsoft.Phone.Tasks;
 
 namespace SparklrWP
 {
@@ -60,14 +61,15 @@ namespace SparklrWP
 
         private void Signup_click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MessageBox.Show("Go to Sparklr.me On Your Browser to Sign Up", "SparklrWP", MessageBoxButton.OK);
-
+            if (MessageBox.Show("Sparklr.me home page where you can sign up will opened in a browser", "SparklrWP", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                new WebBrowserTask() { Uri = new Uri("http://sparklr.me") }.Show();
+            }
         }
 
         private void about_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             MessageBox.Show("Sparklr Branding (C) Jonathan Warner \n\n Application Development Team: Marocco2, jessenic, EaterOfCorpses And TheInterframe\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
-
         }
     }
 }
