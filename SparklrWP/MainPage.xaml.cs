@@ -47,5 +47,10 @@ namespace SparklrWP
                 App.ViewModel.LoadData();
             }
         }
+
+        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/NewPostPage.xaml", UriKind.Relative));
+        }
     }
 }

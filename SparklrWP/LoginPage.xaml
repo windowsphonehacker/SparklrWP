@@ -66,8 +66,8 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="Sparklr For Windows Phone" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="Segoe WP Light"/>
-            <TextBlock Text="Sparklr*" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="Segoe WP Light"/>
+            <TextBlock Text="Sparklr For Windows Phone" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontStyle="Italic"/>
+            <TextBlock Text="Sparklr* test" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontStyle="Italic"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -75,13 +75,15 @@
         	<Grid.Projection>
         		<PlaneProjection GlobalOffsetY="692"/>
         	</Grid.Projection>
-            <phone:WebBrowser Navigating="loginBrowser_Navigating" Navigated="loginBrowser_Navigated" x:Name="loginBrowser" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="571" Width="436" IsScriptEnabled="True" IsGeolocationEnabled="True"/>
             <Button Content="Post test" Click="Button_Click" HorizontalAlignment="Left" Margin="164,-137,0,0" VerticalAlignment="Top" Height="77" d:LayoutOverrides="VerticalAlignment">
             	<Button.Projection>
             		<PlaneProjection GlobalOffsetX="-1" GlobalOffsetZ="-41" GlobalOffsetY="692"/>
             	</Button.Projection>
             </Button>
-
+            <TextBox Name="usernameBox" HorizontalAlignment="Left" Height="72" Margin="0,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" ToolTipService.ToolTip="user"/>
+            <PasswordBox Name="passwordBox" HorizontalAlignment="Left" Margin="0,127,0,0" VerticalAlignment="Top" Width="456" ToolTipService.ToolTip="password"/>
+            <Button Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="0,199,0,0" VerticalAlignment="Top" Click="loginButton_Click" Width="456"/>
+            <TextBlock HorizontalAlignment="Left" Height="51" Margin="0,276,0,0" TextWrapping="Wrap" Text="Please login" VerticalAlignment="Top" Width="456" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
         </Grid>
     </Grid>
 
