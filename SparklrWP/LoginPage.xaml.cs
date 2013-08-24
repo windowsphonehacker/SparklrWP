@@ -25,8 +25,17 @@ namespace SparklrWP
         {
             if (MessageBox.Show("Would you like to post a test message?", "Question", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
-                App.Client.Request("work/post", "{\"body\":\"Testing from SparklrWP\"}");
+                App.Client.BeginRequest(postcallback, "work/post", "{\"body\":\"Testing from SparklrWP\"}");
             }
+        }
+
+        private bool postcallback(string jsonData)
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                MessageBox.Show(jsonData);
+            });
+            return true;
         }
 
         private void loginButton_Click(object sender, RoutedEventArgs e)

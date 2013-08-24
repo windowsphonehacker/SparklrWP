@@ -19,7 +19,7 @@ namespace SparklrLib
         {
         }
 
-        public void Request(string url, string data = "")
+        public void BeginRequest(Func<string, bool> callback, string url, string data = "")
         {
             // Create a HttpWebRequest.
             Uri uri = new Uri(BaseURI + url);
@@ -39,15 +39,16 @@ namespace SparklrLib
                 request.Headers["X-X"] = LoginToken;
             }
             // Send the request.
-            request.BeginGetResponse(new AsyncCallback(ReadCallback), request);
+            request.BeginGetResponse(new AsyncCallback(ReadCallback), new object[] { request, callback });
         }
 
         private void ReadCallback(IAsyncResult ar)
         {
             WebResponse response;
+            Func<string, bool> newCallback = (Func<string, bool>)((object[])ar.AsyncState)[1];
             try
             {
-                HttpWebRequest request = (HttpWebRequest)ar.AsyncState;
+                HttpWebRequest request = (HttpWebRequest)((object[])ar.AsyncState)[0];
                 response = request.EndGetResponse(ar);
                 string setcooks = response.Headers["Set-Cookie"];
                 if (setcooks != null && setcooks.Length > 0)
@@ -91,6 +92,10 @@ namespace SparklrLib
                 System.Diagnostics.Debug.WriteLine("Got response: " + str);
 #endif
                 //TODO: Handle responses and add a response event
+                if (newCallback != null)
+                {
+                    newCallback.Invoke(str);
+                }
             }
         }
 
@@ -98,7 +103,7 @@ namespace SparklrLib
 
         public void Login(string username, string password)
         {
-            Request("work/signin/" + username + "/" + password + "/");
+            BeginRequest(null, "work/signin/" + username + "/" + password + "/");
         }
     }
 }
