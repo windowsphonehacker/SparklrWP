@@ -103,7 +103,7 @@ namespace SparklrLib
 
         public void Login(string username, string password)
         {
-            BeginRequest(null, "work/signin/" + username + "/" + password + "/");
+            BeginRequest((string str) => { System.Diagnostics.Debug.WriteLine(str); return true; }, "work/signin/" + username + "/" + password + "/");
         }
     }
 }
