@@ -33,6 +33,7 @@ namespace SparklrWP
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
+            GlobalLoading.Instance.IsLoading = true;
             App.Client.LoggedIn += Client_LoggedIn;
             App.Client.Login(usernameBox.Text, passwordBox.Password);
         }
@@ -41,6 +42,7 @@ namespace SparklrWP
         {
             Dispatcher.BeginInvoke(() =>
             {
+                GlobalLoading.Instance.IsLoading = false;
                 if (e.Error)
                 {
                     MessageBox.Show("Error");

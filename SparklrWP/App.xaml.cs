@@ -144,6 +144,7 @@ namespace SparklrWP
             // screen to remain active until the application is ready to render.
             RootFrame = new PhoneApplicationFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
+            GlobalLoading.Instance.Initialize(RootFrame); 
 
             // Handle navigation failures
             RootFrame.NavigationFailed += RootFrame_NavigationFailed;

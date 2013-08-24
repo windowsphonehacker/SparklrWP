@@ -75,6 +75,7 @@ namespace SparklrWP
                     {
                     }
                     isInLoadCycle = true;
+                    GlobalLoading.Instance.IsLoading = true;
                     App.Client.BeginRequest(loadCallback,
 #if DEBUG
  "beacon/stream/2?since=" + LastTime + "&n=0&network=1" //Development network
@@ -111,6 +112,7 @@ namespace SparklrWP
                 }
             }
             isInLoadCycle = false;
+            GlobalLoading.Instance.IsLoading = false;
             this.IsDataLoaded = true;
             return this.IsDataLoaded;
         }

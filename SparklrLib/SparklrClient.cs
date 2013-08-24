@@ -42,7 +42,7 @@ namespace SparklrLib
             {
                 request.Headers["X-X"] = LoginToken;
             }
-            if (postData != "")
+            if (postData != null && postData.Length > 0)
             {
                 request.BeginGetRequestStream(new AsyncCallback(GetRequestStreamCallback), new object[] { request, callback, postData });
             }

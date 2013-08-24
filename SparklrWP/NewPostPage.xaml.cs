@@ -25,10 +25,12 @@ namespace SparklrWP
 
         private void postButton_Click(object sender, EventArgs e)
         {
+            GlobalLoading.Instance.IsLoading = true;
             App.Client.BeginRequest((string str) =>
             {
                 Dispatcher.BeginInvoke(() =>
                 {
+                    GlobalLoading.Instance.IsLoading = false;
                     if (str.ToLower().Contains("error"))
                     {
                         MessageBox.Show(str, "Error", MessageBoxButton.OK);
@@ -63,7 +65,7 @@ namespace SparklrWP
         {
             if (e.TaskResult == TaskResult.OK)
             {
-                MessageBox.Show(e.ChosenPhoto.Length.ToString());
+                //MessageBox.Show(e.ChosenPhoto.Length.ToString());
                 using (MemoryStream ms = new MemoryStream())
                 {
                     e.ChosenPhoto.CopyTo(ms);
