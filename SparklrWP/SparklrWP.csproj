@@ -25,6 +25,7 @@
     <SilverlightAppEntry>SparklrWP.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -116,6 +117,13 @@
       <Name>Sparklrlib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BlendEmbeddedFont Include="Fonts\Courgette-Regular.ttf">
+      <IsSystemFont>True</IsSystemFont>
+      <All>True</All>
+      <AutoFill>True</AutoFill>
+    </BlendEmbeddedFont>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -126,4 +134,5 @@
   </Target>
   -->
   <ProjectExtensions />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Expression\Blend\WindowsPhone\v8.0\Microsoft.Expression.Blend.WindowsPhone.targets" />
 </Project>
