@@ -9,7 +9,6 @@ namespace SparklrLib
 {
     public class SparklrClientEOC
     {
-        private CookieContainer Cookies { get; set; }
         public string AuthToken { get; set; }
         public long UserId { get; private set; }
 
@@ -17,7 +16,6 @@ namespace SparklrLib
 
         public SparklrClientEOC()
         {
-            Cookies = new CookieContainer();
         }
 
         public HttpWebRequest CreateRequest(string Path)
@@ -26,10 +24,11 @@ namespace SparklrLib
         }
         public HttpWebRequest CreateRequest(string Path, string XData)
         {
+
             HttpWebRequest newReq = HttpWebRequest.CreateHttp(BaseURI + Path);
-            if (Cookies != null)
+            if (AuthToken != null)
             {
-                newReq.CookieContainer = Cookies;
+                newReq.Headers["Cookie"] = UserId.ToString() + ',' + AuthToken;
             }
             newReq.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36";
             if (XData != "")
@@ -53,6 +52,16 @@ namespace SparklrLib
                 {
                     loginResp = (HttpWebResponse)loginReq.EndGetResponse(res);
                 }
+                catch (WebException ex)
+                {
+                    Callback(new LoginEventArgs()
+                    {
+                        IsSuccessful = false,
+                        Error = ex,
+                        Response = (HttpWebResponse)ex.Response
+                    });
+                    return;
+                }
                 catch (Exception ex)
                 {
                     Callback(new LoginEventArgs()
@@ -63,7 +72,7 @@ namespace SparklrLib
                     });
                     return;
                 }
-                if (loginResp.Cookies == null || loginResp.Cookies["d"] == null)
+                if (loginResp.Headers["Set-Cookie"] == null)
                 {
                     Callback(new LoginEventArgs()
                     {
@@ -78,7 +87,7 @@ namespace SparklrLib
                 foreach(string sortaCookie in cookieParts){
                     string sortaTrimmedCookie = sortaCookie.TrimStart();
                     if(sortaTrimmedCookie.StartsWith("D=")){
-                        cookieD = sortaTrimmedCookie.Substring(3);
+                        cookieD = sortaTrimmedCookie.Substring(2);
                         break;
                     }
                 }
