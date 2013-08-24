@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Express 2012 for Windows Phone
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparklrWP", "SparklrWP\SparklrWP.csproj", "{50B5E547-901C-4CB3-A9CB-C889ED02974C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparklrLib", "SparklrLib\SparklrLib.csproj", "{ACE8C69F-6016-407E-8232-3027DF9CD9F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sparklrlib", "PhoneClassLibrary1\Sparklrlib.csproj", "{7CE670AF-67C9-4577-946C-9ED3D82A8F70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{50B5E547-901C-4CB3-A9CB-C889ED02974C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50B5E547-901C-4CB3-A9CB-C889ED02974C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{50B5E547-901C-4CB3-A9CB-C889ED02974C}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{ACE8C69F-6016-407E-8232-3027DF9CD9F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ACE8C69F-6016-407E-8232-3027DF9CD9F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ACE8C69F-6016-407E-8232-3027DF9CD9F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ACE8C69F-6016-407E-8232-3027DF9CD9F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CE670AF-67C9-4577-946C-9ED3D82A8F70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CE670AF-67C9-4577-946C-9ED3D82A8F70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CE670AF-67C9-4577-946C-9ED3D82A8F70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CE670AF-67C9-4577-946C-9ED3D82A8F70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
