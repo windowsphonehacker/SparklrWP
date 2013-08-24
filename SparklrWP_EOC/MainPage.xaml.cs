@@ -43,7 +43,7 @@ namespace SparklrWP_EOC
                 else
                 {
                     log("Login failed, Error: " + le.Error.Message);
-                    Sparklr.Login("EaterOfCorpses", "500Please", (lea) =>
+                    Sparklr.Login("EaterOfCorpses", "pass", (lea) =>
                     {
                         if (lea.IsSuccessful)
                         {
