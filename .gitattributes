@@ -1,1 +1,29 @@
-* -crlf
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Windows Style Line endings
+# Custom for Visual Studio
+*.cs     diff=csharp eol=crlf
+*.sln    merge=union eol=crlf
+*.csproj merge=union eol=crlf
+*.vbproj merge=union eol=crlf
+*.fsproj merge=union eol=crlf
+*.dbproj merge=union eol=crlf
+*.xml        eol=crlf
+*.xaml       eol=crlf
+*.config     eol=crlf
+*.resx       eol=crlf
+*.settings   eol=crlf
+*.txt        eol=crlf
+
+# Standard to msysgit
+*.doc	 diff=astextplain
+*.DOC	 diff=astextplain
+*.docx diff=astextplain
+*.DOCX diff=astextplain
+*.dot  diff=astextplain
+*.DOT  diff=astextplain
+*.pdf  diff=astextplain
+*.PDF	 diff=astextplain
+*.rtf	 diff=astextplain
+*.RTF	 diff=astextplain
