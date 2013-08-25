@@ -42,10 +42,11 @@ namespace SparklrWP
         // Load data for the ViewModel Items
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
+            //Updates are handled ONLY by the model. Everything else might screw up the timer.
             //if (!App.ViewModel.IsDataLoaded)
-            {
-                App.ViewModel.LoadData();
-            }
+            //{
+            //    App.ViewModel.LoadData();
+            //}
         }
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)

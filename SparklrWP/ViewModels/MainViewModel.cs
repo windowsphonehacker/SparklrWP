@@ -1,33 +1,41 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
-using System.IO;
-using Newtonsoft.Json.Linq;
 using System.Threading;
-using System.Linq.Expressions;
 using System.Linq;
-using System.Data.Linq;
 
 
 namespace SparklrWP
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     {
+        /// <summary>
+        /// The streamUpdater starts stream updates every 10 seconds.
+        /// </summary>
+        Timer streamUpdater;
+
         public MainViewModel()
         {
             this.Items = new ObservableCollection<ItemViewModel>();
+
+            streamUpdater = new Timer(streamUpdater_Tick, null, 10000, Timeout.Infinite);
+
+            //We do not start the updater here. It will be started by the callback of the reponse
+            //Warning: Possible issue where a internet conenction is not stable
+
+            loadData();
+        }
+
+        /// <summary>
+        /// Occures when the streamUpdater elapses
+        /// </summary>
+        /// <param name="state"></param>
+        void streamUpdater_Tick(object state)
+        {
+            //The streamUpdater is stopped in loadData to prevent multiple requests
+            loadData();
         }
 
         /// <summary>
@@ -63,47 +71,40 @@ namespace SparklrWP
         }
 
         public int LastTime = 1377357375;
-        private bool isInLoadCycle = false;
-        private static Thread loadThread = null;
 
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
-        public void LoadData()
+        /// <param name="stopTimer">Indicates if the internal timer should be stopped</param>
+        private void loadData(bool stopTimer = true)
         {
-            if (loadThread == null)
-            {
-                loadThread = new Thread(new ThreadStart(() =>
-                {
-                    while (true)
-                    {
-                        while (isInLoadCycle)
-                        {
-                        }
-                        isInLoadCycle = true;
-                        GlobalLoading.Instance.IsLoading = true;
-                        App.Client.BeginRequest(loadCallback,
+            //Stop the updater, to prevent multiple requests
+            if (stopTimer)
+                streamUpdater.Change(10000, Timeout.Infinite);
+
+            GlobalLoading.Instance.IsLoading = true;
+
+            App.Client.BeginRequest(loadCallback,
 #if DEBUG
  "beacon/stream/2?since=" + LastTime + "&n=0&network=1" //Development network
 #else
  "beacon/stream/0?since="+LastTime+"&n=0"
 #endif
-                            ); //TODO: fix this hack
-                        Thread.Sleep(10000);
-                    }
-                }));
-                loadThread.Start();
-            }
+                );
         }
+
         private bool loadCallback(string result)
         {
             if (result == null || result == "")
             {
                 GlobalLoading.Instance.IsLoading = false;
-                isInLoadCycle = false;
+                streamUpdater.Change(10000, Timeout.Infinite);
                 return false;
             }
+
             SparklrLib.Objects.Responses.Beacon.Stream stream = JsonConvert.DeserializeObject<SparklrLib.Objects.Responses.Beacon.Stream>(result);
+
+
             if (stream != null && stream.notifications != null)
             {
                 foreach (var not in stream.notifications)
@@ -124,10 +125,11 @@ namespace SparklrWP
                     });
                 }
             }
+
             if (stream == null || stream.data == null)
             {
                 GlobalLoading.Instance.IsLoading = false;
-                isInLoadCycle = false;
+                streamUpdater.Change(10000, Timeout.Infinite);
                 return true;
             }
             int count = stream.data.length;
@@ -166,9 +168,9 @@ namespace SparklrWP
                     LastTime = t.modified;
                 }
             }
-            isInLoadCycle = false;
             GlobalLoading.Instance.IsLoading = false;
             this.IsDataLoaded = true;
+            streamUpdater.Change(10000, Timeout.Infinite);
             return this.IsDataLoaded;
         }
 
@@ -180,6 +182,19 @@ namespace SparklrWP
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            //Dispose our disposable stuff
+
+            if (streamUpdater != null)
+                streamUpdater.Dispose();
         }
     }
 }

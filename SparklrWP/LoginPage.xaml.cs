@@ -107,5 +107,11 @@ namespace SparklrWP
         {
             MessageBox.Show("Sparklr Branding (C) Jonathan Warner \n\n Application Development Team: \n\n Marocco2 (design!)\n jessenic (code!)\n EaterOfCorpses (code-design!)\n TheInterframe (code-design!)\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
         }
+
+        private void checkEnter_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+                loginButton_Click(sender, null);
+        }
     }
 }

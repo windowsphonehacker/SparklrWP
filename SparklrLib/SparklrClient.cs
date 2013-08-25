@@ -155,6 +155,7 @@ namespace SparklrLib
                 {
                     LoggedIn.Invoke(this, new LoggedInEventArgs() { Error = !IsLoggedIn });
                 }
+                //TODO: Why is here a return true?
                 return true;
             }, "work/signin/" + username + "/" + password + "/");
         }
