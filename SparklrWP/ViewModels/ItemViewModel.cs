@@ -78,6 +78,23 @@ namespace SparklrWP
             }
         }
 
+        private string _imageUrl;
+        public string ImageUrl
+        {
+            get
+            {
+                return _imageUrl;
+            }
+            set
+            {
+                if (value != _imageUrl)
+                {
+                    _imageUrl = value;
+                    NotifyPropertyChanged("ImageUrl");
+                }
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)
         {

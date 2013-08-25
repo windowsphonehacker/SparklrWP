@@ -31,6 +31,7 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <ScrollViewer>
                 <StackPanel>
+                    <Image Source="{Binding ImageUrl}" />
                     <TextBlock x:Name="ContentText" Text="{Binding Message}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}"/>
                     <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Comments here?" VerticalAlignment="Top" />
                 </StackPanel>

@@ -143,7 +143,12 @@ namespace SparklrWP
                       catch (Exception) { }
                       if (existingitem == null)
                       {
-                          this.Items.Add(new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString() });
+                          existingitem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString() };
+                          if (t.meta != null)
+                          {
+                              existingitem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;
+                          }
+                          this.Items.Add(existingitem);
                       }
                       else
                       {
