@@ -10,8 +10,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True" d:DesignHeight="768" d:DesignWidth="480">
+    mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480">
 	<phone:PhoneApplicationPage.Resources>
 		<Storyboard x:Name="Ani1">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.GlobalOffsetY)" Storyboard.TargetName="ContentPanel">
@@ -65,7 +64,7 @@
         </Button>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28" VerticalAlignment="Bottom">
+        <StackPanel Grid.Row="0" Margin="0,0,0,28" VerticalAlignment="Bottom" Height="107">
         	<TextBlock Text="sparklr*" Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" TextAlignment="Center" FontSize="80"/>
         </StackPanel>
 
@@ -85,7 +84,7 @@
         	<StackPanel.Background>
         		<ImageBrush Stretch="UniformToFill" ImageSource="Senzanome.png"/>
         	</StackPanel.Background>
-        	<TextBlock HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="PROGRESS AT WORK" Width="480" FontSize="26.667" TextAlignment="Center" FontWeight="Bold"/>
+        	<TextBlock HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="PROGRESS AT WORK" Width="480" FontSize="29.333" TextAlignment="Center" FontFamily="Segoe WP Semibold" Foreground="White"/>
         </StackPanel>
     </Grid>
 

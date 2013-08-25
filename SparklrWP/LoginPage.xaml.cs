@@ -52,6 +52,7 @@ namespace SparklrWP
             GlobalLoading.Instance.IsLoading = true;
             App.Client.LoggedIn += Client_LoggedIn;
             App.Client.Login(usernameBox.Text, passwordBox.Password);
+
         }
 
         void Client_LoggedIn(object sender, SparklrClient.LoggedInEventArgs e)
@@ -88,6 +89,9 @@ namespace SparklrWP
         private void Login_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             Ani1.Begin();
+            button.IsEnabled = false;
+            button1.IsEnabled = false;
+            button2.IsEnabled = false;
 
         }
 
