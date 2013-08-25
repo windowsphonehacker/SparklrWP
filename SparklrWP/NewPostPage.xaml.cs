@@ -9,6 +9,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using System.IO;
+using Microsoft.Phone;
 
 namespace SparklrWP
 {
@@ -58,6 +59,7 @@ namespace SparklrWP
 
         private void attachButton_Click(object sender, EventArgs e)
         {
+            GlobalLoading.Instance.IsLoading = true;
             photoChooserTask.Show();
         }
 
@@ -73,9 +75,19 @@ namespace SparklrWP
                 }
 
                 //Code to display the photo on the page in an image control named myImage.
-                //System.Windows.Media.Imaging.BitmapImage bmp = new System.Windows.Media.Imaging.BitmapImage();
-                //bmp.SetSource(e.ChosenPhoto);
-                //myImage.Source = bmp;
+                System.Windows.Media.Imaging.BitmapImage bmp = new System.Windows.Media.Imaging.BitmapImage();
+                bmp.SetSource(e.ChosenPhoto);
+                PicThumbnail.Source = bmp;
+            }
+            GlobalLoading.Instance.IsLoading = false;
+        }
+
+        private void PicThumbnail_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            if (MessageBox.Show("Do you want to remove the attached image?", "Question", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            {
+                PhotoStr = null;
+                PicThumbnail.Source = null;
             }
         }
     }

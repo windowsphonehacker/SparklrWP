@@ -30,6 +30,7 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <TextBox x:Name="messageBox" HorizontalAlignment="Left" TextWrapping="Wrap" Width="456" InputScope="Text" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,206"/>
             <Button Content="Post" HorizontalAlignment="Right" Margin="0,0,8,126" Width="184" Click="postButton_Click" Height="76" VerticalAlignment="Bottom"/>
+            <Image Name="PicThumbnail" HorizontalAlignment="Left" Height="191" Margin="10,336,0,0" VerticalAlignment="Top" Width="249" Tap="PicThumbnail_Tap"/>
 
         </Grid>
     </Grid>
@@ -37,7 +38,7 @@
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton x:Name="attachButton" IconUri="/Assets/AppBar/appbar.feature.camera.rest.png" Text="Picture" Click="attachButton_Click"/>
             <shell:ApplicationBar.MenuItems>
-      
+
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
