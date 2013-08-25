@@ -95,26 +95,26 @@ namespace SparklrWP
                 GlobalLoading.Instance.IsLoading = false;
                 return false;
             }
-            JToken token = JObject.Parse(result).SelectToken("data");
-            if (token == null)
+            SparklrLib.Objects.Responses.Beacon.Stream stream = JsonConvert.DeserializeObject<SparklrLib.Objects.Responses.Beacon.Stream>(result);
+            if (stream == null || stream.data == null)
             {
                 GlobalLoading.Instance.IsLoading = false;
                 return true;
             }
-            int count = (int)token.SelectToken("length");
-            foreach (var t in token.SelectToken("timeline").Children())
+            int count = stream.data.length;
+            foreach (var t in stream.data.timeline)
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                   {
-                      this.Items.Add(new ItemViewModel() { LineOne = (string)t.SelectToken("message") });
+                      this.Items.Add(new ItemViewModel() { LineOne = t.message });
                   });
-                if (LastTime < (int)t.SelectToken("time"))
+                if (LastTime < t.time)
                 {
-                    LastTime = (int)t.SelectToken("time");
+                    LastTime = t.time;
                 }
-                if (LastTime < (int)t.SelectToken("modified"))
+                if (LastTime < t.modified)
                 {
-                    LastTime = (int)t.SelectToken("modified");
+                    LastTime = t.modified;
                 }
             }
             isInLoadCycle = false;

@@ -9,7 +9,7 @@ namespace SparklrLib.Objects.Responses.Beacon
     {
         public int from { get; set; }
         public int id { get; set; }
-        public int to { get; set; }
+        public int? to { get; set; }
         public int type { get; set; }
         public object flags { get; set; }
         public string meta { get; set; }
