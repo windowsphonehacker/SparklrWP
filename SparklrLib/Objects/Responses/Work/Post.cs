@@ -18,7 +18,7 @@ namespace SparklrLib.Objects.Responses.Work
     {
         public int from { get; set; }
         public int id { get; set; }
-        public int to { get; set; }
+        public int? to { get; set; }
         public int type { get; set; }
         public object flags { get; set; }
         public string meta { get; set; }
@@ -27,10 +27,10 @@ namespace SparklrLib.Objects.Responses.Work
         public string message { get; set; }
         public object lat { get; set; }
         public object @long { get; set; }
-        public int via { get; set; }
-        public object origid { get; set; }
-        public int commentcount { get; set; }
-        public int modified { get; set; }
+        public int? via { get; set; }
+        public int? origid { get; set; }
+        public int? commentcount { get; set; }
+        public int? modified { get; set; }
         public int network { get; set; }
         public List<Comment> comments { get; set; }
     }
