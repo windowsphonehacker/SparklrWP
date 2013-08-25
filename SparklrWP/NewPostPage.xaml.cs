@@ -30,7 +30,7 @@ namespace SparklrWP
 
         private void postButton_Click(object sender, EventArgs e)
         {
-            if (messageBox.Text == "")
+            if (messageBox.Text == "" && PhotoStr == null)
             {
                 MessageBox.Show("You Need To Say Somthing! You Can't Leave The Message Box Blank!", "Sorry!", MessageBoxButton.OK);
             }
