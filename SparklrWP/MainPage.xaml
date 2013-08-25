@@ -23,8 +23,8 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="Courgette"/>
-            <TextBlock x:Name="PageTitle" Text="Posts" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="Courgette"/>
+            <TextBlock x:Name="ApplicationTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+            <TextBlock x:Name="PageTitle" Text="Posts" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
         </StackPanel>
 
         <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
@@ -32,9 +32,9 @@
             <ListBox x:Name="MainListBox" Margin="0,0,-12,0" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                      <StackPanel Margin="0,0,0,17" Width="432" Height="78">
-                          <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
-                          <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+                      <StackPanel Margin="0,0,0,17">
+                          <TextBlock Text="{Binding LineOne}" Style="{StaticResource PhoneTextExtraLargeStyle}" TextWrapping="Wrap"/>
+                          
                       </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

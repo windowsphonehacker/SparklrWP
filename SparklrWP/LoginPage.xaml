@@ -78,7 +78,7 @@
             <TextBox x:Name="usernameBox" HorizontalAlignment="Left" Height="72" Margin="0,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" ToolTipService.ToolTip="user" CacheMode="BitmapCache"/>
             <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="0,127,0,0" VerticalAlignment="Top" Width="456" ToolTipService.ToolTip="password" CacheMode="BitmapCache"/>
             <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="0,259,0,0" VerticalAlignment="Top" Click="loginButton_Click" Width="456"/>
-            <TextBlock HorizontalAlignment="Left" Height="51" Margin="0,35,0,0" TextWrapping="Wrap" Text="Please login" VerticalAlignment="Top" Width="456" FontFamily="Courgette"/>
+            <TextBlock HorizontalAlignment="Left" Height="51" Margin="0,35,0,0" TextWrapping="Wrap" Text="Please login" VerticalAlignment="Top" Width="456" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
             <CheckBox Content="Remember Me" Name="rememberBox" Margin="0,182,115,0" Height="77" VerticalAlignment="Top"/>
         </Grid>
         <StackPanel HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="480">

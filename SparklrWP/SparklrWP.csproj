@@ -141,14 +141,12 @@
       <Project>{ACE8C69F-6016-407E-8232-3027DF9CD9F2}</Project>
       <Name>SparklrLib</Name>
     </ProjectReference>
-    <Resource Include="Senzanome.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BlendEmbeddedFont Include="Fonts\Courgette-Regular.ttf">
       <IsSystemFont>True</IsSystemFont>
       <All>True</All>
       <AutoFill>True</AutoFill>
     </BlendEmbeddedFont>
+    <Resource Include="Senzanome.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
