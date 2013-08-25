@@ -52,5 +52,10 @@ namespace SparklrWP
         {
             NavigationService.Navigate(new Uri("/NewPostPage.xaml", UriKind.Relative));
         }
+
+        private void about_click(object sender, System.EventArgs e)
+        {
+        	MessageBox.Show("Sparklr Branding (C) Jonathan Warner \n\nApplication Development Team: Marocco2, Jessenic, EaterOfCorpses And TheInterframe\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
+        }
     }
 }

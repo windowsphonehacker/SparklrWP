@@ -23,8 +23,8 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="Courgette"/>
-            <TextBlock x:Name="PageTitle" Text="Posts" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="Courgette"/>
+            <TextBlock x:Name="ApplicationTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+            <TextBlock x:Name="PageTitle" Text="Posts" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="Segoe WP Light"/>
         </StackPanel>
 
         <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
@@ -45,6 +45,7 @@
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New post" Click="ApplicationBarIconButton_Click"/>
             <shell:ApplicationBar.MenuItems>
+            	<shell:ApplicationBarMenuItem IsEnabled="True" Text="About" Click="about_click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
