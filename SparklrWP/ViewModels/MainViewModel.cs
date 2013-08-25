@@ -16,6 +16,9 @@ using Newtonsoft.Json;
 using System.IO;
 using Newtonsoft.Json.Linq;
 using System.Threading;
+using System.Linq.Expressions;
+using System.Linq;
+using System.Data.Linq;
 
 
 namespace SparklrWP
@@ -128,7 +131,22 @@ namespace SparklrWP
             {
                 Deployment.Current.Dispatcher.BeginInvoke(() =>
                   {
-                      this.Items.Add(new ItemViewModel() { LineOne = t.message });
+                      ItemViewModel existingitem = null;
+                      try
+                      {
+                          existingitem = (from i in this.Items where i.Id == t.id select i).First();
+                      }
+                      catch (Exception) { }
+                      if (existingitem == null)
+                      {
+                          this.Items.Add(new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString() });
+                      }
+                      else
+                      {
+                          existingitem.Message = t.message;
+                          existingitem.CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount);
+                          existingitem.From = t.from.ToString(); //TODO: Use /work/username to get the user names
+                      }
                   });
                 if (LastTime < t.time)
                 {

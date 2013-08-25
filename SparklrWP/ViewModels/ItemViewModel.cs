@@ -15,65 +15,65 @@ namespace SparklrWP
 {
     public class ItemViewModel : INotifyPropertyChanged
     {
-        private string _lineOne;
-        /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
-        /// </summary>
-        /// <returns></returns>
-        public string LineOne
+        public int Id { get; private set; }
+
+        public ItemViewModel(int Id)
+        {
+            this.Id = Id;
+        }
+        //For design:
+        public ItemViewModel()
+        {
+
+        }
+
+        private string _from;
+        public string From
         {
             get
             {
-                return _lineOne;
+                return _from;
             }
             set
             {
-                if (value != _lineOne)
+                if (value != _from)
                 {
-                    _lineOne = value;
-                    NotifyPropertyChanged("LineOne");
+                    _from = value;
+                    NotifyPropertyChanged("From");
                 }
             }
         }
 
-        private string _lineTwo;
-        /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
-        /// </summary>
-        /// <returns></returns>
-        public string LineTwo
+        private string _message;
+        public string Message
         {
             get
             {
-                return _lineTwo;
+                return _message;
             }
             set
             {
-                if (value != _lineTwo)
+                if (value != _message)
                 {
-                    _lineTwo = value;
-                    NotifyPropertyChanged("LineTwo");
+                    _message = value;
+                    NotifyPropertyChanged("Message");
                 }
             }
         }
 
-        private string _lineThree;
-        /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding.
-        /// </summary>
-        /// <returns></returns>
-        public string LineThree
+        private int _commentCount;
+        public int CommentCount
         {
             get
             {
-                return _lineThree;
+                return _commentCount;
             }
             set
             {
-                if (value != _lineThree)
+                if (value != _commentCount)
                 {
-                    _lineThree = value;
-                    NotifyPropertyChanged("LineThree");
+                    _commentCount = value;
+                    NotifyPropertyChanged("CommentCount");
                 }
             }
         }

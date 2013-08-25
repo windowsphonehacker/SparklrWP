@@ -24,21 +24,25 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock x:Name="PageTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-            <TextBlock x:Name="ListTitle" Text="User" Margin="103,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="ListTitle" Text="{Binding From}" Margin="103,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel contains details text. Place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <TextBlock x:Name="ContentText" Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Margin="12,0,12,408"/>
-            <TextBlock HorizontalAlignment="Left" Height="212" Margin="12,129,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="432"/>
+            <ScrollViewer>
+                <StackPanel>
+                    <TextBlock x:Name="ContentText" Text="{Binding Message}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}"/>
+                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Comments here?" VerticalAlignment="Top" />
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
     </Grid>
-	<phone:PhoneApplicationPage.ApplicationBar>
+    <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-         <!--   <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New post (no functional)" Click="ApplicationBarIconButton_Click"/> -->
+            <!--   <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New post (no functional)" Click="ApplicationBarIconButton_Click"/> -->
             <shell:ApplicationBar.MenuItems>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
- 
+
 </phone:PhoneApplicationPage>

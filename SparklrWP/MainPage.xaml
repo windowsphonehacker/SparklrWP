@@ -32,10 +32,12 @@
             <ListBox x:Name="MainListBox" Margin="0,0,-12,0" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                      <StackPanel Margin="0,0,0,17">
-                          <TextBlock Text="{Binding LineOne}" Style="{StaticResource PhoneTextExtraLargeStyle}" TextWrapping="Wrap"/>
-                          
-                      </StackPanel>
+                        <StackPanel Margin="0,0,0,17">
+                            <TextBlock Text="{Binding From}" Style="{StaticResource PhoneTextExtraLargeStyle}" TextWrapping="Wrap"/>
+                            <TextBlock Text="{Binding CommentCount}" TextWrapping="Wrap" Margin="20,0,0,0"/>
+                            <TextBlock Text="{Binding Message}" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap"/>
+
+                        </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
