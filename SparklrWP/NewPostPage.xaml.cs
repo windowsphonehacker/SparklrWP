@@ -10,6 +10,8 @@ using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using System.IO;
 using Microsoft.Phone;
+using System.Windows.Media.Imaging;
+
 
 namespace SparklrWP
 {
@@ -22,45 +24,59 @@ namespace SparklrWP
             InitializeComponent();
             photoChooserTask = new PhotoChooserTask() { ShowCamera = true };
             photoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
+           
+
         }
 
         private void postButton_Click(object sender, EventArgs e)
         {
-            GlobalLoading.Instance.IsLoading = true;
-            App.Client.BeginRequest((string str) =>
+            if (messageBox.Text == "")
             {
-                Dispatcher.BeginInvoke(() =>
+                MessageBox.Show("You Need To Say Somthing! You Can't Leave The Message Box Blank!", "Sorry!", MessageBoxButton.OK);
+            }
+            else
+            {
+                GlobalLoading.Instance.IsLoading = true;
+                App.Client.BeginRequest((string str) =>
                 {
-                    GlobalLoading.Instance.IsLoading = false;
-                    if (str.ToLower().Contains("error"))
+                    Dispatcher.BeginInvoke(() =>
                     {
-                        MessageBox.Show(str, "Error", MessageBoxButton.OK);
-                    }
-                    else
-                    {
-                        if (NavigationService.CanGoBack)
+                        GlobalLoading.Instance.IsLoading = false;
+                        if (str.ToLower().Contains("error"))
                         {
-                            NavigationService.GoBack();
+                            MessageBox.Show(str, "Error", MessageBoxButton.OK);
                         }
                         else
                         {
-                            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                            if (NavigationService.CanGoBack)
+                            {
+                                NavigationService.GoBack();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Your Status Has Been Posted!", "Yay!", MessageBoxButton.OK);
+
+                                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                              
+                            }
                         }
-                    }
-                });
-                return true;
-            }, "work/post",
-            "{\"body\":\"" + messageBox.Text + "\"" + (PhotoStr == null ? "" : ",\"img\":true") +
+                    });
+                    return true;
+                }, "work/post",
+                "{\"body\":\"" + messageBox.Text + "\"" + (PhotoStr == null ? "" : ",\"img\":true") +
 #if DEBUG
  ",\"network\":2" + //Development network
 #endif
- "}", PhotoStr); //TODO: use JSON.NET for this
+     "}", PhotoStr); //TODO: use JSON.NET for this
+            }
         }
 
         private void attachButton_Click(object sender, EventArgs e)
         {
             GlobalLoading.Instance.IsLoading = true;
             photoChooserTask.Show();
+          
+
         }
 
         void photoChooserTask_Completed(object sender, PhotoResult e)
@@ -90,5 +106,6 @@ namespace SparklrWP
                 PicThumbnail.Source = null;
             }
         }
+
     }
 }
