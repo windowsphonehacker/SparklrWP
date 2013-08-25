@@ -93,12 +93,34 @@ namespace SparklrWP
             if (result == null || result == "")
             {
                 GlobalLoading.Instance.IsLoading = false;
+                isInLoadCycle = false;
                 return false;
             }
             SparklrLib.Objects.Responses.Beacon.Stream stream = JsonConvert.DeserializeObject<SparklrLib.Objects.Responses.Beacon.Stream>(result);
+            if (stream != null && stream.notifications != null)
+            {
+                foreach (var not in stream.notifications)
+                {
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        try
+                        {
+                            if (MessageBox.Show("id: " + not.id + "\naction: " + not.action + "\ntype:" + not.type + "\nbody" + not.body, "Notification test", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                            {
+                                App.Client.BeginRequest(null, "work/delete/notification/" + not.id);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.StackTrace, ex.Message, MessageBoxButton.OK);
+                        }
+                    });
+                }
+            }
             if (stream == null || stream.data == null)
             {
                 GlobalLoading.Instance.IsLoading = false;
+                isInLoadCycle = false;
                 return true;
             }
             int count = stream.data.length;
