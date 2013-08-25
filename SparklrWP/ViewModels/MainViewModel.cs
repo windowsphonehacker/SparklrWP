@@ -64,32 +64,36 @@ namespace SparklrWP
 
         public int LastTime = 1377357375;
         private bool isInLoadCycle = false;
+        private static Thread loadThread = null;
 
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
         public void LoadData()
         {
-            Thread t = new Thread(new ThreadStart(() =>
+            if (loadThread == null)
             {
-                while (true)
+                loadThread = new Thread(new ThreadStart(() =>
                 {
-                    while (isInLoadCycle)
+                    while (true)
                     {
-                    }
-                    isInLoadCycle = true;
-                    GlobalLoading.Instance.IsLoading = true;
-                    App.Client.BeginRequest(loadCallback,
+                        while (isInLoadCycle)
+                        {
+                        }
+                        isInLoadCycle = true;
+                        GlobalLoading.Instance.IsLoading = true;
+                        App.Client.BeginRequest(loadCallback,
 #if DEBUG
  "beacon/stream/2?since=" + LastTime + "&n=0&network=1" //Development network
 #else
  "beacon/stream/0?since="+LastTime+"&n=0"
 #endif
-                        ); //TODO: fix this hack
-                    Thread.Sleep(10000);
-                }
-            }));
-            t.Start();
+                            ); //TODO: fix this hack
+                        Thread.Sleep(10000);
+                    }
+                }));
+                loadThread.Start();
+            }
         }
         private bool loadCallback(string result)
         {
