@@ -101,7 +101,7 @@ namespace SparklrWP
 
         private void about_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MessageBox.Show("Sparklr Branding (C) Jonathan Warner \n\n Application Development Team: Marocco2, jessenic, EaterOfCorpses And TheInterframe\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
+            MessageBox.Show("Sparklr Branding (C) Jonathan Warner \n\n Application Development Team: Marocco2 (design!), jessenic (code!), EaterOfCorpses (code-design!) And TheInterframe (code-design!)\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
         }
     }
 }

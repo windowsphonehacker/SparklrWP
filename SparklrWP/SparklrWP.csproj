@@ -141,7 +141,7 @@
       <Project>{ACE8C69F-6016-407E-8232-3027DF9CD9F2}</Project>
       <Name>SparklrLib</Name>
     </ProjectReference>
-    <Folder Include="Fonts\" />
+    <Resource Include="Senzanome.png" />
   </ItemGroup>
   <ItemGroup>
     <BlendEmbeddedFont Include="Fonts\Courgette-Regular.ttf">

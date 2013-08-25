@@ -43,12 +43,12 @@
     		<ImageBrush Stretch="UniformToFill" ImageSource="bg.jpg"/>
     	</Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MinHeight="180"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <Button x:Name="button" Margin="46,228,48,205" Grid.Row="1" BorderBrush="Transparent" FontFamily="Segoe WP Light" FontSize="48" Click="Login_Click">
+        <Button x:Name="button" Margin="46,186,48,205" Grid.Row="1" BorderBrush="Transparent" FontFamily="Segoe WP Light" FontSize="48" Click="Login_Click" Content="Login">
         	<Button.Background>
         		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
         	</Button.Background>
@@ -65,8 +65,8 @@
         </Button>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock Text="sparklr*" Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="Ccc" TextAlignment="Center" FontSize="96"/>
+        <StackPanel Grid.Row="0" Margin="12,17,0,28" VerticalAlignment="Bottom">
+        	<TextBlock Text="sparklr*" Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" TextAlignment="Center" FontSize="80"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -78,9 +78,15 @@
             <TextBox x:Name="usernameBox" HorizontalAlignment="Left" Height="72" Margin="0,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" ToolTipService.ToolTip="user" CacheMode="BitmapCache"/>
             <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="0,127,0,0" VerticalAlignment="Top" Width="456" ToolTipService.ToolTip="password" CacheMode="BitmapCache"/>
             <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="0,259,0,0" VerticalAlignment="Top" Click="loginButton_Click" Width="456"/>
-            <TextBlock HorizontalAlignment="Left" Height="51" Margin="9,37,0,0" TextWrapping="Wrap" Text="Please login" VerticalAlignment="Top" Width="456" FontFamily="Courgette" d:LayoutOverrides="VerticalAlignment"/>
-            <CheckBox Content="Remember Me" Name="rememberBox" Margin="3,178,112,0" Height="77" VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Height="51" Margin="0,35,0,0" TextWrapping="Wrap" Text="Please login" VerticalAlignment="Top" Width="456" FontFamily="Courgette"/>
+            <CheckBox Content="Remember Me" Name="rememberBox" Margin="0,182,115,0" Height="77" VerticalAlignment="Top"/>
         </Grid>
+        <StackPanel HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="480">
+        	<StackPanel.Background>
+        		<ImageBrush Stretch="UniformToFill" ImageSource="Senzanome.png"/>
+        	</StackPanel.Background>
+        	<TextBlock HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="PROGRESS AT WORK" Width="480" FontSize="26.667" TextAlignment="Center" FontWeight="Bold"/>
+        </StackPanel>
     </Grid>
 
 </phone:PhoneApplicationPage>
