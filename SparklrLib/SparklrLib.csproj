@@ -53,6 +53,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Objects\LoginEventArgs.cs" />
+    <Compile Include="Objects\Responses\Beacon\Chat.cs" />
+    <Compile Include="Objects\Responses\Beacon\Comments.cs" />
+    <Compile Include="Objects\Responses\Beacon\Stream.cs" />
+    <Compile Include="Objects\Responses\Work\Chat.cs" />
+    <Compile Include="Objects\Responses\Work\Post.cs" />
+    <Compile Include="Objects\Responses\Work\Username.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SparklrClient.cs" />
     <Compile Include="SparklrClientEOC.cs" />
