@@ -42,24 +42,54 @@ namespace SparklrWP
         /// </summary>
         public ObservableCollection<ItemViewModel> Items { get; private set; }
 
-        private string _sampleProperty = "Sample Runtime Property Value";
-        /// <summary>
-        /// Sample ViewModel property; this property is used in the view to display its value using a Binding
-        /// </summary>
-        /// <returns></returns>
-        public string SampleProperty
+        private int _newPostCount = 0;
+        public int NewPostCount
         {
             get
             {
-                return _sampleProperty;
+                return _newPostCount;
             }
             set
             {
-                if (value != _sampleProperty)
+                if (value != _newPostCount)
                 {
-                    _sampleProperty = value;
-                    NotifyPropertyChanged("SampleProperty");
+                    _newPostCount = value;
+                    NotifyPropertyChanged("NewPostCount");
+                    NotifyPropertyChanged("NewPostCountVisibility");
                 }
+            }
+        }
+        public Visibility NewPostCountVisibility
+        {
+            get
+            {
+                return _newPostCount > 0 ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        private int _newNotificationsCount = 0;
+        public int NewNotificationsCount
+        {
+            get
+            {
+                return _newNotificationsCount;
+            }
+            set
+            {
+                if (value != _newNotificationsCount)
+                {
+                    _newNotificationsCount = value;
+                    NotifyPropertyChanged("NewNotificationsCount");
+                    NotifyPropertyChanged("NewNotificationsCountVisibility");
+                }
+            }
+        }
+
+        public Visibility NewNotificationsCountVisibility
+        {
+            get
+            {
+                return _newNotificationsCount > 0 ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
