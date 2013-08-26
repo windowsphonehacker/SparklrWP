@@ -138,10 +138,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="bg.jpg" />
-    <ProjectReference Include="..\SparklrLib\SparklrLib.csproj">
-      <Project>{ACE8C69F-6016-407E-8232-3027DF9CD9F2}</Project>
-      <Name>SparklrLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BlendEmbeddedFont Include="Fonts\Courgette-Regular.ttf">
@@ -153,6 +149,12 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SparklrLib\SparklrLib.csproj">
+      <Project>{ACE8C69F-6016-407E-8232-3027DF9CD9F2}</Project>
+      <Name>SparklrLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

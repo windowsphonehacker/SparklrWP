@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net;
+
 namespace SparklrLib.Objects
 {
-    public class LoginEventArgs : SparklrEventArgs
+    public class JSONRequestEventArgs<T> : SparklrEventArgs
     {
-        public long UserId { get; set; }
-        public string AuthToken { get; set; }
+        public T Object { get; set; }
         public HttpWebResponse Response { get; set; }
     }
 }
