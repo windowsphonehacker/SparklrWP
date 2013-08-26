@@ -94,6 +94,12 @@ namespace SparklrWP.Controls
         private Regex userMentionRegex = new Regex(@"(@[\w\b]*)", RegexOptions.Compiled);
 
         /// <summary>
+        /// A regex that matches any url and captures the destination without the http(s)://
+        /// </summary>
+        private Regex urlRegex = new Regex(@"(?:(http|ftp|https):\/\/)?([\w\-_]+(?:\.[\w\-_]+)+(?:[\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private Regex urlSplitRegex = new Regex(@"((?:(?:http|ftp|https):\/\/)?(?:[\w\-_]+(?:\.[\w\-_]+)+(?:[\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        /// <summary>
         /// The highlight color for tags, usernames, etc...
         /// </summary>
         private SolidColorBrush accentColor = GetColorFromHex("FF454050");
@@ -316,10 +322,21 @@ namespace SparklrWP.Controls
                             if (userMentionRegex.IsMatch(username))
                                 messageContentParagraph.Inlines.Add(getHighlightedInline(username));
                             else
-                                messageContentParagraph.Inlines.Add(getAsInline(username));
+                            {
+                                //Check if we still have urls in here
+                                if (urlRegex.IsMatch(username))
+                                {
+                                    replaceUrls(username);
+                                }
+                                else
+                                    messageContentParagraph.Inlines.Add(getAsInline(username));
+                            }
                         }
                     }
-                    //TODO: Check for links and images
+                    else if (urlRegex.IsMatch(s))
+                    {
+                        replaceUrls(s);
+                    }
                     else
                     {
                         //The substring doesn't contain username
@@ -327,6 +344,43 @@ namespace SparklrWP.Controls
                     }
                 }
 
+            }
+        }
+
+        private void replaceUrls(string value)
+        {
+            string[] urlparts = urlSplitRegex.Split(value);
+
+            foreach (string urlpart in urlparts)
+            {
+                //Match the urlpart against the regex
+                Match urlMatch = urlRegex.Match(urlpart);
+
+
+                if (urlMatch.Captures.Count == 0)
+                {
+                    //No url found, add urlpart as text
+                    messageContentParagraph.Inlines.Add(getAsInline(urlpart));
+                }
+                else
+                {
+                    //Add part as url
+                    //Create a valid url from the matches
+                    string url;
+
+                    //see if we matched the protocol and build based on that
+                    if (urlMatch.Captures.Count == 2)
+                    {
+                        url = String.Format("{0}{1}", urlMatch.Captures[0].Value, urlMatch.Captures[1].Value);
+                    }
+                    else
+                    {
+                        //http:// is missing
+                        url = String.Format("http://{0}", urlMatch.Captures[0].Value);
+                    }
+
+                    messageContentParagraph.Inlines.Add(getAsInlineLink(urlpart, new Uri(url)));
+                }
             }
         }
 
@@ -341,6 +395,22 @@ namespace SparklrWP.Controls
             {
                 Text = text
             };
+        }
+
+        /// <summary>
+        /// creates a link for a RichTextBox
+        /// </summary>
+        /// <param name="text">The text</param>
+        /// <param name="target">The target location</param>
+        /// <returns>A Inline element that can be added via Paragraph.Inlines.Add</returns>
+        private Inline getAsInlineLink(string text, Uri target)
+        {
+            Hyperlink ret = new Hyperlink();
+            ret.TargetName = "_blank";
+            ret.Foreground = accentColor;
+            ret.NavigateUri = target;
+            ret.Inlines.Add(text);
+            return ret;
         }
 
         /// <summary>
