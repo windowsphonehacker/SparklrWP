@@ -18,7 +18,7 @@ namespace SparklrWP
     public partial class NewPostPage : PhoneApplicationPage
     {
         PhotoChooserTask photoChooserTask;
-        string PhotoStr;
+        Stream PhotoStr;
         public NewPostPage()
         {
             InitializeComponent();
@@ -32,19 +32,19 @@ namespace SparklrWP
         {
             if (messageBox.Text == "" && PhotoStr == null)
             {
-                MessageBox.Show("You Need To Say Somthing! You Can't Leave The Message Box Blank!", "Sorry!", MessageBoxButton.OK);
+                MessageBox.Show("You need to say something! You can't post an empty message!", "Sorry", MessageBoxButton.OK);
             }
             else
             {
                 GlobalLoading.Instance.IsLoading = true;
-                App.Client.BeginRequest((string str) =>
+                App.Client.Post(messageBox.Text, PhotoStr, (args) =>
                 {
                     Dispatcher.BeginInvoke(() =>
                     {
                         GlobalLoading.Instance.IsLoading = false;
-                        if (str.ToLower().Contains("error"))
+                        if (!args.IsSuccessful)
                         {
-                            MessageBox.Show(str, "Error", MessageBoxButton.OK);
+                            MessageBox.Show("Something horrible happend!\nWe couldn't post your message" + (PhotoStr==null?"":" and photo") + " try again later!", "Sorry", MessageBoxButton.OK);
                         }
                         else
                         {
@@ -54,20 +54,14 @@ namespace SparklrWP
                             }
                             else
                             {
-                                MessageBox.Show("Your Status Has Been Posted!", "Yay!", MessageBoxButton.OK);
+                                MessageBox.Show("Your status has been posted!", "Yay!", MessageBoxButton.OK);
 
                                 NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
-                              
+
                             }
                         }
                     });
-                    return true;
-                }, "work/post",
-                "{\"body\":\"" + messageBox.Text + "\"" + (PhotoStr == null ? "" : ",\"img\":true") +
-#if DEBUG
- ",\"network\":2" + //Development network
-#endif
-     "}", PhotoStr); //TODO: use JSON.NET for this
+                });
             }
         }
 
@@ -83,12 +77,7 @@ namespace SparklrWP
         {
             if (e.TaskResult == TaskResult.OK)
             {
-                //MessageBox.Show(e.ChosenPhoto.Length.ToString());
-                using (MemoryStream ms = new MemoryStream())
-                {
-                    e.ChosenPhoto.CopyTo(ms);
-                    PhotoStr = "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
-                }
+                PhotoStr = e.ChosenPhoto;
 
                 //Code to display the photo on the page in an image control named myImage.
                 System.Windows.Media.Imaging.BitmapImage bmp = new System.Windows.Media.Imaging.BitmapImage();
