@@ -78,6 +78,24 @@ namespace SparklrWP
             }
         }
 
+        // TODO: Implement properly
+        private int _likesCount;
+        public int LikesCount
+        {
+            get
+            {
+                return _likesCount;
+            }
+            set
+            {
+                if (value != _likesCount)
+                {
+                    _likesCount = value;
+                    NotifyPropertyChanged("LikesCount");
+                }
+            }
+        }
+
         private string _imageUrl;
         public string ImageUrl
         {

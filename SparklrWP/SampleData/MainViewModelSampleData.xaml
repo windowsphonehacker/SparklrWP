@@ -5,7 +5,8 @@
     SampleProperty="Sample Text Property Value">
 
     <local:MainViewModel.Items>
-        <local:ItemViewModel From="Suraj G." Message="Small fix, you used to be able to post blank updates. Its now fixed ;)" CommentCount="4" ImageUrl="http://d.sparklr.me/i/thksgnhsl_6.jpg"/>
+        <local:ItemViewModel From="ChrisK" Message="#hashtag @mention http://example.org" CommentCount="0" LikesCount="120" />
+        <local:ItemViewModel From="Suraj G." Message="Small fix, you used to be able to post blank updates. Its now fixed ;)" CommentCount="4" ImageUrl="http://d.sparklr.me/i/thksgnhsl_6.jpg" LikesCount="2" />
         <local:ItemViewModel From="Jonathan" Message="Friendly reminder: Before you guys do any public releases, you need to contact me and make sure everything is aligning with Sparklr's strategy itself. Also, Sparklr is not public right now, so keep that in mind" CommentCount="1"/>
         <local:ItemViewModel From="EaterOfCorpses" Message="Well, Eater is amazed by the design!" ImageUrl="http://d.sparklr.me/i/thkr421a3_j.jpg" CommentCount="1"/>
     </local:MainViewModel.Items>
