@@ -48,9 +48,19 @@ namespace SparklrWP.Controls
             control.Text = e.NewValue.ToString();
         }
 
+        /// <summary>
+        /// Matches hashtags like #test and #123
+        /// </summary>
         private Regex hashTagRegex = new Regex(@"(#[\w\b]*)", RegexOptions.Compiled);
+
+        /// <summary>
+        /// Matches usernames like @test and @123
+        /// </summary>
         private Regex userMentionRegex = new Regex(@"(@[\w\b]*)", RegexOptions.Compiled);
 
+        /// <summary>
+        /// The highlight color for tags, usernames, etc...
+        /// </summary>
         private SolidColorBrush accentColor = GetColorFromHex("FF454050");
         private SolidColorBrush accentBackgroundColor = new SolidColorBrush(Colors.White);
 
@@ -138,6 +148,9 @@ namespace SparklrWP.Controls
             }
         }
 
+        /// <summary>
+        /// Gets the visibility of the userbar, depending on username, comments and likes
+        /// </summary>
         public Visibility UserbarVisibility
         {
             get
@@ -146,20 +159,32 @@ namespace SparklrWP.Controls
             }
         }
 
+        /// <summary>
+        /// Creates a new instance of the SparklrText control
+        /// </summary>
         public SparklrText()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// updates the visibility of the userbar
+        /// </summary>
         private void refreshVisibility()
         {
             userbar.Visibility = UserbarVisibility;
         }
 
+        /// <summary>
+        /// Rebuilts and rehighlights the post
+        /// </summary>
+        /// <param name="value">The post content</param>
         private void updateText(string value)
         {
+            //Split on every hashtag
             string[] splittedTags = hashTagRegex.Split(value);
 
+            //Iterate over the parts
             foreach (string s in splittedTags)
             {
 
@@ -170,8 +195,10 @@ namespace SparklrWP.Controls
                 }
                 else
                 {
+                    //See if the part contains at least one mention
                     if (userMentionRegex.IsMatch(s))
                     {
+                        //split the mentions
                         string[] usernameParts = userMentionRegex.Split(s);
 
                         foreach (string username in usernameParts)
@@ -193,6 +220,11 @@ namespace SparklrWP.Controls
             }
         }
 
+        /// <summary>
+        /// creates a text element for a RichTextBox
+        /// </summary>
+        /// <param name="text">the text you want to add</param>
+        /// <returns>A Inline element that can be added via Paragraph.Inlines.Add</returns>
         private Inline getAsInline(string text)
         {
             return new Run
@@ -201,6 +233,11 @@ namespace SparklrWP.Controls
             };
         }
 
+        /// <summary>
+        /// creates a highlighted text element for a RichTextBox
+        /// </summary>
+        /// <param name="text">the text you want to add</param>
+        /// <returns>A formatted Inline element that can be added via Paragraph.Inlines.Add</returns>
         private Inline getHighlightedInline(string text)
         {
             /*
@@ -222,6 +259,11 @@ namespace SparklrWP.Controls
             };
         }
 
+        /// <summary>
+        /// Creates a SolidColorBrush from a "AARRGGBB" string
+        /// </summary>
+        /// <param name="hexaColor">The string (format: "AARRGGBB")</param>
+        /// <returns>A SolidColorBrush with the specified color</returns>
         public static SolidColorBrush GetColorFromHex(string hexaColor)
         {
             return new SolidColorBrush(
