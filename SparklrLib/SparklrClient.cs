@@ -418,17 +418,58 @@ namespace SparklrLib
         /// <param name="Callback">The callback.</param>
         public void GetUsernames(int[] ids, Action<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> Callback)
         {
-            requestJsonObject<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in ids select id.ToString()).ToArray()), (args) =>
+            List<int> idsToRequest = new List<int>();
+            foreach (int id in ids)
             {
-                if (args.IsSuccessful)
+                if (!Usernames.ContainsKey(id))
                 {
-                    foreach (Objects.Responses.Work.Username un in args.Object)
-                    {
-                        Usernames[un.id] = un.username;
-                    }
+                    idsToRequest.Add(id);
                 }
-                Callback(args);
-            });
+            }
+            if (idsToRequest.Count > 0)
+            {
+                requestJsonObject<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in ids select id.ToString()).ToArray()), (args) =>
+                {
+                    if (args.IsSuccessful)
+                    {
+                        foreach (Objects.Responses.Work.Username un in args.Object)
+                        {
+                            Usernames[un.id] = un.username;
+                        }
+                        List<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
+                        foreach (int id in ids)
+                        {
+                            usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
+                        }
+                        Callback(new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
+                        {
+                            Error = null,
+                            IsSuccessful = true,
+                            Object = usrnms.ToArray()
+                        });
+                    }
+                });
+            }
+            else
+            {
+                List<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
+                foreach (int id in ids)
+                {
+                    usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
+                }
+                Callback(new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
+                {
+                    Error = null,
+                    IsSuccessful = true,
+                    Object = usrnms.ToArray()
+                });
+            }
+
+        }
+
+        public void GetOnlineFriends(Action<JSONRequestEventArgs<Objects.Responses.Work.OnlineFriends[]>> Callback)
+        {
+            requestJsonObject<Objects.Responses.Work.OnlineFriends[]>("/work/onlinefriends", Callback);
         }
     }
 }
