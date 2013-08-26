@@ -38,9 +38,11 @@
     <Compile Include="Objects\BeaconStreamEventArgs.cs" />
     <Compile Include="Objects\JSONRequestEventArgs.cs" />
     <Compile Include="Objects\LoginEventArgs.cs" />
+    <Compile Include="Objects\Requests\Work\Post.cs" />
     <Compile Include="Objects\Responses\Beacon\Chat.cs" />
     <Compile Include="Objects\Responses\Beacon\Comments.cs" />
     <Compile Include="Objects\Responses\Beacon\Stream.cs" />
+    <Compile Include="Objects\Responses\Generic.cs" />
     <Compile Include="Objects\Responses\Work\Chat.cs" />
     <Compile Include="Objects\Responses\Work\Inbox.cs" />
     <Compile Include="Objects\Responses\Work\OnlineFriends.cs" />
@@ -50,7 +52,7 @@
     <Compile Include="Objects\SparklrEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SparklrClient.cs" />
-    <Compile Include="SparklrClientEOC.cs" />
+    <Compile Include="SparklrClient_Deprecated.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

@@ -258,7 +258,16 @@ namespace SparklrLib
             if(image != null){
                 using (MemoryStream ms = new MemoryStream())
                 {
+#if PORTABLELIB
+                    byte[] array = new byte[81920];
+                    int count;
+                    while ((count = image.Read(array, 0, array.Length)) != 0)
+                    {
+                       ms.Write(array, 0, count);
+                    }
+#else
                     image.CopyTo(ms);
+#endif
                     data64str = "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
                 }
             }
