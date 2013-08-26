@@ -11,6 +11,11 @@
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="LoginPage.xaml" />
+      <ExtendedTask Name="BackgroundTask">
+        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="SparklrWP Background Agent" Source="SparklrWP Background Agent" Type="SparklrWP_Background_Agent.ScheduledAgent" />
+        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="SparklrWP Background Agent" Source="SparklrWP Background Agent" Type="SparklrWP Background Agent.ScheduledAgent" />
+        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="SparklrWP Background Agent" Source="SparklrWP Background Agent" Type="SparklrWP Background Agent.ScheduledAgent" />
+      </ExtendedTask>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="SparklrWPToken" TaskName="_default">

@@ -36,6 +36,7 @@ namespace SparklrWP
                 passwordBox.Password = Encoding.UTF8.GetString(passbyte, 0, passbyte.Length);
                 rememberBox.IsChecked = true;
             }
+            App.BackgroundTask = new Utils.Task();
         }
 
         private bool postcallback(string jsonData)

@@ -9,21 +9,60 @@ using SparklrLib.Objects;
 using Newtonsoft.Json;
 namespace SparklrLib
 {
+    /// <summary>
+    /// The main Sparklr Client
+    /// </summary>
     public class SparklrClient
     {
+        /// <summary>
+        /// Gets or sets the authentication token.
+        /// </summary>
+        /// <value>
+        /// The authentication token.
+        /// </value>
         public string AuthToken { get; set; }
+        /// <summary>
+        /// Gets the user unique identifier.
+        /// </summary>
+        /// <value>
+        /// The user unique identifier.
+        /// </value>
         public long UserId { get; private set; }
-
+        /// <summary>
+        /// Gets or sets the usernames.
+        /// </summary>
+        /// <value>
+        /// The usernames.
+        /// </value>
+        public Dictionary<int,string> Usernames {get;set;}
+        /// <summary>
+        /// The base URI
+        /// </summary>
         public const string BaseURI = "https://sparklr.me/";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SparklrClient"/> class.
+        /// </summary>
         public SparklrClient()
         {
+            Usernames = new Dictionary<int, string>();
         }
 
+        /// <summary>
+        /// Creates the request.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <returns></returns>
         public HttpWebRequest CreateRequest(string path)
         {
             return CreateRequest(path, "");
         }
+        /// <summary>
+        /// Creates the request.
+        /// </summary>
+        /// <param name="path">The path.</param>
+        /// <param name="xdata">The xdata.</param>
+        /// <returns></returns>
         public HttpWebRequest CreateRequest(string path, string xdata)
         {
             if (path[0] == '/') path = path.Substring(1);
@@ -44,24 +83,60 @@ namespace SparklrLib
             return newReq;
         }
 
+        /// <summary>
+        /// Requests the json object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="Callback">The callback.</param>
         private void requestJsonObject<T>(string path, Action<JSONRequestEventArgs<T>> Callback){
             requestJsonObject<T>(path,"","", Callback);
         }
 
+        /// <summary>
+        /// Requests the json object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="xdata">The xdata.</param>
+        /// <param name="Callback">The callback.</param>
         private void requestJsonObject<T>(string path, object xdata, Action<JSONRequestEventArgs<T>> Callback)
         {
             requestJsonObject<T>(path, JsonConvert.SerializeObject(xdata), "", Callback);
         }
 
+        /// <summary>
+        /// Requests the json object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="xdata">The xdata.</param>
+        /// <param name="Callback">The callback.</param>
         private void requestJsonObject<T>(string path, string xdata, Action<JSONRequestEventArgs<T>> Callback){
             requestJsonObject<T>(path,xdata,"", Callback);
         }
 
+        /// <summary>
+        /// Requests the json object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="xdata">The xdata.</param>
+        /// <param name="postdata">The postdata.</param>
+        /// <param name="Callback">The callback.</param>
         private void requestJsonObject<T>(string path, object xdata, string postdata, Action<JSONRequestEventArgs<T>> Callback)
         {
             requestJsonObject<T>(path, JsonConvert.SerializeObject(xdata), postdata, Callback);
         }
 
+        /// <summary>
+        /// Requests the json object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="xdata">The xdata.</param>
+        /// <param name="postdata">The postdata.</param>
+        /// <param name="Callback">The callback.</param>
         private void requestJsonObject<T>(string path, string xdata, string postdata, Action<JSONRequestEventArgs<T>> Callback)
         {
             HttpWebRequest streamReq = CreateRequest(path,xdata);
@@ -136,6 +211,12 @@ namespace SparklrLib
             }
         }
 
+        /// <summary>
+        /// Logins the specified username.
+        /// </summary>
+        /// <param name="Username">The username.</param>
+        /// <param name="Password">The password.</param>
+        /// <param name="Callback">The callback.</param>
         public void Login(string Username, string Password, Action<LoginEventArgs> Callback)
         {
             HttpWebRequest loginReq = CreateRequest("work/signin/" + Username + "/" + Password + "/");
@@ -227,31 +308,59 @@ namespace SparklrLib
             }, null);
         }
 
+        /// <summary>
+        /// Gets the beacon stream.
+        /// </summary>
+        /// <param name="Callback">The callback.</param>
         public void GetBeaconStream(Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
         {
             GetBeaconStream(0, 20, 0, Callback);
         }
 
+        /// <summary>
+        /// Gets the beacon stream.
+        /// </summary>
+        /// <param name="lastTime">The last time.</param>
+        /// <param name="Callback">The callback.</param>
         public void GetBeaconStream(int lastTime, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
         {
             GetBeaconStream(lastTime, 0, 0, Callback);
         }
 
-        public void GetBeaconStream(int lastTime, int amount, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        /// <summary>
+        /// Gets the beacon stream.
+        /// </summary>
+        /// <param name="lastTime">The last time.</param>
+        /// <param name="lastNotificationTime">The last notification time.</param>
+        /// <param name="Callback">The callback.</param>
+        public void GetBeaconStream(int lastTime, int lastNotificationTime, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
         {
-            GetBeaconStream(lastTime, amount, 0, Callback);
+            GetBeaconStream(lastTime, lastNotificationTime, 0, Callback);
         }
 
-        public void GetBeaconStream(int lastTime,int amount,int network,Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        /// <summary>
+        /// Gets the beacon stream.
+        /// </summary>
+        /// <param name="lastTime">The last time.</param>
+        /// <param name="lastNotificationTime">The last notification time.</param>
+        /// <param name="network">The network.</param>
+        /// <param name="Callback">The callback.</param>
+        public void GetBeaconStream(int lastTime, int lastNotificationTime, int network, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
         {
             int stream = 0;
 #if DEBUG
             stream = 2;
             network = 1;
 #endif
-            requestJsonObject<Objects.Responses.Beacon.Stream>("/beacon/stream/"+stream+"?since=" + lastTime.ToString() + "&n=" + amount.ToString() + (network != 0 ? "&network=" + network.ToString() : ""), Callback);
+            requestJsonObject<Objects.Responses.Beacon.Stream>("/beacon/stream/" + stream + "?since=" + lastTime.ToString() + "&n=" + lastNotificationTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""), Callback);
         }
 
+        /// <summary>
+        /// Posts the specified message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="image">The image.</param>
+        /// <param name="Callback">The callback.</param>
         public void Post(string message, Stream image, Action<SparklrEventArgs> Callback)
         {
             string data64str = "";
@@ -284,6 +393,26 @@ namespace SparklrLib
                     IsSuccessful = args.IsSuccessful && args.Object.error == null,
                     Error = args.IsSuccessful?args.Object.error==true?new Exception("Sparklr said noooooo"):null:args.Error
                 });
+            });
+        }
+
+        /// <summary>
+        /// Gets the usernames by the specified ids.
+        /// </summary>
+        /// <param name="ids">The ids.</param>
+        /// <param name="Callback">The callback.</param>
+        public void GetUsernames(int[] ids, Action<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> Callback)
+        {
+            requestJsonObject<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", ids), (args) =>
+            {
+                if (args.IsSuccessful)
+                {
+                    foreach (Objects.Responses.Work.Username un in args.Object)
+                    {
+                        Usernames[un.id] = un.username;
+                    }
+                }
+                Callback(args);
             });
         }
     }

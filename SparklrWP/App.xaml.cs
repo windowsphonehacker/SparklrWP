@@ -20,6 +20,8 @@ namespace SparklrWP
     {
         private static MainViewModel viewModel = null;
 
+        public static Utils.Task BackgroundTask;
+
         public static SparklrClient Client;
         /// <summary>
         /// A static ViewModel used by the views to bind against.
@@ -149,7 +151,6 @@ namespace SparklrWP
 
             // Handle navigation failures
             RootFrame.NavigationFailed += RootFrame_NavigationFailed;
-
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
         }
