@@ -33,7 +33,7 @@ namespace SparklrLib
         /// <value>
         /// The usernames.
         /// </value>
-        public Dictionary<int,string> Usernames {get;set;}
+        public Dictionary<int, string> Usernames { get; set; }
         /// <summary>
         /// The base URI
         /// </summary>
@@ -88,8 +88,9 @@ namespace SparklrLib
         /// <typeparam name="T"></typeparam>
         /// <param name="path">The path.</param>
         /// <param name="Callback">The callback.</param>
-        private void requestJsonObject<T>(string path, Action<JSONRequestEventArgs<T>> Callback){
-            requestJsonObject<T>(path,"","", Callback);
+        private void requestJsonObject<T>(string path, Action<JSONRequestEventArgs<T>> Callback)
+        {
+            requestJsonObject<T>(path, "", "", Callback);
         }
 
         /// <summary>
@@ -111,8 +112,9 @@ namespace SparklrLib
         /// <param name="path">The path.</param>
         /// <param name="xdata">The xdata.</param>
         /// <param name="Callback">The callback.</param>
-        private void requestJsonObject<T>(string path, string xdata, Action<JSONRequestEventArgs<T>> Callback){
-            requestJsonObject<T>(path,xdata,"", Callback);
+        private void requestJsonObject<T>(string path, string xdata, Action<JSONRequestEventArgs<T>> Callback)
+        {
+            requestJsonObject<T>(path, xdata, "", Callback);
         }
 
         /// <summary>
@@ -138,8 +140,9 @@ namespace SparklrLib
         /// <param name="Callback">The callback.</param>
         private void requestJsonObject<T>(string path, string xdata, string postdata, Action<JSONRequestEventArgs<T>> Callback)
         {
-            HttpWebRequest streamReq = CreateRequest(path,xdata);
-            Action getResponse = () => {
+            HttpWebRequest streamReq = CreateRequest(path, xdata);
+            Action getResponse = () =>
+            {
                 streamReq.BeginGetResponse((res) =>
                 {
                     HttpWebResponse streamResp = null;
@@ -191,13 +194,17 @@ namespace SparklrLib
                         Error = null,
                         Object = desiredObject
                     });
-                },null);
+                }, null);
             };
-            if(postdata == ""){
+            if (postdata == "")
+            {
                 getResponse();
-            }else{
+            }
+            else
+            {
                 streamReq.Method = "POST";
-                streamReq.BeginGetRequestStream((res) => {
+                streamReq.BeginGetRequestStream((res) =>
+                {
                     using (Stream postStream = streamReq.EndGetRequestStream(res))
                     {
                         // Create the post data
@@ -206,7 +213,7 @@ namespace SparklrLib
                         postStream.Write(byteArray, 0, byteArray.Length);
                     }
                     getResponse();
-                },null);
+                }, null);
             }
         }
 
@@ -258,14 +265,17 @@ namespace SparklrLib
                 }
                 string[] cookieParts = loginResp.Headers["Set-Cookie"].Split(';');
                 string cookieD = "";
-                foreach(string sortaCookie in cookieParts){
+                foreach (string sortaCookie in cookieParts)
+                {
                     string sortaTrimmedCookie = sortaCookie.TrimStart();
-                    if(sortaTrimmedCookie.StartsWith("D=")){
+                    if (sortaTrimmedCookie.StartsWith("D="))
+                    {
                         cookieD = sortaTrimmedCookie.Substring(2);
                         break;
                     }
                 }
-                if(cookieD.Length == 0){
+                if (cookieD.Length == 0)
+                {
                     Callback(new LoginEventArgs()
                     {
                         Error = new Exception("Auth token not included"),
@@ -275,7 +285,8 @@ namespace SparklrLib
                     return;
                 }
                 string[] loginBits = cookieD.Split(',');
-                if(loginBits.Length < 2){
+                if (loginBits.Length < 2)
+                {
                     Callback(new LoginEventArgs()
                     {
                         Error = new Exception("Auth token is corrupted"),
@@ -287,8 +298,11 @@ namespace SparklrLib
                 try
                 {
                     UserId = long.Parse(loginBits[0]);
-                }catch(Exception e){
-                    Callback(new LoginEventArgs() { 
+                }
+                catch (Exception)
+                {
+                    Callback(new LoginEventArgs()
+                    {
                         Error = new Exception("Auth token is corrupted"),
                         IsSuccessful = false,
                         Response = loginResp
@@ -363,7 +377,8 @@ namespace SparklrLib
         public void Post(string message, Stream image, Action<SparklrEventArgs> Callback)
         {
             string data64str = "";
-            if(image != null){
+            if (image != null)
+            {
                 using (MemoryStream ms = new MemoryStream())
                 {
 #if PORTABLELIB
@@ -388,9 +403,10 @@ namespace SparklrLib
                 img = data64str != ""
             }, data64str, (args) =>
             {
-                Callback(new SparklrEventArgs() { 
+                Callback(new SparklrEventArgs()
+                {
                     IsSuccessful = args.IsSuccessful && args.Object.error == null,
-                    Error = args.IsSuccessful?args.Object.error==true?new Exception("Sparklr said noooooo"):null:args.Error
+                    Error = args.IsSuccessful ? args.Object.error == true ? new Exception("Sparklr said noooooo") : null : args.Error
                 });
             });
         }
@@ -402,7 +418,7 @@ namespace SparklrLib
         /// <param name="Callback">The callback.</param>
         public void GetUsernames(int[] ids, Action<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> Callback)
         {
-            requestJsonObject<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",",(string[])(from id in ids select id.ToString()).ToArray()), (args) =>
+            requestJsonObject<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in ids select id.ToString()).ToArray()), (args) =>
             {
                 if (args.IsSuccessful)
                 {

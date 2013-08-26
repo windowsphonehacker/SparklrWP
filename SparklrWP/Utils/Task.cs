@@ -17,19 +17,20 @@ namespace SparklrWP.Utils
                 periodicTask = null;
             }
 #endif
-            if(periodicTask == null){
+            if (periodicTask == null)
+            {
                 periodicTask = new PeriodicTask(periodicTaskName);
                 periodicTask.Description = "Sparklr notification agent";
                 try
                 {
                     ScheduledActionService.Add(periodicTask);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
 
                 }
             }
-                // If debugging is enabled, use LaunchForTest to launch the agent in one minute.
+            // If debugging is enabled, use LaunchForTest to launch the agent in one minute.
         }
     }
 }
