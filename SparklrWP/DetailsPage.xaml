@@ -23,23 +23,29 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="PageTitle" Text="Sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-            <TextBlock x:Name="ListTitle" Text="{Binding LineOne}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="PageTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+            <TextBlock x:Name="ListTitle" Text="{Binding From}" Margin="118,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel contains details text. Place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ScrollViewer>
-                <StackPanel>
+            <ListBox>
+                <StackPanel Height="345">
+					<StackPanel Background="Black" >
                     <Image Source="{Binding ImageUrl}" />
-                    <TextBlock x:Name="ContentText" Text="{Binding Message}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}"/>
-                    <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Comments here?" VerticalAlignment="Top" />
+					</StackPanel>
+                    <StackPanel Background="White">
+						<TextBlock x:Name="ContentText" Text="{Binding Message}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Width="441" Foreground="Black"/>
+					</StackPanel>
                 </StackPanel>
-            </ScrollViewer>
+				<StackPanel Width="456">
+					<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Comments here?" VerticalAlignment="Top" />
+				</StackPanel>
+            </ListBox>
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="#FF2A2339">
             <!--   <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New post (no functional)" Click="ApplicationBarIconButton_Click"/> -->
             <shell:ApplicationBar.MenuItems>
             </shell:ApplicationBar.MenuItems>

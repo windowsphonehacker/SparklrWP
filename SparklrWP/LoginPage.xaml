@@ -64,8 +64,8 @@
         </Button>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
-        	<TextBlock Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" TextAlignment="Center" FontSize="130.667"><Run Text="S"/><Run Text="parklr*"/></TextBlock>
+        <StackPanel Grid.Row="0" Margin="12,17,0,28" VerticalAlignment="Bottom">
+        	<TextBlock Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" TextAlignment="Center" FontSize="96" Text="sparklr*" VerticalAlignment="Bottom"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -86,7 +86,7 @@
         	</StackPanel.Background>
         	<TextBlock HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="WORK IN PROGRESS" Width="480" FontSize="29.333" TextAlignment="Center" FontFamily="Segoe WP Semibold" Foreground="White"/>
         </StackPanel>
-        <TextBlock Height="58" Margin="162,0,12,0" TextWrapping="Wrap" Text="For Windows Phone" VerticalAlignment="Bottom" FontFamily="Segoe WP Light" FontSize="29.333"/>
+        <TextBlock Height="58" Margin="162,0,12,0" TextWrapping="Wrap" Text="For Windows Phone" VerticalAlignment="Bottom" FontFamily="Segoe WP Light" FontSize="24"/>
     </Grid>
 
 </phone:PhoneApplicationPage>
