@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Media;
+using System;
 using System.ComponentModel;
+using System.IO;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,27 +19,27 @@ namespace SparklrWP.Controls
         /// The content of the post
         /// </summary>
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(object), new PropertyMetadata(textPropertyChanged));
-        
+
         /// <summary>
         /// The author's name
         /// </summary>
         public static readonly DependencyProperty UsernameProperty = DependencyProperty.Register("Username", typeof(string), typeof(object), new PropertyMetadata(usernamePropertyChanged));
-        
+
         /// <summary>
         /// The number of likes
         /// </summary>
         public static readonly DependencyProperty LikesProperty = DependencyProperty.Register("Likes", typeof(int), typeof(object), new PropertyMetadata(likesPropertyChanged));
-        
+
         /// <summary>
         /// The number of comments
         /// </summary>
         public static readonly DependencyProperty CommentsProperty = DependencyProperty.Register("Comments", typeof(int), typeof(object), new PropertyMetadata(commentsPropertyChanged));
-        
+
         /// <summary>
         /// The locatio (URI) of the image
         /// </summary>
         public static readonly DependencyProperty ImageLocationProperty = DependencyProperty.Register("ImageLocation", typeof(string), typeof(object), new PropertyMetadata(imagelocationPropertyChanged));
-        
+
         /// <summary>
         /// A ItemViewModel that contains all the required data.
         /// </summary>
@@ -102,6 +105,7 @@ namespace SparklrWP.Controls
         private int? likes;
         private int? comments;
         private ItemViewModel post;
+        private BitmapImage image;
 
         /// <summary>
         /// The content of the post
@@ -221,9 +225,25 @@ namespace SparklrWP.Controls
                 {
                     imagelocation = value;
                     MessageImage.Source = new BitmapImage(new Uri(imagelocation));
-                    refreshVisibility();
+
+                    loadImage(value);
                 }
             }
+        }
+
+        private void loadImage(string value)
+        {
+            WebClient wc = new WebClient();
+            wc.OpenReadCompleted += (sender, e) =>
+            {
+                image = new BitmapImage();
+                image.SetSource(e.Result);
+                MessageImage.Source = image;
+
+                refreshVisibility();
+            };
+
+            wc.OpenReadAsync(new Uri(value));
         }
 
         /// <summary>
@@ -349,6 +369,7 @@ namespace SparklrWP.Controls
             };
         }
 
+        //TODO: extract to util namespace
         /// <summary>
         /// Creates a SolidColorBrush from a "AARRGGBB" string
         /// </summary>
@@ -364,6 +385,34 @@ namespace SparklrWP.Controls
                     Convert.ToByte(hexaColor.Substring(6, 2), 16)
                 )
             );
+        }
+
+        //TODO: extract to Util namespace
+        private void SaveImageToPhone_Click(object sender, RoutedEventArgs e)
+        {
+            if (image != null)
+            {
+                try
+                {
+                    string filename = String.Format("{0}", Guid.NewGuid().ToString("N"));
+                    WriteableBitmap bmp = new WriteableBitmap(image);
+
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        bmp.SaveJpeg(ms, bmp.PixelWidth, bmp.PixelHeight, 0, 85);
+                        ms.Seek(0, SeekOrigin.Begin);
+
+                        using (MediaLibrary library = new MediaLibrary())
+                        {
+                            library.SavePicture(filename, ms);
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("We really tried, but we couldn't save your picture. Please try again later.\r\nWe're sorry :(", "Oops!", MessageBoxButton.OK);
+                }
+            }
         }
     }
 }
