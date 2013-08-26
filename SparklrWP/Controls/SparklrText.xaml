@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="SparklrWP.Controls.SparklrText"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="480" d:DesignWidth="480">
+    
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <RichTextBox Grid.Row="0" Background="#CCFFFFFF" Foreground="Black" Padding="5,7,5,2">
+            <Paragraph FontSize="20" x:Name="messageContentParagraph" />
+        </RichTextBox>
+        <Grid Grid.Row="1" Margin="12,0" Background="#DDFFFFFF" x:Name="userbar">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Column="0" Foreground="#333" FontSize="15" x:Name="usernameTextBlock" />
+            <TextBlock Grid.Column="1" Foreground="#333" FontSize="15" x:Name="commentCountTextBlock" />
+            <TextBlock Grid.Column="2" Foreground="#333" FontSize="15" x:Name="likesTextBlock" />
+        </Grid>
+    </Grid>
+</UserControl>

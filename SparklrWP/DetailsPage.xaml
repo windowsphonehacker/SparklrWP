@@ -1,55 +1,57 @@
 ﻿<phone:PhoneApplicationPage 
-    x:Class="SparklrWP.DetailsPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
-    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768" 
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
-    FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait"  Orientation="Portrait" 
-    shell:SystemTray.IsVisible="True">
+	x:Class="SparklrWP.DetailsPage"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
+	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768" 
+	FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	FontSize="{StaticResource PhoneFontSizeNormal}"
+	Foreground="{StaticResource PhoneForegroundBrush}"
+	SupportedOrientations="Portrait"  Orientation="Portrait" 
+	shell:SystemTray.IsVisible="True">
 
-    <!--Data context is set to sample data above and first item in sample data collection below and LayoutRoot contains the root grid where all other page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="#FF454050" d:DataContext="{Binding Items[0]}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+	<!--Data context is set to sample data above and first item in sample data collection below and LayoutRoot contains the root grid where all other page content is placed-->
+	<Grid x:Name="LayoutRoot" Background="#FF454050" d:DataContext="{Binding Items[0]}">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="PageTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-            <TextBlock x:Name="ListTitle" Text="{Binding From}" Margin="118,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
+		<!--TitlePanel contains the name of the application and page title-->
+		<StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+			<TextBlock x:Name="PageTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+			<TextBlock x:Name="ListTitle" Text="{Binding From}" Margin="118,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+		</StackPanel>
 
-        <!--ContentPanel contains details text. Place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ListBox>
-                <StackPanel Height="345">
-					<StackPanel Background="Black" >
-                    <Image Source="{Binding ImageUrl}" />
-					</StackPanel>
-                    <StackPanel Background="White">
-						<TextBlock x:Name="ContentText" Text="{Binding Message}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}" Width="441" Foreground="Black"/>
-					</StackPanel>
-                </StackPanel>
-				<StackPanel Width="456">
+		<!--ContentPanel contains details text. Place additional content here-->
+		<Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+			<ListBox>
+				<ScrollViewer>
+					<!--
+				<StackPanel>
+					<Image Source="{Binding ImageUrl}" />
+					<TextBlock x:Name="ContentText" Text="{Binding Message}" TextWrapping="Wrap" Style="{StaticResource PhoneTextNormalStyle}"/>
 					<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Comments here?" VerticalAlignment="Top" />
-				</StackPanel>
-            </ListBox>
-        </Grid>
-    </Grid>
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="#FF2A2339">
-            <!--   <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New post (no functional)" Click="ApplicationBarIconButton_Click"/> -->
-            <shell:ApplicationBar.MenuItems>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
+				</StackPanel>-->
+					<StackPanel>
+						<sparklrControls:SparklrText Text="{Binding Message}" Username="{Binding From}" Comments="{Binding CommentCount}" Likes="{Binding LikesCount}"></sparklrControls:SparklrText>
+						<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Comments here?" VerticalAlignment="Top" />
+					</StackPanel>
+				</ScrollViewer>
+			</ListBox>
+		</Grid>
+	</Grid>
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="#FF2A2339">
+			<!--   <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New post (no functional)" Click="ApplicationBarIconButton_Click"/> -->
+			<shell:ApplicationBar.MenuItems>
+			</shell:ApplicationBar.MenuItems>
+		</shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

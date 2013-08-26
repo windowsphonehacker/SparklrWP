@@ -5,6 +5,7 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696" 
@@ -32,13 +33,23 @@
                                     <StackPanel x:Name="ximage" Background="Black">
                                         <Image Source="{Binding ImageUrl}" MinWidth="150" MinHeight="150" MaxHeight="400" MaxWidth="400"/>
                                     </StackPanel>
-                                    <TextBlock Text="{Binding From}" Style="{StaticResource PhoneTextExtraLargeStyle}" Foreground="Black" TextWrapping="Wrap"/>
-                                    <TextBlock Text="{Binding CommentCount}" Foreground="Black" TextWrapping="Wrap" Margin="20,0,0,0"/>
-                                    <TextBlock Text="{Binding Message}" FontSize="26" Foreground="Black" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap"/>
-                                </StackPanel>
+                                <!--<Image Source="{Binding ImageUrl}" MaxHeight="100"/>
+							<TextBlock Text="{Binding From}" Style="{StaticResource PhoneTextExtraLargeStyle}" TextWrapping="Wrap"/>
+							<TextBlock Text="{Binding CommentCount}" TextWrapping="Wrap" Margin="20,0,0,0"/>
+							<TextBlock Text="{Binding Message}" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap"/>-->
+                                <sparklrControls:SparklrText Text="{Binding Message}" Username="{Binding From}" Comments="{Binding CommentCount}" Likes="{Binding LikesCount}"></sparklrControls:SparklrText>
+
+                            </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
-                    </ListBox>
+                    <!-- Workaround used to stretch the child elements to the full width -> HorizontalContentAlignment won't work for some reason... -->
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                </ListBox>
                 </Grid>
             </controls:PivotItem>
     </controls:Pivot>
