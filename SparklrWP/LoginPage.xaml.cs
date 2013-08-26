@@ -50,38 +50,44 @@ namespace SparklrWP
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
             GlobalLoading.Instance.IsLoading = true;
-            App.Client.LoggedIn += Client_LoggedIn;
-            App.Client.Login(usernameBox.Text, passwordBox.Password);
-
-        }
-
-        void Client_LoggedIn(object sender, SparklrClient.LoggedInEventArgs e)
-        {
-            Dispatcher.BeginInvoke(() =>
+            App.Client.Login(usernameBox.Text, passwordBox.Password, (loginargs) =>
             {
-                GlobalLoading.Instance.IsLoading = false;
-                if (e.Error)
+                Dispatcher.BeginInvoke(() =>
                 {
-                    MessageBox.Show("Error");
-                }
-                else
-                {
-                    if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
+                    GlobalLoading.Instance.IsLoading = false;
+                    if (!loginargs.IsSuccessful)
                     {
-                        IsolatedStorageSettings.ApplicationSettings.Remove("username");
+                        if (loginargs.Response != null && loginargs.Response.StatusCode == HttpStatusCode.NotFound)
+                        {
+                            MessageBox.Show("Wrong username or password");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Something horrible happend, try again later!", "Sorry",MessageBoxButton.OK);
+#if DEBUG
+                            MessageBox.Show(loginargs.Error.Message);
+#endif
+                        }
                     }
-                    if (IsolatedStorageSettings.ApplicationSettings.Contains("password"))
+                    else
                     {
-                        IsolatedStorageSettings.ApplicationSettings.Remove("password");
+                        if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
+                        {
+                            IsolatedStorageSettings.ApplicationSettings.Remove("username");
+                        }
+                        if (IsolatedStorageSettings.ApplicationSettings.Contains("password"))
+                        {
+                            IsolatedStorageSettings.ApplicationSettings.Remove("password");
+                        }
+                        if (rememberBox.IsChecked == true)
+                        {
+                            IsolatedStorageSettings.ApplicationSettings.Add("password", ProtectedData.Protect(Encoding.UTF8.GetBytes(passwordBox.Password), null));
+                            IsolatedStorageSettings.ApplicationSettings.Add("username", usernameBox.Text);
+                        }
+                        IsolatedStorageSettings.ApplicationSettings.Save();
+                        NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
                     }
-                    if (rememberBox.IsChecked == true)
-                    {
-                        IsolatedStorageSettings.ApplicationSettings.Add("password", ProtectedData.Protect(Encoding.UTF8.GetBytes(passwordBox.Password), null));
-                        IsolatedStorageSettings.ApplicationSettings.Add("username", usernameBox.Text);
-                    }
-                    IsolatedStorageSettings.ApplicationSettings.Save();
-                    NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
-                }
+                });
             });
 
         }
@@ -105,7 +111,7 @@ namespace SparklrWP
 
         private void about_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MessageBox.Show("Sparklr Branding (C) Jonathan Warner \n\n Application Development Team: \n\n Marocco2 (design!)\n jessenic (code!)\n EaterOfCorpses (code-design!)\n TheInterframe (code-design!)\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
+            MessageBox.Show("Sparklr Branding © Jonathan Warner \n\n Application Development Team: \n\n Marocco2 (design!)\n jessenic (code!)\n EaterOfCorpses (code-design!)\n TheInterframe (code-design!)\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
         }
 
         private void checkEnter_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
-
+using System.Net;
+using System.IO;
+using System.Threading;
+using SparklrLib.Objects;
+using Newtonsoft.Json;
 namespace SparklrLib
 {
     public class SparklrClient
     {
-        private string Cookies { get; set; }
-        public string LoginToken { get; set; }
-        public int UserID { get; private set; }
+        public string AuthToken { get; set; }
+        public long UserId { get; private set; }
 
         public const string BaseURI = "https://sparklr.me/";
 
@@ -19,145 +20,262 @@ namespace SparklrLib
         {
         }
 
-        public void BeginRequest(Func<string, bool> callback, string url, string data = "", string postData = "")
+        public HttpWebRequest CreateRequest(string path)
         {
-            // Create a HttpWebRequest.
-            Uri uri = new Uri(BaseURI + url);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
-            if (postData != "")
+            return CreateRequest(path, "");
+        }
+        public HttpWebRequest CreateRequest(string path, string xdata)
+        {
+            if (path[0] == '/') path = path.Substring(1);
+            HttpWebRequest newReq = HttpWebRequest.CreateHttp(BaseURI + path);
+            if (AuthToken != null)
             {
-                request.Method = "POST";
-                request.ContentType = "application/json";
+                newReq.Headers["Cookie"] = "D=" + UserId.ToString() + ',' + AuthToken;
             }
-            request.Headers["User-Agent"] = "Mozilla/5.0 (compatible; MSIE 9.0; Windows Phone OS 7.5; Trident/5.0; IEMobile/9.0";
-            //request.Headers["Referer"] = loginBrowser.Source.ToString();
-            if (Cookies != null)
+            newReq.Headers["User-Agent"] = "Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/29.0.1547.57 Safari/537.36";
+            if (xdata != "")
             {
-                request.Headers["Cookie"] = Cookies;
+                newReq.Headers["X-Data"] = xdata;
             }
-            if (data != "")
+            if (AuthToken != null)
             {
-                request.Headers["X-Data"] = data;
-            } if (LoginToken != null)
-            {
-                request.Headers["X-X"] = LoginToken;
+                newReq.Headers["X-X"] = AuthToken;
             }
-            if (postData != null && postData.Length > 0)
-            {
-                request.BeginGetRequestStream(new AsyncCallback(GetRequestStreamCallback), new object[] { request, callback, postData });
-            }
-            else
-            {
-                // Send the request.
-                request.BeginGetResponse(new AsyncCallback(ReadCallback), new object[] { request, callback });
-            }
+            return newReq;
         }
 
-        void GetRequestStreamCallback(IAsyncResult ar)
-        {
-            HttpWebRequest request = (HttpWebRequest)((object[])ar.AsyncState)[0];
-            // End the stream request operation
-            using (Stream postStream = request.EndGetRequestStream(ar))
-            {
-                // Create the post data
-                string postData = (string)((object[])ar.AsyncState)[2];
-                ((object[])ar.AsyncState)[2] = "";
-                byte[] byteArray = Encoding.UTF8.GetBytes(postData);
-
-                // Add the post data to the web request
-                postStream.Write(byteArray, 0, byteArray.Length);
-            }
-
-            // Send the request.
-            request.BeginGetResponse(new AsyncCallback(ReadCallback), ar.AsyncState);
+        private void requestJsonObject<T>(string path, Action<JSONRequestEventArgs<T>> Callback){
+            requestJsonObject<T>(path,"","", Callback);
         }
 
-
-        private void ReadCallback(IAsyncResult ar)
+        private void requestJsonObject<T>(string path, object xdata, Action<JSONRequestEventArgs<T>> Callback)
         {
-            WebResponse response;
-            Func<string, bool> newCallback = (Func<string, bool>)((object[])ar.AsyncState)[1];
-            try
-            {
-                HttpWebRequest request = (HttpWebRequest)((object[])ar.AsyncState)[0];
-                response = request.EndGetResponse(ar);
-                string setcooks = response.Headers["Set-Cookie"];
-                if (setcooks != null && setcooks.Length > 0)
+            requestJsonObject<T>(path, JsonConvert.SerializeObject(xdata), "", Callback);
+        }
+
+        private void requestJsonObject<T>(string path, string xdata, Action<JSONRequestEventArgs<T>> Callback){
+            requestJsonObject<T>(path,xdata,"", Callback);
+        }
+
+        private void requestJsonObject<T>(string path, object xdata, string postdata, Action<JSONRequestEventArgs<T>> Callback)
+        {
+            requestJsonObject<T>(path, JsonConvert.SerializeObject(xdata), postdata, Callback);
+        }
+
+        private void requestJsonObject<T>(string path, string xdata, string postdata, Action<JSONRequestEventArgs<T>> Callback)
+        {
+            HttpWebRequest streamReq = CreateRequest(path,xdata);
+            Action getResponse = () => {
+                streamReq.BeginGetResponse((res) =>
                 {
-                    Cookies = setcooks;
-                    var cooks = setcooks.Split(';');
-                    foreach (var cook in cooks)
+                    HttpWebResponse streamResp = null;
+                    try
                     {
-                        if (cook.ToLower().StartsWith("d="))
+                        streamResp = (HttpWebResponse)streamReq.EndGetResponse(res);
+                    }
+                    catch (WebException ex)
+                    {
+                        Callback(new JSONRequestEventArgs<T>()
                         {
-                            var split = cook.Substring(3).Split(',');
-                            try
+                            IsSuccessful = false,
+                            Error = ex,
+                            Response = (HttpWebResponse)ex.Response
+                        });
+                        return;
+                    }
+                    catch (Exception ex)
+                    {
+                        Callback(new JSONRequestEventArgs<T>()
+                        {
+                            IsSuccessful = false,
+                            Error = ex
+                        });
+                        return;
+                    }
+                    T desiredObject = default(T);
+                    using (StreamReader strReader = new StreamReader(streamResp.GetResponseStream(), Encoding.UTF8))
+                    {
+                        try
+                        {
+                            string json = strReader.ReadToEnd();
+                            desiredObject = JsonConvert.DeserializeObject<T>(json);
+                        }
+                        catch (Exception ex)
+                        {
+                            Callback(new JSONRequestEventArgs<T>()
                             {
-                                UserID = Int32.Parse(split[0]);
-                            }
-                            catch (Exception) { }
-                            LoginToken = split[1];
+                                IsSuccessful = false,
+                                Error = ex,
+                                Response = streamResp
+                            });
+                            return;
                         }
                     }
-                }
-#if DEBUG
-                System.Diagnostics.Debug.WriteLine("Got auth cookie: " + LoginToken);
-#endif
-            }
-            catch (WebException ex)
-            {
-                response = ex.Response;
-            }
-#if !DEBUG
-            catch (Exception ex)
-            {
-                return;
-            }
-#endif
-
-            string str = "";
-            using (StreamReader sr = new StreamReader(response.GetResponseStream()))
-            {
-                str = sr.ReadToEnd();
-#if DEBUG
-                System.Diagnostics.Debug.WriteLine("Got response: " + str);
-#endif
-                //TODO: Handle responses and add a response event
-                if (newCallback != null)
-                {
-                    newCallback.Invoke(str);
-                }
+                    Callback(new JSONRequestEventArgs<T>()
+                    {
+                        IsSuccessful = true,
+                        Error = null,
+                        Object = desiredObject
+                    });
+                },null);
+            };
+            if(postdata == ""){
+                getResponse();
+            }else{
+                streamReq.Method = "POST";
+                streamReq.BeginGetRequestStream((res) => {
+                    using (Stream postStream = streamReq.EndGetRequestStream(res))
+                    {
+                        // Create the post data
+                        byte[] byteArray = Encoding.UTF8.GetBytes(postdata);
+                        // Add the post data to the web request
+                        postStream.Write(byteArray, 0, byteArray.Length);
+                    }
+                    getResponse();
+                },null);
             }
         }
 
-        //TODO: Separate these:
-        public event LoggedInEvent LoggedIn;
-        public delegate void LoggedInEvent(object sender, LoggedInEventArgs e);
-        public bool IsLoggedIn { get; set; }
-        public class LoggedInEventArgs : EventArgs
+        public void Login(string Username, string Password, Action<LoginEventArgs> Callback)
         {
-            public bool Error { get; set; }
+            HttpWebRequest loginReq = CreateRequest("work/signin/" + Username + "/" + Password + "/");
+            loginReq.BeginGetResponse((res) =>
+            {
+                HttpWebResponse loginResp = null;
+                try
+                {
+                    loginResp = (HttpWebResponse)loginReq.EndGetResponse(res);
+                }
+                catch (WebException ex)
+                {
+                    Callback(new LoginEventArgs()
+                    {
+                        IsSuccessful = false,
+                        Error = ex,
+                        Response = (HttpWebResponse)ex.Response
+                    });
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Callback(new LoginEventArgs()
+                    {
+                        IsSuccessful = false,
+                        Error = ex,
+                        Response = loginResp
+                    });
+                    return;
+                }
+                if (loginResp.Headers["Set-Cookie"] == null)
+                {
+                    Callback(new LoginEventArgs()
+                    {
+                        Error = new Exception("Didn't receive Auth token"),
+                        IsSuccessful = false,
+                        Response = loginResp
+                    });
+                    return;
+                }
+                string[] cookieParts = loginResp.Headers["Set-Cookie"].Split(';');
+                string cookieD = "";
+                foreach(string sortaCookie in cookieParts){
+                    string sortaTrimmedCookie = sortaCookie.TrimStart();
+                    if(sortaTrimmedCookie.StartsWith("D=")){
+                        cookieD = sortaTrimmedCookie.Substring(2);
+                        break;
+                    }
+                }
+                if(cookieD.Length == 0){
+                    Callback(new LoginEventArgs()
+                    {
+                        Error = new Exception("Auth token not included"),
+                        IsSuccessful = false,
+                        Response = loginResp
+                    });
+                    return;
+                }
+                string[] loginBits = cookieD.Split(',');
+                if(loginBits.Length < 2){
+                    Callback(new LoginEventArgs()
+                    {
+                        Error = new Exception("Auth token is corrupted"),
+                        IsSuccessful = false,
+                        Response = loginResp
+                    });
+                    return;
+                }
+                try
+                {
+                    UserId = long.Parse(loginBits[0]);
+                }catch(Exception e){
+                    Callback(new LoginEventArgs() { 
+                        Error = new Exception("Auth token is corrupted"),
+                        IsSuccessful = false,
+                        Response = loginResp
+                    });
+                    return;
+                }
+                AuthToken = loginBits[1];
+                Callback(new LoginEventArgs()
+                {
+                    Error = null,
+                    IsSuccessful = true,
+                    Response = loginResp,
+                    AuthToken = AuthToken,
+                    UserId = UserId
+                });
+            }, null);
         }
 
-        public void Login(string username, string password)
+        public void GetBeaconStream(Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
         {
-            BeginRequest((string str) =>
+            GetBeaconStream(0, 20, 0, Callback);
+        }
+
+        public void GetBeaconStream(int lastTime, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        {
+            GetBeaconStream(lastTime, 0, 0, Callback);
+        }
+
+        public void GetBeaconStream(int lastTime, int amount, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        {
+            GetBeaconStream(lastTime, amount, 0, Callback);
+        }
+
+        public void GetBeaconStream(int lastTime,int amount,int network,Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        {
+            int stream = 0;
+#if DEBUG
+            stream = 2;
+            network = 1;
+#endif
+            requestJsonObject<Objects.Responses.Beacon.Stream>("/beacon/stream/"+stream+"?since=" + lastTime.ToString() + "&n=" + amount.ToString() + (network != 0 ? "&network=" + network.ToString() : ""), Callback);
+        }
+
+        public void Post(string message, Stream image, Action<SparklrEventArgs> Callback)
+        {
+            string data64str = "";
+            if(image != null){
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    image.CopyTo(ms);
+                    data64str = "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            requestJsonObject<Objects.Responses.Generic>("/work/post", new Objects.Requests.Work.Post()
             {
-                if (str.ToLower().Contains("error") || this.LoginToken == null)
-                {
-                    IsLoggedIn = false;
-                }
-                else
-                {
-                    IsLoggedIn = true;
-                }
-                if (LoggedIn != null)
-                {
-                    LoggedIn.Invoke(this, new LoggedInEventArgs() { Error = !IsLoggedIn });
-                }
-                //TODO: Why is here a return true?
-                return true;
-            }, "work/signin/" + username + "/" + password + "/");
+                body = message,
+#if DEBUG
+                network = 2,
+#endif
+                img = data64str != ""
+            }, data64str, (args) =>
+            {
+                Callback(new SparklrEventArgs() { 
+                    IsSuccessful = args.IsSuccessful && args.Object.error == null,
+                    Error = args.IsSuccessful?args.Object.error==true?new Exception("Sparklr said noooooo"):null:args.Error
+                });
+            });
         }
     }
 }

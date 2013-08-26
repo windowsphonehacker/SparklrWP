@@ -15,7 +15,7 @@ namespace SparklrWP_EOC
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        public SparklrLib.SparklrClientEOC Sparklr = new SparklrLib.SparklrClientEOC();
+        public SparklrLib.SparklrClient Sparklr = new SparklrLib.SparklrClient();
 
         // Constructor
         public MainPage()
@@ -27,7 +27,7 @@ namespace SparklrWP_EOC
         {
             Console.Dispatcher.BeginInvoke(() =>
             {
-                Console.Items.Add(val);
+                Console.Items.Add(val.GetType() == typeof(String)?new TextBlock() { Text = (String)val, TextWrapping = TextWrapping.Wrap }:val);
             });
             
         }
@@ -48,6 +48,21 @@ namespace SparklrWP_EOC
                         if (lea.IsSuccessful)
                         {
                             log("Login was succesfull! authToken: " + lea.AuthToken + " UserId: " + lea.UserId);
+                            Sparklr.getBeaconStream((eargs) =>
+                            {
+                                if (eargs.IsSuccessful)
+                                {
+                                    log("Success! dash items: " + eargs.Object.data.length);
+                                    foreach (SparklrLib.Objects.Responses.Beacon.Timeline item in eargs.Object.data.timeline)
+                                    {
+                                        log(item.message);
+                                    }
+                                }
+                                else
+                                {
+                                    log("Getting dash failed: " + eargs.Error.Message);
+                                }
+                            });
                         }
                         else
                         {
