@@ -59,7 +59,7 @@
         <controls:PivotItem Header="Friends">
             <Grid/>
         </controls:PivotItem>
-        <controls:PivotItem Header="Chat">
+        <controls:PivotItem Header="Inbox">
             <Grid/>
         </controls:PivotItem>
         <controls:PivotItem Header="Profile">
