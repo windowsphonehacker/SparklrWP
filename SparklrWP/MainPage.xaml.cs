@@ -13,7 +13,8 @@ namespace SparklrWP
             InitializeComponent();
 
             // Set the data context of the listbox control to the sample data
-            DataContext = App.ViewModel;
+            postsPivot.DataContext = App.PostsViewModel;
+            notificationsPivot.DataContext = App.NotificationsViewModel;
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
         }
 
@@ -39,6 +40,11 @@ namespace SparklrWP
             //{
             //    App.ViewModel.LoadData();
             //}
+            if (!App.NotificationsViewModel.IsDataLoaded)
+            {
+                App.NotificationsViewModel.LoadData();
+            }
+            notificationsPivot.NewCount = 100; //TODO: needs an event maybe to change this
         }
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
@@ -48,7 +54,7 @@ namespace SparklrWP
 
         private void about_click(object sender, System.EventArgs e)
         {
-        	MessageBox.Show("Sparklr Branding © Jonathan Warner \n\n Application Development Team: \n\n Marocco2 (design!)\n jessenic (code!)\n EaterOfCorpses (code-design!)\n TheInterframe (code-design!)\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
+            MessageBox.Show("Sparklr Branding © Jonathan Warner \n\n Application Development Team: \n\n Marocco2 (design!)\n jessenic (code!)\n EaterOfCorpses (code-design!)\n TheInterframe (code-design!)\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
         }
     }
 }

@@ -42,56 +42,31 @@ namespace SparklrWP
         /// </summary>
         public ObservableCollection<ItemViewModel> Items { get; private set; }
 
-        private int _newPostCount = 0;
-        public int NewPostCount
-        {
-            get
-            {
-                return _newPostCount;
-            }
-            set
-            {
-                if (value != _newPostCount)
-                {
-                    _newPostCount = value;
-                    NotifyPropertyChanged("NewPostCount");
-                    NotifyPropertyChanged("NewPostCountVisibility");
-                }
-            }
-        }
-        public Visibility NewPostCountVisibility
-        {
-            get
-            {
-                return _newPostCount > 0 ? Visibility.Visible : Visibility.Collapsed;
-            }
-        }
+        //private int _newCount = 0;
+        //public int NewCount
+        //{
+        //    get
+        //    {
+        //        return _newCount;
+        //    }
+        //    set
+        //    {
+        //        if (value != _newCount)
+        //        {
+        //            _newCount = value;
+        //            NotifyPropertyChanged("NewCount");
+        //            NotifyPropertyChanged("NewCountVisibility");
+        //        }
+        //    }
+        //}
 
-        private int _newNotificationsCount = 0;
-        public int NewNotificationsCount
-        {
-            get
-            {
-                return _newNotificationsCount;
-            }
-            set
-            {
-                if (value != _newNotificationsCount)
-                {
-                    _newNotificationsCount = value;
-                    NotifyPropertyChanged("NewNotificationsCount");
-                    NotifyPropertyChanged("NewNotificationsCountVisibility");
-                }
-            }
-        }
-
-        public Visibility NewNotificationsCountVisibility
-        {
-            get
-            {
-                return _newNotificationsCount > 0 ? Visibility.Visible : Visibility.Collapsed;
-            }
-        }
+        //public Visibility NewCountVisibility
+        //{
+        //    get
+        //    {
+        //        return _newCount > 0 ? Visibility.Visible : Visibility.Collapsed;
+        //    }
+        //}
 
         public bool IsDataLoaded
         {

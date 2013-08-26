@@ -8,7 +8,8 @@ namespace SparklrWP
 {
     public partial class App : Application
     {
-        private static MainViewModel viewModel = null;
+        private static MainViewModel postsViewModel = null;
+        private static NotificationsViewModel notificationsViewModel = null;
 
         public static Utils.Task BackgroundTask;
 
@@ -17,15 +18,31 @@ namespace SparklrWP
         /// A static ViewModel used by the views to bind against.
         /// </summary>
         /// <returns>The MainViewModel object.</returns>
-        public static MainViewModel ViewModel
+        public static MainViewModel PostsViewModel
         {
             get
             {
                 // Delay creation of the view model until necessary
-                if (viewModel == null)
-                    viewModel = new MainViewModel();
+                if (postsViewModel == null)
+                    postsViewModel = new MainViewModel();
 
-                return viewModel;
+                return postsViewModel;
+            }
+        }
+
+        /// <summary>
+        /// A static ViewModel used by the views to bind against.
+        /// </summary>
+        /// <returns>The NotificationsViewModel object.</returns>
+        public static NotificationsViewModel NotificationsViewModel
+        {
+            get
+            {
+                // Delay creation of the view model until necessary
+                if (notificationsViewModel == null)
+                    notificationsViewModel = new NotificationsViewModel();
+
+                return notificationsViewModel;
             }
         }
 
@@ -137,7 +154,7 @@ namespace SparklrWP
             // screen to remain active until the application is ready to render.
             RootFrame = new PhoneApplicationFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
-            GlobalLoading.Instance.Initialize(RootFrame); 
+            GlobalLoading.Instance.Initialize(RootFrame);
 
             // Handle navigation failures
             RootFrame.NavigationFailed += RootFrame_NavigationFailed;

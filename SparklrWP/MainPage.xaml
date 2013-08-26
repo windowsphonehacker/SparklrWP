@@ -9,7 +9,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696" 
-    d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -18,13 +17,24 @@
 
     <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
 
-    <controls:Pivot  Title="sparklr*"  FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Background="#FF454050">
-
+    <controls:Pivot Name="mainPivot" Title="sparklr*"  FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Background="#FF454050">
+        <controls:Pivot.HeaderTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding}" HorizontalAlignment="Left" />
+                    <Border Background="White" CornerRadius="8" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="{Binding NewCountVisibility}" Margin="4,0,0,0">
+                        <TextBlock Foreground="#FF2A2339" Text="{Binding SelectedItem.NewCount, ElementName=mainPivot}" HorizontalAlignment="Center" Margin="10,0,10,4" FontSize="36" VerticalAlignment="Center"></TextBlock>
+                    </Border>
+                </StackPanel>
+            </DataTemplate>
+        </controls:Pivot.HeaderTemplate>
         <!--TitlePanel contains the name of the application and page title-->
 
 
         <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
-        <controls:PivotItem Header="Posts" Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
+        <sparklrControls:NotificationPivotItem Name="postsPivot" Header="Posts"  Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"
+    d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}" NewCount="10">
+
             <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                 <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" >
                     <ListBox.ItemTemplate>
@@ -43,7 +53,9 @@
 
                 </ListBox>
             </Grid>
-        </controls:PivotItem>
+        </sparklrControls:NotificationPivotItem>
+        <sparklrControls:NotificationPivotItem Name="notificationsPivot" Header="Notifications">
+        </sparklrControls:NotificationPivotItem>
     </controls:Pivot>
 
     <phone:PhoneApplicationPage.ApplicationBar>
