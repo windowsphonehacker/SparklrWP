@@ -12,16 +12,55 @@ using System.Text.RegularExpressions;
 using System.Windows.Media;
 using System.Globalization;
 using System.ComponentModel;
+using System.Windows.Media.Imaging;
 
 namespace SparklrWP.Controls
 {
     [Description("Provides a control that can display a Sparklr post.")]
     public partial class SparklrText : UserControl
     {
+        /// <summary>
+        /// The content of the post
+        /// </summary>
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(object), new PropertyMetadata(textPropertyChanged));
+        
+        /// <summary>
+        /// The author's name
+        /// </summary>
         public static readonly DependencyProperty UsernameProperty = DependencyProperty.Register("Username", typeof(string), typeof(object), new PropertyMetadata(usernamePropertyChanged));
+        
+        /// <summary>
+        /// The number of likes
+        /// </summary>
         public static readonly DependencyProperty LikesProperty = DependencyProperty.Register("Likes", typeof(int), typeof(object), new PropertyMetadata(likesPropertyChanged));
+        
+        /// <summary>
+        /// The number of comments
+        /// </summary>
         public static readonly DependencyProperty CommentsProperty = DependencyProperty.Register("Comments", typeof(int), typeof(object), new PropertyMetadata(commentsPropertyChanged));
+        
+        /// <summary>
+        /// The locatio (URI) of the image
+        /// </summary>
+        public static readonly DependencyProperty ImageLocationProperty = DependencyProperty.Register("ImageLocation", typeof(string), typeof(object), new PropertyMetadata(imagelocationPropertyChanged));
+        
+        /// <summary>
+        /// A ItemViewModel that contains all the required data.
+        /// </summary>
+        public static readonly DependencyProperty PostProperty = DependencyProperty.Register("Post", typeof(ItemViewModel), typeof(object), new PropertyMetadata(postPropertyChanged));
+
+        private static void postPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            SparklrText control = d as SparklrText;
+            control.Post = (ItemViewModel)e.NewValue;
+        }
+
+        private static void imagelocationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            SparklrText control = d as SparklrText;
+            control.ImageLocation = e.NewValue.ToString();
+        }
+
 
         private static void commentsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -66,8 +105,10 @@ namespace SparklrWP.Controls
 
         private string text;
         private string username;
+        private string imagelocation;
         private int? likes;
         private int? comments;
+        private ItemViewModel post;
 
         /// <summary>
         /// The content of the post
@@ -84,6 +125,30 @@ namespace SparklrWP.Controls
                 {
                     text = value;
                     updateText(value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// A underlying post. Configures everything else in here.
+        /// </summary>
+        public ItemViewModel Post
+        {
+            get
+            {
+                return post;
+            }
+            set
+            {
+                if (post != value)
+                {
+                    this.ImageLocation = value.ImageUrl;
+                    this.Username = value.From;
+                    this.Comments = value.CommentCount;
+                    this.Likes = value.LikesCount;
+                    this.Text = value.Message;
+
+                    post = value;
                 }
             }
         }
@@ -149,6 +214,26 @@ namespace SparklrWP.Controls
         }
 
         /// <summary>
+        /// Contains the URL to the related image
+        /// </summary>
+        public string ImageLocation
+        {
+            get
+            {
+                return imagelocation;
+            }
+            set
+            {
+                if (imagelocation != value && !String.IsNullOrEmpty(value))
+                {
+                    imagelocation = value;
+                    MessageImage.Source = new BitmapImage(new Uri(imagelocation));
+                    refreshVisibility();
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets the visibility of the userbar, depending on username, comments and likes
         /// </summary>
         public Visibility UserbarVisibility
@@ -156,6 +241,17 @@ namespace SparklrWP.Controls
             get
             {
                 return (String.IsNullOrEmpty(username) && likes == null && comments == null) ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
+        /// <summary>
+        /// Gets the visibility for the image area
+        /// </summary>
+        public Visibility ImageVisibility
+        {
+            get
+            {
+                return String.IsNullOrEmpty(imagelocation) ? Visibility.Collapsed : Visibility.Visible;
             }
         }
 
@@ -173,6 +269,7 @@ namespace SparklrWP.Controls
         private void refreshVisibility()
         {
             userbar.Visibility = UserbarVisibility;
+            ImageContainer.Visibility = ImageVisibility;
         }
 
         /// <summary>

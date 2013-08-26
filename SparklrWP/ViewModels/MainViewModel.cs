@@ -137,7 +137,7 @@ namespace SparklrWP
                         if (existingitem == null)
                         {
                             existingitem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString() };
-                            if (t.meta != null)
+                            if (!String.IsNullOrEmpty(t.meta))
                             {
                                 existingitem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;
                             }

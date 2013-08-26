@@ -17,31 +17,23 @@
     shell:SystemTray.IsVisible="True" Background="#FF454050">
 
     <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
-    
-        <controls:Pivot  Title="sparklr*"  FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Background="#FF454050">
 
-            <!--TitlePanel contains the name of the application and page title-->
-            
+    <controls:Pivot  Title="sparklr*"  FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Background="#FF454050">
 
-            <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
-            <controls:PivotItem Header="Posts" Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
-                <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-                    <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" >
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel MinWidth="456" MaxWidth="456" Background="White" Margin="0,0,0,17">
-                                    <StackPanel x:Name="ximage" Background="Black">
-                                        <Image Source="{Binding ImageUrl}" MinWidth="150" MinHeight="150" MaxHeight="400" MaxWidth="400"/>
-                                    </StackPanel>
-                                <!--<Image Source="{Binding ImageUrl}" MaxHeight="100"/>
-							<TextBlock Text="{Binding From}" Style="{StaticResource PhoneTextExtraLargeStyle}" TextWrapping="Wrap"/>
-							<TextBlock Text="{Binding CommentCount}" TextWrapping="Wrap" Margin="20,0,0,0"/>
-							<TextBlock Text="{Binding Message}" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap"/>-->
-                                <sparklrControls:SparklrText Text="{Binding Message}" Username="{Binding From}" Comments="{Binding CommentCount}" Likes="{Binding LikesCount}"></sparklrControls:SparklrText>
+        <!--TitlePanel contains the name of the application and page title-->
 
+
+        <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
+        <controls:PivotItem Header="Posts" Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
+            <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+                <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel MinWidth="456" MaxWidth="456" Background="White" Margin="0,0,0,17">
+                                <sparklrControls:SparklrText Post="{Binding}" />
                             </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                     <!-- Workaround used to stretch the child elements to the full width -> HorizontalContentAlignment won't work for some reason... -->
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
@@ -50,15 +42,15 @@
                     </ListBox.ItemContainerStyle>
 
                 </ListBox>
-                </Grid>
-            </controls:PivotItem>
+            </Grid>
+        </controls:PivotItem>
     </controls:Pivot>
-    
-<phone:PhoneApplicationPage.ApplicationBar>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="#FF2A2339">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New post" Click="ApplicationBarIconButton_Click"/>
             <shell:ApplicationBar.MenuItems>
-            	<shell:ApplicationBarMenuItem IsEnabled="True" Text="About" Click="about_click"/>
+                <shell:ApplicationBarMenuItem IsEnabled="True" Text="About" Click="about_click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
