@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using SparklrLib.Objects.Responses.Beacon;
 using System.Net;
-using SparklrLib.Objects.Responses.Beacon;
 namespace SparklrLib.Objects
 {
     public class BeaconStreamEventArgs : SparklrEventArgs

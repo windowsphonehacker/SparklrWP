@@ -1,13 +1,13 @@
-﻿using System.Windows;
-using Microsoft.Phone.Scheduler;
+﻿using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
-using System.IO.IsolatedStorage;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using SparklrLib;
 using SparklrLib.Objects.Responses.Beacon;
+using System;
+using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Security.Cryptography;
+using System.Text;
+using System.Windows;
 namespace SparklrWP_Background_Agent
 {
     public class ScheduledAgent : ScheduledTaskAgent

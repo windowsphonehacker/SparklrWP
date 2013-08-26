@@ -1,10 +1,9 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Windows;
 using System.Collections.ObjectModel;
-using Newtonsoft.Json;
-using System.Threading;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading;
+using System.Windows;
 
 
 namespace SparklrWP
