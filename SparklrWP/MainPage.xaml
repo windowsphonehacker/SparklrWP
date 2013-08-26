@@ -56,6 +56,15 @@
         </sparklrControls:NotificationPivotItem>
         <sparklrControls:NotificationPivotItem Name="notificationsPivot" Header="Notifications">
         </sparklrControls:NotificationPivotItem>
+        <controls:PivotItem Header="Friends">
+            <Grid/>
+        </controls:PivotItem>
+        <controls:PivotItem Header="Chat">
+            <Grid/>
+        </controls:PivotItem>
+        <controls:PivotItem Header="Profile">
+            <Grid/>
+        </controls:PivotItem>
     </controls:Pivot>
 
     <phone:PhoneApplicationPage.ApplicationBar>

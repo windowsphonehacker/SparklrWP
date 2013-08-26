@@ -59,7 +59,7 @@
         </Image>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+        <shell:ApplicationBar IsVisible="True" BackgroundColor="#FF2A2339" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton x:Name="attachButton" IconUri="/Assets/AppBar/appbar.feature.camera.rest.png" Text="Picture" Click="attachButton_Click"/>
             <shell:ApplicationBar.MenuItems>
 
