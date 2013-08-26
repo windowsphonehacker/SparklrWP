@@ -403,7 +403,7 @@ namespace SparklrLib
         /// <param name="Callback">The callback.</param>
         public void GetUsernames(int[] ids, Action<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> Callback)
         {
-            requestJsonObject<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", ids), (args) =>
+            requestJsonObject<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",",(string[])(from id in ids select id.ToString()).ToArray()), (args) =>
             {
                 if (args.IsSuccessful)
                 {
