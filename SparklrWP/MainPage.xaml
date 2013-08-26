@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696" 
@@ -15,37 +16,34 @@
     shell:SystemTray.IsVisible="True" Background="#FF454050">
 
     <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="#FF454050">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+    
+        <controls:Pivot  Title="sparklr*"  FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Background="#FF454050">
 
-        <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-            <TextBlock x:Name="PageTitle" Text="Posts" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-        </StackPanel>
+            <!--TitlePanel contains the name of the application and page title-->
+            
 
-        <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel MinWidth="456" MaxWidth="456" Background="White" Margin="0,0,0,17">
-							<StackPanel x:Name="ximage" Background="Black">
-                            <Image Source="{Binding ImageUrl}" MinWidth="150" MinHeight="150" MaxHeight="400" MaxWidth="400"/>
-							</StackPanel>
-                            <TextBlock Text="{Binding From}" Style="{StaticResource PhoneTextExtraLargeStyle}" Foreground="Black" TextWrapping="Wrap"/>
-                            <TextBlock Text="{Binding CommentCount}" Foreground="Black" TextWrapping="Wrap" Margin="20,0,0,0"/>
-                            <TextBlock Text="{Binding Message}" FontSize="26" Foreground="Black" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid>
-    </Grid>
-    <phone:PhoneApplicationPage.ApplicationBar>
+            <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
+            <controls:PivotItem Header="Posts" Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
+                <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+                    <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" >
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel MinWidth="456" MaxWidth="456" Background="White" Margin="0,0,0,17">
+                                    <StackPanel x:Name="ximage" Background="Black">
+                                        <Image Source="{Binding ImageUrl}" MinWidth="150" MinHeight="150" MaxHeight="400" MaxWidth="400"/>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding From}" Style="{StaticResource PhoneTextExtraLargeStyle}" Foreground="Black" TextWrapping="Wrap"/>
+                                    <TextBlock Text="{Binding CommentCount}" Foreground="Black" TextWrapping="Wrap" Margin="20,0,0,0"/>
+                                    <TextBlock Text="{Binding Message}" FontSize="26" Foreground="Black" Style="{StaticResource PhoneTextSmallStyle}" TextWrapping="Wrap"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </controls:PivotItem>
+    </controls:Pivot>
+    
+<phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="#FF2A2339">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New post" Click="ApplicationBarIconButton_Click"/>
             <shell:ApplicationBar.MenuItems>
@@ -53,4 +51,5 @@
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
+
 </phone:PhoneApplicationPage>
