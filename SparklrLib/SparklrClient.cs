@@ -439,7 +439,10 @@ namespace SparklrLib
                         List<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
                         foreach (int id in ids)
                         {
-                            usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
+                            if (Usernames.ContainsKey(id))
+                            {
+                                usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
+                            }
                         }
                         Callback(new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
                         {
@@ -455,7 +458,10 @@ namespace SparklrLib
                 List<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
                 foreach (int id in ids)
                 {
-                    usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
+                    if (Usernames.ContainsKey(id))
+                    {
+                        usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
+                    }
                 }
                 Callback(new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
                 {
