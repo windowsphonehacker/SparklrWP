@@ -23,9 +23,9 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,38">
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="0,17,0,38">
             <TextBlock x:Name="PageTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-            <TextBlock x:Name="ListTitle" Text="{Binding From}" Margin="118,-6,-1,0" Style="{StaticResource PhoneTextTitle1Style}">
+            <TextBlock x:Name="ListTitle" Text="{Binding From}" Margin="0,-6,0,0" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right" Width="217">
             	<TextBlock.Projection>
             		<PlaneProjection GlobalOffsetX="-117"/>
             	</TextBlock.Projection>
@@ -34,57 +34,38 @@
 
         <!--ContentPanel contains details text. Place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <TextBox TextWrapping="Wrap" Text="Comment Here..." RenderTransformOrigin="0.5,0.5" Margin="24,0,-44,131" VerticalAlignment="Bottom">
+        		<TextBox.RenderTransform>
+        			<CompositeTransform TranslateY="187"/>
+        		</TextBox.RenderTransform>
+        		<TextBox.Projection>
+        			<PlaneProjection GlobalOffsetX="-36" GlobalOffsetY="-55"/>
+        		</TextBox.Projection>
+        	</TextBox>
             <ScrollViewer>
                 <ListBox>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                     <StackPanel Orientation="Vertical">
-                        <sparklrControls:SparklrText Post="{Binding}" Foreground="White" Height="137" />
+                        <sparklrControls:SparklrText Post="{Binding}" Foreground="White" />
                     </StackPanel>
-                    <Button Height="92" Width="104" Foreground="Transparent" BorderBrush="#01FFFFFF" Click="HeartClick">
-                    	<Button.Projection>
-                    		<PlaneProjection GlobalOffsetX="166" GlobalOffsetY="-8"/>
-                    	</Button.Projection>
-                    	<Image Height="53" Source="Assets\Heart.png" Stretch="Fill" Width="53"/>
-                    </Button>
-                    <TextBlock Height="36" TextWrapping="Wrap" Text="Like" Width="50" FontFamily="Segoe WP Light">
-                    	<TextBlock.Projection>
-                    		<PlaneProjection GlobalOffsetX="177" GlobalOffsetY="-24"/>
-                    	</TextBlock.Projection>
-                    </TextBlock>
-                    <TextBox Height="71" TextWrapping="Wrap" Text="Comment Here..." Width="405" RenderTransformOrigin="0.5,0.5">
-                    	<TextBox.RenderTransform>
-                    		<CompositeTransform TranslateY="187"/>
-                    	</TextBox.RenderTransform>
-                    	<TextBox.Projection>
-                    		<PlaneProjection GlobalOffsetX="-36" GlobalOffsetY="-55"/>
-                    	</TextBox.Projection>
-                    </TextBox>
-                    <Button Height="87" Width="129" BorderBrush="Transparent" Foreground="Transparent">
-                    	<Button.Projection>
-                    		<PlaneProjection GlobalOffsetX="215" GlobalOffsetY="-134"/>
-                    	</Button.Projection>
-                    	<Image Height="45" Source="Assets\Add-New.png" Stretch="Fill" Width="43" Margin="-38,0,0,0" RenderTransformOrigin="0.5,0.5">
-                    		<Image.RenderTransform>
-                    			<CompositeTransform TranslateY="187"/>
-                    		</Image.RenderTransform>
-                    	</Image>
-                    </Button>
                     <TextBlock Height="75" TextWrapping="Wrap" Text="Time Here? Ex: ChrisK @ 2:40am" Width="234" FontFamily="Segoe WP Light" FontSize="16" Foreground="White">
                     	<TextBlock.Projection>
                     		<PlaneProjection GlobalOffsetX="-99" GlobalOffsetY="-268"/>
                     	</TextBlock.Projection>
                     </TextBlock>
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
                 </ListBox>
             </ScrollViewer>
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="#FF2A2339">
-            <!--   <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New post (no functional)" Click="ApplicationBarIconButton_Click"/> -->
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New reply (no functional)"/>
+			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.heart.png" Text="Like (no functional)"/>
+			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.refresh.rest.png" Text="Repost (no functional)"/>
             <shell:ApplicationBar.MenuItems>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
