@@ -266,8 +266,15 @@ namespace SparklrWP.Controls
                            if (oldImageLocation == this.ImageLocation)
                            {
                                image = new BitmapImage();
-                               image.SetSource(e.Result);
-                               MessageImage.Source = image;
+                               try
+                               {
+                                   image.SetSource(e.Result);
+                                   MessageImage.Source = image;
+                               }
+                               catch (Exception)
+                               {
+
+                               }
                            }
 
                            refreshVisibility();
