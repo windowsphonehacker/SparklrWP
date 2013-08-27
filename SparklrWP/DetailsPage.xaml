@@ -42,8 +42,8 @@
         			<PlaneProjection GlobalOffsetX="-36" GlobalOffsetY="-55"/>
         		</TextBox.Projection>
         	</TextBox>
-            <ScrollViewer>
-                <ListBox>
+            <ScrollViewer VerticalAlignment="Top">
+                <ListBox Height="464" VerticalAlignment="Top">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -52,11 +52,7 @@
                     <StackPanel Orientation="Vertical">
                         <sparklrControls:SparklrText Post="{Binding}" Foreground="White" />
                     </StackPanel>
-                    <TextBlock Height="75" TextWrapping="Wrap" Text="Time Here? Ex: ChrisK @ 2:40am" Width="234" FontFamily="Segoe WP Light" FontSize="16" Foreground="White">
-                    	<TextBlock.Projection>
-                    		<PlaneProjection GlobalOffsetX="-99" GlobalOffsetY="-268"/>
-                    	</TextBlock.Projection>
-                    </TextBlock>
+                    
                 </ListBox>
             </ScrollViewer>
         </Grid>
