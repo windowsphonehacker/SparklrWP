@@ -33,10 +33,11 @@
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <TextBox x:Name="messageBox" HorizontalAlignment="Left" TextWrapping="Wrap" Width="456" InputScope="Text" HorizontalScrollBarVisibility="Auto" Margin="0,0,0,206"/>
-            <Button Content="Post" HorizontalAlignment="Right" Margin="0,0,8,126" Width="184" Click="postButton_Click" Height="76" VerticalAlignment="Bottom"/>
+            <!--<Button Content="Post" HorizontalAlignment="Right" Margin="0,0,8,126" Width="184" Click="postButton_Click" Height="76" VerticalAlignment="Bottom"/>-->
             <TextBlock HorizontalAlignment="Left" Height="64" Margin="16,0,0,114" TextWrapping="Wrap" Text="Press the &quot;Picture&quot; button down below to attach a picture" VerticalAlignment="Bottom" Width="126" FontSize="13.333" Foreground="Gray"/>
             <Image x:Name="PicThumbnail" HorizontalAlignment="Left" Height="104" Margin="8,335,0,0" VerticalAlignment="Top" Width="152" Tap="PicThumbnail_Tap" d:LayoutOverrides="HorizontalAlignment"/>
             <Image Margin="-25,0,0,165" HorizontalAlignment="Left" Width="94" Source="Assets/Attachment.png" Height="102" VerticalAlignment="Bottom"/>
+            <TextBlock HorizontalAlignment="Left" Height="57" Margin="16,444,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Text="There is an image editor! "/>
         </Grid>
         <Rectangle x:Name="rectangle" Height="64" VerticalAlignment="Top" Margin="-564,13,0,0" HorizontalAlignment="Left" Width="480" Opacity="0">
         	<Rectangle.Stroke>
@@ -62,6 +63,7 @@
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" BackgroundColor="#FF2A2339" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New Postt" Click="postButton_Click"/>
             <shell:ApplicationBarIconButton x:Name="attachButton" IconUri="/Assets/AppBar/appbar.feature.camera.rest.png" Text="Picture" Click="attachButton_Click"/>
             <shell:ApplicationBar.MenuItems>
 
