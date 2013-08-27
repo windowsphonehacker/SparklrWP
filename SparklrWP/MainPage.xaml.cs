@@ -1,8 +1,8 @@
 ﻿using Microsoft.Phone.Controls;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Generic;
 namespace SparklrWP
 {
     public partial class MainPage : PhoneApplicationPage
@@ -50,7 +50,8 @@ namespace SparklrWP
                 if (fargs.IsSuccessful)
                 {
                     List<int> friends = new List<int>();
-                    foreach(int id in fargs.Object.followers){
+                    foreach (int id in fargs.Object.followers)
+                    {
                         friends.Add(id);
                     }
                     foreach (int id in fargs.Object.following)
@@ -63,7 +64,7 @@ namespace SparklrWP
                         {
                             App.FriendsViewModel.Items.Add(new FriendViewModel()
                             {
-                                Name = App.Client.Usernames[id],
+                                Name = App.Client.Usernames.ContainsKey(id) ? App.Client.Usernames[id] : "User " + id,
                                 Image = "http://d.sparklr.me/i/t" + id + ".jpg"
                             });
                         }
