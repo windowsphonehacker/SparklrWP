@@ -45,7 +45,7 @@ namespace SparklrWP
             {
                 App.NotificationsViewModel.LoadData();
             }
-            notificationsPivot.NewCount = 100; //TODO: needs an event maybe to change this
+            notificationsPivot.Tag = 99; //TODO: Fill this and change from Tag to notificationsviewmodel
             if (!didFriends)
             {
                 didFriends = true;
@@ -122,6 +122,11 @@ namespace SparklrWP
             }
 
             ScrollViewer.SetVerticalScrollBarVisibility(control, ScrollBarVisibility.Disabled);
+        }
+
+        private void NotificationCount_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            mainPivot.SelectedItem = notificationsPivot;
         }
     }
 }

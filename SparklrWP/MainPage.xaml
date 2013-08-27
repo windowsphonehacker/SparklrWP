@@ -20,22 +20,22 @@
     <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
 
     <controls:Pivot Name="mainPivot" Title="sparklr*"  FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Background="#FF454050">
-        <controls:Pivot.HeaderTemplate>
+        <controls:Pivot.TitleTemplate>
             <DataTemplate>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding}" HorizontalAlignment="Left" />
-                    <Border x:Name="BorderNotification" Background="White" CornerRadius="8" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="{Binding SelectedItem.NewCountVisibility, ElementName=mainPivot}" Margin="4,0,0,0">
-                        <TextBlock Foreground="#FF2A2339" Text="{Binding SelectedItem.NewCount, ElementName=mainPivot}" HorizontalAlignment="Center" Margin="10,0,10,4" FontSize="36" VerticalAlignment="Center"></TextBlock>
+                    <Border x:Name="BorderNotification" Background="White" CornerRadius="8" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="4,0,0,0">
+                        <TextBlock Name="NotificationCount" Foreground="#FF2A2339" Text="{Binding ElementName=notificationsPivot, Path=Tag}" HorizontalAlignment="Center" Margin="10,0,10,4" FontSize="36" VerticalAlignment="Center" Tap="NotificationCount_Tap"></TextBlock>
                     </Border>
                 </StackPanel>
             </DataTemplate>
-        </controls:Pivot.HeaderTemplate>
+        </controls:Pivot.TitleTemplate>
         <!--TitlePanel contains the name of the application and page title-->
 
 
         <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
-        <sparklrControls:NotificationPivotItem Name="postsPivot" Header="Posts"  Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"
-    d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}" NewCount="10">
+        <controls:PivotItem Name="postsPivot" Header="Posts"  Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"
+    d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}">
             <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                 <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" >
                     <ListBox.ItemTemplate>
@@ -53,11 +53,11 @@
                     </ListBox.ItemContainerStyle>
                 </ListBox>
             </Grid>
-        </sparklrControls:NotificationPivotItem>
-        <sparklrControls:NotificationPivotItem Name="notificationsPivot" Header="Notifications">
-        </sparklrControls:NotificationPivotItem>
+        </controls:PivotItem>
+        <controls:PivotItem Tag="10" Name="notificationsPivot" Header="Notifications">
+        </controls:PivotItem>
 
-        <sparklrControls:NotificationPivotItem d:DataContext="{d:DesignData SampleData/FriendsViewModelSampleData.xaml}" Header="Friends" Name="friendPivot">
+        <controls:PivotItem d:DataContext="{d:DesignData SampleData/FriendsViewModelSampleData.xaml}" Header="Friends" Name="friendPivot">
             <toolkit:LongListSelector Background="{x:Null}" ItemsSource="{Binding GroupedItems}">
                 <!-- Template for the letters inside the list -->
                 <toolkit:LongListSelector.GroupHeaderTemplate>
@@ -94,13 +94,13 @@
                     </DataTemplate>
                 </toolkit:LongListSelector.GroupItemTemplate>
             </toolkit:LongListSelector>
-        </sparklrControls:NotificationPivotItem>
-        <sparklrControls:NotificationPivotItem Header="Inbox">
+        </controls:PivotItem>
+        <controls:PivotItem Header="Inbox">
             <Grid/>
-        </sparklrControls:NotificationPivotItem>
-        <sparklrControls:NotificationPivotItem Header="Profile">
+        </controls:PivotItem>
+        <controls:PivotItem Header="Profile">
             <Grid/>
-        </sparklrControls:NotificationPivotItem>
+        </controls:PivotItem>
     </controls:Pivot>
 
     <phone:PhoneApplicationPage.ApplicationBar>
