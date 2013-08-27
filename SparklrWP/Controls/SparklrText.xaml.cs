@@ -54,7 +54,7 @@ namespace SparklrWP.Controls
         private static void imagelocationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             SparklrText control = d as SparklrText;
-            control.ImageLocation = e.NewValue.ToString();
+            control.ImageLocation = (string)e.NewValue;
         }
 
 
@@ -86,18 +86,18 @@ namespace SparklrWP.Controls
         /// <summary>
         /// Matches hashtags like #test and #123
         /// </summary>
-        private Regex hashTagRegex = new Regex(@"(#[\w\b]*)", RegexOptions.Compiled);
+        private static Regex hashTagRegex = new Regex(@"(#[\w\b]*)", RegexOptions.Compiled);
 
         /// <summary>
         /// Matches usernames like @test and @123
         /// </summary>
-        private Regex userMentionRegex = new Regex(@"(@[\w\b]*)", RegexOptions.Compiled);
+        private static Regex userMentionRegex = new Regex(@"(@[\w\b]*)", RegexOptions.Compiled);
 
         /// <summary>
         /// A regex that matches any url and captures the destination without the http(s)://
         /// </summary>
-        private Regex urlRegex = new Regex(@"(?:(http|ftp|https):\/\/)?([\w\-_]+(?:\.[\w\-_]+)+(?:[\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        private Regex urlSplitRegex = new Regex(@"((?:(?:http|ftp|https):\/\/)?(?:[\w\-_]+(?:\.[\w\-_]+)+(?:[\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex urlRegex = new Regex(@"(?:(http|ftp|https):\/\/)?([\w\-_]+(?:\.[\w\-_]+)+(?:[\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex urlSplitRegex = new Regex(@"((?:(?:http|ftp|https):\/\/)?(?:[\w\-_]+(?:\.[\w\-_]+)+(?:[\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>
         /// The highlight color for tags, usernames, etc...
@@ -133,7 +133,7 @@ namespace SparklrWP.Controls
         }
 
         /// <summary>
-        /// A underlying post. Configures everything else in here.
+        /// A underlying post. Configures everything else in here. As a workarounf for issue #33, you can't update the control with a post that has a diffrent ID
         /// </summary>
         public ItemViewModel Post
         {
@@ -145,6 +145,10 @@ namespace SparklrWP.Controls
             {
                 if (post != value)
                 {
+#if DEBUG
+                    if (System.Diagnostics.Debugger.IsAttached && post != null && post.Id != value.Id)
+                        throw new Exception("Control updated with wrong id. Don't handle this exception!");
+#endif
                     this.ImageLocation = value.ImageUrl;
                     this.Username = value.From;
                     this.Comments = value.CommentCount;
@@ -170,7 +174,7 @@ namespace SparklrWP.Controls
                 if (username != value)
                 {
                     username = value;
-                    usernameTextBlock.Text = value;
+                    usernameTextBlock.Text = username;
                     refreshVisibility();
                 }
             }
@@ -230,8 +234,6 @@ namespace SparklrWP.Controls
                 if (imagelocation != value && !String.IsNullOrEmpty(value))
                 {
                     imagelocation = value;
-                    MessageImage.Source = new BitmapImage(new Uri(imagelocation));
-
                     loadImage(value);
                 }
             }
@@ -280,6 +282,7 @@ namespace SparklrWP.Controls
         public SparklrText()
         {
             InitializeComponent();
+            this.LayoutRoot.DataContext = this;
         }
 
         /// <summary>
@@ -297,6 +300,7 @@ namespace SparklrWP.Controls
         /// <param name="value">The post content</param>
         private void updateText(string value)
         {
+            messageContentParagraph.Inlines.Clear();
             //Split on every hashtag
             string[] splittedTags = hashTagRegex.Split(value);
 

@@ -19,7 +19,7 @@ namespace SparklrWP
         {
             this.Items = new ObservableCollection<ItemViewModel>();
 
-            streamUpdater = new Timer(streamUpdater_Tick, null, 10000, Timeout.Infinite);
+            streamUpdater = new Timer(streamUpdater_Tick, null, Timeout.Infinite, Timeout.Infinite);
 
             //We do not start the updater here. It will be started by the callback of the reponse
             //Warning: Possible issue where a internet conenction is not stable
@@ -37,10 +37,29 @@ namespace SparklrWP
             loadData();
         }
 
+        private ObservableCollection<ItemViewModel> _items;
         /// <summary>
         /// A collection for ItemViewModel objects.
         /// </summary>
-        public ObservableCollection<ItemViewModel> Items { get; private set; }
+        public ObservableCollection<ItemViewModel> Items
+        {
+            get
+            {
+                return _items;
+            }
+            private set
+            {
+                if (_items != value)
+                {
+                    _items = value;
+
+                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    {
+                        NotifyPropertyChanged("Items");
+                    });
+                }
+            }
+        }
 
         //private int _newCount = 0;
         //public int NewCount
@@ -83,90 +102,91 @@ namespace SparklrWP
         private void loadData(bool stopTimer = true)
         {
             //Stop the updater, to prevent multiple requests
+<<<<<<< HEAD
            /* if (stopTimer)
                 streamUpdater.Change(10000, Timeout.Infinite);*/
+=======
+            if (stopTimer)
+                streamUpdater.Change(Timeout.Infinite, Timeout.Infinite);
+>>>>>>> Resolving conflicts
 
             GlobalLoading.Instance.IsLoading = true;
 
             App.Client.GetBeaconStream(LastTime, (args) =>
             {
-                if (!args.IsSuccessful)
+                if (args.IsSuccessful)
                 {
-                    GlobalLoading.Instance.IsLoading = false;
-                    streamUpdater.Change(10000, Timeout.Infinite);
-                    return;
-                }
+                    SparklrLib.Objects.Responses.Beacon.Stream stream = args.Object;
+                    if (stream != null && stream.notifications != null)
+                    {
+                        /*foreach (var not in stream.notifications)
+                        {
+                            Deployment.Current.Dispatcher.BeginInvoke(() =>
+                            {
+                                try
+                                {
+                                    if (MessageBox.Show("id: " + not.id + "\naction: " + not.action + "\ntype:" + not.type + "\nbody" + not.body, "Notification test", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                                    {
+                                        App.Client.BeginRequest(null, "work/delete/notification/" + not.id);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    MessageBox.Show(ex.StackTrace, ex.Message, MessageBoxButton.OK);
+                                }
+                            });
+                        }*/
+                    }
 
-                SparklrLib.Objects.Responses.Beacon.Stream stream = args.Object;
+                    if (stream == null || stream.data == null)
+                    {
+                        GlobalLoading.Instance.IsLoading = false;
+                        //streamUpdater.Change(10000, Timeout.Infinite);
+                        return;
+                    }
+                    int count = stream.data.length;
 
+                    ObservableCollection<ItemViewModel> newItems = new ObservableCollection<ItemViewModel>(Items);
 
-                if (stream != null && stream.notifications != null)
-                {
-                    /*foreach (var not in stream.notifications)
+                    foreach (var t in stream.data.timeline)
                     {
                         Deployment.Current.Dispatcher.BeginInvoke(() =>
                         {
-                            try
+                            ItemViewModel existingitem = null;
+                            existingitem = (from i in newItems where i.Id == t.id select i).FirstOrDefault();
+
+                            if (existingitem == null)
                             {
-                                if (MessageBox.Show("id: " + not.id + "\naction: " + not.action + "\ntype:" + not.type + "\nbody" + not.body, "Notification test", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                                ItemViewModel newItem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString() };
+                                if (!String.IsNullOrEmpty(t.meta))
                                 {
-                                    App.Client.BeginRequest(null, "work/delete/notification/" + not.id);
+                                    newItem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;
                                 }
+                                newItems.Add(newItem);
                             }
-                            catch (Exception ex)
+                            else
                             {
-                                MessageBox.Show(ex.StackTrace, ex.Message, MessageBoxButton.OK);
+                                existingitem.Message = t.message;
+                                existingitem.CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount);
+                                existingitem.From = t.from.ToString(); //TODO: Use /work/username to get the user names
                             }
                         });
-                    }*/
-                }
+                        if (LastTime < t.time)
+                        {
+                            LastTime = t.time;
+                        }
+                        if (LastTime < t.modified)
+                        {
+                            LastTime = t.modified;
+                        }
+                    }
 
-                if (stream == null || stream.data == null)
-                {
+                    Items = newItems;
                     GlobalLoading.Instance.IsLoading = false;
-                    streamUpdater.Change(10000, Timeout.Infinite);
+                    this.IsDataLoaded = true;
+                    //streamUpdater.Change(10000, Timeout.Infinite);
                     return;
                 }
-                int count = stream.data.length;
-                foreach (var t in stream.data.timeline)
-                {
-                    Deployment.Current.Dispatcher.BeginInvoke(() =>
-                    {
-                        ItemViewModel existingitem = null;
-                        try
-                        {
-                            existingitem = (from i in this.Items where i.Id == t.id select i).First();
-                        }
-                        catch (Exception) { }
-                        if (existingitem == null)
-                        {
-                            existingitem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString() };
-                            if (!String.IsNullOrEmpty(t.meta))
-                            {
-                                existingitem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;
-                            }
-                            this.Items.Add(existingitem);
-                        }
-                        else
-                        {
-                            existingitem.Message = t.message;
-                            existingitem.CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount);
-                            existingitem.From = t.from.ToString(); //TODO: Use /work/username to get the user names
-                        }
-                    });
-                    if (LastTime < t.time)
-                    {
-                        LastTime = t.time;
-                    }
-                    if (LastTime < t.modified)
-                    {
-                        LastTime = t.modified;
-                    }
-                }
-                GlobalLoading.Instance.IsLoading = false;
-                this.IsDataLoaded = true;
-                streamUpdater.Change(10000, Timeout.Infinite);
-                return;
             });
         }
 

@@ -112,5 +112,28 @@ namespace SparklrWP
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is ItemViewModel)
+            {
+                ItemViewModel m = (ItemViewModel)obj;
+                return this.Id == m.Id;
+            }
+            else
+            {
+                return base.Equals(obj);
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return String.Format("{0} - {1}", this.Id, this.Message);
+        }
     }
 }
