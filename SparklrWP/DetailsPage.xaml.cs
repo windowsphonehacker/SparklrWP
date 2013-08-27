@@ -21,5 +21,12 @@ namespace SparklrWP
                 DataContext = App.PostsViewModel.Items[index];
             }
         }
+
+        private void HeartClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            //Preform Like
+
+
+        }
     }
 }

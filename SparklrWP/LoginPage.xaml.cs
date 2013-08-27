@@ -16,6 +16,7 @@ namespace SparklrWP
         public LoginPage()
         {
             InitializeComponent();
+          
             App.Client = new SparklrClient();
             if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
             {
@@ -91,15 +92,20 @@ namespace SparklrWP
         private void Login_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             Ani1.Begin();
+            
+
+
             button.IsEnabled = false;
             button1.IsEnabled = false;
             button2.IsEnabled = false;
+          
+
 
         }
 
         private void Signup_click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (MessageBox.Show("Sparklr.me home page where you can sign up will opened in a browser", "SparklrWP", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            if (MessageBox.Show("The Sign Up Page Will Open In Internet Explorer, Is That Ok?", "Sparklr", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 new WebBrowserTask() { Uri = new Uri("http://sparklr.me") }.Show();
             }
@@ -114,6 +120,26 @@ namespace SparklrWP
         {
             if (e.Key == System.Windows.Input.Key.Enter)
                 loginButton_Click(sender, null);
+        }
+       protected override void OnBackKeyPress (System.ComponentModel.CancelEventArgs e)
+       {
+
+           if (button1.IsEnabled == false)
+           {
+               e.Cancel = true;
+               //Close the PopUp Window
+               ani2.Begin();
+               button.IsEnabled = true;
+               button1.IsEnabled = true;
+               button2.IsEnabled = true;
+           }
+           else
+           {
+               NavigationService.GoBack();
+
+           }
+
+
         }
     }
 }
