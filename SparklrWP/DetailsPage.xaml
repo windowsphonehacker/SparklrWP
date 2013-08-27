@@ -8,7 +8,7 @@
 	xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
-	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768" 
+	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696" 
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
 	FontSize="{StaticResource PhoneFontSizeNormal}"
 	Foreground="{StaticResource PhoneForegroundBrush}"
@@ -23,9 +23,13 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,38">
             <TextBlock x:Name="PageTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-            <TextBlock x:Name="ListTitle" Text="{Binding From}" Margin="118,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="ListTitle" Text="{Binding From}" Margin="118,-6,-1,0" Style="{StaticResource PhoneTextTitle1Style}">
+            	<TextBlock.Projection>
+            		<PlaneProjection GlobalOffsetX="-117"/>
+            	</TextBlock.Projection>
+            </TextBlock>
         </StackPanel>
 
         <!--ContentPanel contains details text. Place additional content here-->
@@ -33,9 +37,42 @@
             <ScrollViewer>
                 <ListBox>
                     <StackPanel Orientation="Vertical">
-                        <sparklrControls:SparklrText Post="{Binding}" />
-                        <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Comments here?" VerticalAlignment="Top" />
+                        <sparklrControls:SparklrText Post="{Binding}" Foreground="White" Height="137" />
                     </StackPanel>
+                    <Button Height="92" Width="104" Foreground="Transparent" BorderBrush="#01FFFFFF" Click="HeartClick">
+                    	<Button.Projection>
+                    		<PlaneProjection GlobalOffsetX="166" GlobalOffsetY="-8"/>
+                    	</Button.Projection>
+                    	<Image Height="53" Source="Heart.png" Stretch="Fill" Width="53"/>
+                    </Button>
+                    <TextBlock Height="36" TextWrapping="Wrap" Text="Like" Width="50" FontFamily="Segoe WP Light">
+                    	<TextBlock.Projection>
+                    		<PlaneProjection GlobalOffsetX="177" GlobalOffsetY="-24"/>
+                    	</TextBlock.Projection>
+                    </TextBlock>
+                    <TextBox Height="71" TextWrapping="Wrap" Text="Comment Here..." Width="405" RenderTransformOrigin="0.5,0.5">
+                    	<TextBox.RenderTransform>
+                    		<CompositeTransform TranslateY="187"/>
+                    	</TextBox.RenderTransform>
+                    	<TextBox.Projection>
+                    		<PlaneProjection GlobalOffsetX="-36" GlobalOffsetY="-55"/>
+                    	</TextBox.Projection>
+                    </TextBox>
+                    <Button Height="87" Width="129" BorderBrush="Transparent" Foreground="Transparent">
+                    	<Button.Projection>
+                    		<PlaneProjection GlobalOffsetX="215" GlobalOffsetY="-134"/>
+                    	</Button.Projection>
+                    	<Image Height="45" Source="Add-New.png" Stretch="Fill" Width="43" Margin="-38,0,0,0" RenderTransformOrigin="0.5,0.5">
+                    		<Image.RenderTransform>
+                    			<CompositeTransform TranslateY="187"/>
+                    		</Image.RenderTransform>
+                    	</Image>
+                    </Button>
+                    <TextBlock Height="75" TextWrapping="Wrap" Text="Time Here? Ex: ChrisK @ 2:40am" Width="234" FontFamily="Segoe WP Light" FontSize="16" Foreground="White">
+                    	<TextBlock.Projection>
+                    		<PlaneProjection GlobalOffsetX="-99" GlobalOffsetY="-268"/>
+                    	</TextBlock.Projection>
+                    </TextBlock>
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

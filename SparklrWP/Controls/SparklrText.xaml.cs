@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework.Media;
+﻿//using Microsoft.Xna.Framework.Media;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -472,9 +472,9 @@ namespace SparklrWP.Controls
                         bmp.SaveJpeg(ms, bmp.PixelWidth, bmp.PixelHeight, 0, 85);
                         ms.Seek(0, SeekOrigin.Begin);
 
-                        using (MediaLibrary library = new MediaLibrary())
+                        //using (MediaLibrary library = new MediaLibrary())
                         {
-                            library.SavePicture(filename, ms);
+                           // library.SavePicture(filename, ms);
                         }
                     }
                 }
