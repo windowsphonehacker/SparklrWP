@@ -2,7 +2,7 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Collections.Generic;
 namespace SparklrWP
 {
     public partial class MainPage : PhoneApplicationPage
@@ -45,6 +45,36 @@ namespace SparklrWP
                 App.NotificationsViewModel.LoadData();
             }
             notificationsPivot.NewCount = 100; //TODO: needs an event maybe to change this
+            App.Client.GetFriends((fargs) =>
+            {
+                if (fargs.IsSuccessful)
+                {
+                    List<int> friends = new List<int>();
+                    foreach(int id in fargs.Object.followers){
+                        friends.Add(id);
+                    }
+                    foreach (int id in fargs.Object.following)
+                    {
+                        if (!friends.Contains(id)) friends.Add(id);
+                    }
+                    App.Client.GetUsernames(friends.ToArray(), (uargs) =>
+                    {
+                        foreach (int id in friends)
+                        {
+                            App.FriendsViewModel.Items.Add(new FriendViewModel()
+                            {
+                                Name = App.Client.Usernames[id],
+                                Image = "http://d.sparklr.me/i/t" + id + ".jpg"
+                            });
+                        }
+                        this.Dispatcher.BeginInvoke(() =>
+                        {
+                            friendPivot.DataContext = App.FriendsViewModel;
+                        });
+
+                    });
+                }
+            });
         }
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
@@ -55,6 +85,37 @@ namespace SparklrWP
         private void about_click(object sender, System.EventArgs e)
         {
             MessageBox.Show("Sparklr Branding © Jonathan Warner \n\n Application Development Team: \n\n Marocco2 (design!)\n jessenic (code!)\n EaterOfCorpses (code-design!)\n TheInterframe (code-design!)\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
+        }
+        private Type addedType;
+        private void LongListSelector_GroupViewClosing(object sender, GroupViewClosingEventArgs e)
+        {
+            if (addedType != null)
+            {
+                TiltEffect.TiltableItems.Remove(addedType);
+                addedType = null;
+            }
+        }
+
+        private void LongListSelector_GroupViewOpened(object sender, GroupViewOpenedEventArgs e)
+        {
+            var control = e.ItemsControl.Parent as UIElement;
+            var generator = e.ItemsControl.ItemContainerGenerator;
+
+            foreach (var item in e.ItemsControl.Items)
+            {
+                var container = generator.ContainerFromItem(item);
+                if (addedType == null)
+                {
+                    addedType = container.GetType();
+                    TiltEffect.TiltableItems.Add(addedType);
+                }
+                if (container != null)
+                {
+                    TiltEffect.SetIsTiltEnabled(container, true);
+                }
+            }
+
+            ScrollViewer.SetVerticalScrollBarVisibility(control, ScrollBarVisibility.Disabled);
         }
     }
 }

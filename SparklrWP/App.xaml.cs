@@ -10,6 +10,7 @@ namespace SparklrWP
     {
         private static MainViewModel postsViewModel = null;
         private static NotificationsViewModel notificationsViewModel = null;
+        private static FriendsViewModel friendsViewModel = null;
 
         public static Utils.Task BackgroundTask;
 
@@ -27,6 +28,18 @@ namespace SparklrWP
                     postsViewModel = new MainViewModel();
 
                 return postsViewModel;
+            }
+        }
+
+        public static FriendsViewModel FriendsViewModel
+        {
+            get
+            {
+                // Delay creation of the view model until necessary
+                if (friendsViewModel == null)
+                    friendsViewModel = new FriendsViewModel();
+
+                return friendsViewModel;
             }
         }
 

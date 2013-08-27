@@ -5,9 +5,11 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:utils="clr-namespace:SparklrWP.Utils"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696" 
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -16,6 +18,13 @@
     shell:SystemTray.IsVisible="True" Background="#FF454050">
 
     <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
+
+    <phone:PhoneApplicationPage.Resources>
+        <utils:ListToGroupedListConverter x:Key="ListToGroupedListConverter"/>
+        <ItemsPanelTemplate x:Key="GroupItemsPanel">
+            <toolkit:WrapPanel Margin="18,12" />
+        </ItemsPanelTemplate>
+    </phone:PhoneApplicationPage.Resources>
 
     <controls:Pivot Name="mainPivot" Title="sparklr*"  FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Background="#FF454050">
         <controls:Pivot.HeaderTemplate>
@@ -34,7 +43,6 @@
         <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
         <sparklrControls:NotificationPivotItem Name="postsPivot" Header="Posts"  Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"
     d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}" NewCount="10">
-
             <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                 <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" >
                     <ListBox.ItemTemplate>
@@ -50,14 +58,29 @@
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                         </Style>
                     </ListBox.ItemContainerStyle>
-
                 </ListBox>
             </Grid>
         </sparklrControls:NotificationPivotItem>
         <sparklrControls:NotificationPivotItem Name="notificationsPivot" Header="Notifications">
         </sparklrControls:NotificationPivotItem>
-        <controls:PivotItem Header="Friends">
-            <Grid/>
+        <controls:PivotItem d:DataContext="{d:DesignData SampleData/FriendsViewModelSampleData.xaml}" Header="Friends" Name="friendPivot">
+            <toolkit:LongListSelector Background="{x:Null}" GroupViewClosing="LongListSelector_GroupViewClosing" GroupViewOpened="LongListSelector_GroupViewOpened" ItemsSource="{Binding Items, ConverterParameter=Name, Converter={StaticResource ListToGroupedListConverter}}" GroupItemsPanel="{StaticResource GroupItemsPanel}">
+                <toolkit:LongListSelector.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <Grid Height="99" Width="99" Background="#FF2A2339" HorizontalAlignment="Left" Margin="12,6" toolkit:TiltEffect.IsTiltEnabled="True">
+                            <TextBlock TextWrapping="Wrap" Text="{Binding KeyName}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
+                        </Grid>
+                    </DataTemplate>
+                </toolkit:LongListSelector.GroupHeaderTemplate>
+                <toolkit:LongListSelector.ItemTemplate>
+                    <DataTemplate>
+                        <Grid toolkit:TiltEffect.IsTiltEnabled="True">
+                            <Image Height="60" Width="60" Source="{Binding Image}" Margin="12,6" HorizontalAlignment="Left" />
+                            <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" VerticalAlignment="Center" Margin="84,0,12,0" />
+                        </Grid>
+                    </DataTemplate>
+                </toolkit:LongListSelector.ItemTemplate>
+            </toolkit:LongListSelector>
         </controls:PivotItem>
         <controls:PivotItem Header="Inbox">
             <Grid/>

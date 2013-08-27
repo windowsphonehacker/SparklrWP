@@ -61,6 +61,7 @@
     <Compile Include="Objects\Responses\Beacon\Stream.cs" />
     <Compile Include="Objects\Responses\Generic.cs" />
     <Compile Include="Objects\Responses\Work\Chat.cs" />
+    <Compile Include="Objects\Responses\Work\Friends.cs" />
     <Compile Include="Objects\Responses\Work\Inbox.cs" />
     <Compile Include="Objects\Responses\Work\OnlineFriends.cs" />
     <Compile Include="Objects\Responses\Work\Post.cs" />
@@ -68,7 +69,6 @@
     <Compile Include="Objects\Responses\Work\Username.cs" />
     <Compile Include="Objects\SparklrEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SparklrClient_Deprecated.cs" />
     <Compile Include="SparklrClient.cs" />
   </ItemGroup>
   <ItemGroup>

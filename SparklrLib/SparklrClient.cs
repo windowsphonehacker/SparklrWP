@@ -471,5 +471,10 @@ namespace SparklrLib
         {
             requestJsonObject<Objects.Responses.Work.OnlineFriends[]>("/work/onlinefriends", Callback);
         }
+
+        public void GetFriends(Action<JSONRequestEventArgs<Objects.Responses.Work.Friends>> Callback)
+        {
+            requestJsonObject<Objects.Responses.Work.Friends>("/work/friends", Callback);
+        }
     }
 }
