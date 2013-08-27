@@ -84,6 +84,9 @@
     <Compile Include="DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Profile.xaml.cs">
+      <DependentUpon>Profile.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GlobalLoading.cs" />
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
@@ -111,6 +114,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="Controls\SparklrText.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Profile.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -170,16 +177,16 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
-    <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
-    <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
-    <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
-    <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
+    <Content Include="Assets\ApplicationBar.Add.png" />
+    <Content Include="Assets\ApplicationBar.Cancel.png" />
+    <Content Include="Assets\ApplicationBar.Check.png" />
+    <Content Include="Assets\ApplicationBar.Delete.png" />
+    <Content Include="Assets\ApplicationBar.Select.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Add-New.png" />
-    <Resource Include="Attachment.png" />
-    <Resource Include="bg.jpg" />
+    <Resource Include="Assets\Add-New.png" />
+    <Resource Include="Assets\Attachment.png" />
+    <Resource Include="Assets\bg.jpg" />
   </ItemGroup>
   <ItemGroup>
     <BlendEmbeddedFont Include="Fonts\Courgette-Regular.ttf">
@@ -187,10 +194,10 @@
       <All>True</All>
       <AutoFill>True</AutoFill>
     </BlendEmbeddedFont>
-    <Resource Include="Heart.png" />
-    <Resource Include="HeartRed.png" />
-    <Resource Include="Reload.png" />
-    <Resource Include="Senzanome.png" />
+    <Resource Include="Assets\Heart.png" />
+    <Resource Include="Assets\HeartRed.png" />
+    <Resource Include="Assets\Reload.png" />
+    <Resource Include="Assets\Senzanome.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
