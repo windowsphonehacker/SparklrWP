@@ -31,7 +31,7 @@
             <DataTemplate>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding}" HorizontalAlignment="Left" />
-                    <Border Background="White" CornerRadius="8" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="{Binding NewCountVisibility}" Margin="4,0,0,0">
+                    <Border x:Name="BorderNotification" Background="White" CornerRadius="8" VerticalAlignment="Top" HorizontalAlignment="Right" Visibility="{Binding NewCountVisibility}" Margin="4,0,0,0">
                         <TextBlock Foreground="#FF2A2339" Text="{Binding SelectedItem.NewCount, ElementName=mainPivot}" HorizontalAlignment="Center" Margin="10,0,10,4" FontSize="36" VerticalAlignment="Center"></TextBlock>
                     </Border>
                 </StackPanel>
