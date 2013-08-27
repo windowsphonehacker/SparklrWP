@@ -4,6 +4,7 @@ using Microsoft.Phone.Tasks;
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 
@@ -67,7 +68,7 @@ namespace SparklrWP
                 {
                     _photoStr.Dispose();
                     _photoStr = null;
-                    PicThumbnail.Source = null;
+                    SetThumbnail(null);
                 }
             }
             else
@@ -87,7 +88,7 @@ namespace SparklrWP
                 //Code to display the photo on the page in an image control named myImage.
                 var bmp = new System.Windows.Media.Imaging.BitmapImage();
                 bmp.SetSource(e.ChosenPhoto);
-                PicThumbnail.Source = bmp;
+                SetThumbnail(bmp);
             }
             GlobalLoading.Instance.IsLoading = false;
         }
@@ -106,7 +107,8 @@ namespace SparklrWP
             {
                 _photoStr.Dispose();
                 _photoStr = new MemoryStream();
-                PicThumbnail.Source = e.PhotoResult;
+                SetThumbnail(e.PhotoResult);
+
                 e.PhotoResult.SaveJpeg(_photoStr, e.PhotoResult.PixelWidth, e.PhotoResult.PixelHeight, 0, 100);
                 _photoStr.Seek(0, SeekOrigin.Begin);
             }
@@ -115,6 +117,20 @@ namespace SparklrWP
                 aviaryTask_Error(e.Exception);
             }
             GlobalLoading.Instance.IsLoading = false;
+        }
+
+        void SetThumbnail(ImageSource imgSource)
+        {
+            if (imgSource != null)
+            {
+                PicThumbnail.Source = imgSource;
+                EditBorder.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                PicThumbnail.Source = null;
+                EditBorder.Visibility = Visibility.Collapsed;
+            }
         }
 
         void aviaryTask_Error(Exception ex)
