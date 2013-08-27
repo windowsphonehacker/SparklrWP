@@ -1,19 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
-using System.ComponentModel;
+﻿using SparklrWP.Utils;
+using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace SparklrWP
 {
-    public class FriendsViewModel :INotifyPropertyChanged 
+    public class FriendsViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<FriendViewModel> Items {get;set;}
+        private ObservableCollection<FriendViewModel> _items;
+        public ReadOnlyObservableCollection<FriendViewModel> Items
+        {
+            get
+            {
+                return new ReadOnlyObservableCollection<FriendViewModel>(_items);
+            }
+            /*set
+            {
+                if (_items != value)
+                {
+                    _items = value;
+                    GroupedItems = _items.GroupFriends();
+                    NotifyPropertyChanged("Items");
+                    NotifyPropertyChanged("GroupedItems");
+                }
+            }*/
+        }
 
-        public FriendsViewModel(){
-            Items = new ObservableCollection<FriendViewModel>();
+        public void AddFriend(FriendViewModel f)
+        {
+            _items.Add(f);
+            GroupedItems.AddFriend(f);
+
+        }
+
+        public ObservableCollection<GroupedObservableCollection<FriendViewModel>> GroupedItems { get; private set; }
+
+        public FriendsViewModel()
+        {
+            _items = new ObservableCollection<FriendViewModel>();
+            GroupedItems = _items.GroupFriends();
+
+            NotifyPropertyChanged("GroupedItems");
+            NotifyPropertyChanged("Items");
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
