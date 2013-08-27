@@ -67,7 +67,7 @@
             <toolkit:LongListSelector Background="{x:Null}" GroupViewClosing="LongListSelector_GroupViewClosing" GroupViewOpened="LongListSelector_GroupViewOpened" ItemsSource="{Binding Items, ConverterParameter=Name, Converter={StaticResource ListToGroupedListConverter}}" GroupItemsPanel="{StaticResource GroupItemsPanel}">
                 <toolkit:LongListSelector.GroupHeaderTemplate>
                     <DataTemplate>
-                        <Grid Height="99" Width="99" Background="#FF2A2339" HorizontalAlignment="Left" Margin="12,6" toolkit:TiltEffect.IsTiltEnabled="True">
+                        <Grid Height="75" Width="75" Background="#FF2A2339" HorizontalAlignment="Left" Margin="12,6" toolkit:TiltEffect.IsTiltEnabled="True">
                             <TextBlock TextWrapping="Wrap" Text="{Binding KeyName}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
                         </Grid>
                     </DataTemplate>
@@ -75,8 +75,8 @@
                 <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <Grid toolkit:TiltEffect.IsTiltEnabled="True">
-                            <Image Height="60" Width="60" Source="{Binding Image}" Margin="12,6" HorizontalAlignment="Left" />
-                            <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" VerticalAlignment="Center" Margin="84,0,12,0" />
+                            <Image Height="75" Width="75" Source="{Binding Image}" Margin="12,6" HorizontalAlignment="Left" />
+                            <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" VerticalAlignment="Center" Margin="92,15,12,15" />
                         </Grid>
                     </DataTemplate>
                 </toolkit:LongListSelector.ItemTemplate>
