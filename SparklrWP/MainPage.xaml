@@ -71,7 +71,7 @@
                 <!-- Template for a single item inside the list -->
                 <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Tag="{Binding Id}" Orientation="Horizontal" Tap="StackPanel_Tap">
                             <Image Height="75" Width="75" Source="{Binding Image}" Margin="12,6" HorizontalAlignment="Left" />
                             <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" VerticalAlignment="Center" Margin="0,15,12,15" />
                         </StackPanel>

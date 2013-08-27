@@ -48,6 +48,10 @@ namespace SparklrWP.Pages
                                 Handle = "@" + usargs.Object.handle
                             };
                             bio.Text = usargs.Object.bio;
+                            if(bio.Text.Trim() == ""){
+                                bio.FontStyle = FontStyles.Italic;
+                                bio.Text = usargs.Object.name + " is too shy to write something about his/herself maybe check again later!";
+                            }
                         });
                     }
                 });
