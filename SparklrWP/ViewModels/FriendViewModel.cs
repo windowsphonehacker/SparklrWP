@@ -8,6 +8,10 @@ namespace SparklrWP
 {
     public class FriendViewModel:INotifyPropertyChanged
     {
+        public FriendViewModel(int Id){
+            this.Id = Id;
+        }
+
         private string _name;
         public string Name
         {

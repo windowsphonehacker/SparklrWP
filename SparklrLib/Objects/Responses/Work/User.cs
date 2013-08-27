@@ -26,8 +26,8 @@ namespace SparklrLib.Objects.Responses.Work
     {
         public int user { get; set; }
         public string handle { get; set; }
-        public int avatarid { get; set; }
-        public int background { get; set; }
+        public int? avatarid { get; set; }
+        public int? background { get; set; }
         public bool following { get; set; }
         public string name { get; set; }
         public string bio { get; set; }

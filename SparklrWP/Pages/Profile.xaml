@@ -12,36 +12,66 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="False">
+    shell:SystemTray.IsVisible="False" Background="#FF454050">
 
     <!--LayoutRoot contains the root grid where all other page content is placed-->
-    <Grid x:Name="LayoutRoot">
-        <controls:Panorama Title="Dude">
+    <Grid x:Name="LayoutRoot" Background="#FF454050">
+        <controls:Panorama x:Name="profilePanorama" Tag="http://d.sparklr.me/i/34.jpg" Title="">
             <controls:Panorama.Background>
-                <ImageBrush ImageSource="http://d.sparklr.me/i/b591.jpg" AlignmentX="Left" AlignmentY="Top" Stretch="UniformToFill"/>
+                <ImageBrush x:Name="profileBg" ImageSource="" Stretch="UniformToFill"/>
             </controls:Panorama.Background>
             <controls:Panorama.TitleTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" Margin="0,64,0,0">
                         <Border Width="100" Height="100" CornerRadius="50" Margin="0,0,20,0">
                             <Border.Background>
-                                <ImageBrush Stretch="UniformToFill" ImageSource="http://d.sparklr.me/i/591.jpg" />
+                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Tag.Image, ElementName=profilePanorama}" />
                              </Border.Background>
                         </Border>
-                        <TextBlock Text="{Binding}" FontSize="100" />
+                        <StackPanel>
+                            <Grid Background="#BF454050">
+                                <TextBlock Height="100" Text="{Binding}" FontSize="75" />
+                            </Grid>
+                            <Grid Background="#BF454050">
+                                <TextBlock Height="27" Text="{Binding Tag.Handle, ElementName=profilePanorama}" FontSize="25" />
+                            </Grid>
+                        </StackPanel>
                     </StackPanel>
                 </DataTemplate>
             </controls:Panorama.TitleTemplate>
+            <controls:Panorama.HeaderTemplate>
+                <DataTemplate>
+                    <Grid Background="#BF454050">
+                        <TextBlock Text="{Binding}"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </controls:Panorama.HeaderTemplate>
             <!--Panorama item one-->
             <controls:PanoramaItem Header="About">
-                <Grid/>
+                <TextBlock x:Name="bio" HorizontalAlignment="Left" Height="484" TextWrapping="Wrap" VerticalAlignment="Top" Width="420"/>
             </controls:PanoramaItem>
 
             <!--Panorama item two-->
             <controls:PanoramaItem Header="Posts">
                 <Grid/>
             </controls:PanoramaItem>
+
+            <controls:PanoramaItem Header="Photos">
+                <Grid/>
+            </controls:PanoramaItem>
+
+            <controls:PanoramaItem Header="Mentions">
+                <Grid/>
+            </controls:PanoramaItem>
         </controls:Panorama>
     </Grid>
-
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar BackgroundColor="#FF2A2339">
+            <shell:ApplicationBar.Buttons>
+                <shell:ApplicationBarIconButton x:Name="followButton" Text="Follow" IconUri="/Assets/AppBar/ApplicationBar.Add.png">
+                    
+                </shell:ApplicationBarIconButton>
+            </shell:ApplicationBar.Buttons>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

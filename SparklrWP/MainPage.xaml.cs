@@ -18,6 +18,7 @@ namespace SparklrWP
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
         }
 
+        public bool didFriends = false;
         // Handle selection changed on ListBox
         private void MainListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -45,37 +46,41 @@ namespace SparklrWP
                 App.NotificationsViewModel.LoadData();
             }
             notificationsPivot.NewCount = 100; //TODO: needs an event maybe to change this
-            App.Client.GetFriends((fargs) =>
+            if (!didFriends)
             {
-                if (fargs.IsSuccessful)
+                didFriends = true;
+                App.Client.GetFriends((fargs) =>
                 {
-                    List<int> friends = new List<int>();
-                    foreach (int id in fargs.Object.followers)
+                    if (fargs.IsSuccessful)
                     {
-                        friends.Add(id);
-                    }
-                    foreach (int id in fargs.Object.following)
-                    {
-                        if (!friends.Contains(id)) friends.Add(id);
-                    }
-                    App.Client.GetUsernames(friends.ToArray(), (uargs) =>
-                    {
-                        foreach (int id in friends)
+                        List<int> friends = new List<int>();
+                        foreach (int id in fargs.Object.followers)
                         {
-                            App.FriendsViewModel.AddFriend(new FriendViewModel()
-                            {
-                                Name = App.Client.Usernames.ContainsKey(id) ? App.Client.Usernames[id] : "User " + id,
-                                Image = "http://d.sparklr.me/i/t" + id + ".jpg"
-                            });
+                            friends.Add(id);
                         }
-                        this.Dispatcher.BeginInvoke(() =>
+                        foreach (int id in fargs.Object.following)
                         {
-                            friendPivot.DataContext = App.FriendsViewModel;
-                        });
+                            if (!friends.Contains(id)) friends.Add(id);
+                        }
+                        App.Client.GetUsernames(friends.ToArray(), (uargs) =>
+                        {
+                            foreach (int id in friends)
+                            {
+                                App.FriendsViewModel.AddFriend(new FriendViewModel(id)
+                                {
+                                    Name = App.Client.Usernames.ContainsKey(id) ? App.Client.Usernames[id] : "User " + id,
+                                    Image = "http://d.sparklr.me/i/t" + id + ".jpg"
+                                });
+                            }
+                            this.Dispatcher.BeginInvoke(() =>
+                            {
+                                friendPivot.DataContext = App.FriendsViewModel;
+                            });
 
-                    });
-                }
-            });
+                        });
+                    }
+                });
+            }
         }
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
