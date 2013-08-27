@@ -19,13 +19,6 @@
 
     <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
 
-    <phone:PhoneApplicationPage.Resources>
-        <utils:ListToGroupedListConverter x:Key="ListToGroupedListConverter"/>
-        <ItemsPanelTemplate x:Key="GroupItemsPanel">
-            <toolkit:WrapPanel Margin="18,12" />
-        </ItemsPanelTemplate>
-    </phone:PhoneApplicationPage.Resources>
-
     <controls:Pivot Name="mainPivot" Title="sparklr*"  FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Background="#FF454050">
         <controls:Pivot.HeaderTemplate>
             <DataTemplate>
@@ -63,23 +56,43 @@
         </sparklrControls:NotificationPivotItem>
         <sparklrControls:NotificationPivotItem Name="notificationsPivot" Header="Notifications">
         </sparklrControls:NotificationPivotItem>
+
         <sparklrControls:NotificationPivotItem d:DataContext="{d:DesignData SampleData/FriendsViewModelSampleData.xaml}" Header="Friends" Name="friendPivot">
-            <toolkit:LongListSelector Background="{x:Null}" GroupViewClosing="LongListSelector_GroupViewClosing" GroupViewOpened="LongListSelector_GroupViewOpened" ItemsSource="{Binding Items, ConverterParameter=Name, Converter={StaticResource ListToGroupedListConverter}}" GroupItemsPanel="{StaticResource GroupItemsPanel}">
+            <toolkit:LongListSelector Background="{x:Null}" ItemsSource="{Binding GroupedItems}">
+                <!-- Template for the letters inside the list -->
                 <toolkit:LongListSelector.GroupHeaderTemplate>
                     <DataTemplate>
-                        <Grid Height="75" Width="75" Background="#FF2A2339" HorizontalAlignment="Left" Margin="12,6" toolkit:TiltEffect.IsTiltEnabled="True">
-                            <TextBlock TextWrapping="Wrap" Text="{Binding KeyName}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
-                        </Grid>
+                        <Border Height="75" Width="75" Background="#FF2A2339" HorizontalAlignment="Left" Margin="12,6">
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
+                        </Border>
                     </DataTemplate>
                 </toolkit:LongListSelector.GroupHeaderTemplate>
+                
+                <!-- Template for a single item inside the list -->
                 <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
-                        <Grid toolkit:TiltEffect.IsTiltEnabled="True">
+                        <StackPanel Orientation="Horizontal">
                             <Image Height="75" Width="75" Source="{Binding Image}" Margin="12,6" HorizontalAlignment="Left" />
-                            <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" VerticalAlignment="Center" Margin="92,15,12,15" />
-                        </Grid>
+                            <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" VerticalAlignment="Center" Margin="0,15,12,15" />
+                        </StackPanel>
                     </DataTemplate>
                 </toolkit:LongListSelector.ItemTemplate>
+                
+                <!-- Template for the popup container -->
+                <toolkit:LongListSelector.GroupItemsPanel>
+                    <ItemsPanelTemplate>
+                        <toolkit:WrapPanel />
+                    </ItemsPanelTemplate>
+                </toolkit:LongListSelector.GroupItemsPanel>
+                
+                <!-- Template for the popup letters -->
+                <toolkit:LongListSelector.GroupItemTemplate>
+                    <DataTemplate>
+                        <Border Height="75" Width="75" Background="#FF2A2339" HorizontalAlignment="Left" Margin="12,6" IsHitTestVisible="{Binding HasItems}">
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
+                        </Border>
+                    </DataTemplate>
+                </toolkit:LongListSelector.GroupItemTemplate>
             </toolkit:LongListSelector>
         </sparklrControls:NotificationPivotItem>
         <sparklrControls:NotificationPivotItem Header="Inbox">

@@ -62,7 +62,7 @@ namespace SparklrWP
                     {
                         foreach (int id in friends)
                         {
-                            App.FriendsViewModel.Items.Add(new FriendViewModel()
+                            App.FriendsViewModel.AddFriend(new FriendViewModel()
                             {
                                 Name = App.Client.Usernames.ContainsKey(id) ? App.Client.Usernames[id] : "User " + id,
                                 Image = "http://d.sparklr.me/i/t" + id + ".jpg"

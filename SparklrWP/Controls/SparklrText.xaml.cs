@@ -493,14 +493,22 @@ namespace SparklrWP.Controls
                     string filename = String.Format("{0}", Guid.NewGuid().ToString("N"));
                     WriteableBitmap bmp = new WriteableBitmap(image);
 
-                    using (MemoryStream ms = new MemoryStream())
+                    if (ImageLocation.StartsWith("http://d.sparklr.me/i/t", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        bmp.SaveJpeg(ms, bmp.PixelWidth, bmp.PixelHeight, 0, 85);
-                        ms.Seek(0, SeekOrigin.Begin);
-
-                        //using (MediaLibrary library = new MediaLibrary())
+                        //Check if we have a thumbnail only
+                    }
+                    else
+                    {
+                        using (MemoryStream ms = new MemoryStream())
                         {
-                            // library.SavePicture(filename, ms);
+                            bmp.SaveJpeg(ms, bmp.PixelWidth, bmp.PixelHeight, 0, 85);
+                            ms.Seek(0, SeekOrigin.Begin);
+
+                            //TODO: Uncomment on release
+                            //using (MediaLibrary library = new MediaLibrary())
+                            //{
+                            //    library.SavePicture(filename, ms);
+                            //}
                         }
                     }
                 }
