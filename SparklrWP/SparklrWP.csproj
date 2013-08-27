@@ -53,6 +53,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AviarySDK">
+      <HintPath>..\Libraries\AviarySDK\dll\AviarySDK.dll</HintPath>
+    </Reference>
     <Reference Include="Mangopollo">
       <HintPath>..\packages\Mangopollo.1.3\lib\sl4-windowsphone71\Mangopollo.dll</HintPath>
     </Reference>
@@ -176,6 +179,9 @@
     <Content Include="Assets\AppBar\appbar.refresh.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Icons\appbar.apply.rest.png" />
+    <Content Include="Icons\appbar.cancel.rest.png" />
+    <Content Include="Icons\appbar.save.rest.png" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
