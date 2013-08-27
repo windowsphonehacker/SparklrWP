@@ -1,15 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.ComponentModel;
 
 namespace SparklrWP
 {
-    public class FriendViewModel:INotifyPropertyChanged
+    public class FriendViewModel : INotifyPropertyChanged
     {
-        public FriendViewModel(int Id){
+        public FriendViewModel(int Id)
+        {
             this.Id = Id;
+        }
+
+        //For design
+        public FriendViewModel()
+        {
         }
 
         private string _name;
