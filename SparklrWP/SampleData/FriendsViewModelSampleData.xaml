@@ -4,7 +4,8 @@
     xmlns:local="clr-namespace:SparklrWP">
 
     <local:FriendsViewModel.Items>
-        <local:FriendViewModel Name="Dude" Image="http://d.sparklr.me/i/t591.jpg"></local:FriendViewModel>
+        <local:FriendViewModel Name="Dude" Image="http://d.sparklr.me/i/t591.jpg" IsOnline="True"></local:FriendViewModel>
+        <local:FriendViewModel Name="Guy" Image="http://d.sparklr.me/i/t591.jpg" IsOnline="False"></local:FriendViewModel>
     </local:FriendsViewModel.Items>
 
 </local:FriendsViewModel>
