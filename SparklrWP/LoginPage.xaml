@@ -52,13 +52,13 @@
 		</Storyboard>
 	</phone:PhoneApplicationPage.Resources>
 	<phone:PhoneApplicationPage.Background>
-		<ImageBrush Stretch="Fill" ImageSource="bg.jpg"/>
+		<ImageBrush Stretch="Fill" ImageSource="Assets\bg.jpg"/>
 	</phone:PhoneApplicationPage.Background>
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot">
     	<Grid.Background>
-    		<ImageBrush Stretch="UniformToFill" ImageSource="bg.jpg"/>
+    		<ImageBrush Stretch="UniformToFill" ImageSource="Assets\bg.jpg"/>
     	</Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="180"/>
@@ -101,7 +101,7 @@
         </Grid>
         <StackPanel HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="480">
         	<StackPanel.Background>
-        		<ImageBrush Stretch="UniformToFill" ImageSource="Senzanome.png"/>
+        		<ImageBrush Stretch="UniformToFill" ImageSource="Assets\Senzanome.png"/>
         	</StackPanel.Background>
         	<TextBlock HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="WORK IN PROGRESS" Width="480" FontSize="29.333" TextAlignment="Center" FontFamily="Segoe WP Semibold" Foreground="White"/>
         </StackPanel>

@@ -43,7 +43,7 @@
                     	<Button.Projection>
                     		<PlaneProjection GlobalOffsetX="166" GlobalOffsetY="-8"/>
                     	</Button.Projection>
-                    	<Image Height="53" Source="Heart.png" Stretch="Fill" Width="53"/>
+                    	<Image Height="53" Source="Assets\Heart.png" Stretch="Fill" Width="53"/>
                     </Button>
                     <TextBlock Height="36" TextWrapping="Wrap" Text="Like" Width="50" FontFamily="Segoe WP Light">
                     	<TextBlock.Projection>
@@ -62,7 +62,7 @@
                     	<Button.Projection>
                     		<PlaneProjection GlobalOffsetX="215" GlobalOffsetY="-134"/>
                     	</Button.Projection>
-                    	<Image Height="45" Source="Add-New.png" Stretch="Fill" Width="43" Margin="-38,0,0,0" RenderTransformOrigin="0.5,0.5">
+                    	<Image Height="45" Source="Assets\Add-New.png" Stretch="Fill" Width="43" Margin="-38,0,0,0" RenderTransformOrigin="0.5,0.5">
                     		<Image.RenderTransform>
                     			<CompositeTransform TranslateY="187"/>
                     		</Image.RenderTransform>
