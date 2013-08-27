@@ -1,6 +1,8 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SparklrLib;
+using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Navigation;
 
@@ -187,5 +189,37 @@ namespace SparklrWP
         }
 
         #endregion
+
+        private static string _aviaryApiKey;
+
+        public static string AviaryApiKey
+        {
+            get
+            {
+                if (_aviaryApiKey == null)
+                {
+                    var resourceStream = Application.GetResourceStream(new Uri("aviaryapikey.txt", UriKind.Relative));
+
+                    if (resourceStream != null)
+                    {
+                        using (Stream myFileStream = resourceStream.Stream)
+                        {
+                            if (myFileStream.CanRead)
+                            {
+                                using (StreamReader myStreamReader = new StreamReader(myFileStream))
+                                {
+
+                                    //read the content here
+                                    _aviaryApiKey = myStreamReader.ReadToEnd();
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+                return _aviaryApiKey;
+            }
+        }
     }
 }
