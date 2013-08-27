@@ -22,33 +22,33 @@
             </controls:Panorama.Background>
             <controls:Panorama.TitleTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal" Margin="0,64,0,0">
-                        <Border Width="100" Height="100" CornerRadius="50" Margin="0,0,20,0">
-                            <Border.Background>
-                                <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Tag.Image, ElementName=profilePanorama}" />
-                             </Border.Background>
-                        </Border>
-                        <StackPanel>
-                            <Grid Background="#BF454050">
-                                <TextBlock Height="100" Text="{Binding}" FontSize="75" />
-                            </Grid>
-                            <Grid Background="#BF454050">
-                                <TextBlock Height="27" Text="{Binding Tag.Handle, ElementName=profilePanorama}" FontSize="25" />
-                            </Grid>
+                    <Border Background="#BF454050" Margin="0,85,0,0" CornerRadius="50" BorderThickness="1,0,0,0" Padding="20,5">
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="100" Height="100" CornerRadius="50" Margin="0,0,20,0">
+                                <Border.Background>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding Tag.Image, ElementName=profilePanorama}" />
+                                </Border.Background>
+                            </Border>
+                            <StackPanel>
+                                <TextBlock Text="{Binding}" FontSize="75" />
+                                <TextBlock Text="{Binding Tag.Handle, ElementName=profilePanorama}" FontSize="25" Margin="0" VerticalAlignment="Bottom" />
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
+                    </Border>
                 </DataTemplate>
             </controls:Panorama.TitleTemplate>
             <controls:Panorama.HeaderTemplate>
                 <DataTemplate>
-                    <Grid Background="#BF454050">
+                    <Border CornerRadius="30" Padding="10" Background="#BF454050">
                         <TextBlock Text="{Binding}"></TextBlock>
-                    </Grid>
+                    </Border>
                 </DataTemplate>
             </controls:Panorama.HeaderTemplate>
             <!--Panorama item one-->
             <controls:PanoramaItem Header="About">
-                <TextBlock x:Name="bio" HorizontalAlignment="Left" Height="484" TextWrapping="Wrap" VerticalAlignment="Top" Width="420"/>
+                <Border Padding="10" Background="#BF454050" CornerRadius="10" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                    <TextBlock x:Name="bio" TextWrapping="Wrap"/>
+                </Border>
             </controls:PanoramaItem>
 
             <!--Panorama item two-->
@@ -69,7 +69,7 @@
         <shell:ApplicationBar BackgroundColor="#FF2A2339">
             <shell:ApplicationBar.Buttons>
                 <shell:ApplicationBarIconButton x:Name="followButton" Text="Follow" IconUri="/Assets/AppBar/ApplicationBar.Add.png">
-                    
+
                 </shell:ApplicationBarIconButton>
             </shell:ApplicationBar.Buttons>
         </shell:ApplicationBar>

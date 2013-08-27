@@ -128,5 +128,9 @@ namespace SparklrWP
         {
             mainPivot.SelectedItem = notificationsPivot;
         }
+        private void StackPanel_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/Profile.xaml?userId=" + ((StackPanel)sender).Tag, UriKind.Relative));
+        }
     }
 }
