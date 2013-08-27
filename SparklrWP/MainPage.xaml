@@ -40,7 +40,7 @@
                 <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel MinWidth="456" MaxWidth="456" Background="White" Margin="0,0,0,17">
+                            <StackPanel MinWidth="456" MaxWidth="456" Margin="0,0,0,17">
                                 <sparklrControls:SparklrText Post="{Binding}" />
                             </StackPanel>
                         </DataTemplate>

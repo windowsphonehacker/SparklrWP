@@ -103,8 +103,8 @@ namespace SparklrWP
         {
             //Stop the updater, to prevent multiple requests
 
-           /* if (stopTimer)
-                streamUpdater.Change(10000, Timeout.Infinite);*/
+            if (stopTimer)
+                streamUpdater.Change(Timeout.Infinite, Timeout.Infinite);
 
             GlobalLoading.Instance.IsLoading = true;
 
@@ -137,7 +137,7 @@ namespace SparklrWP
                     if (stream == null || stream.data == null)
                     {
                         GlobalLoading.Instance.IsLoading = false;
-                        //streamUpdater.Change(10000, Timeout.Infinite);
+                        streamUpdater.Change(10000, Timeout.Infinite);
                         return;
                     }
                     int count = stream.data.length;
@@ -180,7 +180,7 @@ namespace SparklrWP
                     Items = newItems;
                     GlobalLoading.Instance.IsLoading = false;
                     this.IsDataLoaded = true;
-                    //streamUpdater.Change(10000, Timeout.Infinite);
+                    streamUpdater.Change(10000, Timeout.Infinite);
                     return;
                 }
             });

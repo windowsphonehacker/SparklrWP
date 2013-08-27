@@ -74,6 +74,7 @@
       <HintPath>..\Libraries\AviarySDK\dll\Microsoft.Phone.Controls.Toolkit.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Microsoft.Xna.Framework" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -223,7 +224,7 @@
       <All>True</All>
       <AutoFill>True</AutoFill>
     </BlendEmbeddedFont>
-    <Resource Include="Assets\Heart.png" />
+    <Content Include="Assets\Heart.png" />
     <Resource Include="Assets\HeartRed.png" />
     <Resource Include="Assets\Reload.png" />
     <Resource Include="Assets\Senzanome.png" />

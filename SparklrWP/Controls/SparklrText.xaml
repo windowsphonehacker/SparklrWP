@@ -8,35 +8,48 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="480" d:DesignWidth="480">
-
-    <Grid x:Name="LayoutRoot">
+    d:DesignHeight="480" d:DesignWidth="480" Padding="0" Margin="0">
+    
+    <Grid x:Name="LayoutRoot">     
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Border MaxWidth="432" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="7" BorderBrush="#E5E4E6" x:Name="ImageContainer" Margin="0,0,0,0" Visibility="Collapsed">
-            <Image Stretch="Fill" x:Name="MessageImage" />
-            <toolkit:ContextMenuService.ContextMenu>
-                <toolkit:ContextMenu>
-                    <toolkit:MenuItem Header="Save to phone..." Click="SaveImageToPhone_Click" />
-                </toolkit:ContextMenu>
-            </toolkit:ContextMenuService.ContextMenu>
-        </Border>
-        <RichTextBox Grid.Row="1" Background="#CCFFFFFF" Foreground="Black" Padding="5,7,5,2">
-            <Paragraph FontSize="26" x:Name="messageContentParagraph" />
+            <Grid Width="432" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ImageContainer" Visibility="Collapsed">
+                <Image Stretch="Fill" x:Name="MessageImage"></Image>
+                <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Visibility="{Binding Visibility, ElementName=messageContentContainer}">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="Transparent" Offset="0.532"/>
+                            <GradientStop Color="White" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+                <toolkit:ContextMenuService.ContextMenu>
+                    <toolkit:ContextMenu>
+                        <toolkit:MenuItem Header="Save to phone..." Click="SaveImageToPhone_Click" />
+                    </toolkit:ContextMenu>
+                </toolkit:ContextMenuService.ContextMenu>
+        </Grid>
+        <RichTextBox Grid.Row="1" Background="White" Foreground="Black" Padding="5,7,5,2" x:Name="messageContentContainer">
+            <Paragraph FontSize="26" x:Name="messageContentParagraph">
+            </Paragraph>
         </RichTextBox>
-        <Grid Grid.Row="2" Margin="12,0" Background="#DDFFFFFF" x:Name="userbar">
+        <Grid Grid.Row="2" Margin="12,0" Background="#FF2A2339" x:Name="userbar" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Foreground="#333" FontSize="17" x:Name="usernameTextBlock" />
-            <TextBlock Grid.Column="1" Foreground="#333" FontSize="17" x:Name="commentCountTextBlock" />
-            <TextBlock Grid.Column="2" Foreground="#333" FontSize="17" x:Name="likesTextBlock" />
+            <TextBlock Grid.Column="0" Foreground="White" FontSize="17" x:Name="usernameTextBlock" />
+            <TextBlock Grid.Column="1" Foreground="White" FontSize="17" x:Name="commentCountTextBlock" />
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Image Source="/Assets/Heart.png" Width="15" Height="15" HorizontalAlignment="Left" />
+                <TextBlock Foreground="White" FontSize="17" x:Name="likesTextBlock" Padding="7,0,0,0">Test</TextBlock>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>
