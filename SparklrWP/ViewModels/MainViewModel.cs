@@ -102,13 +102,9 @@ namespace SparklrWP
         private void loadData(bool stopTimer = true)
         {
             //Stop the updater, to prevent multiple requests
-<<<<<<< HEAD
+
            /* if (stopTimer)
                 streamUpdater.Change(10000, Timeout.Infinite);*/
-=======
-            if (stopTimer)
-                streamUpdater.Change(Timeout.Infinite, Timeout.Infinite);
->>>>>>> Resolving conflicts
 
             GlobalLoading.Instance.IsLoading = true;
 
