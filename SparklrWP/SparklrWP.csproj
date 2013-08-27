@@ -53,6 +53,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AviarySDK">
+      <HintPath>..\..\..\..\Downloads\Aviary-WP7-SDK\AviarySDK\dll\AviarySDK.dll</HintPath>
+    </Reference>
+    <Reference Include="ExifLib">
+      <HintPath>..\..\..\..\Downloads\Aviary-WP7-SDK\AviarySDK\dll\ExifLib.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.Phone">
+      <HintPath>..\..\..\..\Downloads\Aviary-WP7-SDK\AviarySDK\dll\ImageTools.Phone.dll</HintPath>
+    </Reference>
     <Reference Include="Mangopollo">
       <HintPath>..\packages\Mangopollo.1.3\lib\sl4-windowsphone71\Mangopollo.dll</HintPath>
     </Reference>
@@ -65,7 +74,13 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PhoneCodeContractsAssemblies">
+      <HintPath>..\..\..\..\Downloads\Aviary-WP7-SDK\AviarySDK\dll\PhoneCodeContractsAssemblies.dll</HintPath>
+    </Reference>
     <Reference Include="system.data.linq" />
+    <Reference Include="System.Json">
+      <HintPath>..\..\..\..\Downloads\Aviary-WP7-SDK\AviarySDK\dll\System.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -176,6 +191,9 @@
     <Content Include="Assets\AppBar\appbar.refresh.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="icons\appbar.apply.rest.png" />
+    <Resource Include="icons\appbar.cancel.rest.png" />
+    <Resource Include="icons\appbar.save.rest.png" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
