@@ -482,5 +482,14 @@ namespace SparklrLib
         {
             requestJsonObject<Objects.Responses.Work.Friends>("/work/friends", Callback);
         }
+
+        public void GetUser(string username, Action<JSONRequestEventArgs<Objects.Responses.Work.User>> Callback)
+        {
+            requestJsonObject<Objects.Responses.Work.User>("/work/user/" + username, Callback);
+        }
+        public void GetUser(int userid, Action<JSONRequestEventArgs<Objects.Responses.Work.User>> Callback)
+        {
+            requestJsonObject<Objects.Responses.Work.User>("/work/user/" + userid, Callback);
+        }
     }
 }
