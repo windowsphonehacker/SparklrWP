@@ -113,6 +113,8 @@ namespace SparklrWP.Controls
         private ItemViewModel post;
         private BitmapImage image;
 
+        WebClient asynchronousImageUpdater;
+
         /// <summary>
         /// The content of the post
         /// </summary>
@@ -145,10 +147,6 @@ namespace SparklrWP.Controls
             {
                 if (post != value)
                 {
-#if DEBUG
-                    if (System.Diagnostics.Debugger.IsAttached && post != null && post.Id != value.Id)
-                        throw new Exception("Control updated with wrong id. Don't handle this exception!");
-#endif
                     this.ImageLocation = value.ImageUrl;
                     this.Username = value.From;
                     this.Comments = value.CommentCount;
@@ -231,27 +229,51 @@ namespace SparklrWP.Controls
             }
             set
             {
-                if (imagelocation != value && !String.IsNullOrEmpty(value))
+                if (imagelocation != value)
                 {
+                    if (String.IsNullOrEmpty(value))
+                    {
+                        MessageImage.Source = null;
+                    }
+                    else
+                    {
+                        loadImage(value);
+                    }
+
                     imagelocation = value;
-                    loadImage(value);
                 }
             }
         }
 
         private void loadImage(string value)
         {
-            WebClient wc = new WebClient();
-            wc.OpenReadCompleted += (sender, e) =>
-            {
-                image = new BitmapImage();
-                image.SetSource(e.Result);
-                MessageImage.Source = image;
+            //We need to store the old image location
+            string oldImageLocation = value;
 
-                refreshVisibility();
-            };
+            if (asynchronousImageUpdater != null && asynchronousImageUpdater.IsBusy)
+                asynchronousImageUpdater.CancelAsync();
 
-            wc.OpenReadAsync(new Uri(value));
+            asynchronousImageUpdater = new WebClient();
+            asynchronousImageUpdater.OpenReadCompleted += (sender, e) =>
+                       {
+                           /*
+                            * We need to make sure that this.ImageLocation is the
+                            * same value as when we started the request. The parent
+                            * of the control might reuse controls and change the content.
+                            * This way we might finish this asynchronous operation when we already
+                            * have a different image location.
+                            */
+                           if (oldImageLocation == this.ImageLocation)
+                           {
+                               image = new BitmapImage();
+                               image.SetSource(e.Result);
+                               MessageImage.Source = image;
+                           }
+
+                           refreshVisibility();
+                       };
+
+            asynchronousImageUpdater.OpenReadAsync(new Uri(value));
         }
 
         /// <summary>
@@ -478,7 +500,7 @@ namespace SparklrWP.Controls
 
                         //using (MediaLibrary library = new MediaLibrary())
                         {
-                           // library.SavePicture(filename, ms);
+                            // library.SavePicture(filename, ms);
                         }
                     }
                 }
