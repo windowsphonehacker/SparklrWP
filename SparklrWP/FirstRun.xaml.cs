@@ -18,6 +18,7 @@ namespace SparklrWP
             if (!IsolatedStorageSettings.ApplicationSettings.Contains("firstruncheck"))
             {
                 IsolatedStorageSettings.ApplicationSettings.Add("firstruncheck", true);
+                IsolatedStorageSettings.ApplicationSettings.Save();
             }
             if (NavigationService.CanGoBack)
             {

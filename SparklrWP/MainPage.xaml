@@ -108,6 +108,7 @@
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New post" Click="ApplicationBarIconButton_Click"/>
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem IsEnabled="True" Text="About" Click="about_click"/>
+                <shell:ApplicationBarMenuItem IsEnabled="True" Text="logout" Click="logout_Click"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
