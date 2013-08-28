@@ -30,19 +30,6 @@ namespace SparklrLib
         /// </value>
         public long UserId { get; private set; }
         /// <summary>
-        /// Get is user logged in
-        /// </summary>
-        /// <value>
-        /// User login status
-        /// </value>
-        public bool IsLoggedIn
-        {
-            get
-            {
-                return AuthToken != null && UserId != 0L;
-            }
-        }
-        /// <summary>
         /// Gets or sets the usernames.
         /// </summary>
         /// <value>
@@ -212,13 +199,6 @@ namespace SparklrLib
                     Error = ex
                 };
             }
-        }
-
-        public void ManualLogin(string authToken, long userId)
-        {
-            //TODO: Could use some checks
-            this.AuthToken = authToken;
-            this.UserId = userId;
         }
 
         /// <summary>

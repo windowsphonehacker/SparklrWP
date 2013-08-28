@@ -27,7 +27,7 @@
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <Utf8Output>true</Utf8Output>
     <ExpressionBlendVersion>4.0.30816.0</ExpressionBlendVersion>
-    <ExpressionBlendVersion>4.0.30816.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -254,6 +254,9 @@
     </Content>
     <Resource Include="Assets\Attachment.png" />
     <Resource Include="Assets\bg.jpg" />
+    <Content Include="Controls\appbar.message.send.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Login-Arrow.png" />
     <Resource Include="Login.PNG" />
     <Resource Include="Pivoit.PNG" />
