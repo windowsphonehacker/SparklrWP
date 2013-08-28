@@ -34,7 +34,7 @@
 
 
         <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
-        <sparklrControls:NotificationPivotItem Name="postsPivot" Header="Posts"  Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"
+        <sparklrControls:NotificationPivotItem x:Name="postsPivot" Header="Posts"  Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"
     d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}" NewCount="10">
             <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                 <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" >
@@ -54,10 +54,10 @@
                 </ListBox>
             </Grid>
         </sparklrControls:NotificationPivotItem>
-        <sparklrControls:NotificationPivotItem Name="notificationsPivot" Header="Notifications">
+        <sparklrControls:NotificationPivotItem x:Name="notificationsPivot" Header="Notifications">
         </sparklrControls:NotificationPivotItem>
 
-        <sparklrControls:NotificationPivotItem d:DataContext="{d:DesignData SampleData/FriendsViewModelSampleData.xaml}" Header="Friends" Name="friendPivot">
+        <sparklrControls:NotificationPivotItem d:DataContext="{d:DesignData SampleData/FriendsViewModelSampleData.xaml}" Header="Friends" x:Name="friendPivot">
             <toolkit:LongListSelector Background="{x:Null}" ItemsSource="{Binding GroupedItems}">
                 <!-- Template for the letters inside the list -->
                 <toolkit:LongListSelector.GroupHeaderTemplate>

@@ -8,6 +8,10 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Navigation;
+using Microsoft.Phone.Shell;
+using System.IO;
+
+
 
 namespace SparklrWP
 {
@@ -16,7 +20,24 @@ namespace SparklrWP
         public LoginPage()
         {
             InitializeComponent();
-          
+            if (App.logger.hasCriticalLogged())
+            {
+                if (MessageBox.Show("Looks Like You Had A Crash The Last Time You Used The App. Would You Like To Send A Bug Report?", "Somthings Wrong Here...", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                {
+                    App.logger.emailReport();
+                    App.logger.clearEventsFromLog();
+                }
+                else
+                {
+
+                }
+                
+            }
+//#if DEBUG
+            
+            
+//#endif
+
             App.Client = new SparklrClient();
             if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
             {
@@ -82,7 +103,8 @@ namespace SparklrWP
                             IsolatedStorageSettings.ApplicationSettings.Add("username", usernameBox.Text);
                         }
                         IsolatedStorageSettings.ApplicationSettings.Save();
-                        NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                        
+                       NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
                     }
                 });
             });
@@ -91,6 +113,7 @@ namespace SparklrWP
 
         private void Login_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            
             Ani1.Begin();
             
 
@@ -121,25 +144,60 @@ namespace SparklrWP
             if (e.Key == System.Windows.Input.Key.Enter)
                 loginButton_Click(sender, null);
         }
-       protected override void OnBackKeyPress (System.ComponentModel.CancelEventArgs e)
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+
+            if (button1.IsEnabled == false)
+            {
+                e.Cancel = true;
+                //Close the PopUp Window
+                ani2.Begin();
+                button.IsEnabled = true;
+                button1.IsEnabled = true;
+                button2.IsEnabled = true;
+            }
+            else
+            {
+
+                e.Cancel = false;
+               
+
+
+            }
+        }
+//if DEBUG
+        private void about_Unload(object sender, RoutedEventArgs e)
        {
+            IsolatedStorageFile isf = IsolatedStorageFile.GetUserStoreForApplication();
+            isf.CreateDirectory("Check");
+            StreamWriter sw = new StreamWriter(new IsolatedStorageFileStream("Check\\Check.txt",FileMode.Create , isf));
+            sw.WriteLine("HI");
+            sw.Close();
+        }
 
-           if (button1.IsEnabled == false)
-           {
-               e.Cancel = true;
-               //Close the PopUp Window
-               ani2.Begin();
-               button.IsEnabled = true;
-               button1.IsEnabled = true;
-               button2.IsEnabled = true;
+        private void about_Loaded(object sender, RoutedEventArgs e)
+        {
+            IsolatedStorageFile isf = IsolatedStorageFile.GetUserStoreForApplication();
+            StreamReader sr = null;
+            try
+            {
+                sr = new StreamReader(new IsolatedStorageFileStream("Check\\Check.txt", FileMode.Open, isf));
+                sr.ReadLine();
+                sr.Close();
+            }
+
+            catch
+            {
+                MessageBox.Show("Looks Like It's The First Time You've Used This App! We Will Take Tou Through A Small Intro To Show You Around The App!", "Have We Met Before?", MessageBoxButton.OK);
+
+                NavigationService.Navigate(new Uri("/FirstRun.xaml", UriKind.Relative));
+
+
+            }
+        }
+//#endif 
+           
+         
            }
-           else
-           {
-               NavigationService.GoBack();
-
-           }
-
 
         }
-    }
-}

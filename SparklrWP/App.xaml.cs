@@ -13,6 +13,7 @@ namespace SparklrWP
         private static MainViewModel postsViewModel = null;
         private static NotificationsViewModel notificationsViewModel = null;
         private static FriendsViewModel friendsViewModel = null;
+        public static WPClogger logger = new WPClogger(LogLevel.debug);
 
         public static Utils.Task BackgroundTask;
 
@@ -151,6 +152,10 @@ namespace SparklrWP
             {
                 // An unhandled exception has occurred; break into the debugger
                 System.Diagnostics.Debugger.Break();
+            }
+            else
+            {
+                logger.log(LogLevel.critical, e.ExceptionObject);
             }
         }
 
