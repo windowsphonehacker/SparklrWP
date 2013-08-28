@@ -121,7 +121,7 @@ namespace SparklrWP
 
         private void Signup_click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("The Sign Up Page Will Open In Internet Explorer, Is That Ok?", "Sparklr", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            if (MessageBox.Show("The sign up page will open in Internet Explorer, is that ok?", "Sparklr*", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 new WebBrowserTask() { Uri = new Uri("http://sparklr.me") }.Show();
             }
