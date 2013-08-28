@@ -1,6 +1,7 @@
 ﻿using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using SparklrLib;
+using SparklrLib.Objects;
 using SparklrLib.Objects.Responses.Beacon;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace SparklrWP_Background_Agent
         /// <remarks>
         /// This method is called when a periodic or resource intensive task is invoked
         /// </remarks>
-        protected override void OnInvoke(ScheduledTask task)
+        protected async override void OnInvoke(ScheduledTask task)
         {
             //TODO: Add code to perform your task in background
             if (IsolatedStorageSettings.ApplicationSettings.Contains("username") && IsolatedStorageSettings.ApplicationSettings.Contains("password"))
@@ -57,8 +58,9 @@ namespace SparklrWP_Background_Agent
                 SparklrClient client = new SparklrClient();
                 string username = IsolatedStorageSettings.ApplicationSettings["username"].ToString();
                 byte[] passbyts = ProtectedData.Unprotect((byte[])IsolatedStorageSettings.ApplicationSettings["password"], null);
-                string password = Encoding.UTF8.GetString(passbyts,0,passbyts.Length);
-                Func<Notification,String> textGenerator = (not) =>
+                string password = Encoding.UTF8.GetString(passbyts, 0, passbyts.Length);
+
+                Func<Notification, String> textGenerator = (not) =>
                 {
                     if (not.type == 1)
                     {
@@ -76,62 +78,62 @@ namespace SparklrWP_Background_Agent
                         return "{0} mentioned you";
                     }
                 };
-                client.Login(username, password, (loginArgs) =>
+
+                LoginEventArgs loginArgs = await client.LoginAsync(username, password);
+                if (loginArgs.IsSuccessful)
                 {
-                    if (loginArgs.IsSuccessful)
+                    client.GetBeaconStream(0, 1, (args) =>
                     {
-                        client.GetBeaconStream(0,1,(args) =>
+                        if (args.IsSuccessful)
                         {
-                            if(args.IsSuccessful){
-                                Stream strm = args.Object;
-                                if (strm.notifications != null)
+                            Stream strm = args.Object;
+                            if (strm.notifications != null)
+                            {
+                                List<int> userIds = new List<int>();
+                                foreach (Notification not in strm.notifications)
                                 {
-                                    List<int> userIds = new List<int>();
-                                    foreach (Notification not in strm.notifications)
+                                    if (!userIds.Contains(not.from))
                                     {
-                                        if (!userIds.Contains(not.from))
+                                        userIds.Add(not.from);
+                                    }
+                                }
+                                client.GetUsernames(userIds.ToArray(), (unargs) =>
+                                {
+                                    if (unargs.IsSuccessful)
+                                    {
+                                        foreach (Notification not in strm.notifications)
                                         {
-                                            userIds.Add(not.from);
+                                            ShellToast notif = new ShellToast();
+                                            notif.Title = "Sparklr*";
+                                            notif.Content = String.Format(textGenerator(not), client.Usernames[not.from]);
+                                            notif.Show();
                                         }
                                     }
-                                    client.GetUsernames(userIds.ToArray(), (unargs) =>
+                                    else
                                     {
-                                        if (unargs.IsSuccessful)
+                                        foreach (Notification not in strm.notifications)
                                         {
-                                            foreach (Notification not in strm.notifications)
-                                            {
-                                                ShellToast notif = new ShellToast();
-                                                notif.Title = "Sparklr*";
-                                                notif.Content = String.Format(textGenerator(not), client.Usernames[not.from]);
-                                                notif.Show();
-                                            }
+                                            ShellToast notif = new ShellToast();
+                                            notif.Title = "Sparklr*";
+                                            notif.Content = String.Format(textGenerator(not), "Someone");
+                                            notif.Show();
                                         }
-                                        else
-                                        {
-                                            foreach (Notification not in strm.notifications)
-                                            {
-                                                ShellToast notif = new ShellToast();
-                                                notif.Title = "Sparklr*";
-                                                notif.Content = String.Format(textGenerator(not), "Someone");
-                                                notif.Show();
-                                            }
-                                        }
-                                        NotifyComplete();
-                                    });
-                                }
-                                else
-                                {
+                                    }
                                     NotifyComplete();
-                                }
+                                });
                             }
-                            
-                        });
-                    }
-                    else
-                    {
-                        NotifyComplete();
-                    }
-                });
+                            else
+                            {
+                                NotifyComplete();
+                            }
+                        }
+
+                    });
+                }
+                else
+                {
+                    NotifyComplete();
+                }
             }
             else
             {

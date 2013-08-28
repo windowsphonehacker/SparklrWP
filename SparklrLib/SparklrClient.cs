@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
+
 namespace SparklrLib
 {
     /// <summary>
@@ -218,107 +220,116 @@ namespace SparklrLib
         }
 
         /// <summary>
-        /// Logins the specified username.
+        /// Performans an asynchronous login of the user
         /// </summary>
         /// <param name="Username">The username.</param>
         /// <param name="Password">The password.</param>
-        /// <param name="Callback">The callback.</param>
-        public void Login(string Username, string Password, Action<LoginEventArgs> Callback)
+        public async Task<LoginEventArgs> LoginAsync(string Username, string Password)
         {
             HttpWebRequest loginReq = CreateRequest("work/signin/" + Username + "/" + Password + "/");
-            loginReq.BeginGetResponse((res) =>
+
+            try
             {
-                HttpWebResponse loginResp = null;
-                try
+                HttpWebResponse response = (HttpWebResponse)await loginReq.GetResponseAsync();
+
+                if (response.Headers["Set-Cookie"] == null)
                 {
-                    loginResp = (HttpWebResponse)loginReq.EndGetResponse(res);
-                }
-                catch (WebException ex)
-                {
-                    Callback(new LoginEventArgs()
+                    return new LoginEventArgs()
                     {
-                        IsSuccessful = false,
-                        Error = ex,
-                        Response = (HttpWebResponse)ex.Response
-                    });
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    Callback(new LoginEventArgs()
-                    {
-                        IsSuccessful = false,
-                        Error = ex,
-                        Response = loginResp
-                    });
-                    return;
-                }
-                if (loginResp.Headers["Set-Cookie"] == null)
-                {
-                    Callback(new LoginEventArgs()
-                    {
+                        //TODO: Use custom exception types
                         Error = new Exception("Didn't receive Auth token"),
                         IsSuccessful = false,
-                        Response = loginResp
-                    });
-                    return;
+                        Response = response
+                    };
                 }
-                string[] cookieParts = loginResp.Headers["Set-Cookie"].Split(';');
-                string cookieD = "";
-                foreach (string sortaCookie in cookieParts)
+                else
                 {
-                    string sortaTrimmedCookie = sortaCookie.TrimStart();
-                    if (sortaTrimmedCookie.StartsWith("D="))
+                    string[] cookieParts = response.Headers["Set-Cookie"].Split(';');
+                    string cookieD = "";
+
+                    //TODO: Suggestion: use a regex instead?
+                    foreach (string sortaCookie in cookieParts)
                     {
-                        cookieD = sortaTrimmedCookie.Substring(2);
-                        break;
+                        string sortaTrimmedCookie = sortaCookie.TrimStart();
+                        if (sortaTrimmedCookie.StartsWith("D="))
+                        {
+                            cookieD = sortaTrimmedCookie.Substring(2);
+                            break;
+                        }
+                    }
+
+                    string[] loginBits = cookieD.Split(',');
+
+                    if (cookieD.Length == 0)
+                    {
+                        return new LoginEventArgs()
+                        {
+                            Error = new Exception("Auth token not included"),
+                            IsSuccessful = false,
+                            Response = response
+                        };
+                    }
+                    else if (loginBits.Length < 2)
+                    {
+                        return new LoginEventArgs()
+                        {
+                            Error = new Exception("Auth token is corrupted"),
+                            IsSuccessful = false,
+                            Response = response
+                        };
+                    }
+                    else
+                    {
+                        try
+                        {
+                            UserId = long.Parse(loginBits[0]);
+                        }
+                        catch (Exception)
+                        {
+                            return new LoginEventArgs()
+                            {
+                                Error = new Exception("Auth token is corrupted"),
+                                IsSuccessful = false,
+                                Response = response
+                            };
+                        }
+                        AuthToken = loginBits[1];
+                        return new LoginEventArgs()
+                        {
+                            Error = null,
+                            IsSuccessful = true,
+                            Response = response,
+                            AuthToken = AuthToken,
+                            UserId = UserId
+                        };
                     }
                 }
-                if (cookieD.Length == 0)
+            }
+            catch (Exception ex)
+            {
+                if (ex is WebException)
                 {
-                    Callback(new LoginEventArgs()
+                    return new LoginEventArgs()
                     {
-                        Error = new Exception("Auth token not included"),
                         IsSuccessful = false,
-                        Response = loginResp
-                    });
-                    return;
+                        Error = ex,
+                        Response = (HttpWebResponse)((WebException)ex).Response
+                    };
                 }
-                string[] loginBits = cookieD.Split(',');
-                if (loginBits.Length < 2)
+                else
                 {
-                    Callback(new LoginEventArgs()
+#if DEBUG
+                    if (System.Diagnostics.Debugger.IsAttached)
+                        System.Diagnostics.Debugger.Break();
+#endif
+                    return new LoginEventArgs()
                     {
-                        Error = new Exception("Auth token is corrupted"),
                         IsSuccessful = false,
-                        Response = loginResp
-                    });
-                    return;
+                        Error = ex,
+                        Response = null
+                    };
                 }
-                try
-                {
-                    UserId = long.Parse(loginBits[0]);
-                }
-                catch (Exception)
-                {
-                    Callback(new LoginEventArgs()
-                    {
-                        Error = new Exception("Auth token is corrupted"),
-                        IsSuccessful = false,
-                        Response = loginResp
-                    });
-                    return;
-                }
-                AuthToken = loginBits[1];
-                Callback(new LoginEventArgs()
-                {
-                    Error = null,
-                    IsSuccessful = true,
-                    Response = loginResp,
-                    AuthToken = AuthToken,
-                    UserId = UserId
-                });
-            }, null);
+            }
         }
 
         /// <summary>

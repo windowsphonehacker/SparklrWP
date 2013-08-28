@@ -113,8 +113,6 @@ namespace SparklrWP.Controls
         private ItemViewModel post;
         private BitmapImage image;
 
-        WebClient asynchronousImageUpdater;
-
         /// <summary>
         /// The content of the post
         /// </summary>
@@ -262,11 +260,12 @@ namespace SparklrWP.Controls
             try
             {
                 string oldLink = String.Copy(value);
-                ImageSource loaded = await Utils.Helpers.LoadImageFromUrlAsync(value);
+                BitmapImage loaded = await Utils.Helpers.LoadImageFromUrlAsync(value);
 
                 if (oldLink == this.imagelocation)
                 {
                     MessageImage.Source = loaded;
+                    image = loaded;
                     refreshVisibility();
                 }
             }

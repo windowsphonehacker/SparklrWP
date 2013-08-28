@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace SparklrWP.Utils
@@ -13,7 +12,7 @@ namespace SparklrWP.Utils
         /// </summary>
         /// <param name="location">The location of the image</param>
         /// <returns>A BitmapImage, that can be set as a source</returns>
-        public static async Task<ImageSource> LoadImageFromUrlAsync(Uri location)
+        public static async Task<BitmapImage> LoadImageFromUrlAsync(Uri location)
         {
             WebClient client = new WebClient();
             BitmapImage image = new BitmapImage();
@@ -26,7 +25,7 @@ namespace SparklrWP.Utils
         /// </summary>
         /// <param name="location">The location of the image</param>
         /// <returns>A BitmapImage, that can be set as a source</returns>
-        public static Task<ImageSource> LoadImageFromUrlAsync(string location)
+        public static Task<BitmapImage> LoadImageFromUrlAsync(string location)
         {
             return LoadImageFromUrlAsync(new Uri(location));
         }
