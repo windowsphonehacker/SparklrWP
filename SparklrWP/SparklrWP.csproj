@@ -123,6 +123,9 @@
     <Compile Include="FirstRun.xaml.cs">
       <DependentUpon>FirstRun.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PinchToZoom.xaml.cs">
+      <DependentUpon>PinchToZoom.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Profile.xaml.cs">
       <DependentUpon>Profile.xaml</DependentUpon>
     </Compile>
@@ -163,6 +166,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="FirstRun.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\PinchToZoom.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>

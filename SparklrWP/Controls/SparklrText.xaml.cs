@@ -575,5 +575,16 @@ namespace SparklrWP.Controls
                 }
             }
         }
+
+        private void ImageContainer_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            string location = this.ImageLocation;
+            if (ImageLocation.StartsWith("http://d.sparklr.me/i/t", StringComparison.InvariantCultureIgnoreCase))
+                location = ImageLocation.Replace("http://d.sparklr.me/i/t", "http://d.sparklr.me/i/");
+
+            location = HttpUtility.UrlEncode(location);
+
+            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(String.Format("/Pages/PinchToZoom.xaml?image={0}", location), UriKind.Relative));
+        }
     }
 }

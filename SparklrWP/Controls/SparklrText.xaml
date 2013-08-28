@@ -10,16 +10,15 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480" Padding="0" Margin="0">
     
-    <Grid x:Name="LayoutRoot">     
+    <Grid x:Name="LayoutRoot" toolkit:TiltEffect.IsTiltEnabled="True">     
         
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-            <Grid Width="432" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ImageContainer" Visibility="Collapsed">
-            
-            <Image Stretch="Fill" x:Name="MessageImage"></Image>
+            <Grid Width="432" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ImageContainer" Visibility="Collapsed" Tap="ImageContainer_Tap">
+                <Image Stretch="Fill" x:Name="MessageImage"></Image>
                 <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Visibility="{Binding Visibility, ElementName=messageContentContainer}">
                     <Rectangle.Fill>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -33,7 +32,7 @@
                         <toolkit:MenuItem Header="Save to phone..." Click="SaveImageToPhone_Click" />
                     </toolkit:ContextMenu>
                 </toolkit:ContextMenuService.ContextMenu>
-        </Grid>
+            </Grid>
         <RichTextBox Grid.Row="1" Background="White" Foreground="Black" Padding="5,7,5,2" x:Name="messageContentContainer">
             <Paragraph FontSize="26" x:Name="messageContentParagraph">
             </Paragraph>
