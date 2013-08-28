@@ -35,7 +35,7 @@ namespace SparklrWP
         private XDocument loadedDoc = null;
         #endregion
         #region configurable variables
-        private const String emailAddress = "SurajGoraya@outlook.com";
+        private const String emailAddress = "";
         private const String emailDefaultUserComments = "<Add any extra detail you'd like to here, or you can hit send now, the technical information below will help>";
         private const String emailSubject = "WPClogger Bug Report: Sparklr for Windows Phone";
         private long maxFileSize = 38000;
