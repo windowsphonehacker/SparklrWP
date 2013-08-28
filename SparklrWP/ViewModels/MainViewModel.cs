@@ -1,5 +1,5 @@
-﻿using SparklrLib.Objects;
-using SparklrWP.Utils;
+using SparklrLib.Objects;
+﻿using SparklrWP.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -166,7 +166,6 @@ namespace SparklrWP
                     {
                         LastTime = t.modified;
                     }
-
 
                     ItemViewModel existingitem = null;
                     existingitem = (from i in newItems where i.Id == t.id select i).FirstOrDefault();
