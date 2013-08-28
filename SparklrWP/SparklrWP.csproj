@@ -58,6 +58,7 @@
     </Reference>
     <Reference Include="Coding4Fun.Toolkit.Controls">
       <HintPath>..\..\..\..\..\C$F\Coding4Fun.Toolkit.Controls.dll</HintPath>
+    </Reference>
     <Reference Include="ExifLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Libraries\AviarySDK\dll\ExifLib.dll</HintPath>
