@@ -64,7 +64,7 @@
                 <PlaneProjection/>
             </TextBlock.Projection>
         </TextBlock>
-        <controls:Pivot x:Name="pivot" Title="Sparklr*" Opacity="0.015">
+        <controls:Pivot x:Name="pivot" Title="sparklr*" Opacity="0.015" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
             <!--Pivot item one-->
             <controls:PivotItem Header="The Basics">
 
@@ -72,26 +72,26 @@
 
                 <Grid>
 
-                    <TextBlock x:Name="textBlock1" Margin="8,8,8,0" TextWrapping="Wrap" Text="Lets Get Started!" FontFamily="Segoe WP Light" FontSize="48" TextAlignment="Center" Height="66" VerticalAlignment="Top">
+                    <TextBlock x:Name="textBlock1" Margin="8,8,8,0" TextWrapping="Wrap" Text="Lets Get Started!" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="48" TextAlignment="Center" Height="66" VerticalAlignment="Top">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                         </TextBlock.Foreground>
                     </TextBlock>
-                    <TextBlock x:Name="textBlock2" Height="50" Margin="-292,106,0,0" TextWrapping="Wrap" Text="The Login Page:" VerticalAlignment="Top" FontSize="26.667" FontFamily="Segoe WP Light" HorizontalAlignment="Left" Width="255" Foreground="White" RenderTransformOrigin="0.5,0.5">
+                    <TextBlock x:Name="textBlock2" Height="50" Margin="-292,106,0,0" TextWrapping="Wrap" Text="The Login Page:" VerticalAlignment="Top" FontSize="26.667" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" HorizontalAlignment="Left" Width="255" Foreground="White" RenderTransformOrigin="0.5,0.5">
                         <TextBlock.RenderTransform>
                             <CompositeTransform/>
                         </TextBlock.RenderTransform>
                     </TextBlock>
-                    <TextBlock Margin="0,138,77,299" TextWrapping="Wrap" FontSize="29.333" FontFamily="Segoe WP Light"><Run Text="Enter Your User Name And Password Used On Sparklr If You Don't  Have A Account Sign Up! Its Free!"/><LineBreak/><Run/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Height="47" Margin="8,82,0,0" TextWrapping="Wrap" Text="Login:" VerticalAlignment="Top" Width="85" FontSize="32" FontFamily="Segoe WP Light"/>
-                    <TextBlock HorizontalAlignment="Left" Height="47" Margin="31,0,0,-80" TextWrapping="Wrap" Text="Login:" VerticalAlignment="Bottom" Width="85" FontSize="32" FontFamily="Segoe WP Light"/>
-                    <TextBlock Height="47" Margin="0,0,0,8" TextWrapping="Wrap" Text="Slide Over ;)" VerticalAlignment="Bottom" FontSize="32" FontFamily="Segoe WP Light" HorizontalAlignment="Right" Width="171">
+                    <TextBlock Margin="0,138,77,299" TextWrapping="Wrap" FontSize="29.333" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"><Run Text="Enter Your User Name And Password Used On Sparklr If You Don't  Have A Account Sign Up! Its Free!"/><LineBreak/><Run/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Height="47" Margin="8,82,0,0" TextWrapping="Wrap" Text="Login:" VerticalAlignment="Top" Width="85" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+                    <TextBlock HorizontalAlignment="Left" Height="47" Margin="31,0,0,-80" TextWrapping="Wrap" Text="Login:" VerticalAlignment="Bottom" Width="85" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+                    <TextBlock Height="47" Margin="0,0,0,8" TextWrapping="Wrap" Text="Slide Over" VerticalAlignment="Bottom" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" HorizontalAlignment="Right" Width="171">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                         </TextBlock.Foreground>
                     </TextBlock>
-                    <TextBlock Margin="0,0,94,210" TextWrapping="Wrap" Text="The Dashboard:" FontFamily="Segoe WP Light" FontSize="29.333" Height="63" VerticalAlignment="Bottom"/>
-                    <TextBlock Margin="0,0,42,64" TextWrapping="Wrap" Text="The Power Of The Pivot! Slide Over On The Main Page For More Things To Do! It's Like Having The Power Of Sparklr In Your Hands!" FontFamily="Segoe WP Light" FontSize="26.667" Height="146" VerticalAlignment="Bottom"/>
+                    <TextBlock Margin="0,0,94,210" TextWrapping="Wrap" Text="The Dashboard:" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="29.333" Height="63" VerticalAlignment="Bottom"/>
+                    <TextBlock Margin="0,0,42,64" TextWrapping="Wrap" Text="The Power Of The Pivot! Slide Over On The Main Page For More Things To Do! It's Like Having The Power Of Sparklr In Your Hands!" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="26.667" Height="146" VerticalAlignment="Bottom"/>
 
                 </Grid>
 
@@ -100,13 +100,13 @@
             <!--Pivot item two-->
             <controls:PivotItem Header="Other Stuff">
                 <Grid>
-                    <TextBlock Margin="42,221,34,136" TextWrapping="Wrap" Text="What Are You Waiting For?! Try It Yourself!" FontFamily="Segoe WP Light" FontSize="64">
+                    <TextBlock Margin="42,221,34,136" TextWrapping="Wrap" Text="What Are You Waiting For?! Try It Yourself!" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="64">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                         </TextBlock.Foreground>
                     </TextBlock>
-                    <TextBlock Height="63" Margin="8,8,86,0" TextWrapping="Wrap" Text="The Three Dots!" VerticalAlignment="Top" FontFamily="Segoe WP Light" FontSize="29.333"/>
-                    <TextBlock Margin="8,71,34,0" TextWrapping="Wrap" Text="On Most Pages You Will See A Bar With An Icon! Those Are Passage Ways To Other Parts In The App!" FontFamily="Segoe WP Light" FontSize="26.667" Height="146" VerticalAlignment="Top"/>
+                    <TextBlock Height="63" Margin="8,8,86,0" TextWrapping="Wrap" Text="The Three Dots!" VerticalAlignment="Top" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="29.333"/>
+                    <TextBlock Margin="8,71,34,0" TextWrapping="Wrap" Text="On Most Pages You Will See A Bar With An Icon! Those Are Passage Ways To Other Parts In The App!" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="26.667" Height="146" VerticalAlignment="Top"/>
                     <Coding4Fun_Toolkit_Controls:RoundButton Margin="0,0,-68,-18" HorizontalAlignment="Right" Height="116" VerticalAlignment="Bottom" Width="204" Click="OK_Click"/>
                     <TextBlock Height="40" Margin="0,0,-186,0" TextWrapping="Wrap" Text="OK!" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="236"/>
                 </Grid>
