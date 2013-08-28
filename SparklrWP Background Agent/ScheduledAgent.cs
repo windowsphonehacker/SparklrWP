@@ -82,7 +82,7 @@ namespace SparklrWP_Background_Agent
                 LoginEventArgs loginArgs = await client.LoginAsync(username, password);
                 if (loginArgs.IsSuccessful)
                 {
-                    JSONRequestEventArgs<Stream> args = await client.GetBeaconStream(0, 1);
+                    JSONRequestEventArgs<Stream> args = await client.GetBeaconStreamAsync(0, 1);
                     if (args.IsSuccessful)
                     {
                         Stream strm = args.Object;
@@ -96,9 +96,7 @@ namespace SparklrWP_Background_Agent
                                     userIds.Add(not.from);
                                 }
                             }
-                            client.GetUsernames(userIds.ToArray(), (unargs) =>
-                            {
-                                if (unargs.IsSuccessful)
+                            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> unargs = await client.GetUsernamesAsync(userIds.ToArray());                                if (unargs.IsSuccessful)
                                 {
                                     foreach (Notification not in strm.notifications)
                                     {
@@ -119,7 +117,6 @@ namespace SparklrWP_Background_Agent
                                     }
                                 }
                                 NotifyComplete();
-                            });
                         }
                         else
                         {

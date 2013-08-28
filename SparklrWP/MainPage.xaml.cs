@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Controls;
+using SparklrLib.Objects;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -34,7 +35,7 @@ namespace SparklrWP
         }
 
         // Load data for the ViewModel Items
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             //Updates are handled ONLY by the model. Everything else might screw up the timer.
             //if (!App.ViewModel.IsDataLoaded)
@@ -49,37 +50,33 @@ namespace SparklrWP
             if (!didFriends)
             {
                 didFriends = true;
-                App.Client.GetFriends((fargs) =>
-                {
-                    if (fargs.IsSuccessful)
-                    {
-                        List<int> friends = new List<int>();
-                        foreach (int id in fargs.Object.followers)
-                        {
-                            friends.Add(id);
-                        }
-                        foreach (int id in fargs.Object.following)
-                        {
-                            if (!friends.Contains(id)) friends.Add(id);
-                        }
-                        App.Client.GetUsernames(friends.ToArray(), (uargs) =>
-                        {
-                            foreach (int id in friends)
-                            {
-                                App.FriendsViewModel.AddFriend(new FriendViewModel(id)
-                                {
-                                    Name = App.Client.Usernames.ContainsKey(id) ? App.Client.Usernames[id] : "User " + id,
-                                    Image = "http://d.sparklr.me/i/t" + id + ".jpg"
-                                });
-                            }
-                            this.Dispatcher.BeginInvoke(() =>
-                            {
-                                friendPivot.DataContext = App.FriendsViewModel;
-                            });
+                JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Friends> fargs = await App.Client.GetFriendsAsync();
 
+                if (fargs.IsSuccessful)
+                {
+                    List<int> friends = new List<int>();
+                    foreach (int id in fargs.Object.followers)
+                    {
+                        friends.Add(id);
+                    }
+                    foreach (int id in fargs.Object.following)
+                    {
+                        if (!friends.Contains(id)) friends.Add(id);
+                    }
+                    JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> uargs = await App.Client.GetUsernamesAsync(friends.ToArray());
+                    foreach (int id in friends)
+                    {
+                        App.FriendsViewModel.AddFriend(new FriendViewModel(id)
+                        {
+                            Name = App.Client.Usernames.ContainsKey(id) ? App.Client.Usernames[id] : "User " + id,
+                            Image = "http://d.sparklr.me/i/t" + id + ".jpg"
                         });
                     }
-                });
+                    this.Dispatcher.BeginInvoke(() =>
+                    {
+                        friendPivot.DataContext = App.FriendsViewModel;
+                    });
+                }
             }
         }
 

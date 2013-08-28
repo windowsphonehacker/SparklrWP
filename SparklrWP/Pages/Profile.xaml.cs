@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Controls;
+using SparklrLib.Objects;
 using System.Windows.Navigation;
 
 namespace SparklrWP.Pages
@@ -16,7 +17,7 @@ namespace SparklrWP.Pages
 
         public bool dataLoaded = false;
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (dataLoaded) return;
             dataLoaded = true;
@@ -25,24 +26,23 @@ namespace SparklrWP.Pages
             {
                 model.ID = int.Parse(selectedIndex);
 
-                App.Client.GetUser(model.ID, (usargs) =>
-                {
-                    if (usargs.IsSuccessful)
-                    {
-                        this.Dispatcher.BeginInvoke(() =>
-                        {
-                            model.Handle = "@" + usargs.Object.handle;
-                            model.BackgroundImage = "http://d.sparklr.me/i/b" + model.ID + ".jpg";
-                            model.ProfileImage = "http://d.sparklr.me/i/" + model.ID + ".jpg";
+                JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.User> usargs = await App.Client.GetUserAsync(model.ID);
 
-                            model.Bio = usargs.Object.bio;
-                            if (model.Bio.Trim() == "")
-                            {
-                                model.Bio = usargs.Object.name + " is too shy to write something about his/herself maybe check again later!";
-                            }
-                        });
-                    }
-                });
+                if (usargs.IsSuccessful)
+                {
+                    this.Dispatcher.BeginInvoke(() =>
+                    {
+                        model.Handle = "@" + usargs.Object.handle;
+                        model.BackgroundImage = "http://d.sparklr.me/i/b" + model.ID + ".jpg";
+                        model.ProfileImage = "http://d.sparklr.me/i/" + model.ID + ".jpg";
+
+                        model.Bio = usargs.Object.bio;
+                        if (model.Bio.Trim() == "")
+                        {
+                            model.Bio = usargs.Object.name + " is too shy to write something about his/herself maybe check again later!";
+                        }
+                    });
+                }
             }
         }
 

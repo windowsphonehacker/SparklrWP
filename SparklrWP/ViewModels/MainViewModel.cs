@@ -120,7 +120,7 @@ namespace SparklrWP
 
             GlobalLoading.Instance.IsLoading = true;
 
-            JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await App.Client.GetBeaconStream(LastTime);
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await App.Client.GetBeaconStreamAsync(LastTime);
 
             if (args.IsSuccessful)
             {
@@ -179,11 +179,9 @@ namespace SparklrWP
                             newItem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;
                         }
 
-                        App.Client.GetUsernames(new int[] { t.from }, (response) =>
-                        {
-                            if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
-                                newItem.From = response.Object[0].username;
-                        });
+                        JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> response = await App.Client.GetUsernamesAsync(new int[] { t.from });
+                        if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
+                            newItem.From = response.Object[0].username;
 
                         newItems.Add(newItem);
                     }
@@ -194,11 +192,10 @@ namespace SparklrWP
                         existingitem.From = t.from.ToString();
                         existingitem.OrderTime = t.modified > t.time ? t.modified : t.time;
 
-                        App.Client.GetUsernames(new int[] { t.from }, (response) =>
-                        {
-                            if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
-                                existingitem.From = response.Object[0].username;
-                        });
+                        JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> response = await App.Client.GetUsernamesAsync(new int[] { t.from });
+
+                        if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
+                            existingitem.From = response.Object[0].username;
                     }
                 }
                 newItems.Sort(itemComparison);

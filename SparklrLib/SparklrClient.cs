@@ -317,19 +317,18 @@ namespace SparklrLib
         /// <summary>
         /// Gets the beacon stream.
         /// </summary>
-        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStream()
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync()
         {
-            return GetBeaconStream(0, 20, 0);
+            return GetBeaconStreamAsync(0, 20, 0);
         }
 
         /// <summary>
         /// Gets the beacon stream.
         /// </summary>
         /// <param name="lastTime">The last time.</param>
-        /// <param name="Callback">The callback.</param>
-        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStream(int lastTime)
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(int lastTime)
         {
-            return GetBeaconStream(lastTime, 0, 0);
+            return GetBeaconStreamAsync(lastTime, 0, 0);
         }
 
         /// <summary>
@@ -337,10 +336,9 @@ namespace SparklrLib
         /// </summary>
         /// <param name="lastTime">The last time.</param>
         /// <param name="lastNotificationTime">The last notification time.</param>
-        /// <param name="Callback">The callback.</param>
-        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStream(int lastTime, int lastNotificationTime)
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(int lastTime, int lastNotificationTime)
         {
-            return GetBeaconStream(lastTime, lastNotificationTime, 0);
+            return GetBeaconStreamAsync(lastTime, lastNotificationTime, 0);
         }
 
         /// <summary>
@@ -349,7 +347,7 @@ namespace SparklrLib
         /// <param name="lastTime">The last time.</param>
         /// <param name="lastNotificationTime">The last notification time.</param>
         /// <param name="network">The network.</param>
-        public async Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStream(int lastTime, int lastNotificationTime, int network)
+        public async Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(int lastTime, int lastNotificationTime, int network)
         {
             int stream = 0;
 #if DEBUG
@@ -365,7 +363,6 @@ namespace SparklrLib
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="image">The image.</param>
-        /// <param name="Callback">The callback.</param>
         public async Task<SparklrEventArgs> PostAsync(string message, Stream image)
         {
             string data64str = "";
@@ -406,8 +403,7 @@ namespace SparklrLib
         /// Gets the usernames by the specified ids.
         /// </summary>
         /// <param name="ids">The ids.</param>
-        /// <param name="Callback">The callback.</param>
-        public async void GetUsernames(int[] ids, Action<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> Callback)
+        public async Task<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> GetUsernamesAsync(int[] ids)
         {
             List<int> idsToRequest = new List<int>();
             foreach (int id in ids)
@@ -435,12 +431,13 @@ namespace SparklrLib
                             usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
                         }
                     }
-                    Callback(new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
+
+                    return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
                     {
                         Error = null,
                         IsSuccessful = true,
                         Object = usrnms.ToArray()
-                    });
+                    };
                 }
             }
             else
@@ -453,34 +450,37 @@ namespace SparklrLib
                         usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
                     }
                 }
-                Callback(new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
+                return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
                 {
                     Error = null,
                     IsSuccessful = true,
                     Object = usrnms.ToArray()
-                });
+                };
             }
-
+            return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
+            {
+                Error = new Exception("Invalid data was provided"),
+                IsSuccessful = false
+            };
         }
 
-        public void GetOnlineFriends(Action<JSONRequestEventArgs<Objects.Responses.Work.OnlineFriends[]>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.OnlineFriends[]>> GetOnlineFriendsAsync()
         {
-            requestJsonObjectAsync<Objects.Responses.Work.OnlineFriends[]>("/work/onlinefriends", Callback);
+            return requestJsonObjectAsync<Objects.Responses.Work.OnlineFriends[]>("/work/onlinefriends");
         }
 
-        public async void GetFriends(Action<JSONRequestEventArgs<Objects.Responses.Work.Friends>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.Friends>> GetFriendsAsync()
         {
-            JSONRequestEventArgs<Objects.Responses.Work.Friends> args = await requestJsonObjectAsync<Objects.Responses.Work.Friends>("/work/friends");
-            Callback(args);
+            return requestJsonObjectAsync<Objects.Responses.Work.Friends>("/work/friends");
         }
 
-        public void GetUser(string username, Action<JSONRequestEventArgs<Objects.Responses.Work.User>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserAsync(string username)
         {
-            requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + username, Callback);
+            return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + username);
         }
-        public void GetUser(int userid, Action<JSONRequestEventArgs<Objects.Responses.Work.User>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserAsync(int userid)
         {
-            requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + userid, Callback);
+            return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + userid);
         }
     }
 }
