@@ -238,6 +238,9 @@ namespace SparklrWP.Controls
                     }
                     else
                     {
+                        if (value.EndsWith(",[]"))
+                            value = value.Replace(",[]", "");
+
                         loadImage(value);
                     }
 
@@ -254,45 +257,25 @@ namespace SparklrWP.Controls
             }
         }
 
-        private void loadImage(string value)
+        private async void loadImage(string value)
         {
-            //We need to store the old image location
-            string oldImageLocation = value;
+            try
+            {
+                Uri location = new Uri(value);
+                WebClient client = new WebClient();
+                BitmapImage image = new BitmapImage();
+                image.SetSource(await client.OpenReadTaskAsync(location));
+                MessageImage.Source = image;
 
-            if (asynchronousImageUpdater != null && asynchronousImageUpdater.IsBusy)
-                asynchronousImageUpdater.CancelAsync();
-
-            asynchronousImageUpdater = new WebClient();
-            asynchronousImageUpdater.OpenReadCompleted += (sender, e) =>
-                       {
-                           /*
-                            * We need to make sure that this.ImageLocation is the
-                            * same value as when we started the request. The parent
-                            * of the control might reuse controls and change the content.
-                            * This way we might finish this asynchronous operation when we already
-                            * have a different image location.
-                            */
-                           if (oldImageLocation == this.ImageLocation)
-                           {
-                               try
-                               {
-                                   image = new BitmapImage();
-                                   image.SetSource(e.Result);
-                                   MessageImage.Source = image;
-                               }
-                               catch (WebException)
-                               {
+                refreshVisibility();
+            }
+            catch (WebException)
+            {
 #if DEBUG
-                                   if (System.Diagnostics.Debugger.IsAttached)
-                                       System.Diagnostics.Debugger.Log(0, "SparklrTextControl", String.Format("Did not load image {0}", oldImageLocation));
+                if (System.Diagnostics.Debugger.IsAttached)
+                    System.Diagnostics.Debugger.Break();
 #endif
-                               }
-                           }
-
-                           refreshVisibility();
-                       };
-
-            asynchronousImageUpdater.OpenReadAsync(new Uri(value));
+            }
         }
 
         /// <summary>
