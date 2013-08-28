@@ -89,10 +89,9 @@ namespace SparklrLib
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path">The path.</param>
-        /// <param name="Callback">The callback.</param>
-        private Task<JSONRequestEventArgs<T>> requestJsonObject<T>(string path)
+        private Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path)
         {
-            return requestJsonObject<T>(path, "", "");
+            return requestJsonObjectAsync<T>(path, "", "");
         }
 
         /// <summary>
@@ -101,10 +100,9 @@ namespace SparklrLib
         /// <typeparam name="T"></typeparam>
         /// <param name="path">The path.</param>
         /// <param name="xdata">The xdata.</param>
-        /// <param name="Callback">The callback.</param>
-        private Task<JSONRequestEventArgs<T>> requestJsonObject<T>(string path, object xdata)
+        private Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path, object xdata)
         {
-            return requestJsonObject<T>(path, JsonConvert.SerializeObject(xdata), "");
+            return requestJsonObjectAsync<T>(path, JsonConvert.SerializeObject(xdata), "");
         }
 
         /// <summary>
@@ -113,23 +111,9 @@ namespace SparklrLib
         /// <typeparam name="T"></typeparam>
         /// <param name="path">The path.</param>
         /// <param name="xdata">The xdata.</param>
-        /// <param name="Callback">The callback.</param>
-        private Task<JSONRequestEventArgs<T>> requestJsonObject<T>(string path, string xdata)
+        private Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path, string xdata)
         {
-            return requestJsonObject<T>(path, xdata, "");
-        }
-
-        /// <summary>
-        /// Requests the json object.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path">The path.</param>
-        /// <param name="xdata">The xdata.</param>
-        /// <param name="postdata">The postdata.</param>
-        /// <param name="Callback">The callback.</param>
-        private Task<JSONRequestEventArgs<T>> requestJsonObject<T>(string path, object xdata, string postdata)
-        {
-            return requestJsonObject<T>(path, JsonConvert.SerializeObject(xdata), postdata);
+            return requestJsonObjectAsync<T>(path, xdata, "");
         }
 
         /// <summary>
@@ -139,8 +123,19 @@ namespace SparklrLib
         /// <param name="path">The path.</param>
         /// <param name="xdata">The xdata.</param>
         /// <param name="postdata">The postdata.</param>
-        /// <param name="Callback">The callback.</param>
-        private async Task<JSONRequestEventArgs<T>> requestJsonObject<T>(string path, string xdata, string postdata)
+        private Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path, object xdata, string postdata)
+        {
+            return requestJsonObjectAsync<T>(path, JsonConvert.SerializeObject(xdata), postdata);
+        }
+
+        /// <summary>
+        /// Requests the json object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="xdata">The xdata.</param>
+        /// <param name="postdata">The postdata.</param>
+        private async Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path, string xdata, string postdata)
         {
             HttpWebRequest streamReq = CreateRequest(path, xdata);
 
@@ -166,7 +161,7 @@ namespace SparklrLib
                                 // Add the post data to the web request
                                 postStream.Write(byteArray, 0, byteArray.Length);
                             }
-                            return await requestJsonObject<T>(path, xdata, postdata);
+                            return await requestJsonObjectAsync<T>(path, xdata, postdata);
                         }
                     }
                     catch (Exception ex)
@@ -322,10 +317,9 @@ namespace SparklrLib
         /// <summary>
         /// Gets the beacon stream.
         /// </summary>
-        /// <param name="Callback">The callback.</param>
-        public void GetBeaconStream(Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStream()
         {
-            GetBeaconStream(0, 20, 0, Callback);
+            return GetBeaconStream(0, 20, 0);
         }
 
         /// <summary>
@@ -333,9 +327,9 @@ namespace SparklrLib
         /// </summary>
         /// <param name="lastTime">The last time.</param>
         /// <param name="Callback">The callback.</param>
-        public void GetBeaconStream(int lastTime, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStream(int lastTime)
         {
-            GetBeaconStream(lastTime, 0, 0, Callback);
+            return GetBeaconStream(lastTime, 0, 0);
         }
 
         /// <summary>
@@ -344,9 +338,9 @@ namespace SparklrLib
         /// <param name="lastTime">The last time.</param>
         /// <param name="lastNotificationTime">The last notification time.</param>
         /// <param name="Callback">The callback.</param>
-        public void GetBeaconStream(int lastTime, int lastNotificationTime, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStream(int lastTime, int lastNotificationTime)
         {
-            GetBeaconStream(lastTime, lastNotificationTime, 0, Callback);
+            return GetBeaconStream(lastTime, lastNotificationTime, 0);
         }
 
         /// <summary>
@@ -355,16 +349,15 @@ namespace SparklrLib
         /// <param name="lastTime">The last time.</param>
         /// <param name="lastNotificationTime">The last notification time.</param>
         /// <param name="network">The network.</param>
-        /// <param name="Callback">The callback.</param>
-        public async void GetBeaconStream(int lastTime, int lastNotificationTime, int network, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        public async Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStream(int lastTime, int lastNotificationTime, int network)
         {
             int stream = 0;
 #if DEBUG
             stream = 2;
             network = 1;
 #endif
-            JSONRequestEventArgs<Objects.Responses.Beacon.Stream> args = await requestJsonObject<Objects.Responses.Beacon.Stream>("/beacon/stream/" + stream + "?since=" + lastTime.ToString() + "&n=" + lastNotificationTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""));
-            Callback(args);
+            JSONRequestEventArgs<Objects.Responses.Beacon.Stream> args = await requestJsonObjectAsync<Objects.Responses.Beacon.Stream>("/beacon/stream/" + stream + "?since=" + lastTime.ToString() + "&n=" + lastNotificationTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""));
+            return args;
         }
 
         /// <summary>
@@ -373,7 +366,7 @@ namespace SparklrLib
         /// <param name="message">The message.</param>
         /// <param name="image">The image.</param>
         /// <param name="Callback">The callback.</param>
-        public async void Post(string message, Stream image, Action<SparklrEventArgs> Callback)
+        public async Task<SparklrEventArgs> PostAsync(string message, Stream image)
         {
             string data64str = "";
             if (image != null)
@@ -393,7 +386,7 @@ namespace SparklrLib
                     data64str = "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
                 }
             }
-            JSONRequestEventArgs<Objects.Responses.Generic> args = await requestJsonObject<Objects.Responses.Generic>("/work/post", new Objects.Requests.Work.Post()
+            JSONRequestEventArgs<Objects.Responses.Generic> args = await requestJsonObjectAsync<Objects.Responses.Generic>("/work/post", new Objects.Requests.Work.Post()
             {
                 body = message,
 #if DEBUG
@@ -402,11 +395,11 @@ namespace SparklrLib
                 img = data64str != ""
             }, data64str);
 
-            Callback(new SparklrEventArgs()
+            return new SparklrEventArgs()
             {
                 IsSuccessful = args.IsSuccessful && args.Object.error == null,
                 Error = args.IsSuccessful ? args.Object.error == true ? new Exception("Sparklr said noooooo") : null : args.Error
-            });
+            };
         }
 
         /// <summary>
@@ -426,7 +419,7 @@ namespace SparklrLib
             }
             if (idsToRequest.Count > 0)
             {
-                JSONRequestEventArgs<Objects.Responses.Work.Username[]> args = await requestJsonObject<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in ids select id.ToString()).ToArray()));
+                JSONRequestEventArgs<Objects.Responses.Work.Username[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in ids select id.ToString()).ToArray()));
 
                 if (args.IsSuccessful)
                 {
@@ -472,22 +465,22 @@ namespace SparklrLib
 
         public void GetOnlineFriends(Action<JSONRequestEventArgs<Objects.Responses.Work.OnlineFriends[]>> Callback)
         {
-            requestJsonObject<Objects.Responses.Work.OnlineFriends[]>("/work/onlinefriends", Callback);
+            requestJsonObjectAsync<Objects.Responses.Work.OnlineFriends[]>("/work/onlinefriends", Callback);
         }
 
         public async void GetFriends(Action<JSONRequestEventArgs<Objects.Responses.Work.Friends>> Callback)
         {
-            JSONRequestEventArgs<Objects.Responses.Work.Friends> args = await requestJsonObject<Objects.Responses.Work.Friends>("/work/friends");
+            JSONRequestEventArgs<Objects.Responses.Work.Friends> args = await requestJsonObjectAsync<Objects.Responses.Work.Friends>("/work/friends");
             Callback(args);
         }
 
         public void GetUser(string username, Action<JSONRequestEventArgs<Objects.Responses.Work.User>> Callback)
         {
-            requestJsonObject<Objects.Responses.Work.User>("/work/user/" + username, Callback);
+            requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + username, Callback);
         }
         public void GetUser(int userid, Action<JSONRequestEventArgs<Objects.Responses.Work.User>> Callback)
         {
-            requestJsonObject<Objects.Responses.Work.User>("/work/user/" + userid, Callback);
+            requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + userid, Callback);
         }
     }
 }

@@ -82,53 +82,50 @@ namespace SparklrWP_Background_Agent
                 LoginEventArgs loginArgs = await client.LoginAsync(username, password);
                 if (loginArgs.IsSuccessful)
                 {
-                    client.GetBeaconStream(0, 1, (args) =>
+                    JSONRequestEventArgs<Stream> args = await client.GetBeaconStream(0, 1);
+                    if (args.IsSuccessful)
                     {
-                        if (args.IsSuccessful)
+                        Stream strm = args.Object;
+                        if (strm.notifications != null)
                         {
-                            Stream strm = args.Object;
-                            if (strm.notifications != null)
+                            List<int> userIds = new List<int>();
+                            foreach (Notification not in strm.notifications)
                             {
-                                List<int> userIds = new List<int>();
-                                foreach (Notification not in strm.notifications)
+                                if (!userIds.Contains(not.from))
                                 {
-                                    if (!userIds.Contains(not.from))
+                                    userIds.Add(not.from);
+                                }
+                            }
+                            client.GetUsernames(userIds.ToArray(), (unargs) =>
+                            {
+                                if (unargs.IsSuccessful)
+                                {
+                                    foreach (Notification not in strm.notifications)
                                     {
-                                        userIds.Add(not.from);
+                                        ShellToast notif = new ShellToast();
+                                        notif.Title = "Sparklr*";
+                                        notif.Content = String.Format(textGenerator(not), client.Usernames[not.from]);
+                                        notif.Show();
                                     }
                                 }
-                                client.GetUsernames(userIds.ToArray(), (unargs) =>
+                                else
                                 {
-                                    if (unargs.IsSuccessful)
+                                    foreach (Notification not in strm.notifications)
                                     {
-                                        foreach (Notification not in strm.notifications)
-                                        {
-                                            ShellToast notif = new ShellToast();
-                                            notif.Title = "Sparklr*";
-                                            notif.Content = String.Format(textGenerator(not), client.Usernames[not.from]);
-                                            notif.Show();
-                                        }
+                                        ShellToast notif = new ShellToast();
+                                        notif.Title = "Sparklr*";
+                                        notif.Content = String.Format(textGenerator(not), "Someone");
+                                        notif.Show();
                                     }
-                                    else
-                                    {
-                                        foreach (Notification not in strm.notifications)
-                                        {
-                                            ShellToast notif = new ShellToast();
-                                            notif.Title = "Sparklr*";
-                                            notif.Content = String.Format(textGenerator(not), "Someone");
-                                            notif.Show();
-                                        }
-                                    }
-                                    NotifyComplete();
-                                });
-                            }
-                            else
-                            {
+                                }
                                 NotifyComplete();
-                            }
+                            });
                         }
-
-                    });
+                        else
+                        {
+                            NotifyComplete();
+                        }
+                    }
                 }
                 else
                 {
