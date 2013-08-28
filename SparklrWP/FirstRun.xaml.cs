@@ -1,5 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 using System;
+using System.IO.IsolatedStorage;
 
 namespace SparklrWP
 {
@@ -14,8 +15,18 @@ namespace SparklrWP
 
         private void OK_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
-
+            if (!IsolatedStorageSettings.ApplicationSettings.Contains("firstruncheck"))
+            {
+                IsolatedStorageSettings.ApplicationSettings.Add("firstruncheck", true);
+            }
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
+            else
+            {
+                NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+            }
         }
     }
 }

@@ -11,106 +11,106 @@
 	x:Class="SparklrWP.FirstRun"
 	SupportedOrientations="Portrait" Orientation="Portrait"
 	shell:SystemTray.IsVisible="True">
-	<phone:PhoneApplicationPage.Resources>
-		<Storyboard x:Name="HelloAni">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LayoutRoot">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.GlobalOffsetX)" Storyboard.TargetName="textBlock">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="-466"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="-493"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="-472"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1.8" Value="-472"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="textBlock">
-				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:1.8" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:2.4" Value="0.355"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:2.9" Value="0"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="pivot">
-				<EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="0.015"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:2.3" Value="0.495"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:3.2" Value="1"/>
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-	</phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.Resources>
+        <Storyboard x:Name="HelloAni">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LayoutRoot">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.GlobalOffsetX)" Storyboard.TargetName="textBlock">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="-466"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="-493"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="-472"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.8" Value="-472"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="textBlock">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.8" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.4" Value="0.355"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.9" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="pivot">
+                <EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="0.015"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.3" Value="0.495"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3.2" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </phone:PhoneApplicationPage.Resources>
 
-	<phone:PhoneApplicationPage.FontFamily>
-		<StaticResource ResourceKey="PhoneFontFamilyNormal"/>
-	</phone:PhoneApplicationPage.FontFamily>
-	<phone:PhoneApplicationPage.FontSize>
-		<StaticResource ResourceKey="PhoneFontSizeNormal"/>
-	</phone:PhoneApplicationPage.FontSize>
-	<phone:PhoneApplicationPage.Foreground>
-		<StaticResource ResourceKey="PhoneForegroundBrush"/>
-	</phone:PhoneApplicationPage.Foreground>
+    <phone:PhoneApplicationPage.FontFamily>
+        <StaticResource ResourceKey="PhoneFontFamilyNormal"/>
+    </phone:PhoneApplicationPage.FontFamily>
+    <phone:PhoneApplicationPage.FontSize>
+        <StaticResource ResourceKey="PhoneFontSizeNormal"/>
+    </phone:PhoneApplicationPage.FontSize>
+    <phone:PhoneApplicationPage.Foreground>
+        <StaticResource ResourceKey="PhoneForegroundBrush"/>
+    </phone:PhoneApplicationPage.Foreground>
 
-	<!--LayoutRoot is the root grid where all page content is placed-->
-	<Grid x:Name="LayoutRoot" Opacity="0">
-		<Grid.Background>
-			<ImageBrush Stretch="UniformToFill" ImageSource="Assets/bg.jpg"/>
-		</Grid.Background>
-		<!--Pivot Control-->
-		<!--Pivot Control-->
-		<TextBlock x:Name="textBlock" Margin="0,348,-685,170" TextWrapping="Wrap" Text="Hello There :)" FontFamily="Segoe WP Light" FontSize="64" HorizontalAlignment="Right" Width="654">
-			<TextBlock.Projection>
-				<PlaneProjection/>
-			</TextBlock.Projection>
-		</TextBlock>
-		<controls:Pivot x:Name="pivot" Title="Sparklr*" Opacity="0.015">
-			<!--Pivot item one-->
-			<controls:PivotItem Header="The Basics">
-				
-				
-				   
-				<Grid>
-					
-					<TextBlock x:Name="textBlock1" Margin="8,8,8,0" TextWrapping="Wrap" Text="Lets Get Started!" FontFamily="Segoe WP Light" FontSize="48" TextAlignment="Center" Height="66" VerticalAlignment="Top">
-						<TextBlock.Foreground>
-							<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-						</TextBlock.Foreground>
-					</TextBlock>
-					<TextBlock x:Name="textBlock2" Height="50" Margin="-292,106,0,0" TextWrapping="Wrap" Text="The Login Page:" VerticalAlignment="Top" FontSize="26.667" FontFamily="Segoe WP Light" HorizontalAlignment="Left" Width="255" Foreground="White" RenderTransformOrigin="0.5,0.5">
-						<TextBlock.RenderTransform>
-							<CompositeTransform/>
-						</TextBlock.RenderTransform>
-					</TextBlock>
-					<TextBlock Margin="0,138,77,299" TextWrapping="Wrap" FontSize="29.333" FontFamily="Segoe WP Light"><Run Text="Enter Your User Name And Password Used On Sparklr If You Don't  Have A Account Sign Up! Its Free!"/><LineBreak/><Run/></TextBlock>
-					<TextBlock HorizontalAlignment="Left" Height="47" Margin="8,82,0,0" TextWrapping="Wrap" Text="Login:" VerticalAlignment="Top" Width="85" FontSize="32" FontFamily="Segoe WP Light"/>
-					<TextBlock HorizontalAlignment="Left" Height="47" Margin="31,0,0,-80" TextWrapping="Wrap" Text="Login:" VerticalAlignment="Bottom" Width="85" FontSize="32" FontFamily="Segoe WP Light"/>
-					<TextBlock Height="47" Margin="0,0,0,8" TextWrapping="Wrap" Text="Slide Over ;)" VerticalAlignment="Bottom" FontSize="32" FontFamily="Segoe WP Light" HorizontalAlignment="Right" Width="171">
-						<TextBlock.Foreground>
-							<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-						</TextBlock.Foreground>
-					</TextBlock>
-					<TextBlock Margin="0,0,94,210" TextWrapping="Wrap" Text="The Dashboard:" FontFamily="Segoe WP Light" FontSize="29.333" Height="63" VerticalAlignment="Bottom"/>
-					<TextBlock Margin="0,0,42,64" TextWrapping="Wrap" Text="The Power Of The Pivot! Slide Over On The Main Page For More Things To Do! It's Like Having The Power Of Sparklr In Your Hands!" FontFamily="Segoe WP Light" FontSize="26.667" Height="146" VerticalAlignment="Bottom"/>
-			
-				</Grid>
-				
-			</controls:PivotItem>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Opacity="0">
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" ImageSource="Assets/bg.jpg"/>
+        </Grid.Background>
+        <!--Pivot Control-->
+        <!--Pivot Control-->
+        <TextBlock x:Name="textBlock" Margin="0,348,-685,170" TextWrapping="Wrap" Text="Hello There :)" FontFamily="Segoe WP Light" FontSize="64" HorizontalAlignment="Right" Width="654">
+            <TextBlock.Projection>
+                <PlaneProjection/>
+            </TextBlock.Projection>
+        </TextBlock>
+        <controls:Pivot x:Name="pivot" Title="Sparklr*" Opacity="0.015">
+            <!--Pivot item one-->
+            <controls:PivotItem Header="The Basics">
 
-			<!--Pivot item two-->
-			<controls:PivotItem Header="Other Stuff">
-				<Grid>
-					<TextBlock Margin="42,221,34,136" TextWrapping="Wrap" Text="What Are You Waiting For?! Try It Yourself!" FontFamily="Segoe WP Light" FontSize="64">
-						<TextBlock.Foreground>
-							<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-						</TextBlock.Foreground>
-					</TextBlock>
-					<TextBlock Height="63" Margin="8,8,86,0" TextWrapping="Wrap" Text="The Three Dots!" VerticalAlignment="Top" FontFamily="Segoe WP Light" FontSize="29.333"/>
-					<TextBlock Margin="8,71,34,0" TextWrapping="Wrap" Text="On Most Pages You Will See A Bar With An Icon! Those Are Passage Ways To Other Parts In The App!" FontFamily="Segoe WP Light" FontSize="26.667" Height="146" VerticalAlignment="Top"/>
-					<Coding4Fun_Toolkit_Controls:RoundButton Margin="0,0,-68,-18" HorizontalAlignment="Right" Height="116" VerticalAlignment="Bottom" Width="204" Click="OK_Click"/>
-					<TextBlock Height="40" Margin="0,0,-186,0" TextWrapping="Wrap" Text="OK!" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="236"/>
-				</Grid>
-			</controls:PivotItem>
-		</controls:Pivot>
-	</Grid>
+
+
+                <Grid>
+
+                    <TextBlock x:Name="textBlock1" Margin="8,8,8,0" TextWrapping="Wrap" Text="Lets Get Started!" FontFamily="Segoe WP Light" FontSize="48" TextAlignment="Center" Height="66" VerticalAlignment="Top">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock x:Name="textBlock2" Height="50" Margin="-292,106,0,0" TextWrapping="Wrap" Text="The Login Page:" VerticalAlignment="Top" FontSize="26.667" FontFamily="Segoe WP Light" HorizontalAlignment="Left" Width="255" Foreground="White" RenderTransformOrigin="0.5,0.5">
+                        <TextBlock.RenderTransform>
+                            <CompositeTransform/>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+                    <TextBlock Margin="0,138,77,299" TextWrapping="Wrap" FontSize="29.333" FontFamily="Segoe WP Light"><Run Text="Enter Your User Name And Password Used On Sparklr If You Don't  Have A Account Sign Up! Its Free!"/><LineBreak/><Run/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Height="47" Margin="8,82,0,0" TextWrapping="Wrap" Text="Login:" VerticalAlignment="Top" Width="85" FontSize="32" FontFamily="Segoe WP Light"/>
+                    <TextBlock HorizontalAlignment="Left" Height="47" Margin="31,0,0,-80" TextWrapping="Wrap" Text="Login:" VerticalAlignment="Bottom" Width="85" FontSize="32" FontFamily="Segoe WP Light"/>
+                    <TextBlock Height="47" Margin="0,0,0,8" TextWrapping="Wrap" Text="Slide Over ;)" VerticalAlignment="Bottom" FontSize="32" FontFamily="Segoe WP Light" HorizontalAlignment="Right" Width="171">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Margin="0,0,94,210" TextWrapping="Wrap" Text="The Dashboard:" FontFamily="Segoe WP Light" FontSize="29.333" Height="63" VerticalAlignment="Bottom"/>
+                    <TextBlock Margin="0,0,42,64" TextWrapping="Wrap" Text="The Power Of The Pivot! Slide Over On The Main Page For More Things To Do! It's Like Having The Power Of Sparklr In Your Hands!" FontFamily="Segoe WP Light" FontSize="26.667" Height="146" VerticalAlignment="Bottom"/>
+
+                </Grid>
+
+            </controls:PivotItem>
+
+            <!--Pivot item two-->
+            <controls:PivotItem Header="Other Stuff">
+                <Grid>
+                    <TextBlock Margin="42,221,34,136" TextWrapping="Wrap" Text="What Are You Waiting For?! Try It Yourself!" FontFamily="Segoe WP Light" FontSize="64">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Height="63" Margin="8,8,86,0" TextWrapping="Wrap" Text="The Three Dots!" VerticalAlignment="Top" FontFamily="Segoe WP Light" FontSize="29.333"/>
+                    <TextBlock Margin="8,71,34,0" TextWrapping="Wrap" Text="On Most Pages You Will See A Bar With An Icon! Those Are Passage Ways To Other Parts In The App!" FontFamily="Segoe WP Light" FontSize="26.667" Height="146" VerticalAlignment="Top"/>
+                    <Coding4Fun_Toolkit_Controls:RoundButton Margin="0,0,-68,-18" HorizontalAlignment="Right" Height="116" VerticalAlignment="Bottom" Width="204" Click="OK_Click"/>
+                    <TextBlock Height="40" Margin="0,0,-186,0" TextWrapping="Wrap" Text="OK!" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="236"/>
+                </Grid>
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
 </phone:PhoneApplicationPage>

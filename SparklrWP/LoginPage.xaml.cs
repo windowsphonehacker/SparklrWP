@@ -2,7 +2,6 @@
 using Microsoft.Phone.Tasks;
 using SparklrLib;
 using System;
-using System.IO;
 using System.IO.IsolatedStorage;
 using System.Net;
 using System.Security.Cryptography;
@@ -53,6 +52,17 @@ namespace SparklrWP
                 rememberBox.IsChecked = true;
             }
             App.BackgroundTask = new Utils.Task();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (!IsolatedStorageSettings.ApplicationSettings.Contains("firstruncheck"))
+            {
+                MessageBox.Show("Looks like it's the first time you've used this app! We will take you through a small intro to show you around the app!", "Have we met before?", MessageBoxButton.OK);
+
+                NavigationService.Navigate(new Uri("/FirstRun.xaml", UriKind.Relative));
+            }
         }
 
         private bool postcallback(string jsonData)
@@ -157,39 +167,6 @@ namespace SparklrWP
 
             }
         }
-        //if DEBUG
-        private void about_Unload(object sender, RoutedEventArgs e)
-        {
-            IsolatedStorageFile isf = IsolatedStorageFile.GetUserStoreForApplication();
-            isf.CreateDirectory("Check");
-            StreamWriter sw = new StreamWriter(new IsolatedStorageFileStream("Check\\Check.txt", FileMode.Create, isf));
-            sw.WriteLine("HI");
-            sw.Close();
-        }
-
-        private void about_Loaded(object sender, RoutedEventArgs e)
-        {
-            IsolatedStorageFile isf = IsolatedStorageFile.GetUserStoreForApplication();
-            StreamReader sr = null;
-            try
-            {
-                sr = new StreamReader(new IsolatedStorageFileStream("Check\\Check.txt", FileMode.Open, isf));
-                sr.ReadLine();
-                sr.Close();
-            }
-
-            catch
-            {
-                MessageBox.Show("Looks Like It's The First Time You've Used This App! We Will Take Tou Through A Small Intro To Show You Around The App!", "Have We Met Before?", MessageBoxButton.OK);
-
-                NavigationService.Navigate(new Uri("/FirstRun.xaml", UriKind.Relative));
-
-
-            }
-        }
-        //#endif 
-
-
     }
 
 }

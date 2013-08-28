@@ -76,7 +76,7 @@
         		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
         	</Button.Background>
         </Button>
-        <Button x:Name="button2" Content="About" Margin="228,0,48,52" Grid.Row="1" Height="174" VerticalAlignment="Bottom" BorderBrush="Transparent" FontFamily="Segoe WP Light" FontSize="26.667" Click="about_Click" Unloaded="about_Unload" Loaded="about_Loaded">
+        <Button x:Name="button2" Content="About" Margin="228,0,48,52" Grid.Row="1" Height="174" VerticalAlignment="Bottom" BorderBrush="Transparent" FontFamily="Segoe WP Light" FontSize="26.667" Click="about_Click">
         	<Button.Background>
         		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
         	</Button.Background>
