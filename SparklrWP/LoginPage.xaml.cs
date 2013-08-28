@@ -2,14 +2,13 @@
 using Microsoft.Phone.Tasks;
 using SparklrLib;
 using System;
+using System.IO;
 using System.IO.IsolatedStorage;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
 using System.Windows.Navigation;
-using Microsoft.Phone.Shell;
-using System.IO;
 
 
 
@@ -31,12 +30,12 @@ namespace SparklrWP
                 {
 
                 }
-                
+
             }
-//#if DEBUG
-            
-            
-//#endif
+            //#if DEBUG
+
+
+            //#endif
 
             App.Client = new SparklrClient();
             if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
@@ -106,7 +105,7 @@ namespace SparklrWP
 
         private void Login_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            
+
             Ani1.Begin();
 
 
@@ -153,17 +152,17 @@ namespace SparklrWP
             {
 
                 e.Cancel = false;
-               
+
 
 
             }
         }
-//if DEBUG
+        //if DEBUG
         private void about_Unload(object sender, RoutedEventArgs e)
-       {
+        {
             IsolatedStorageFile isf = IsolatedStorageFile.GetUserStoreForApplication();
             isf.CreateDirectory("Check");
-            StreamWriter sw = new StreamWriter(new IsolatedStorageFileStream("Check\\Check.txt",FileMode.Create , isf));
+            StreamWriter sw = new StreamWriter(new IsolatedStorageFileStream("Check\\Check.txt", FileMode.Create, isf));
             sw.WriteLine("HI");
             sw.Close();
         }
@@ -188,9 +187,9 @@ namespace SparklrWP
 
             }
         }
-//#endif 
-           
-         
-           }
+        //#endif 
 
-        }
+
+    }
+
+}
