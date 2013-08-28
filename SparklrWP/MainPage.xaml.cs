@@ -135,10 +135,5 @@ namespace SparklrWP
         {
             NavigationService.Navigate(new Uri("/Pages/Profile.xaml?userId=" + ((StackPanel)sender).Tag, UriKind.Relative));
         }
-
-        private void logout_Click(object sender, EventArgs e)
-        {
-            NavigationService.Navigate(new Uri("/LoginPage.xaml?logout=true", UriKind.Relative));
-        }
     }
 }
