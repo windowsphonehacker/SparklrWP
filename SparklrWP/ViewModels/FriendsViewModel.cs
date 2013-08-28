@@ -8,11 +8,11 @@ namespace SparklrWP
     public class FriendsViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<FriendViewModel> _items;
-        public ReadOnlyObservableCollection<FriendViewModel> Items
+        public ObservableCollection<FriendViewModel> Items
         {
             get
             {
-                return new ReadOnlyObservableCollection<FriendViewModel>(_items);
+                return new ObservableCollection<FriendViewModel>(_items);
             }
             /*set
             {

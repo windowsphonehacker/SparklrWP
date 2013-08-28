@@ -1,4 +1,4 @@
-﻿//using Microsoft.Xna.Framework.Media;
+﻿using Microsoft.Xna.Framework.Media;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -96,7 +96,7 @@ namespace SparklrWP.Controls
         /// <summary>
         /// A regex that matches any url and captures the destination without the http(s)://
         /// </summary>
-        private static Regex urlRegex = new Regex(@"(?:(http|ftp|https):\/\/)?([\w\-_]+(?:\.[\w\-_]+)+(?:[\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+        private static Regex urlRegex = new Regex(@"(?:((?:http|ftp|https):\/\/))?([\w\-_]+(?:\.[\w\-_]+)+(?:[\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static Regex urlSplitRegex = new Regex(@"((?:(?:http|ftp|https):\/\/)?(?:[\w\-_]+(?:\.[\w\-_]+)+(?:[\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
         /// <summary>
@@ -130,6 +130,7 @@ namespace SparklrWP.Controls
                 {
                     text = value;
                     updateText(value);
+                    refreshVisibility();
                 }
             }
         }
@@ -245,6 +246,14 @@ namespace SparklrWP.Controls
             }
         }
 
+        public Visibility TextVisibility
+        {
+            get
+            {
+                return String.IsNullOrEmpty(this.text) ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
+
         private void loadImage(string value)
         {
             //We need to store the old image location
@@ -265,9 +274,19 @@ namespace SparklrWP.Controls
                             */
                            if (oldImageLocation == this.ImageLocation)
                            {
-                               image = new BitmapImage();
-                               image.SetSource(e.Result);
-                               MessageImage.Source = image;
+                               try
+                               {
+                                   image = new BitmapImage();
+                                   image.SetSource(e.Result);
+                                   MessageImage.Source = image;
+                               }
+                               catch (WebException)
+                               {
+#if DEBUG
+                                   if (System.Diagnostics.Debugger.IsAttached)
+                                       System.Diagnostics.Debugger.Log(0, "SparklrTextControl", String.Format("Did not load image {0}", oldImageLocation));
+#endif
+                               }
                            }
 
                            refreshVisibility();
@@ -314,6 +333,8 @@ namespace SparklrWP.Controls
         {
             userbar.Visibility = UserbarVisibility;
             ImageContainer.Visibility = ImageVisibility;
+            messageContentContainer.Visibility = TextVisibility;
+            this.InvalidateMeasure();
         }
 
         /// <summary>
@@ -395,17 +416,21 @@ namespace SparklrWP.Controls
                     string url;
 
                     //see if we matched the protocol and build based on that
-                    if (urlMatch.Captures.Count == 2)
+                    if (!String.IsNullOrEmpty(urlMatch.Groups[1].Value))
                     {
-                        url = String.Format("{0}{1}", urlMatch.Captures[0].Value, urlMatch.Captures[1].Value);
+                        url = String.Format("{0}{1}", urlMatch.Groups[1].Value, urlMatch.Groups[2].Value);
                     }
                     else
                     {
                         //http:// is missing
-                        url = String.Format("http://{0}", urlMatch.Captures[0].Value);
+                        url = String.Format("http://{0}", urlMatch.Groups[2].Value);
                     }
 
-                    messageContentParagraph.Inlines.Add(getAsInlineLink(urlpart, new Uri(url)));
+                    Uri uri;
+                    if (Uri.TryCreate(url, UriKind.RelativeOrAbsolute, out uri))
+                        messageContentParagraph.Inlines.Add(getAsInlineLink(urlpart, uri));
+                    else
+                        messageContentParagraph.Inlines.Add(getAsInline(urlpart));
                 }
             }
         }
@@ -495,7 +520,22 @@ namespace SparklrWP.Controls
 
                     if (ImageLocation.StartsWith("http://d.sparklr.me/i/t", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        //Check if we have a thumbnail only
+                        //We have a thumbnail
+                        string location = ImageLocation.Replace("http://d.sparklr.me/i/t", "http://d.sparklr.me/i/");
+
+                        WebClient downloader = new WebClient();
+                        downloader.OpenReadCompleted += (dSender, dE) =>
+                            {
+                                using (MediaLibrary library = new MediaLibrary())
+                                {
+                                    library.SavePicture(filename, dE.Result);
+                                }
+                                MessageBox.Show("Hooray! We downloaded the image. You can now admire it via the Image hub.");
+                            };
+
+                        downloader.OpenReadAsync(new Uri(location));
+
+                        MessageBox.Show("We are now downloading the image in the beackground. We will tell you when everything is ready!");
                     }
                     else
                     {
@@ -505,10 +545,12 @@ namespace SparklrWP.Controls
                             ms.Seek(0, SeekOrigin.Begin);
 
                             //TODO: Uncomment on release
-                            //using (MediaLibrary library = new MediaLibrary())
-                            //{
-                            //    library.SavePicture(filename, ms);
-                            //}
+                            using (MediaLibrary library = new MediaLibrary())
+                            {
+                                library.SavePicture(filename, ms);
+                            }
+
+                            MessageBox.Show("Yay! We saved the image to your gallery. You can now admire it everytime you want!");
                         }
                     }
                 }

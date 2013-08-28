@@ -58,56 +58,49 @@ namespace SparklrWP
 
         private bool postcallback(string jsonData)
         {
-            Dispatcher.BeginInvoke(() =>
-            {
-                MessageBox.Show(jsonData);
-            });
+            Dispatcher.BeginInvoke(() => MessageBox.Show(jsonData));
             return true;
         }
 
         private void loginButton_Click(object sender, RoutedEventArgs e)
         {
             GlobalLoading.Instance.IsLoading = true;
-            App.Client.Login(usernameBox.Text, passwordBox.Password, (loginargs) =>
+            App.Client.Login(usernameBox.Text, passwordBox.Password, loginargs => Dispatcher.BeginInvoke(() =>
             {
-                Dispatcher.BeginInvoke(() =>
+                GlobalLoading.Instance.IsLoading = false;
+                if (!loginargs.IsSuccessful)
                 {
-                    GlobalLoading.Instance.IsLoading = false;
-                    if (!loginargs.IsSuccessful)
+                    if (loginargs.Response != null && loginargs.Response.StatusCode == HttpStatusCode.NotFound)
                     {
-                        if (loginargs.Response != null && loginargs.Response.StatusCode == HttpStatusCode.NotFound)
-                        {
-                            MessageBox.Show("Wrong username or password");
-                        }
-                        else
-                        {
-                            MessageBox.Show("Something horrible happend, try again later!", "Sorry",MessageBoxButton.OK);
-#if DEBUG
-                            MessageBox.Show(loginargs.Error.Message);
-#endif
-                        }
+                        MessageBox.Show("Wrong username or password");
                     }
                     else
                     {
-                        if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
-                        {
-                            IsolatedStorageSettings.ApplicationSettings.Remove("username");
-                        }
-                        if (IsolatedStorageSettings.ApplicationSettings.Contains("password"))
-                        {
-                            IsolatedStorageSettings.ApplicationSettings.Remove("password");
-                        }
-                        if (rememberBox.IsChecked == true)
-                        {
-                            IsolatedStorageSettings.ApplicationSettings.Add("password", ProtectedData.Protect(Encoding.UTF8.GetBytes(passwordBox.Password), null));
-                            IsolatedStorageSettings.ApplicationSettings.Add("username", usernameBox.Text);
-                        }
-                        IsolatedStorageSettings.ApplicationSettings.Save();
-                        
-                       NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                        MessageBox.Show("Something horrible happend, try again later!", "Sorry", MessageBoxButton.OK);
+#if DEBUG
+                        MessageBox.Show(loginargs.Error.Message);
+#endif
                     }
-                });
-            });
+                }
+                else
+                {
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
+                    {
+                        IsolatedStorageSettings.ApplicationSettings.Remove("username");
+                    }
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("password"))
+                    {
+                        IsolatedStorageSettings.ApplicationSettings.Remove("password");
+                    }
+                    if (rememberBox.IsChecked == true)
+                    {
+                        IsolatedStorageSettings.ApplicationSettings.Add("password", ProtectedData.Protect(Encoding.UTF8.GetBytes(passwordBox.Password), null));
+                        IsolatedStorageSettings.ApplicationSettings.Add("username", usernameBox.Text);
+                    }
+                    IsolatedStorageSettings.ApplicationSettings.Save();
+                    NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                }
+            }));
 
         }
 
@@ -115,18 +108,18 @@ namespace SparklrWP
         {
             
             Ani1.Begin();
-            
+
 
 
             button.IsEnabled = false;
             button1.IsEnabled = false;
             button2.IsEnabled = false;
-          
+
 
 
         }
 
-        private void Signup_click(object sender, System.Windows.RoutedEventArgs e)
+        private void Signup_click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("The Sign Up Page Will Open In Internet Explorer, Is That Ok?", "Sparklr", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
@@ -136,7 +129,7 @@ namespace SparklrWP
 
         private void about_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MessageBox.Show("Sparklr Branding © Jonathan Warner \n\n Application Development Team: \n\n Marocco2 (design!)\n jessenic (code!)\n EaterOfCorpses (code-design!)\n TheInterframe (code-design!)\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
+            MessageBox.Show("Sparklr Branding © Jonathan Warner \n\n Application Development Team: \n\nMarocco2 (design!)\njessenic (code!)\nEaterOfCorpses (code-design!)\nTheInterframe (code-design!)\nChrisk (code-design!)\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
         }
 
         private void checkEnter_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

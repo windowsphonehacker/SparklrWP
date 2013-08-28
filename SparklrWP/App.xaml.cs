@@ -1,6 +1,7 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SparklrLib;
+using SparklrWP.Utils;
 using System;
 using System.IO;
 using System.Windows;
@@ -75,6 +76,10 @@ namespace SparklrWP
         {
             // Global handler for uncaught exceptions. 
             UnhandledException += Application_UnhandledException;
+
+#if DEBUG
+            MemoryDiagnosticsHelper.Start(TimeSpan.FromMilliseconds(500), true);
+#endif
 
             // Standard Silverlight initialization
             InitializeComponent();

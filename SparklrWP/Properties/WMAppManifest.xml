@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
+  <AppExtra xmlns="" AppPlatformVersion="8.0">
+    <Extra Name="Tiles"/>
+  </AppExtra>
   <App xmlns="" ProductID="{50b5e547-901c-4cb3-a9cb-c889ed02974c}" Title="Sparklr*" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Sparklr Team" Description="Sample description" Publisher="Jonathan Warner" BitsPerPixel="32">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
@@ -14,8 +17,6 @@
       <DefaultTask Name="_default" NavigationPage="LoginPage.xaml" />
       <ExtendedTask Name="BackgroundTask">
         <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="SparklrWP Background Agent" Source="SparklrWP Background Agent" Type="SparklrWP_Background_Agent.ScheduledAgent" />
-        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="SparklrWP Background Agent" Source="SparklrWP Background Agent" Type="SparklrWP Background Agent.ScheduledAgent" />
-        <BackgroundServiceAgent Specifier="ScheduledTaskAgent" Name="SparklrWP Background Agent" Source="SparklrWP Background Agent" Type="SparklrWP Background Agent.ScheduledAgent" />
       </ExtendedTask>
     </Tasks>
     <Tokens>

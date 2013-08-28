@@ -1,27 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using Microsoft.Phone.Controls;
+﻿using Microsoft.Phone.Controls;
 using System.Windows.Navigation;
 
 namespace SparklrWP.Pages
 {
     public partial class Profile : PhoneApplicationPage
     {
+        ProfileViewModel model;
+
         public Profile()
         {
             InitializeComponent();
+            model = new ProfileViewModel();
+            this.DataContext = model;
         }
+
         public bool dataLoaded = false;
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (dataLoaded) return;
@@ -29,29 +23,29 @@ namespace SparklrWP.Pages
             string selectedIndex = "";
             if (NavigationContext.QueryString.TryGetValue("userId", out selectedIndex))
             {
-                int index = int.Parse(selectedIndex);
-                profileBg.ImageSource = new BitmapImage(new Uri("http://d.sparklr.me/i/b" + index + ".jpg"));
-                profilePanorama.Tag = new
+                model.ID = int.Parse(selectedIndex);
+
+                App.Client.GetUser(model.ID, (usargs) =>
                 {
-                    Image = new BitmapImage(new Uri("http://d.sparklr.me/i/" + index + ".jpg")),
-                    Handle = "@..."
-                };
-                App.Client.GetUser(index, (usargs) =>
-                {
-                    if(usargs.IsSuccessful){
+                    if (usargs.IsSuccessful)
+                    {
                         this.Dispatcher.BeginInvoke(() =>
                         {
-                            profilePanorama.Title = usargs.Object.name;
-                            profilePanorama.Tag = profilePanorama.Tag = new
+                            model.Handle = "@" + usargs.Object.handle;
+                            model.BackgroundImage = "http://d.sparklr.me/i/b" + model.ID + ".jpg";
+                            model.ProfileImage = "http://d.sparklr.me/i/" + model.ID + ".jpg";
+
+                            model.Bio = usargs.Object.bio;
+                            if (model.Bio.Trim() == "")
                             {
-                                Image = new BitmapImage(new Uri("http://d.sparklr.me/i/" + index + ".jpg")),
-                                Handle = "@" + usargs.Object.handle
-                            };
-                            bio.Text = usargs.Object.bio;
+                                model.Bio = usargs.Object.name + " is too shy to write something about his/herself maybe check again later!";
+                            }
                         });
                     }
                 });
             }
         }
+
+
     }
 }
