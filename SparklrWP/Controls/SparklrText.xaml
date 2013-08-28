@@ -46,7 +46,11 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" Foreground="White" FontSize="24" x:Name="usernameTextBlock" />
-            <TextBlock Grid.Column="1" Foreground="White" FontSize="24" x:Name="commentCountTextBlock" />
+			<StackPanel Grid.Column="1" Orientation="Horizontal">
+				<TextBlock Grid.Column="1" Foreground="White" FontSize="24" x:Name="commentCountTextBlock" />
+				<Image Source="appbar.message.send.png" Width="35" Height="35" HorizontalAlignment="Left" />
+			</StackPanel>
+            
             <StackPanel Grid.Column="2" Orientation="Horizontal">
                 <Image Source="/Assets/Heart.png" Width="15" Height="15" HorizontalAlignment="Left" />
                 <TextBlock Foreground="White" FontSize="24" x:Name="likesTextBlock" Padding="7,0,0,0">Test</TextBlock>

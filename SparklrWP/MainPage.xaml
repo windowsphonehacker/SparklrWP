@@ -37,7 +37,7 @@
         <controls:PivotItem x:Name="postsPivot" Header="Posts"  Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"
     d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}">
             <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-                <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" >
+                <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" Margin="-11,0,0,0" >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel MinWidth="456" MaxWidth="456" Margin="0,0,0,17">
@@ -98,7 +98,7 @@
         <controls:PivotItem Header="Inbox">
             <Grid/>
         </controls:PivotItem>
-        <controls:PivotItem Header="Profile">
+        <controls:PivotItem Header="My profile">
             <Grid/>
         </controls:PivotItem>
     </controls:Pivot>

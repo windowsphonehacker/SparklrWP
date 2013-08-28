@@ -194,7 +194,7 @@ namespace SparklrWP.Controls
                 if (comments != value)
                 {
                     comments = value;
-                    commentCountTextBlock.Text = comments == 1 ? "1 comment" : String.Format("{0} comments", comments);
+                    commentCountTextBlock.Text = comments == 1 ? "1" : String.Format("{0}", comments);
                     refreshVisibility();
                 }
             }

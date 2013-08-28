@@ -40,6 +40,7 @@
             <Border Name="EditBorder" Visibility="Collapsed" Background="#C0C0C0C0" Margin="8,417,415,98">
                 <TextBlock HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Bottom" FontSize="18" Foreground="White" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Text="Edit "/>
             </Border>
+            <TextBlock HorizontalAlignment="Left" Height="80" Margin="213,359,0,0" TextWrapping="Wrap" Text="There is an image editor!" VerticalAlignment="Top" Width="233" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
         </Grid>
         <Rectangle x:Name="rectangle" Height="64" VerticalAlignment="Top" Margin="-564,13,0,0" HorizontalAlignment="Left" Width="480" Opacity="0">
             <Rectangle.Stroke>
@@ -65,7 +66,7 @@
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" BackgroundColor="#FF2A2339" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New Postt" Click="postButton_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Controls/appbar.message.send.png" Text="New Post" Click="postButton_Click"/>
             <shell:ApplicationBarIconButton x:Name="attachButton" IconUri="/Assets/AppBar/appbar.feature.camera.rest.png" Text="Picture" Click="attachButton_Click"/>
             <shell:ApplicationBar.MenuItems>
 
