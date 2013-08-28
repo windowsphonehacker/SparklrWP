@@ -127,13 +127,6 @@ namespace SparklrWP
                 button1.IsEnabled = true;
                 button2.IsEnabled = true;
             }
-            else
-            {
-                NavigationService.GoBack();
-
-            }
-
-
         }
     }
 }
