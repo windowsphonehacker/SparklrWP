@@ -232,12 +232,10 @@ namespace SparklrWP
                         {
                             if (myFileStream.CanRead)
                             {
-                                using (StreamReader myStreamReader = new StreamReader(myFileStream))
-                                {
-
-                                    //read the content here
-                                    _aviaryApiKey = myStreamReader.ReadToEnd();
-                                }
+                                //Will be disposed when the underlying stream is disposed, no using required
+                                StreamReader myStreamReader = new StreamReader(myFileStream);
+                                //read the content here
+                                _aviaryApiKey = myStreamReader.ReadToEnd();
                             }
                         }
 

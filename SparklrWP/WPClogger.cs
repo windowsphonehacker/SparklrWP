@@ -1,21 +1,12 @@
-﻿using System;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Text;
-using System.Diagnostics;
-using System.IO.IsolatedStorage;
+﻿using Microsoft.Phone.Tasks;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Xml.Linq;
-using Microsoft.Phone.Tasks;
+using System.Diagnostics;
+using System.IO.IsolatedStorage;
+using System.Text;
 using System.Xml;
+using System.Xml.Linq;
 
 /*
  * Change the namespace to your app's namespace!
@@ -35,7 +26,7 @@ namespace SparklrWP
         #region logging variables
         private static String[] levelLabel = new String[] { "DEBUG", "INFO", "WARN", "ERROR", "CRITICAL" };
         private List<WPCException> buffer = new List<WPCException>();
-        IDictionary<string, string> dictionary = new Dictionary<string,string>();
+        IDictionary<string, string> dictionary = new Dictionary<string, string>();
         private IsolatedStorageFile iso = IsolatedStorageFile.GetUserStoreForApplication();
         private IsolatedStorageSettings settings = IsolatedStorageSettings.ApplicationSettings;
         private bool toFile = false;
@@ -119,7 +110,7 @@ namespace SparklrWP
                 }
                 else
                 {
-                    emailTask.Body = emailTask.Body.Substring(0, emailTask.Body.Length/2);
+                    emailTask.Body = emailTask.Body.Substring(0, emailTask.Body.Length / 2);
                 }
                 emailTask.Body += "\nTruncated due to email size limitation";
                 emailTask.Show();
@@ -375,26 +366,29 @@ namespace SparklrWP
                     {
                         if (file.Length > maxFileSize)
                         {
-                            file.Close();
                             iso.DeleteFile(fileName);
-                            buffer.Add(new WPCException(LogLevel.info,new Exception("Log reached maximum size, purging")));
+                            buffer.Add(new WPCException(LogLevel.info, new Exception("Log reached maximum size, purging")));
                             return false;
                         }
                         loadedDoc = XDocument.Load(file);
                         loadParameters();
-                        file.Close();
                         return true;
                     }
                     catch (System.Xml.XmlException exception)
                     {
-                        file.Close();
                         log(LogLevel.error, exception);
                         return false;
+                    }
+                    finally
+                    {
+                        //Fix for CA2202
+                        file.Close();
                     }
                 }
                 catch (IsolatedStorageException ex)
                 {
-                    throw ex;
+                    //Fix for CA2200
+                    throw;
                 }
             }
             else if (loadedDoc != null)

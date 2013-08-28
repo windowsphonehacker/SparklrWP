@@ -12,7 +12,7 @@ using System.Windows.Navigation;
 
 namespace SparklrWP
 {
-    public partial class NewPostPage : PhoneApplicationPage
+    public partial class NewPostPage : PhoneApplicationPage, IDisposable
     {
         readonly PhotoChooserTask _photoChooserTask;
         Stream _photoStr;
@@ -21,8 +21,6 @@ namespace SparklrWP
             InitializeComponent();
             _photoChooserTask = new PhotoChooserTask() { ShowCamera = true };
             _photoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
-
-
         }
 
         private async void postButton_Click(object sender, EventArgs e)
@@ -167,5 +165,16 @@ namespace SparklrWP
             }
         }
 
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            //Fix for CA1001
+            if (_photoStr != null)
+                _photoStr.Close();
+        }
     }
 }
