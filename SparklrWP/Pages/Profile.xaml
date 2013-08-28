@@ -17,7 +17,6 @@
 	shell:SystemTray.IsVisible="False" Background="#FF454050"
     d:DataContext="{d:DesignData ../SampleData/UserProfileViewModelSampleData.xaml}"
     x:Name="ProfilePage">
-
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar BackgroundColor="#FF2A2339">
 			<shell:ApplicationBarIconButton x:Name="followButton" Text="Follow" IconUri="/Assets/AppBar/ApplicationBar.Add.png"/>
@@ -25,7 +24,17 @@
 	</phone:PhoneApplicationPage.ApplicationBar>
 <!--LayoutRoot contains the root grid where all other page content is placed-->
 	<Grid x:Name="LayoutRoot">
-		<controls:Panorama>
+        <Grid.Resources>
+            <ResourceDictionary>
+                <Storyboard x:Key="FadeInAnimation" x:Name="FadeInStoryboard">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" x:Name="FadeInAnimation">
+                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                        <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </ResourceDictionary>
+        </Grid.Resources>
+		<controls:Panorama x:Name="MainPanorama">
 			<controls:Panorama.Resources>
 				<Style x:Key="PanoramaFadedStyle" TargetType="controls:Panorama">
 					<Setter Property="ItemsPanel">
@@ -46,10 +55,7 @@
 										<RowDefinition Height="*"/>
 									</Grid.RowDefinitions>
 									<controlsPrimitives:PanningBackgroundLayer x:Name="BackgroundLayer" HorizontalAlignment="Left" Grid.RowSpan="2">
-										<!--<Border x:Name="background" Background="{TemplateBinding Background}" CacheMode="BitmapCache"/>
-                                            We're using an Image because the Background ImageBrush ImageSource won't bind properly
-                                        -->
-                                        <Image x:Name="background" Source="{Binding Path=DataContext.BackgroundImage, ElementName=ProfilePage}" Stretch="UniformToFill" />
+										<Border x:Name="background" Background="{TemplateBinding Background}" CacheMode="BitmapCache"/>
 									</controlsPrimitives:PanningBackgroundLayer>
                                     <Rectangle Grid.Row="0" Fill="#aa2A2339" Margin="0,44,0,35"></Rectangle>
                                     <Rectangle Fill="#cc2A2339" Grid.Row="1" Margin="0,20,0,0" Height="60" VerticalAlignment="Top"></Rectangle>
@@ -66,7 +72,20 @@
 			<controls:Panorama.TitleTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal" Margin="0,85,0,0">
-                            <Image  Width="100" Height="100" Source="{Binding Path=DataContext.ProfileImage, ElementName=ProfilePage}"  Stretch="UniformToFill"/>
+                        <Image x:Name="ProfileImage" Width="100" Height="100" Source="{Binding Path=DataContext.ProfileImage, ElementName=ProfilePage}"  Stretch="UniformToFill" Opacity="0" >
+                            <Image.Triggers>
+                                <EventTrigger RoutedEvent="Image.Loaded">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ProfileImage">
+                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                            </Image.Triggers>
+                        </Image>
                         <StackPanel Margin="20,10,10,10">
                             <TextBlock Text="{Binding Path=DataContext.Handle, ElementName=ProfilePage}" FontSize="75" />
 						</StackPanel>
@@ -91,7 +110,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Rectangle Grid.Row="0" Fill="#cc2A2339" RadiusX="15" RadiusY="15" />
+                    <Rectangle Grid.Row="0" Fill="#cc2A2339" />
                     
                     <!-- TODO: implement sparklrText once it is customizable enough -->
                     <TextBlock Padding="5" Grid.Row="0" Text="{Binding Bio}" TextWrapping="Wrap" />

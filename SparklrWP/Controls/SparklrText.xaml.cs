@@ -1,9 +1,12 @@
-﻿using Microsoft.Xna.Framework.Media;
+﻿using Microsoft.Phone.Controls;
+using Microsoft.Xna.Framework.Media;
+using SparklrLib.Objects;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -324,7 +327,7 @@ namespace SparklrWP.Controls
         /// Rebuilts and rehighlights the post
         /// </summary>
         /// <param name="value">The post content</param>
-        private void updateText(string value)
+        private async void updateText(string value)
         {
             messageContentParagraph.Inlines.Clear();
             //Split on every hashtag
@@ -350,7 +353,7 @@ namespace SparklrWP.Controls
                         foreach (string username in usernameParts)
                         {
                             if (userMentionRegex.IsMatch(username))
-                                messageContentParagraph.Inlines.Add(getHighlightedInline(username));
+                                messageContentParagraph.Inlines.Add(await getAsInlineUsername(username));
                             else
                             {
                                 //Check if we still have urls in here
@@ -376,6 +379,7 @@ namespace SparklrWP.Controls
 
             }
         }
+
 
         private void replaceUrls(string value)
         {
@@ -446,6 +450,34 @@ namespace SparklrWP.Controls
             ret.Inlines.Add(text);
             return ret;
         }
+
+        private async Task<Inline> getAsInlineUsername(string username)
+        {
+            if (username.StartsWith("@"))
+                username = username.TrimStart('@');
+
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.User> userInfo = await App.Client.GetUserAsync(username);
+            if (userInfo.IsSuccessful)
+            {
+                Hyperlink ret = new Hyperlink();
+                ret.Foreground = accentColor;
+                ret.Inlines.Add("@" + username);
+
+                int userId = userInfo.Object.user;
+
+                ret.Click += (sender, e) =>
+                {
+                    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(String.Format("/Pages/Profile.xaml?userId={0}", userId), UriKind.Relative));
+                };
+
+                return ret;
+            }
+            else
+            {
+                return getAsInline(username);
+            }
+        }
+
 
         /// <summary>
         /// creates a highlighted text element for a RichTextBox

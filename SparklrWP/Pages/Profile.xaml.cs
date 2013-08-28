@@ -1,5 +1,7 @@
 ﻿using Microsoft.Phone.Controls;
 using SparklrLib.Objects;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Navigation;
 
 namespace SparklrWP.Pages
@@ -13,6 +15,21 @@ namespace SparklrWP.Pages
             InitializeComponent();
             model = new ProfileViewModel();
             this.DataContext = model;
+            model.PropertyChanged += model_PropertyChanged;
+        }
+
+        async void model_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "BackgroundImage")
+            {
+                ImageBrush image = new ImageBrush();
+                image.ImageSource = await Utils.Helpers.LoadImageFromUrlAsync(model.BackgroundImage);
+                image.Stretch = Stretch.UniformToFill;
+                image.Opacity = 0;
+                MainPanorama.Background = image;
+                Storyboard.SetTarget(FadeInAnimation, image);
+                FadeInStoryboard.Begin();
+            }
         }
 
         public bool dataLoaded = false;
@@ -45,7 +62,5 @@ namespace SparklrWP.Pages
                 }
             }
         }
-
-
     }
 }
