@@ -18,7 +18,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
             <Grid Width="432" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ImageContainer" Visibility="Collapsed">
-                <Image Stretch="Fill" x:Name="MessageImage"></Image>
+            
+            <Image Stretch="Fill" x:Name="MessageImage"></Image>
                 <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Visibility="{Binding Visibility, ElementName=messageContentContainer}">
                     <Rectangle.Fill>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -44,11 +45,11 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" Foreground="White" FontSize="17" x:Name="usernameTextBlock" />
-            <TextBlock Grid.Column="1" Foreground="White" FontSize="17" x:Name="commentCountTextBlock" />
+            <TextBlock Grid.Column="0" Foreground="White" FontSize="24" x:Name="usernameTextBlock" />
+            <TextBlock Grid.Column="1" Foreground="White" FontSize="24" x:Name="commentCountTextBlock" />
             <StackPanel Grid.Column="2" Orientation="Horizontal">
                 <Image Source="/Assets/Heart.png" Width="15" Height="15" HorizontalAlignment="Left" />
-                <TextBlock Foreground="White" FontSize="17" x:Name="likesTextBlock" Padding="7,0,0,0">Test</TextBlock>
+                <TextBlock Foreground="White" FontSize="24" x:Name="likesTextBlock" Padding="7,0,0,0">Test</TextBlock>
             </StackPanel>
         </Grid>
     </Grid>

@@ -51,8 +51,8 @@
                                         -->
                                         <Image x:Name="background" Source="{Binding Path=DataContext.BackgroundImage, ElementName=ProfilePage}" Stretch="UniformToFill" />
 									</controlsPrimitives:PanningBackgroundLayer>
-									<Rectangle Grid.Row="0" Fill="#BB000000" Margin="0,44,0,35"></Rectangle>
-									<Rectangle Fill="#BB000000" Grid.Row="1" Margin="0,20,0,0" Height="60" VerticalAlignment="Top"></Rectangle>
+                                    <Rectangle Grid.Row="0" Fill="#aa2A2339" Margin="0,44,0,35"></Rectangle>
+                                    <Rectangle Fill="#cc2A2339" Grid.Row="1" Margin="0,20,0,0" Height="60" VerticalAlignment="Top"></Rectangle>
 									<controlsPrimitives:PanningTitleLayer x:Name="TitleLayer" CacheMode="BitmapCache" ContentTemplate="{TemplateBinding TitleTemplate}" Content="{TemplateBinding Title}" FontSize="187" FontFamily="{StaticResource PhoneFontFamilyLight}" HorizontalAlignment="Left" Margin="10,-76,0,9" Grid.Row="0"/>
 									<controlsPrimitives:PanningLayer x:Name="ItemsLayer" HorizontalAlignment="Left" Grid.Row="1">
 										<ItemsPresenter x:Name="items"/>
@@ -91,7 +91,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-                    <Rectangle Grid.Row="0" Fill="#BB000000" />
+                    <Rectangle Grid.Row="0" Fill="#cc2A2339" RadiusX="15" RadiusY="15" />
                     
                     <!-- TODO: implement sparklrText once it is customizable enough -->
                     <TextBlock Padding="5" Grid.Row="0" Text="{Binding Bio}" TextWrapping="Wrap" />
