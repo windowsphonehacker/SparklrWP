@@ -1,6 +1,7 @@
 ﻿using AviarySDK;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
+using SparklrLib.Objects;
 using System;
 using System.IO;
 using System.Windows;
@@ -24,7 +25,7 @@ namespace SparklrWP
 
         }
 
-        private void postButton_Click(object sender, EventArgs e)
+        private async void postButton_Click(object sender, EventArgs e)
         {
             if (messageBox.Text == "" && _photoStr == null)
             {
@@ -33,28 +34,28 @@ namespace SparklrWP
             else
             {
                 GlobalLoading.Instance.IsLoading = true;
-                App.Client.Post(messageBox.Text, _photoStr, (args) => Dispatcher.BeginInvoke(() =>
+                SparklrEventArgs args = await App.Client.PostAsync(messageBox.Text, _photoStr);
+                GlobalLoading.Instance.IsLoading = false;
+
+                if (!args.IsSuccessful)
                 {
-                    GlobalLoading.Instance.IsLoading = false;
-                    if (!args.IsSuccessful)
+                    MessageBox.Show("Something horrible happend!\nWe couldn't post your message" + (_photoStr == null ? "" : " and photo") + " try again later!", "Sorry", MessageBoxButton.OK);
+                }
+                else
+                {
+                    if (NavigationService.CanGoBack)
                     {
-                        MessageBox.Show("Something horrible happend!\nWe couldn't post your message" + (_photoStr == null ? "" : " and photo") + " try again later!", "Sorry", MessageBoxButton.OK);
+                        NavigationService.GoBack();
                     }
                     else
                     {
-                        if (NavigationService.CanGoBack)
-                        {
-                            NavigationService.GoBack();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Your status has been posted!", "Yay!", MessageBoxButton.OK);
+                        MessageBox.Show("Your status has been posted!", "Yay!", MessageBoxButton.OK);
 
-                            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                        NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
 
-                        }
                     }
-                }));
+                }
+
             }
         }
 

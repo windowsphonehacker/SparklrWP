@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
+
 namespace SparklrLib
 {
     /// <summary>
@@ -87,10 +89,9 @@ namespace SparklrLib
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="path">The path.</param>
-        /// <param name="Callback">The callback.</param>
-        private void requestJsonObject<T>(string path, Action<JSONRequestEventArgs<T>> Callback)
+        private Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path)
         {
-            requestJsonObject<T>(path, "", "", Callback);
+            return requestJsonObjectAsync<T>(path, "", "");
         }
 
         /// <summary>
@@ -99,10 +100,9 @@ namespace SparklrLib
         /// <typeparam name="T"></typeparam>
         /// <param name="path">The path.</param>
         /// <param name="xdata">The xdata.</param>
-        /// <param name="Callback">The callback.</param>
-        private void requestJsonObject<T>(string path, object xdata, Action<JSONRequestEventArgs<T>> Callback)
+        private Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path, object xdata)
         {
-            requestJsonObject<T>(path, JsonConvert.SerializeObject(xdata), "", Callback);
+            return requestJsonObjectAsync<T>(path, JsonConvert.SerializeObject(xdata), "");
         }
 
         /// <summary>
@@ -111,23 +111,9 @@ namespace SparklrLib
         /// <typeparam name="T"></typeparam>
         /// <param name="path">The path.</param>
         /// <param name="xdata">The xdata.</param>
-        /// <param name="Callback">The callback.</param>
-        private void requestJsonObject<T>(string path, string xdata, Action<JSONRequestEventArgs<T>> Callback)
+        private Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path, string xdata)
         {
-            requestJsonObject<T>(path, xdata, "", Callback);
-        }
-
-        /// <summary>
-        /// Requests the json object.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path">The path.</param>
-        /// <param name="xdata">The xdata.</param>
-        /// <param name="postdata">The postdata.</param>
-        /// <param name="Callback">The callback.</param>
-        private void requestJsonObject<T>(string path, object xdata, string postdata, Action<JSONRequestEventArgs<T>> Callback)
-        {
-            requestJsonObject<T>(path, JsonConvert.SerializeObject(xdata), postdata, Callback);
+            return requestJsonObjectAsync<T>(path, xdata, "");
         }
 
         /// <summary>
@@ -137,207 +123,212 @@ namespace SparklrLib
         /// <param name="path">The path.</param>
         /// <param name="xdata">The xdata.</param>
         /// <param name="postdata">The postdata.</param>
-        /// <param name="Callback">The callback.</param>
-        private void requestJsonObject<T>(string path, string xdata, string postdata, Action<JSONRequestEventArgs<T>> Callback)
+        private Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path, object xdata, string postdata)
+        {
+            return requestJsonObjectAsync<T>(path, JsonConvert.SerializeObject(xdata), postdata);
+        }
+
+        /// <summary>
+        /// Requests the json object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="xdata">The xdata.</param>
+        /// <param name="postdata">The postdata.</param>
+        private async Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path, string xdata, string postdata)
         {
             HttpWebRequest streamReq = CreateRequest(path, xdata);
-            Action getResponse = () =>
+
+            try
             {
-                streamReq.BeginGetResponse((res) =>
+                HttpWebResponse streamResp = (HttpWebResponse)await streamReq.GetResponseAsync();
+                T desiredObject = default(T);
+                using (StreamReader strReader = new StreamReader(streamResp.GetResponseStream(), Encoding.UTF8))
                 {
-                    HttpWebResponse streamResp = null;
                     try
                     {
-                        streamResp = (HttpWebResponse)streamReq.EndGetResponse(res);
-                    }
-                    catch (WebException ex)
-                    {
-                        Callback(new JSONRequestEventArgs<T>()
+                        string json = await strReader.ReadToEndAsync();
+                        desiredObject = JsonConvert.DeserializeObject<T>(json);
+
+
+                        if (postdata != "")
                         {
-                            IsSuccessful = false,
-                            Error = ex,
-                            Response = (HttpWebResponse)ex.Response
-                        });
-                        return;
+                            streamReq.Method = "POST";
+                            using (Stream postStream = await streamReq.GetRequestStreamAsync())
+                            {
+                                // Create the post data
+                                byte[] byteArray = Encoding.UTF8.GetBytes(postdata);
+                                // Add the post data to the web request
+                                postStream.Write(byteArray, 0, byteArray.Length);
+                            }
+                            return await requestJsonObjectAsync<T>(path, xdata, postdata);
+                        }
                     }
                     catch (Exception ex)
                     {
-                        Callback(new JSONRequestEventArgs<T>()
+                        return new JSONRequestEventArgs<T>()
                         {
                             IsSuccessful = false,
-                            Error = ex
-                        });
-                        return;
+                            Error = ex,
+                            Response = streamResp
+                        };
                     }
-                    T desiredObject = default(T);
-                    using (StreamReader strReader = new StreamReader(streamResp.GetResponseStream(), Encoding.UTF8))
-                    {
-                        try
-                        {
-                            string json = strReader.ReadToEnd();
-                            desiredObject = JsonConvert.DeserializeObject<T>(json);
-                        }
-                        catch (Exception ex)
-                        {
-                            Callback(new JSONRequestEventArgs<T>()
-                            {
-                                IsSuccessful = false,
-                                Error = ex,
-                                Response = streamResp
-                            });
-                            return;
-                        }
-                    }
-                    Callback(new JSONRequestEventArgs<T>()
-                    {
-                        IsSuccessful = true,
-                        Error = null,
-                        Object = desiredObject
-                    });
-                }, null);
-            };
-            if (postdata == "")
-            {
-                getResponse();
-            }
-            else
-            {
-                streamReq.Method = "POST";
-                streamReq.BeginGetRequestStream((res) =>
+                }
+
+                return new JSONRequestEventArgs<T>()
                 {
-                    using (Stream postStream = streamReq.EndGetRequestStream(res))
-                    {
-                        // Create the post data
-                        byte[] byteArray = Encoding.UTF8.GetBytes(postdata);
-                        // Add the post data to the web request
-                        postStream.Write(byteArray, 0, byteArray.Length);
-                    }
-                    getResponse();
-                }, null);
+                    IsSuccessful = true,
+                    Error = null,
+                    Object = desiredObject
+                };
+            }
+            catch (WebException ex)
+            {
+                return new JSONRequestEventArgs<T>()
+                {
+                    IsSuccessful = false,
+                    Error = ex,
+                    Response = (HttpWebResponse)ex.Response
+                };
+            }
+            catch (Exception ex)
+            {
+                return new JSONRequestEventArgs<T>()
+                {
+                    IsSuccessful = false,
+                    Error = ex
+                };
             }
         }
 
         /// <summary>
-        /// Logins the specified username.
+        /// Performans an asynchronous login of the user
         /// </summary>
         /// <param name="Username">The username.</param>
         /// <param name="Password">The password.</param>
-        /// <param name="Callback">The callback.</param>
-        public void Login(string Username, string Password, Action<LoginEventArgs> Callback)
+        public async Task<LoginEventArgs> LoginAsync(string Username, string Password)
         {
             HttpWebRequest loginReq = CreateRequest("work/signin/" + Username + "/" + Password + "/");
-            loginReq.BeginGetResponse((res) =>
+
+            try
             {
-                HttpWebResponse loginResp = null;
-                try
+                HttpWebResponse response = (HttpWebResponse)await loginReq.GetResponseAsync();
+
+                if (response.Headers["Set-Cookie"] == null)
                 {
-                    loginResp = (HttpWebResponse)loginReq.EndGetResponse(res);
-                }
-                catch (WebException ex)
-                {
-                    Callback(new LoginEventArgs()
+                    return new LoginEventArgs()
                     {
-                        IsSuccessful = false,
-                        Error = ex,
-                        Response = (HttpWebResponse)ex.Response
-                    });
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    Callback(new LoginEventArgs()
-                    {
-                        IsSuccessful = false,
-                        Error = ex,
-                        Response = loginResp
-                    });
-                    return;
-                }
-                if (loginResp.Headers["Set-Cookie"] == null)
-                {
-                    Callback(new LoginEventArgs()
-                    {
+                        //TODO: Use custom exception types
                         Error = new Exception("Didn't receive Auth token"),
                         IsSuccessful = false,
-                        Response = loginResp
-                    });
-                    return;
+                        Response = response
+                    };
                 }
-                string[] cookieParts = loginResp.Headers["Set-Cookie"].Split(';');
-                string cookieD = "";
-                foreach (string sortaCookie in cookieParts)
+                else
                 {
-                    string sortaTrimmedCookie = sortaCookie.TrimStart();
-                    if (sortaTrimmedCookie.StartsWith("D="))
+                    string[] cookieParts = response.Headers["Set-Cookie"].Split(';');
+                    string cookieD = "";
+
+                    //TODO: Suggestion: use a regex instead?
+                    foreach (string sortaCookie in cookieParts)
                     {
-                        cookieD = sortaTrimmedCookie.Substring(2);
-                        break;
+                        string sortaTrimmedCookie = sortaCookie.TrimStart();
+                        if (sortaTrimmedCookie.StartsWith("D="))
+                        {
+                            cookieD = sortaTrimmedCookie.Substring(2);
+                            break;
+                        }
+                    }
+
+                    string[] loginBits = cookieD.Split(',');
+
+                    if (cookieD.Length == 0)
+                    {
+                        return new LoginEventArgs()
+                        {
+                            Error = new Exception("Auth token not included"),
+                            IsSuccessful = false,
+                            Response = response
+                        };
+                    }
+                    else if (loginBits.Length < 2)
+                    {
+                        return new LoginEventArgs()
+                        {
+                            Error = new Exception("Auth token is corrupted"),
+                            IsSuccessful = false,
+                            Response = response
+                        };
+                    }
+                    else
+                    {
+                        try
+                        {
+                            UserId = long.Parse(loginBits[0]);
+                        }
+                        catch (Exception)
+                        {
+                            return new LoginEventArgs()
+                            {
+                                Error = new Exception("Auth token is corrupted"),
+                                IsSuccessful = false,
+                                Response = response
+                            };
+                        }
+                        AuthToken = loginBits[1];
+                        return new LoginEventArgs()
+                        {
+                            Error = null,
+                            IsSuccessful = true,
+                            Response = response,
+                            AuthToken = AuthToken,
+                            UserId = UserId
+                        };
                     }
                 }
-                if (cookieD.Length == 0)
+            }
+            catch (Exception ex)
+            {
+                if (ex is WebException)
                 {
-                    Callback(new LoginEventArgs()
+                    return new LoginEventArgs()
                     {
-                        Error = new Exception("Auth token not included"),
                         IsSuccessful = false,
-                        Response = loginResp
-                    });
-                    return;
+                        Error = ex,
+                        Response = (HttpWebResponse)((WebException)ex).Response
+                    };
                 }
-                string[] loginBits = cookieD.Split(',');
-                if (loginBits.Length < 2)
+                else
                 {
-                    Callback(new LoginEventArgs()
+#if DEBUG
+                    if (System.Diagnostics.Debugger.IsAttached)
+                        System.Diagnostics.Debugger.Break();
+#endif
+                    return new LoginEventArgs()
                     {
-                        Error = new Exception("Auth token is corrupted"),
                         IsSuccessful = false,
-                        Response = loginResp
-                    });
-                    return;
+                        Error = ex,
+                        Response = null
+                    };
                 }
-                try
-                {
-                    UserId = long.Parse(loginBits[0]);
-                }
-                catch (Exception)
-                {
-                    Callback(new LoginEventArgs()
-                    {
-                        Error = new Exception("Auth token is corrupted"),
-                        IsSuccessful = false,
-                        Response = loginResp
-                    });
-                    return;
-                }
-                AuthToken = loginBits[1];
-                Callback(new LoginEventArgs()
-                {
-                    Error = null,
-                    IsSuccessful = true,
-                    Response = loginResp,
-                    AuthToken = AuthToken,
-                    UserId = UserId
-                });
-            }, null);
+            }
         }
 
         /// <summary>
         /// Gets the beacon stream.
         /// </summary>
-        /// <param name="Callback">The callback.</param>
-        public void GetBeaconStream(Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync()
         {
-            GetBeaconStream(0, 20, 0, Callback);
+            return GetBeaconStreamAsync(0, 20, 0);
         }
 
         /// <summary>
         /// Gets the beacon stream.
         /// </summary>
         /// <param name="lastTime">The last time.</param>
-        /// <param name="Callback">The callback.</param>
-        public void GetBeaconStream(int lastTime, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(int lastTime)
         {
-            GetBeaconStream(lastTime, 0, 0, Callback);
+            return GetBeaconStreamAsync(lastTime, 0, 0);
         }
 
         /// <summary>
@@ -345,10 +336,9 @@ namespace SparklrLib
         /// </summary>
         /// <param name="lastTime">The last time.</param>
         /// <param name="lastNotificationTime">The last notification time.</param>
-        /// <param name="Callback">The callback.</param>
-        public void GetBeaconStream(int lastTime, int lastNotificationTime, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(int lastTime, int lastNotificationTime)
         {
-            GetBeaconStream(lastTime, lastNotificationTime, 0, Callback);
+            return GetBeaconStreamAsync(lastTime, lastNotificationTime, 0);
         }
 
         /// <summary>
@@ -357,15 +347,15 @@ namespace SparklrLib
         /// <param name="lastTime">The last time.</param>
         /// <param name="lastNotificationTime">The last notification time.</param>
         /// <param name="network">The network.</param>
-        /// <param name="Callback">The callback.</param>
-        public void GetBeaconStream(int lastTime, int lastNotificationTime, int network, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        public async Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(int lastTime, int lastNotificationTime, int network)
         {
             int stream = 0;
 #if DEBUG
             stream = 2;
             network = 1;
 #endif
-            requestJsonObject<Objects.Responses.Beacon.Stream>("/beacon/stream/" + stream + "?since=" + lastTime.ToString() + "&n=" + lastNotificationTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""), Callback);
+            JSONRequestEventArgs<Objects.Responses.Beacon.Stream> args = await requestJsonObjectAsync<Objects.Responses.Beacon.Stream>("/beacon/stream/" + stream + "?since=" + lastTime.ToString() + "&n=" + lastNotificationTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""));
+            return args;
         }
 
         /// <summary>
@@ -373,8 +363,7 @@ namespace SparklrLib
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="image">The image.</param>
-        /// <param name="Callback">The callback.</param>
-        public void Post(string message, Stream image, Action<SparklrEventArgs> Callback)
+        public async Task<SparklrEventArgs> PostAsync(string message, Stream image)
         {
             string data64str = "";
             if (image != null)
@@ -394,29 +383,27 @@ namespace SparklrLib
                     data64str = "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
                 }
             }
-            requestJsonObject<Objects.Responses.Generic>("/work/post", new Objects.Requests.Work.Post()
+            JSONRequestEventArgs<Objects.Responses.Generic> args = await requestJsonObjectAsync<Objects.Responses.Generic>("/work/post", new Objects.Requests.Work.Post()
             {
                 body = message,
 #if DEBUG
                 network = 2,
 #endif
                 img = data64str != ""
-            }, data64str, (args) =>
+            }, data64str);
+
+            return new SparklrEventArgs()
             {
-                Callback(new SparklrEventArgs()
-                {
-                    IsSuccessful = args.IsSuccessful && args.Object.error == null,
-                    Error = args.IsSuccessful ? args.Object.error == true ? new Exception("Sparklr said noooooo") : null : args.Error
-                });
-            });
+                IsSuccessful = args.IsSuccessful && args.Object.error == null,
+                Error = args.IsSuccessful ? args.Object.error == true ? new Exception("Sparklr said noooooo") : null : args.Error
+            };
         }
 
         /// <summary>
         /// Gets the usernames by the specified ids.
         /// </summary>
         /// <param name="ids">The ids.</param>
-        /// <param name="Callback">The callback.</param>
-        public void GetUsernames(int[] ids, Action<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> Callback)
+        public async Task<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> GetUsernamesAsync(int[] ids)
         {
             List<int> idsToRequest = new List<int>();
             foreach (int id in ids)
@@ -428,30 +415,30 @@ namespace SparklrLib
             }
             if (idsToRequest.Count > 0)
             {
-                requestJsonObject<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in ids select id.ToString()).ToArray()), (args) =>
+                JSONRequestEventArgs<Objects.Responses.Work.Username[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in ids select id.ToString()).ToArray()));
+
+                if (args.IsSuccessful)
                 {
-                    if (args.IsSuccessful)
+                    foreach (Objects.Responses.Work.Username un in args.Object)
                     {
-                        foreach (Objects.Responses.Work.Username un in args.Object)
-                        {
-                            Usernames[un.id] = un.username;
-                        }
-                        List<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
-                        foreach (int id in ids)
-                        {
-                            if (Usernames.ContainsKey(id))
-                            {
-                                usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
-                            }
-                        }
-                        Callback(new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
-                        {
-                            Error = null,
-                            IsSuccessful = true,
-                            Object = usrnms.ToArray()
-                        });
+                        Usernames[un.id] = un.username;
                     }
-                });
+                    List<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
+                    foreach (int id in ids)
+                    {
+                        if (Usernames.ContainsKey(id))
+                        {
+                            usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
+                        }
+                    }
+
+                    return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
+                    {
+                        Error = null,
+                        IsSuccessful = true,
+                        Object = usrnms.ToArray()
+                    };
+                }
             }
             else
             {
@@ -463,33 +450,37 @@ namespace SparklrLib
                         usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
                     }
                 }
-                Callback(new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
+                return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
                 {
                     Error = null,
                     IsSuccessful = true,
                     Object = usrnms.ToArray()
-                });
+                };
             }
-
+            return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
+            {
+                Error = new Exception("Invalid data was provided"),
+                IsSuccessful = false
+            };
         }
 
-        public void GetOnlineFriends(Action<JSONRequestEventArgs<Objects.Responses.Work.OnlineFriends[]>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.OnlineFriends[]>> GetOnlineFriendsAsync()
         {
-            requestJsonObject<Objects.Responses.Work.OnlineFriends[]>("/work/onlinefriends", Callback);
+            return requestJsonObjectAsync<Objects.Responses.Work.OnlineFriends[]>("/work/onlinefriends");
         }
 
-        public void GetFriends(Action<JSONRequestEventArgs<Objects.Responses.Work.Friends>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.Friends>> GetFriendsAsync()
         {
-            requestJsonObject<Objects.Responses.Work.Friends>("/work/friends", Callback);
+            return requestJsonObjectAsync<Objects.Responses.Work.Friends>("/work/friends");
         }
 
-        public void GetUser(string username, Action<JSONRequestEventArgs<Objects.Responses.Work.User>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserAsync(string username)
         {
-            requestJsonObject<Objects.Responses.Work.User>("/work/user/" + username, Callback);
+            return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + username);
         }
-        public void GetUser(int userid, Action<JSONRequestEventArgs<Objects.Responses.Work.User>> Callback)
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserAsync(int userid)
         {
-            requestJsonObject<Objects.Responses.Work.User>("/work/user/" + userid, Callback);
+            return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + userid);
         }
     }
 }
