@@ -84,8 +84,21 @@ namespace SparklrWP_Background_Agent
                         {
                             if(args.IsSuccessful){
                                 Stream strm = args.Object;
+
+                                if (strm.notifications == null)
+                                    strm.notifications = new List<Notification>();
+                                
+
                                 if (strm.notifications != null)
                                 {
+#if DEBUG
+                                    strm.notifications.Add(new Notification()
+                                    {
+                                        from = 4,
+                                        type = 1,
+                                        body = "ILY"
+                                    });
+#endif
                                     List<int> userIds = new List<int>();
                                     foreach (Notification not in strm.notifications)
                                     {
@@ -98,6 +111,19 @@ namespace SparklrWP_Background_Agent
                                     {
                                         if (unargs.IsSuccessful)
                                         {
+
+                                            foreach(ShellTile til in ShellTile.ActiveTiles){
+                                                StandardTileData data = new StandardTileData();
+                                                data.Title = "Sparklr*";
+                                                data.BackContent = String.Format(textGenerator(strm.notifications[0]),client.Usernames[strm.notifications[0].from]);
+                                                System.Net.WebClient wc = new System.Net.WebClient();
+                                                //wc.D
+                                                //data.BackgroundImage = new Uri("http://d.sparklr.me/i/" + strm.notifications[0].from + ".jpg");
+                                                data.BackTitle = "Sparklr*";
+                                                data.Count = strm.notifications.Count; 
+                                                til.Update(data);
+                                            }
+                                            
                                             foreach (Notification not in strm.notifications)
                                             {
                                                 ShellToast notif = new ShellToast();
