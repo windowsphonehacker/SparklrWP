@@ -242,6 +242,10 @@
       <Project>{ACE8C69F-6016-407E-8232-3027DF9CD9F2}</Project>
       <Name>SparklrLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SparklrWP Background Agent\SparklrWP Background Agent.csproj">
+      <Project>{032C5913-F811-43CD-9379-176A9EDBBD64}</Project>
+      <Name>SparklrWP Background Agent</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
