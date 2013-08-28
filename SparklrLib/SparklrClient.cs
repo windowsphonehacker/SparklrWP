@@ -90,9 +90,9 @@ namespace SparklrLib
         /// <typeparam name="T"></typeparam>
         /// <param name="path">The path.</param>
         /// <param name="Callback">The callback.</param>
-        private void requestJsonObject<T>(string path, Action<JSONRequestEventArgs<T>> Callback)
+        private Task<JSONRequestEventArgs<T>> requestJsonObject<T>(string path)
         {
-            requestJsonObject<T>(path, "", "", Callback);
+            return requestJsonObject<T>(path, "", "");
         }
 
         /// <summary>
@@ -102,9 +102,9 @@ namespace SparklrLib
         /// <param name="path">The path.</param>
         /// <param name="xdata">The xdata.</param>
         /// <param name="Callback">The callback.</param>
-        private void requestJsonObject<T>(string path, object xdata, Action<JSONRequestEventArgs<T>> Callback)
+        private Task<JSONRequestEventArgs<T>> requestJsonObject<T>(string path, object xdata)
         {
-            requestJsonObject<T>(path, JsonConvert.SerializeObject(xdata), "", Callback);
+            return requestJsonObject<T>(path, JsonConvert.SerializeObject(xdata), "");
         }
 
         /// <summary>
@@ -114,22 +114,9 @@ namespace SparklrLib
         /// <param name="path">The path.</param>
         /// <param name="xdata">The xdata.</param>
         /// <param name="Callback">The callback.</param>
-        private void requestJsonObject<T>(string path, string xdata, Action<JSONRequestEventArgs<T>> Callback)
+        private Task<JSONRequestEventArgs<T>> requestJsonObject<T>(string path, string xdata)
         {
-            requestJsonObject<T>(path, xdata, "", Callback);
-        }
-
-        /// <summary>
-        /// Requests the json object.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="path">The path.</param>
-        /// <param name="xdata">The xdata.</param>
-        /// <param name="postdata">The postdata.</param>
-        /// <param name="Callback">The callback.</param>
-        private void requestJsonObject<T>(string path, object xdata, string postdata, Action<JSONRequestEventArgs<T>> Callback)
-        {
-            requestJsonObject<T>(path, JsonConvert.SerializeObject(xdata), postdata, Callback);
+            return requestJsonObject<T>(path, xdata, "");
         }
 
         /// <summary>
@@ -140,82 +127,82 @@ namespace SparklrLib
         /// <param name="xdata">The xdata.</param>
         /// <param name="postdata">The postdata.</param>
         /// <param name="Callback">The callback.</param>
-        private void requestJsonObject<T>(string path, string xdata, string postdata, Action<JSONRequestEventArgs<T>> Callback)
+        private Task<JSONRequestEventArgs<T>> requestJsonObject<T>(string path, object xdata, string postdata)
+        {
+            return requestJsonObject<T>(path, JsonConvert.SerializeObject(xdata), postdata);
+        }
+
+        /// <summary>
+        /// Requests the json object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="path">The path.</param>
+        /// <param name="xdata">The xdata.</param>
+        /// <param name="postdata">The postdata.</param>
+        /// <param name="Callback">The callback.</param>
+        private async Task<JSONRequestEventArgs<T>> requestJsonObject<T>(string path, string xdata, string postdata)
         {
             HttpWebRequest streamReq = CreateRequest(path, xdata);
-            Action getResponse = () =>
+
+            try
             {
-                streamReq.BeginGetResponse((res) =>
+                HttpWebResponse streamResp = (HttpWebResponse)await streamReq.GetResponseAsync();
+                T desiredObject = default(T);
+                using (StreamReader strReader = new StreamReader(streamResp.GetResponseStream(), Encoding.UTF8))
                 {
-                    HttpWebResponse streamResp = null;
                     try
                     {
-                        streamResp = (HttpWebResponse)streamReq.EndGetResponse(res);
-                    }
-                    catch (WebException ex)
-                    {
-                        Callback(new JSONRequestEventArgs<T>()
+                        string json = await strReader.ReadToEndAsync();
+                        desiredObject = JsonConvert.DeserializeObject<T>(json);
+
+
+                        if (postdata != "")
                         {
-                            IsSuccessful = false,
-                            Error = ex,
-                            Response = (HttpWebResponse)ex.Response
-                        });
-                        return;
+                            streamReq.Method = "POST";
+                            using (Stream postStream = await streamReq.GetRequestStreamAsync())
+                            {
+                                // Create the post data
+                                byte[] byteArray = Encoding.UTF8.GetBytes(postdata);
+                                // Add the post data to the web request
+                                postStream.Write(byteArray, 0, byteArray.Length);
+                            }
+                            return await requestJsonObject<T>(path, xdata, postdata);
+                        }
                     }
                     catch (Exception ex)
                     {
-                        Callback(new JSONRequestEventArgs<T>()
+                        return new JSONRequestEventArgs<T>()
                         {
                             IsSuccessful = false,
-                            Error = ex
-                        });
-                        return;
+                            Error = ex,
+                            Response = streamResp
+                        };
                     }
-                    T desiredObject = default(T);
-                    using (StreamReader strReader = new StreamReader(streamResp.GetResponseStream(), Encoding.UTF8))
-                    {
-                        try
-                        {
-                            string json = strReader.ReadToEnd();
-                            desiredObject = JsonConvert.DeserializeObject<T>(json);
-                        }
-                        catch (Exception ex)
-                        {
-                            Callback(new JSONRequestEventArgs<T>()
-                            {
-                                IsSuccessful = false,
-                                Error = ex,
-                                Response = streamResp
-                            });
-                            return;
-                        }
-                    }
-                    Callback(new JSONRequestEventArgs<T>()
-                    {
-                        IsSuccessful = true,
-                        Error = null,
-                        Object = desiredObject
-                    });
-                }, null);
-            };
-            if (postdata == "")
-            {
-                getResponse();
-            }
-            else
-            {
-                streamReq.Method = "POST";
-                streamReq.BeginGetRequestStream((res) =>
+                }
+
+                return new JSONRequestEventArgs<T>()
                 {
-                    using (Stream postStream = streamReq.EndGetRequestStream(res))
-                    {
-                        // Create the post data
-                        byte[] byteArray = Encoding.UTF8.GetBytes(postdata);
-                        // Add the post data to the web request
-                        postStream.Write(byteArray, 0, byteArray.Length);
-                    }
-                    getResponse();
-                }, null);
+                    IsSuccessful = true,
+                    Error = null,
+                    Object = desiredObject
+                };
+            }
+            catch (WebException ex)
+            {
+                return new JSONRequestEventArgs<T>()
+                {
+                    IsSuccessful = false,
+                    Error = ex,
+                    Response = (HttpWebResponse)ex.Response
+                };
+            }
+            catch (Exception ex)
+            {
+                return new JSONRequestEventArgs<T>()
+                {
+                    IsSuccessful = false,
+                    Error = ex
+                };
             }
         }
 
@@ -369,14 +356,15 @@ namespace SparklrLib
         /// <param name="lastNotificationTime">The last notification time.</param>
         /// <param name="network">The network.</param>
         /// <param name="Callback">The callback.</param>
-        public void GetBeaconStream(int lastTime, int lastNotificationTime, int network, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
+        public async void GetBeaconStream(int lastTime, int lastNotificationTime, int network, Action<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> Callback)
         {
             int stream = 0;
 #if DEBUG
             stream = 2;
             network = 1;
 #endif
-            requestJsonObject<Objects.Responses.Beacon.Stream>("/beacon/stream/" + stream + "?since=" + lastTime.ToString() + "&n=" + lastNotificationTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""), Callback);
+            JSONRequestEventArgs<Objects.Responses.Beacon.Stream> args = await requestJsonObject<Objects.Responses.Beacon.Stream>("/beacon/stream/" + stream + "?since=" + lastTime.ToString() + "&n=" + lastNotificationTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""));
+            Callback(args);
         }
 
         /// <summary>
@@ -385,7 +373,7 @@ namespace SparklrLib
         /// <param name="message">The message.</param>
         /// <param name="image">The image.</param>
         /// <param name="Callback">The callback.</param>
-        public void Post(string message, Stream image, Action<SparklrEventArgs> Callback)
+        public async void Post(string message, Stream image, Action<SparklrEventArgs> Callback)
         {
             string data64str = "";
             if (image != null)
@@ -405,20 +393,19 @@ namespace SparklrLib
                     data64str = "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
                 }
             }
-            requestJsonObject<Objects.Responses.Generic>("/work/post", new Objects.Requests.Work.Post()
+            JSONRequestEventArgs<Objects.Responses.Generic> args = await requestJsonObject<Objects.Responses.Generic>("/work/post", new Objects.Requests.Work.Post()
             {
                 body = message,
 #if DEBUG
                 network = 2,
 #endif
                 img = data64str != ""
-            }, data64str, (args) =>
+            }, data64str);
+
+            Callback(new SparklrEventArgs()
             {
-                Callback(new SparklrEventArgs()
-                {
-                    IsSuccessful = args.IsSuccessful && args.Object.error == null,
-                    Error = args.IsSuccessful ? args.Object.error == true ? new Exception("Sparklr said noooooo") : null : args.Error
-                });
+                IsSuccessful = args.IsSuccessful && args.Object.error == null,
+                Error = args.IsSuccessful ? args.Object.error == true ? new Exception("Sparklr said noooooo") : null : args.Error
             });
         }
 
@@ -427,7 +414,7 @@ namespace SparklrLib
         /// </summary>
         /// <param name="ids">The ids.</param>
         /// <param name="Callback">The callback.</param>
-        public void GetUsernames(int[] ids, Action<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> Callback)
+        public async void GetUsernames(int[] ids, Action<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> Callback)
         {
             List<int> idsToRequest = new List<int>();
             foreach (int id in ids)
@@ -439,30 +426,29 @@ namespace SparklrLib
             }
             if (idsToRequest.Count > 0)
             {
-                requestJsonObject<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in ids select id.ToString()).ToArray()), (args) =>
+                JSONRequestEventArgs<Objects.Responses.Work.Username[]> args = await requestJsonObject<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in ids select id.ToString()).ToArray()));
+
+                if (args.IsSuccessful)
                 {
-                    if (args.IsSuccessful)
+                    foreach (Objects.Responses.Work.Username un in args.Object)
                     {
-                        foreach (Objects.Responses.Work.Username un in args.Object)
-                        {
-                            Usernames[un.id] = un.username;
-                        }
-                        List<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
-                        foreach (int id in ids)
-                        {
-                            if (Usernames.ContainsKey(id))
-                            {
-                                usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
-                            }
-                        }
-                        Callback(new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
-                        {
-                            Error = null,
-                            IsSuccessful = true,
-                            Object = usrnms.ToArray()
-                        });
+                        Usernames[un.id] = un.username;
                     }
-                });
+                    List<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
+                    foreach (int id in ids)
+                    {
+                        if (Usernames.ContainsKey(id))
+                        {
+                            usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
+                        }
+                    }
+                    Callback(new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
+                    {
+                        Error = null,
+                        IsSuccessful = true,
+                        Object = usrnms.ToArray()
+                    });
+                }
             }
             else
             {
@@ -489,9 +475,10 @@ namespace SparklrLib
             requestJsonObject<Objects.Responses.Work.OnlineFriends[]>("/work/onlinefriends", Callback);
         }
 
-        public void GetFriends(Action<JSONRequestEventArgs<Objects.Responses.Work.Friends>> Callback)
+        public async void GetFriends(Action<JSONRequestEventArgs<Objects.Responses.Work.Friends>> Callback)
         {
-            requestJsonObject<Objects.Responses.Work.Friends>("/work/friends", Callback);
+            JSONRequestEventArgs<Objects.Responses.Work.Friends> args = await requestJsonObject<Objects.Responses.Work.Friends>("/work/friends");
+            Callback(args);
         }
 
         public void GetUser(string username, Action<JSONRequestEventArgs<Objects.Responses.Work.User>> Callback)

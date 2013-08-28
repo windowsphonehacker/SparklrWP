@@ -154,12 +154,9 @@ namespace SparklrWP
                     int count = stream.data.length;
 
                     List<ItemViewModel> newItems = new List<ItemViewModel>(Items);
-                    ManualResetEvent synchronize;
 
                     foreach (var t in stream.data.timeline)
                     {
-                        synchronize = new ManualResetEvent(false);
-
                         if (LastTime < t.time)
                         {
                             LastTime = t.time;
@@ -169,45 +166,39 @@ namespace SparklrWP
                             LastTime = t.modified;
                         }
 
-                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+
+                        ItemViewModel existingitem = null;
+                        existingitem = (from i in newItems where i.Id == t.id select i).FirstOrDefault();
+
+                        if (existingitem == null)
                         {
-                            ItemViewModel existingitem = null;
-                            existingitem = (from i in newItems where i.Id == t.id select i).FirstOrDefault();
-
-                            if (existingitem == null)
+                            ItemViewModel newItem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString(), OrderTime = t.modified > t.time ? t.modified : t.time };
+                            if (!String.IsNullOrEmpty(t.meta))
                             {
-                                ItemViewModel newItem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString(), OrderTime = t.modified > t.time ? t.modified : t.time };
-                                if (!String.IsNullOrEmpty(t.meta))
-                                {
-                                    newItem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;
-                                }
-
-                                App.Client.GetUsernames(new int[] { t.from }, (response) =>
-                                {
-                                    if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
-                                        newItem.From = response.Object[0].username;
-                                });
-
-                                newItems.Add(newItem);
-                            }
-                            else
-                            {
-                                existingitem.Message = t.message;
-                                existingitem.CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount);
-                                existingitem.From = t.from.ToString();
-                                existingitem.OrderTime = t.modified > t.time ? t.modified : t.time;
-
-                                App.Client.GetUsernames(new int[] { t.from }, (response) =>
-                                {
-                                    if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
-                                        existingitem.From = response.Object[0].username;
-                                });
+                                newItem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;
                             }
 
-                            synchronize.Set();
-                        });
+                            App.Client.GetUsernames(new int[] { t.from }, (response) =>
+                            {
+                                if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
+                                    newItem.From = response.Object[0].username;
+                            });
 
-                        synchronize.WaitOne();
+                            newItems.Add(newItem);
+                        }
+                        else
+                        {
+                            existingitem.Message = t.message;
+                            existingitem.CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount);
+                            existingitem.From = t.from.ToString();
+                            existingitem.OrderTime = t.modified > t.time ? t.modified : t.time;
+
+                            App.Client.GetUsernames(new int[] { t.from }, (response) =>
+                            {
+                                if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
+                                    existingitem.From = response.Object[0].username;
+                            });
+                        }
                     }
                     newItems.Sort(itemComparison);
                     newItems.Reverse();
