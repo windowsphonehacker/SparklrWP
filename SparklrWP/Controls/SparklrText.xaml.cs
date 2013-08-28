@@ -261,13 +261,14 @@ namespace SparklrWP.Controls
         {
             try
             {
-                Uri location = new Uri(value);
-                WebClient client = new WebClient();
-                BitmapImage image = new BitmapImage();
-                image.SetSource(await client.OpenReadTaskAsync(location));
-                MessageImage.Source = image;
+                string oldLink = String.Copy(value);
+                ImageSource loaded = await Utils.Helpers.LoadImageFromUrlAsync(value);
 
-                refreshVisibility();
+                if (oldLink == this.imagelocation)
+                {
+                    MessageImage.Source = loaded;
+                    refreshVisibility();
+                }
             }
             catch (WebException)
             {

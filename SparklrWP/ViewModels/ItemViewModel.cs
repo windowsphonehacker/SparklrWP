@@ -6,6 +6,7 @@ namespace SparklrWP
     public class ItemViewModel : INotifyPropertyChanged
     {
         public int Id { get; private set; }
+        public int OrderTime { get; set; }
 
         public ItemViewModel(int Id)
         {

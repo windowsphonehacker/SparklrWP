@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using SparklrWP.Utils;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Windows;
-
 
 namespace SparklrWP
 {
@@ -14,10 +14,21 @@ namespace SparklrWP
         /// The streamUpdater starts stream updates every 10 seconds.
         /// </summary>
         Timer streamUpdater;
+        Comparison<ItemViewModel> itemComparison = new Comparison<ItemViewModel>(
+            (p, q) =>
+            {
+                if (p.OrderTime > q.OrderTime)
+                    return 1;
+                else if (p.OrderTime < q.OrderTime)
+                    return -1;
+                else
+                    return 0;
+            }
+            );
 
         public MainViewModel()
         {
-            this.Items = new ObservableCollection<ItemViewModel>();
+            this.Items = new ObservableCollectionWithItemNotification<ItemViewModel>();
 
             streamUpdater = new Timer(streamUpdater_Tick, null, Timeout.Infinite, Timeout.Infinite);
 
@@ -37,11 +48,11 @@ namespace SparklrWP
             loadData();
         }
 
-        private ObservableCollection<ItemViewModel> _items;
+        private ObservableCollectionWithItemNotification<ItemViewModel> _items;
         /// <summary>
         /// A collection for ItemViewModel objects.
         /// </summary>
-        public ObservableCollection<ItemViewModel> Items
+        public ObservableCollectionWithItemNotification<ItemViewModel> Items
         {
             get
             {
@@ -142,31 +153,13 @@ namespace SparklrWP
                     }
                     int count = stream.data.length;
 
-                    ObservableCollection<ItemViewModel> newItems = new ObservableCollection<ItemViewModel>(Items);
+                    List<ItemViewModel> newItems = new List<ItemViewModel>(Items);
+                    ManualResetEvent synchronize;
 
                     foreach (var t in stream.data.timeline)
                     {
-                        Deployment.Current.Dispatcher.BeginInvoke(() =>
-                        {
-                            ItemViewModel existingitem = null;
-                            existingitem = (from i in newItems where i.Id == t.id select i).FirstOrDefault();
+                        synchronize = new ManualResetEvent(false);
 
-                            if (existingitem == null)
-                            {
-                                ItemViewModel newItem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString() };
-                                if (!String.IsNullOrEmpty(t.meta))
-                                {
-                                    newItem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;
-                                }
-                                newItems.Add(newItem);
-                            }
-                            else
-                            {
-                                existingitem.Message = t.message;
-                                existingitem.CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount);
-                                existingitem.From = t.from.ToString(); //TODO: Use /work/username to get the user names
-                            }
-                        });
                         if (LastTime < t.time)
                         {
                             LastTime = t.time;
@@ -175,9 +168,51 @@ namespace SparklrWP
                         {
                             LastTime = t.modified;
                         }
-                    }
 
-                    Items = newItems;
+                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        {
+                            ItemViewModel existingitem = null;
+                            existingitem = (from i in newItems where i.Id == t.id select i).FirstOrDefault();
+
+                            if (existingitem == null)
+                            {
+                                ItemViewModel newItem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString(), OrderTime = t.modified > t.time ? t.modified : t.time };
+                                if (!String.IsNullOrEmpty(t.meta))
+                                {
+                                    newItem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;
+                                }
+
+                                App.Client.GetUsernames(new int[] { t.from }, (response) =>
+                                {
+                                    if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
+                                        newItem.From = response.Object[0].username;
+                                });
+
+                                newItems.Add(newItem);
+                            }
+                            else
+                            {
+                                existingitem.Message = t.message;
+                                existingitem.CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount);
+                                existingitem.From = t.from.ToString();
+                                existingitem.OrderTime = t.modified > t.time ? t.modified : t.time;
+
+                                App.Client.GetUsernames(new int[] { t.from }, (response) =>
+                                {
+                                    if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
+                                        existingitem.From = response.Object[0].username;
+                                });
+                            }
+
+                            synchronize.Set();
+                        });
+
+                        synchronize.WaitOne();
+                    }
+                    newItems.Sort(itemComparison);
+                    newItems.Reverse();
+
+                    Items = new ObservableCollectionWithItemNotification<ItemViewModel>(newItems);
                     GlobalLoading.Instance.IsLoading = false;
                     this.IsDataLoaded = true;
                     streamUpdater.Change(10000, Timeout.Infinite);
