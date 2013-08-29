@@ -17,7 +17,7 @@ namespace SparklrWP
         private static MainViewModel mainViewModel = null;
         public static WPClogger logger = new WPClogger(LogLevel.debug);
 
-        public static Utils.Task BackgroundTask = new Task();
+        public static Utils.Task BackgroundTask;
 
         public static SparklrClient Client = new SparklrClient();
 

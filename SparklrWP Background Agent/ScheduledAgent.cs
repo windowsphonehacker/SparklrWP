@@ -154,7 +154,6 @@ namespace SparklrWP_Background_Agent
                                         notif.Show();
                                     }
                                 }
-                                NotifyComplete();
                             }
                             else
                             {
@@ -167,23 +166,9 @@ namespace SparklrWP_Background_Agent
                                     notif.Show();
                                 }
                             }
-                            NotifyComplete();
                         }
-                        else
-                        {
-                            NotifyComplete();
-                        }
-                        NotifyComplete();
                     }
                 }
-                else
-                {
-                    NotifyComplete();
-                }
-            }
-            else
-            {
-                NotifyComplete();
             }
             NotifyComplete();
         }

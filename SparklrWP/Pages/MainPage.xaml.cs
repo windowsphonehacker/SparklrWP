@@ -1,5 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using SparklrWP.Utils;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,6 +39,7 @@ namespace SparklrWP.Pages
             this.ApplicationBar.MenuItems.Add(clearCache);
             this.ApplicationBar.MenuItems.Add(cleanCache);
 #endif
+            App.BackgroundTask = new Task();
         }
 
         public bool didFriends = false;
