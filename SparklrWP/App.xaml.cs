@@ -116,19 +116,6 @@ namespace SparklrWP
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-            if (IsolatedStorageSettings.ApplicationSettings.Contains("authkey") && !App.Client.IsLoggedIn &&
-                  IsolatedStorageSettings.ApplicationSettings.Contains("userid"))
-            {
-                byte[] authBytes = null;
-                IsolatedStorageSettings.ApplicationSettings.TryGetValue("authkey", out authBytes);
-                authBytes = ProtectedData.Unprotect(authBytes, null);
-                App.Client.ManualLogin(Encoding.UTF8.GetString(authBytes, 0, authBytes.Length),
-                    (long)IsolatedStorageSettings.ApplicationSettings["userid"]);
-            }
-            else
-            {
-                RootFrame.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
-            }
         }
 
         // Code to execute when the application is activated (brought to foreground)
@@ -154,6 +141,30 @@ namespace SparklrWP
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+        }
+
+        void RootFrame_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+            if (RemoveBackEntryOnNavigate)
+            {
+                RemoveBackEntryOnNavigate = false;
+                RootFrame.Dispatcher.BeginInvoke(() => RootFrame.RemoveBackEntry());
+            }
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("authkey") && !App.Client.IsLoggedIn &&
+                  IsolatedStorageSettings.ApplicationSettings.Contains("userid"))
+            {
+                byte[] authBytes = null;
+                IsolatedStorageSettings.ApplicationSettings.TryGetValue("authkey", out authBytes);
+                authBytes = ProtectedData.Unprotect(authBytes, null);
+                App.Client.ManualLogin(Encoding.UTF8.GetString(authBytes, 0, authBytes.Length),
+                    (long)IsolatedStorageSettings.ApplicationSettings["userid"]);
+            }
+            else if (!e.Uri.ToString().Contains("/LoginPage.xaml") && !App.Client.IsLoggedIn)
+            {
+                e.Cancel = true;
+                LoginReturnUri = e.Uri;
+                RootFrame.Dispatcher.BeginInvoke(() => RootFrame.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative)));
+            }
         }
 
         // Code to execute if a navigation fails
@@ -195,6 +206,7 @@ namespace SparklrWP
             // screen to remain active until the application is ready to render.
             RootFrame = new PhoneApplicationFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
+            RootFrame.Navigating += RootFrame_Navigating;
             GlobalLoading.Instance.Initialize(RootFrame);
 
             // Handle navigation failures
@@ -245,5 +257,9 @@ namespace SparklrWP
                 return _aviaryApiKey;
             }
         }
+
+        public static Uri LoginReturnUri { get; set; }
+
+        public static bool RemoveBackEntryOnNavigate { get; set; }
     }
 }

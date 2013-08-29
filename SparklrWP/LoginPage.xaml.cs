@@ -139,12 +139,19 @@ namespace SparklrWP
                     IsolatedStorageSettings.ApplicationSettings.Add("username", usernameBox.Text);
                 }
                 IsolatedStorageSettings.ApplicationSettings.Save();
-                if (NavigationService.CanGoBack)
+                if (App.LoginReturnUri != null)
+                {
+                    App.RemoveBackEntryOnNavigate = true;
+                    NavigationService.Navigate(App.LoginReturnUri);
+                    App.LoginReturnUri = null;
+                }
+                else if (NavigationService.CanGoBack)
                 {
                     NavigationService.GoBack();
                 }
                 else
                 {
+                    App.RemoveBackEntryOnNavigate = true;
                     NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
                 }
             }
