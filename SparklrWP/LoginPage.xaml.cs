@@ -4,6 +4,7 @@ using SparklrLib;
 using SparklrLib.Objects;
 using System;
 using System.IO.IsolatedStorage;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
@@ -19,6 +20,16 @@ namespace SparklrWP
         public LoginPage()
         {
             InitializeComponent();
+            //#if DEBUG
+
+
+            //#endif
+            App.BackgroundTask = new Utils.Task();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
             if (App.logger.hasCriticalLogged())
             {
                 if (MessageBox.Show("Looks Like You Had A Crash The Last Time You Used The App. Would You Like To Send A Bug Report?", "Somthings Wrong Here...", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
@@ -26,50 +37,59 @@ namespace SparklrWP
                     App.logger.emailReport();
                     App.logger.clearEventsFromLog();
                 }
-                else
-                {
-
-                }
-
             }
-            //#if DEBUG
-
-
-            //#endif
-
-            App.Client = new SparklrClient();
-            if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
-            {
-                string username = "";
-                IsolatedStorageSettings.ApplicationSettings.TryGetValue<string>("username", out username);
-                usernameBox.Text = username;
-            }
-            if (IsolatedStorageSettings.ApplicationSettings.Contains("password"))
-            {
-                byte[] passbyte = null;
-                IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out passbyte);
-                passbyte = ProtectedData.Unprotect(passbyte, null);
-                passwordBox.Password = Encoding.UTF8.GetString(passbyte, 0, passbyte.Length);
-                rememberBox.IsChecked = true;
-            }
-            App.BackgroundTask = new Utils.Task();
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
             if (!IsolatedStorageSettings.ApplicationSettings.Contains("firstruncheck"))
             {
-                MessageBox.Show("Looks like it's the first time you've used this app! We will take you through a small intro to show you around the app!", "Have we met before?", MessageBoxButton.OK);
+                MessageBox.Show(
+                    "Looks like it's the first time you've used this app! We will take you through a small intro to show you around the app!",
+                    "Have we met before?", MessageBoxButton.OK);
 
                 NavigationService.Navigate(new Uri("/FirstRun.xaml", UriKind.Relative));
             }
-        }
+            else
+            {
+                if (NavigationContext.QueryString.ContainsKey("logout"))
+                {
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("authkey"))
+                    {
+                        IsolatedStorageSettings.ApplicationSettings.Remove("authkey");
+                    }
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("userid"))
+                    {
+                        IsolatedStorageSettings.ApplicationSettings.Remove("userid");
+                    }
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
+                    {
+                        IsolatedStorageSettings.ApplicationSettings.Remove("username");
+                    }
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("password"))
+                    {
+                        IsolatedStorageSettings.ApplicationSettings.Remove("password");
+                    }
+                    IsolatedStorageSettings.ApplicationSettings.Save();
+                    App.Client = new SparklrClient();
+                    while (NavigationService.BackStack.Any())
+                    {
+                        NavigationService.RemoveBackEntry();
+                    }
+                }
 
-        private bool postcallback(string jsonData)
-        {
-            Dispatcher.BeginInvoke(() => MessageBox.Show(jsonData));
-            return true;
+
+                if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
+                {
+                    string username = "";
+                    IsolatedStorageSettings.ApplicationSettings.TryGetValue<string>("username", out username);
+                    usernameBox.Text = username;
+                }
+                if (IsolatedStorageSettings.ApplicationSettings.Contains("password"))
+                {
+                    byte[] passbyte = null;
+                    IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out passbyte);
+                    passbyte = ProtectedData.Unprotect(passbyte, null);
+                    passwordBox.Password = Encoding.UTF8.GetString(passbyte, 0, passbyte.Length);
+                    rememberBox.IsChecked = true;
+                }
+            }
         }
 
         private async void loginButton_Click(object sender, RoutedEventArgs e)
@@ -94,6 +114,14 @@ namespace SparklrWP
             }
             else
             {
+                if (IsolatedStorageSettings.ApplicationSettings.Contains("authkey"))
+                {
+                    IsolatedStorageSettings.ApplicationSettings.Remove("authkey");
+                }
+                if (IsolatedStorageSettings.ApplicationSettings.Contains("userid"))
+                {
+                    IsolatedStorageSettings.ApplicationSettings.Remove("userid");
+                }
                 if (IsolatedStorageSettings.ApplicationSettings.Contains("username"))
                 {
                     IsolatedStorageSettings.ApplicationSettings.Remove("username");
@@ -105,10 +133,19 @@ namespace SparklrWP
                 if (rememberBox.IsChecked == true)
                 {
                     IsolatedStorageSettings.ApplicationSettings.Add("password", ProtectedData.Protect(Encoding.UTF8.GetBytes(passwordBox.Password), null));
+                    IsolatedStorageSettings.ApplicationSettings.Add("authkey", ProtectedData.Protect(Encoding.UTF8.GetBytes(loginargs.AuthToken), null));
+                    IsolatedStorageSettings.ApplicationSettings.Add("userid", loginargs.UserId);
                     IsolatedStorageSettings.ApplicationSettings.Add("username", usernameBox.Text);
                 }
                 IsolatedStorageSettings.ApplicationSettings.Save();
-                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                if (NavigationService.CanGoBack)
+                {
+                    NavigationService.GoBack();
+                }
+                else
+                {
+                    NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                }
             }
         }
 

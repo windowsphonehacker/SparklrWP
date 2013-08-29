@@ -4,6 +4,9 @@ using SparklrLib;
 using SparklrWP.Utils;
 using System;
 using System.IO;
+using System.IO.IsolatedStorage;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Navigation;
 
@@ -18,7 +21,7 @@ namespace SparklrWP
 
         public static Utils.Task BackgroundTask;
 
-        public static SparklrClient Client;
+        public static SparklrClient Client = new SparklrClient();
         /// <summary>
         /// A static ViewModel used by the views to bind against.
         /// </summary>
@@ -113,6 +116,19 @@ namespace SparklrWP
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("authkey") && !App.Client.IsLoggedIn &&
+                  IsolatedStorageSettings.ApplicationSettings.Contains("userid"))
+            {
+                byte[] authBytes = null;
+                IsolatedStorageSettings.ApplicationSettings.TryGetValue("authkey", out authBytes);
+                authBytes = ProtectedData.Unprotect(authBytes, null);
+                App.Client.ManualLogin(Encoding.UTF8.GetString(authBytes, 0, authBytes.Length),
+                    (long)IsolatedStorageSettings.ApplicationSettings["userid"]);
+            }
+            else
+            {
+                RootFrame.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+            }
         }
 
         // Code to execute when the application is activated (brought to foreground)
