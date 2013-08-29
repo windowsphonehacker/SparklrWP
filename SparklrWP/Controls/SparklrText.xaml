@@ -14,7 +14,7 @@
         
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
             <Grid Width="432" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ImageContainer" Visibility="Collapsed" Tap="ImageContainer_Tap">
@@ -41,18 +41,12 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
-                <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" Foreground="White" FontSize="24" x:Name="usernameTextBlock" />
-			<StackPanel Grid.Column="1" Orientation="Horizontal">
-				<TextBlock Grid.Column="1" Foreground="White" FontSize="24" x:Name="commentCountTextBlock" />
-				<Image Source="appbar.message.send.png" Width="35" Height="35" HorizontalAlignment="Left" />
-			</StackPanel>
-            
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <Image Source="/Assets/Heart.png" Width="15" Height="15" HorizontalAlignment="Left" />
-                <TextBlock Foreground="White" FontSize="24" x:Name="likesTextBlock" Padding="7,0,0,0">Test</TextBlock>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" x:Name="commentCountContainer">
+                <TextBlock Grid.Column="1" Foreground="White" FontSize="24" x:Name="commentCountTextBlock" />
+                <Image Source="appbar.message.send.png" Width="35" Height="35" HorizontalAlignment="Left" />
             </StackPanel>
         </Grid>
     </Grid>

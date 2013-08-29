@@ -109,7 +109,7 @@
                     <!-- Template for the letters inside the list -->
                     <toolkit:LongListSelector.GroupHeaderTemplate>
                         <DataTemplate>
-                            <Border Height="75" Width="75" Background="#FF2A2339" HorizontalAlignment="Left" Margin="12,6" Tap="BorderNotification_Tap">
+                            <Border Height="75" Width="75" Background="#FF2A2339" HorizontalAlignment="Left" Margin="12,6">
                                 <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
                             </Border>
                         </DataTemplate>
@@ -155,16 +155,23 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Style="{StaticResource PhoneTextExtraLargeStyle}">Notifications</TextBlock>
             <ScrollViewer Grid.Row="1">
-                <ListBox ItemsSource="{Binding Notifications.Items}">
+                <ListBox ItemsSource="{Binding Notifications}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Message}" />
+                            <StackPanel Margin="5,3">
+                                <sparklrControls:SparklrText Text="{Binding Message}" Username="{Binding FromName}" UserbarLocation="Top" CommentCountVisibility="Collapsed" />
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    <!-- Workaround used to stretch the child elements to the full width -> HorizontalContentAlignment won't work for some reason... -->
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                 </ListBox>
             </ScrollViewer>
         </Grid>

@@ -51,6 +51,32 @@ namespace SparklrWP
             }
         }
 
+        private int _from;
+        public string FromName { get; private set; }
+        public int From
+        {
+            get
+            {
+                return _from;
+            }
+            set
+            {
+                if (_from != value)
+                {
+                    _from = value;
+                    NotifyPropertyChanged("From");
+                    updateUsername();
+                }
+            }
+        }
+
+        private async void updateUsername()
+        {
+            SparklrLib.Objects.JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.User> result = await App.Client.GetUserAsync(From);
+            FromName = result.IsSuccessful ? result.Object.name : String.Format("#{0}", From);
+            NotifyPropertyChanged("FromName");
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)
         {

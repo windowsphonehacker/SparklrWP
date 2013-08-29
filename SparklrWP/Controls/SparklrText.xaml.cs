@@ -13,9 +13,16 @@ using System.Windows.Media.Imaging;
 
 namespace SparklrWP.Controls
 {
+    public enum Location
+    {
+        Top,
+        Bottom
+    }
+
     [Description("Provides a control that can display a Sparklr post.")]
     public partial class SparklrText : UserControl
     {
+        public static readonly DependencyProperty UserbarLocationProperty = DependencyProperty.Register("UserbarLocation", typeof(Location), typeof(object), new PropertyMetadata(userbarLocationChanged));
         /// <summary>
         /// The content of the post
         /// </summary>
@@ -25,11 +32,6 @@ namespace SparklrWP.Controls
         /// The author's name
         /// </summary>
         public static readonly DependencyProperty UsernameProperty = DependencyProperty.Register("Username", typeof(string), typeof(object), new PropertyMetadata(usernamePropertyChanged));
-
-        /// <summary>
-        /// The number of likes
-        /// </summary>
-        public static readonly DependencyProperty LikesProperty = DependencyProperty.Register("Likes", typeof(int), typeof(object), new PropertyMetadata(likesPropertyChanged));
 
         /// <summary>
         /// The number of comments
@@ -45,6 +47,24 @@ namespace SparklrWP.Controls
         /// A ItemViewModel that contains all the required data.
         /// </summary>
         public static readonly DependencyProperty PostProperty = DependencyProperty.Register("Post", typeof(ItemViewModel), typeof(object), new PropertyMetadata(postPropertyChanged));
+
+        /// <summary>
+        /// Specifies if the comment numer is visible or not
+        /// </summary>
+        public static readonly DependencyProperty CommentCountVisibilityProperty = DependencyProperty.Register("CommentCountVisibility", typeof(Visibility), typeof(object), new PropertyMetadata(commentCountVisibilityChanged));
+
+
+        private static void commentCountVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+ 	        SparklrText control = d as SparklrText;
+            control.CommentCountVisibility = (Visibility)e.NewValue;
+        }
+        
+        static void userbarLocationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            SparklrText control = d as SparklrText;
+            control.UserbarLocation = (Location)e.NewValue;
+        }
 
         private static void postPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -63,13 +83,6 @@ namespace SparklrWP.Controls
         {
             SparklrText control = d as SparklrText;
             control.Comments = (int)e.NewValue;
-        }
-
-
-        private static void likesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            SparklrText control = d as SparklrText;
-            control.Likes = (int)e.NewValue;
         }
 
         private static void usernamePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -109,10 +122,74 @@ namespace SparklrWP.Controls
         private string text;
         private string username;
         private string imagelocation;
-        private int? likes;
         private int? comments;
         private ItemViewModel post;
         private BitmapImage image;
+        private Location userbarLocation = Location.Bottom;
+        private Visibility commentCountVisibility = Visibility.Visible;
+
+        /// <summary>
+        /// The location of the userbar
+        /// </summary>
+        public Location UserbarLocation
+        {
+            get
+            {
+                return userbarLocation;
+            }
+            set
+            {
+                if (userbarLocation != value)
+                {
+                    userbarLocation = value;
+
+                    switch (userbarLocation)
+                    {
+                        case Location.Top:
+                            Grid.SetRow(ImageContainer, 1);
+                            Grid.SetRow(userbar, 0);
+                            Grid.SetRow(messageContentContainer, 2);
+                            break;
+                        case Location.Bottom:
+                            Grid.SetRow(ImageContainer, 0);
+                            Grid.SetRow(userbar, 2);
+                            Grid.SetRow(messageContentContainer, 1);
+                            break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// The content of the post
+        /// </summary>
+        public Visibility CommentCountVisibility
+        {
+            get
+            {
+                return commentCountVisibility;
+            }
+            set
+            {
+                if (commentCountVisibility != value)
+                {
+                    commentCountVisibility = value;
+
+                    switch (commentCountVisibility)
+                    {
+                        case Visibility.Collapsed:
+                            commentCountContainer.Visibility = Visibility.Collapsed;
+                            Grid.SetColumnSpan(usernameTextBlock, 2);
+                            break;
+
+                        case Visibility.Visible:
+                            commentCountContainer.Visibility = Visibility.Visible;
+                            Grid.SetColumnSpan(usernameTextBlock, 1);
+                            break;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// The content of the post
@@ -150,7 +227,6 @@ namespace SparklrWP.Controls
                     this.ImageLocation = value.ImageUrl;
                     this.Username = value.From;
                     this.Comments = value.CommentCount;
-                    this.Likes = value.LikesCount;
                     this.Text = value.Message;
 
                     post = value;
@@ -193,26 +269,6 @@ namespace SparklrWP.Controls
                 {
                     comments = value;
                     commentCountTextBlock.Text = comments == 1 ? "1" : String.Format("{0}", comments);
-                    refreshVisibility();
-                }
-            }
-        }
-
-        /// <summary>
-        /// The number of likes
-        /// </summary>
-        public int? Likes
-        {
-            get
-            {
-                return likes;
-            }
-            set
-            {
-                if (likes != value)
-                {
-                    likes = value;
-                    likesTextBlock.Text = String.Format("{0} likes", likes);
                     refreshVisibility();
                 }
             }
@@ -290,7 +346,7 @@ namespace SparklrWP.Controls
         {
             get
             {
-                return (String.IsNullOrEmpty(username) && likes == null && comments == null) ? Visibility.Collapsed : Visibility.Visible;
+                return (String.IsNullOrEmpty(username) && comments == null) ? Visibility.Collapsed : Visibility.Visible;
             }
         }
 
@@ -378,8 +434,9 @@ namespace SparklrWP.Controls
                         messageContentParagraph.Inlines.Add(getAsInline(s));
                     }
                 }
-
             }
+
+            this.InvalidateMeasure();
         }
 
 

@@ -115,7 +115,8 @@ namespace SparklrWP
                         {
                             Notifications.Add(new NotificationViewModel(n.id)
                             {
-                                Message = n.body
+                                Message = n.body,
+                                From = n.from
                             });
                         }
                     }
