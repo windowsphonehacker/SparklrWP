@@ -1,12 +1,10 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Xna.Framework.Media;
-using SparklrLib.Objects;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -263,7 +261,7 @@ namespace SparklrWP.Controls
             try
             {
                 string oldLink = String.Copy(value);
-                BitmapImage loaded = await Utils.Helpers.LoadImageFromUrlAsync(value);
+                BitmapImage loaded = await Utils.Caching.Image.LoadCachedImageFromUrlAsync(value);
 
                 if (oldLink == this.imagelocation)
                 {
@@ -353,7 +351,7 @@ namespace SparklrWP.Controls
                         foreach (string username in usernameParts)
                         {
                             if (userMentionRegex.IsMatch(username))
-                                messageContentParagraph.Inlines.Add(await getAsInlineUsername(username));
+                                messageContentParagraph.Inlines.Add(getAsInlineUsername(username));
                             else
                             {
                                 //Check if we still have urls in here
@@ -451,31 +449,21 @@ namespace SparklrWP.Controls
             return ret;
         }
 
-        private async Task<Inline> getAsInlineUsername(string username)
+        private Inline getAsInlineUsername(string username)
         {
             if (username.StartsWith("@"))
                 username = username.TrimStart('@');
 
-            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.User> userInfo = await App.Client.GetUserAsync(username);
-            if (userInfo.IsSuccessful)
+            Hyperlink ret = new Hyperlink();
+            ret.Foreground = accentColor;
+            ret.Inlines.Add("@" + username);
+
+            ret.Click += (sender, e) =>
             {
-                Hyperlink ret = new Hyperlink();
-                ret.Foreground = accentColor;
-                ret.Inlines.Add("@" + username);
+                (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(String.Format("/Pages/Profile.xaml?userId={0}", username), UriKind.Relative));
+            };
 
-                int userId = userInfo.Object.user;
-
-                ret.Click += (sender, e) =>
-                {
-                    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(String.Format("/Pages/Profile.xaml?userId={0}", userId), UriKind.Relative));
-                };
-
-                return ret;
-            }
-            else
-            {
-                return getAsInline(username);
-            }
+            return ret;
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 using SparklrLib.Objects;
+using System;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Navigation;
@@ -41,9 +42,22 @@ namespace SparklrWP.Pages
             string selectedIndex = "";
             if (NavigationContext.QueryString.TryGetValue("userId", out selectedIndex))
             {
-                model.ID = int.Parse(selectedIndex);
+                //model.ID = int.Parse(selectedIndex);
 
-                JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.User> usargs = await App.Client.GetUserAsync(model.ID);
+                JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.User> usargs;
+
+                int id;
+
+                if (Int32.TryParse(selectedIndex, out id))
+                {
+                    model.ID = id;
+                    usargs = await App.Client.GetUserAsync(model.ID);
+                }
+                else
+                {
+                    usargs = await App.Client.GetUserAsync(selectedIndex);
+                    model.ID = (usargs != null && usargs.IsSuccessful) ? usargs.Object.user : -1;
+                }
 
                 if (usargs.IsSuccessful)
                 {
