@@ -155,6 +155,30 @@ namespace SparklrLib
 
             try
             {
+                if (postdata != "")
+                {
+                    streamReq.Method = "POST";
+                    using (Stream postStream = await streamReq.GetRequestStreamAsync())
+                    {
+                        // Create the post data
+                        byte[] byteArray = Encoding.UTF8.GetBytes(postdata);
+                        // Add the post data to the web request
+                        postStream.Write(byteArray, 0, byteArray.Length);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new JSONRequestEventArgs<T>()
+                {
+                    IsSuccessful = false,
+                    Error = ex,
+                    Response = null
+                };
+            }
+
+            try
+            {
                 HttpWebResponse streamResp = (HttpWebResponse)await streamReq.GetResponseAsync();
                 T desiredObject = default(T);
                 using (StreamReader strReader = new StreamReader(streamResp.GetResponseStream(), Encoding.UTF8))
@@ -163,20 +187,6 @@ namespace SparklrLib
                     {
                         string json = await strReader.ReadToEndAsync();
                         desiredObject = JsonConvert.DeserializeObject<T>(json);
-
-
-                        if (postdata != "")
-                        {
-                            streamReq.Method = "POST";
-                            using (Stream postStream = await streamReq.GetRequestStreamAsync())
-                            {
-                                // Create the post data
-                                byte[] byteArray = Encoding.UTF8.GetBytes(postdata);
-                                // Add the post data to the web request
-                                postStream.Write(byteArray, 0, byteArray.Length);
-                            }
-                            return await requestJsonObjectAsync<T>(path, xdata, postdata);
-                        }
                     }
                     catch (Exception ex)
                     {
@@ -391,6 +401,7 @@ namespace SparklrLib
             {
                 using (MemoryStream ms = new MemoryStream())
                 {
+                    image.Seek(0, SeekOrigin.Begin);
 #if PORTABLELIB
                     byte[] array = new byte[81920];
                     int count;
