@@ -181,7 +181,8 @@ namespace SparklrLib
                     Response = null
                 };
             }
-
+            bool error = false;
+            WebException exc;
             try
             {
                 HttpWebResponse streamResp = (HttpWebResponse)await streamReq.GetResponseAsync();
@@ -213,17 +214,8 @@ namespace SparklrLib
             }
             catch (WebException ex)
             {
-                if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.Forbidden)
-                {
-                    raiseCredentialsExpired();
-                }
-
-                return new JSONRequestEventArgs<T>()
-                {
-                    IsSuccessful = false,
-                    Error = ex,
-                    Response = (HttpWebResponse)ex.Response
-                };
+                error = true;
+                exc = ex;
             }
             catch (Exception ex)
             {
@@ -233,6 +225,46 @@ namespace SparklrLib
                     Error = ex
                 };
             }
+            if (error)
+            {
+                if (((HttpWebResponse)exc.Response).StatusCode == HttpStatusCode.Forbidden)
+                {
+                    using (StreamReader strReader = new StreamReader(exc.Response.GetResponseStream(), Encoding.UTF8))
+                    {
+                        string json = await strReader.ReadToEndAsync();
+
+                        if (json == "")
+                        {
+                            raiseCredentialsExpired();
+                        }
+                        else
+                        {
+                            //TODO: Handle other errors here, for example not authorized to see user profile:
+                            //{
+                            //    "error": true,
+                            //    "info": {
+                            //        "notFriends": true,
+                            //        "following": false
+                            //    }
+                            //}
+                        }
+                    }
+                }
+
+                return new JSONRequestEventArgs<T>()
+                {
+                    IsSuccessful = false,
+                    Error = exc,
+                    Response = (HttpWebResponse)exc.Response
+                };
+            }
+
+            return new JSONRequestEventArgs<T>()
+            {
+                IsSuccessful = false,
+                Error = null,
+                Response = null
+            };
         }
 
         public void ManualLogin(string authToken, long userId)
