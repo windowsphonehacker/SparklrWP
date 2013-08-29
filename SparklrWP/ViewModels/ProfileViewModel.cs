@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace SparklrWP
 {
@@ -9,6 +10,7 @@ namespace SparklrWP
         private string _profileImage;
         private string _backgroundImage;
         private string _bio;
+        private ImageSource _profileImageSource;
         private int _id;
 
         public string Handle
@@ -55,6 +57,23 @@ namespace SparklrWP
                 {
                     _profileImage = value;
                     NotifyPropertyChanged("ProfileImage");
+                    updateProfileImage();
+                }
+            }
+        }
+
+        public ImageSource ProfileImageSource
+        {
+            get
+            {
+                return _profileImageSource;
+            }
+            set
+            {
+                if (_profileImageSource != value)
+                {
+                    _profileImageSource = value;
+                    NotifyPropertyChanged("ProfileImageSource");
                 }
             }
         }
@@ -94,6 +113,11 @@ namespace SparklrWP
         public ProfileViewModel()
         {
 
+        }
+
+        private async void updateProfileImage()
+        {
+            ProfileImageSource = await Utils.Caching.Image.LoadCachedImageFromUrlAsync(ProfileImage);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

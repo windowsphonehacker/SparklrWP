@@ -231,6 +231,7 @@ namespace SparklrWP.Controls
             {
                 if (imagelocation != value)
                 {
+                    bool startLoading = false;
                     if (String.IsNullOrEmpty(value))
                     {
                         MessageImage.Source = null;
@@ -240,10 +241,13 @@ namespace SparklrWP.Controls
                         if (value.EndsWith(",[]"))
                             value = value.Replace(",[]", "");
 
-                        loadImage(value);
+                        startLoading = true;
                     }
 
                     imagelocation = value;
+
+                    if (startLoading)
+                        loadImage(value);
                 }
             }
         }
@@ -325,7 +329,7 @@ namespace SparklrWP.Controls
         /// Rebuilts and rehighlights the post
         /// </summary>
         /// <param name="value">The post content</param>
-        private async void updateText(string value)
+        private void updateText(string value)
         {
             messageContentParagraph.Inlines.Clear();
             //Split on every hashtag

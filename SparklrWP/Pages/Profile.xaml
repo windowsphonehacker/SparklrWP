@@ -8,6 +8,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:controlsPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls" 
     xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
+    xmlns:converters="clr-namespace:SparklrWP.Utils.Caching.Converters"
 	x:Class="SparklrWP.Pages.Profile" 
 	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -72,7 +73,7 @@
 			<controls:Panorama.TitleTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal" Margin="0,85,0,0">
-                        <Image x:Name="ProfileImage" Width="100" Height="100" Source="{Binding Path=DataContext.ProfileImage, ElementName=ProfilePage}"  Stretch="UniformToFill" Opacity="0" >
+                        <Image x:Name="ProfileImage" Width="100" Height="100" Source="{Binding Path=DataContext.ProfileImageSource, ElementName=ProfilePage}"  Stretch="UniformToFill" Opacity="0" >
                             <Image.Triggers>
                                 <EventTrigger RoutedEvent="Image.Loaded">
                                     <BeginStoryboard>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 using SparklrLib.Objects;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,24 @@ namespace SparklrWP
             postsPivot.DataContext = App.PostsViewModel;
             notificationsPivot.DataContext = App.NotificationsViewModel;
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
+
+#if DEBUG
+            //Debug items for cache cleaning. TODO: Implement them properly in a settings page
+            ApplicationBarMenuItem clearCache = new ApplicationBarMenuItem("DEBUG: Clear cache");
+            clearCache.Click += (sender, e) =>
+            {
+                Utils.Caching.Image.ClearImageCache();
+            };
+
+            ApplicationBarMenuItem cleanCache = new ApplicationBarMenuItem("DEBUG: Clean cache");
+            cleanCache.Click += (sender, e) =>
+            {
+                Utils.Caching.Image.CleanImageCache();
+            };
+
+            this.ApplicationBar.MenuItems.Add(clearCache);
+            this.ApplicationBar.MenuItems.Add(cleanCache);
+#endif
         }
 
         public bool didFriends = false;
