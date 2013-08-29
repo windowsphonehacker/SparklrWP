@@ -14,57 +14,12 @@ namespace SparklrWP
 {
     public partial class App : Application
     {
-        private static MainViewModel postsViewModel = null;
-        private static NotificationsViewModel notificationsViewModel = null;
-        private static FriendsViewModel friendsViewModel = null;
+        private static MainViewModel mainViewModel = null;
         public static WPClogger logger = new WPClogger(LogLevel.debug);
 
         public static Utils.Task BackgroundTask;
 
         public static SparklrClient Client = new SparklrClient();
-        /// <summary>
-        /// A static ViewModel used by the views to bind against.
-        /// </summary>
-        /// <returns>The MainViewModel object.</returns>
-        public static MainViewModel PostsViewModel
-        {
-            get
-            {
-                // Delay creation of the view model until necessary
-                if (postsViewModel == null)
-                    postsViewModel = new MainViewModel();
-
-                return postsViewModel;
-            }
-        }
-
-        public static FriendsViewModel FriendsViewModel
-        {
-            get
-            {
-                // Delay creation of the view model until necessary
-                if (friendsViewModel == null)
-                    friendsViewModel = new FriendsViewModel();
-
-                return friendsViewModel;
-            }
-        }
-
-        /// <summary>
-        /// A static ViewModel used by the views to bind against.
-        /// </summary>
-        /// <returns>The NotificationsViewModel object.</returns>
-        public static NotificationsViewModel NotificationsViewModel
-        {
-            get
-            {
-                // Delay creation of the view model until necessary
-                if (notificationsViewModel == null)
-                    notificationsViewModel = new NotificationsViewModel();
-
-                return notificationsViewModel;
-            }
-        }
 
         /// <summary>
         /// Provides easy access to the root frame of the Phone Application.
@@ -83,7 +38,7 @@ namespace SparklrWP
 #if DEBUG
             MemoryDiagnosticsHelper.Start(TimeSpan.FromMilliseconds(500), true);
 #endif
-
+            Client.CredentialsExpired += Client_CredentialsExpired;
             // Standard Silverlight initialization
             InitializeComponent();
 
@@ -111,6 +66,28 @@ namespace SparklrWP
             }
 
         }
+
+        void Client_CredentialsExpired(object sender, EventArgs e)
+        {
+            RootFrame.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+        }
+
+        /// <summary>
+        /// A static ViewModel used by the views to bind against.
+        /// </summary>
+        /// <returns>The MainViewModel object.</returns>
+        public static MainViewModel MainViewModel
+        {
+            get
+            {
+                // Delay creation of the view model until necessary
+                if (mainViewModel == null)
+                    mainViewModel = new MainViewModel();
+
+                return mainViewModel;
+            }
+        }
+
 
         // Code to execute when the application is launching (eg, from Start)
         // This code will not execute when the application is reactivated
