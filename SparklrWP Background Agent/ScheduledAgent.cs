@@ -94,7 +94,7 @@ namespace SparklrWP_Background_Agent
                        {
                            from = 4,
                            type = 1,
-                           body = "ILY"
+                           body = "Debug test"
                        });
 #endif
                         if (strm.notifications != null)
@@ -115,6 +115,7 @@ namespace SparklrWP_Background_Agent
                                     ShellToast notif = new ShellToast();
                                     notif.Title = "Sparklr*";
                                     notif.Content = String.Format(textGenerator(not), client.Usernames[not.from]);
+                                    notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
                                     notif.Show();
                                 }
                                 if (unargs.IsSuccessful)
@@ -138,6 +139,7 @@ namespace SparklrWP_Background_Agent
                                         ShellToast notif = new ShellToast();
                                         notif.Title = "Sparklr*";
                                         notif.Content = String.Format(textGenerator(not), client.Usernames[not.from]);
+                                        notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
                                         notif.Show();
                                     }
                                 }
@@ -148,6 +150,7 @@ namespace SparklrWP_Background_Agent
                                         ShellToast notif = new ShellToast();
                                         notif.Title = "Sparklr*";
                                         notif.Content = String.Format(textGenerator(not), "Someone");
+                                        notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
                                         notif.Show();
                                     }
                                 }
@@ -160,6 +163,7 @@ namespace SparklrWP_Background_Agent
                                     ShellToast notif = new ShellToast();
                                     notif.Title = "Sparklr*";
                                     notif.Content = String.Format(textGenerator(not), "Someone");
+                                    notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
                                     notif.Show();
                                 }
                             }
@@ -169,6 +173,7 @@ namespace SparklrWP_Background_Agent
                         {
                             NotifyComplete();
                         }
+                        NotifyComplete();
                     }
                 }
                 else
@@ -180,6 +185,7 @@ namespace SparklrWP_Background_Agent
             {
                 NotifyComplete();
             }
+            NotifyComplete();
         }
     }
 }

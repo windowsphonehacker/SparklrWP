@@ -17,7 +17,7 @@ namespace SparklrWP
         private static MainViewModel mainViewModel = null;
         public static WPClogger logger = new WPClogger(LogLevel.debug);
 
-        public static Utils.Task BackgroundTask;
+        public static Utils.Task BackgroundTask = new Task();
 
         public static SparklrClient Client = new SparklrClient();
 
@@ -140,7 +140,7 @@ namespace SparklrWP
                 App.Client.ManualLogin(Encoding.UTF8.GetString(authBytes, 0, authBytes.Length),
                     (long)IsolatedStorageSettings.ApplicationSettings["userid"]);
             }
-            else if (!e.Uri.ToString().Contains("/LoginPage.xaml") && !App.Client.IsLoggedIn)
+            else if (!e.Uri.ToString().Contains("/LoginPage.xaml") && !e.Uri.ToString().Contains("/FirstRun.xaml") && !App.Client.IsLoggedIn)
             {
                 e.Cancel = true;
                 LoginReturnUri = e.Uri;

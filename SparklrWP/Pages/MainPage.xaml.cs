@@ -3,6 +3,7 @@ using Microsoft.Phone.Shell;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Navigation;
 
 namespace SparklrWP.Pages
 {
@@ -66,6 +67,15 @@ namespace SparklrWP.Pages
             //{
             //    App.NotificationsViewModel.LoadData();
             //}
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (this.NavigationContext.QueryString.ContainsKey("notification"))
+            {
+                BorderNotification_Tap(this, new System.Windows.Input.GestureEventArgs());
+            }
         }
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)

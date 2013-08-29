@@ -23,7 +23,6 @@ namespace SparklrWP
 
 
             //#endif
-            App.BackgroundTask = new Utils.Task();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

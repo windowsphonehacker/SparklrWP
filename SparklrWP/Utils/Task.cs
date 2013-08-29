@@ -5,7 +5,7 @@ namespace SparklrWP.Utils
     public class Task
     {
         PeriodicTask periodicTask;
-        string periodicTaskName = "Sparklr";
+        const string periodicTaskName = "Sparklr";
 
         public Task()
         {
@@ -19,20 +19,20 @@ namespace SparklrWP.Utils
 #endif
             if (periodicTask == null)
             {
-                periodicTask = new PeriodicTask(periodicTaskName); 
+                periodicTask = new PeriodicTask(periodicTaskName);
                 periodicTask.Description = "Sparklr notification agent";
                 try
                 {
                     ScheduledActionService.Add(periodicTask);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-
+                    //TODO: Handle errors here (For example if there are too many background tasks already)
                 }
             }
-            // If debugging is enabled, use LaunchForTest to launch the agent in one minute.
+            // If debugging is enabled, use LaunchForTest to launch the agent in 15 seconds.
 #if DEBUG
-            ScheduledActionService.LaunchForTest("Sparklr", new TimeSpan(1));
+            ScheduledActionService.LaunchForTest(periodicTaskName, new TimeSpan(0, 0, 15));
 #endif
         }
     }
