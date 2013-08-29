@@ -67,9 +67,13 @@ namespace SparklrWP
 
         }
 
-        void Client_CredentialsExpired(object sender, EventArgs e)
+        private void Client_CredentialsExpired(object sender, EventArgs e)
         {
-            RootFrame.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+            RootFrame.Dispatcher.BeginInvoke(() =>
+            {
+                LoginReturnUri = RootFrame.CurrentSource;
+                RootFrame.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+            });
         }
 
         /// <summary>

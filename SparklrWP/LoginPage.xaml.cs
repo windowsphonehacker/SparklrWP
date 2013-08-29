@@ -37,6 +37,7 @@ namespace SparklrWP
                     App.logger.clearEventsFromLog();
                 }
             }
+
             if (!IsolatedStorageSettings.ApplicationSettings.Contains("firstruncheck"))
             {
                 MessageBox.Show(
@@ -202,13 +203,22 @@ namespace SparklrWP
                 button1.IsEnabled = true;
                 button2.IsEnabled = true;
             }
-            else
+            else if (NavigationService.CanGoBack)
             {
-
-                e.Cancel = false;
-
-
-
+                //We don't want anyone getting pass the login screen without logging in first
+                if (MessageBox.Show("Do you want to exit the app? Unsaved changes will be lost.", "Confirmation",
+                    MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                {
+                    while (NavigationService.BackStack.Any())
+                    {
+                        NavigationService.RemoveBackEntry();
+                    }
+                    e.Cancel = false;
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
 

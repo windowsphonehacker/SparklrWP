@@ -527,8 +527,13 @@ namespace SparklrLib
 
         private void raiseCredentialsExpired()
         {
-            if (CredentialsExpired != null)
-                CredentialsExpired(this, null);
+            //Fire only once
+            if (IsLoggedIn)
+            {
+                AuthToken = null;
+                if (CredentialsExpired != null)
+                    CredentialsExpired(this, null);
+            }
         }
     }
 }
