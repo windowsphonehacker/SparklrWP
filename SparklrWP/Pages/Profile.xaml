@@ -8,7 +8,6 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:controlsPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls" 
     xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
-    xmlns:converters="clr-namespace:SparklrWP.Utils.Caching.Converters"
 	x:Class="SparklrWP.Pages.Profile" 
 	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"

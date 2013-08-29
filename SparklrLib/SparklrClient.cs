@@ -123,9 +123,9 @@ namespace SparklrLib
         /// <param name="path">The path.</param>
         /// <param name="xdata">The xdata.</param>
         /// <param name="postdata">The postdata.</param>
-        private Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path, object xdata, string postdata)
+        private Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path, object xdata, string postdata, string method = "GET")
         {
-            return requestJsonObjectAsync<T>(path, JsonConvert.SerializeObject(xdata), postdata);
+            return requestJsonObjectAsync<T>(path, JsonConvert.SerializeObject(xdata), postdata, method);
         }
 
         /// <summary>
@@ -135,9 +135,10 @@ namespace SparklrLib
         /// <param name="path">The path.</param>
         /// <param name="xdata">The xdata.</param>
         /// <param name="postdata">The postdata.</param>
-        private async Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path, string xdata, string postdata)
+        private async Task<JSONRequestEventArgs<T>> requestJsonObjectAsync<T>(string path, string xdata, string postdata, string method = "GET")
         {
             HttpWebRequest streamReq = CreateRequest(path, xdata);
+            streamReq.Method = method;
 
             try
             {
@@ -390,7 +391,7 @@ namespace SparklrLib
                 network = 2,
 #endif
                 img = data64str != ""
-            }, data64str);
+            }, data64str, "POST");
 
             return new SparklrEventArgs()
             {
