@@ -12,7 +12,6 @@ using System.Windows;
 using System.Windows.Navigation;
 
 
-
 namespace SparklrWP
 {
     public partial class LoginPage : PhoneApplicationPage
@@ -80,15 +79,17 @@ namespace SparklrWP
                     string username = "";
                     IsolatedStorageSettings.ApplicationSettings.TryGetValue<string>("username", out username);
                     usernameBox.Text = username;
+
+                    if (IsolatedStorageSettings.ApplicationSettings.Contains("password"))
+                    {
+                        byte[] passbyte = null;
+                        IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out passbyte);
+                        passbyte = ProtectedData.Unprotect(passbyte, null);
+                        passwordBox.Password = Encoding.UTF8.GetString(passbyte, 0, passbyte.Length);
+                        rememberBox.IsChecked = true;
+                    }
                 }
-                if (IsolatedStorageSettings.ApplicationSettings.Contains("password"))
-                {
-                    byte[] passbyte = null;
-                    IsolatedStorageSettings.ApplicationSettings.TryGetValue("password", out passbyte);
-                    passbyte = ProtectedData.Unprotect(passbyte, null);
-                    passwordBox.Password = Encoding.UTF8.GetString(passbyte, 0, passbyte.Length);
-                    rememberBox.IsChecked = true;
-                }
+                CheckLoginButtonEnabled();
             }
         }
 
@@ -179,7 +180,7 @@ namespace SparklrWP
 
         private void checkEnter_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == System.Windows.Input.Key.Enter)
+            if (e.Key == System.Windows.Input.Key.Enter && CheckLoginButtonEnabled())
                 loginButton_Click(sender, null);
         }
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
@@ -202,6 +203,30 @@ namespace SparklrWP
 
 
             }
+        }
+
+        private bool CheckLoginButtonEnabled()
+        {
+            if (string.IsNullOrEmpty(usernameBox.Text) || string.IsNullOrEmpty(passwordBox.Password))
+            {
+                loginButton.IsEnabled = false;
+                return false;
+            }
+            else
+            {
+                loginButton.IsEnabled = true;
+                return true;
+            }
+        }
+
+        private void usernameBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            CheckLoginButtonEnabled();
+        }
+
+        private void passwordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            CheckLoginButtonEnabled();
         }
     }
 
