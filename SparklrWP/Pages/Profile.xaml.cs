@@ -24,7 +24,7 @@ namespace SparklrWP.Pages
             if (e.PropertyName == "BackgroundImage")
             {
                 ImageBrush image = new ImageBrush();
-                image.ImageSource = await Utils.Helpers.LoadImageFromUrlAsync(model.BackgroundImage);
+                image.ImageSource = await Utils.Caching.Image.LoadCachedImageFromUrlAsync(model.BackgroundImage);
                 image.Stretch = Stretch.UniformToFill;
                 image.Opacity = 0;
                 MainPanorama.Background = image;
