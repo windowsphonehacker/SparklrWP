@@ -160,6 +160,17 @@ namespace SparklrWP
             log(LogLevel.debug, e);
         }
 
+
+        /// <summary>
+        /// Log a formatted debug message (replaces Debug.WriteLine() with String.Format())
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        public void log(String format, params string[] args)
+        {
+            Exception e = new Exception(String.Format(format, args));
+            log(LogLevel.debug, e);
+        }
+
         /// <summary>
         /// Log a message with any logging level
         /// </summary>
