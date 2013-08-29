@@ -49,7 +49,7 @@ namespace SparklrWP
                     {
                         MessageBox.Show("Your status has been posted!", "Yay!", MessageBoxButton.OK);
 
-                        NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                        NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
 
                     }
                 }

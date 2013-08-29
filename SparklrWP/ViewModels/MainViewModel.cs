@@ -1,7 +1,8 @@
 using SparklrLib.Objects;
-﻿using SparklrWP.Utils;
+using SparklrWP.Utils;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
@@ -30,6 +31,8 @@ namespace SparklrWP
         public MainViewModel()
         {
             this.Items = new ObservableCollectionWithItemNotification<ItemViewModel>();
+            _friends = new ObservableCollection<FriendViewModel>();
+            GroupedItems = _friends.GroupFriends();
 
             streamUpdater = new Timer(streamUpdater_Tick, null, Timeout.Infinite, Timeout.Infinite);
 
@@ -37,6 +40,7 @@ namespace SparklrWP
             //Warning: Possible issue where a internet conenction is not stable
 
             loadData();
+            loadFriends();
         }
 
         /// <summary>
@@ -73,32 +77,6 @@ namespace SparklrWP
             }
         }
 
-        //private int _newCount = 0;
-        //public int NewCount
-        //{
-        //    get
-        //    {
-        //        return _newCount;
-        //    }
-        //    set
-        //    {
-        //        if (value != _newCount)
-        //        {
-        //            _newCount = value;
-        //            NotifyPropertyChanged("NewCount");
-        //            NotifyPropertyChanged("NewCountVisibility");
-        //        }
-        //    }
-        //}
-
-        //public Visibility NewCountVisibility
-        //{
-        //    get
-        //    {
-        //        return _newCount > 0 ? Visibility.Visible : Visibility.Collapsed;
-        //    }
-        //}
-
         public bool IsDataLoaded
         {
             get;
@@ -125,87 +103,177 @@ namespace SparklrWP
             if (args.IsSuccessful)
             {
                 SparklrLib.Objects.Responses.Beacon.Stream stream = args.Object;
-                if (stream != null && stream.notifications != null)
+
+                if (stream != null && stream.data != null)
                 {
-                    /*foreach (var not in stream.notifications)
+                    if (stream.notifications != null)
                     {
-                        Deployment.Current.Dispatcher.BeginInvoke(() =>
+                        NewCount = stream.notifications.Count;
+
+                        Notifications.Clear();
+                        foreach (SparklrLib.Objects.Responses.Beacon.Notification n in stream.notifications)
                         {
-                            try
+                            Notifications.Add(new NotificationViewModel(n.id)
                             {
-                                if (MessageBox.Show("id: " + not.id + "\naction: " + not.action + "\ntype:" + not.type + "\nbody" + not.body, "Notification test", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                                {
-                                    App.Client.BeginRequest(null, "work/delete/notification/" + not.id);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                MessageBox.Show(ex.StackTrace, ex.Message, MessageBoxButton.OK);
-                            }
-                        });
-                    }*/
-                }
-
-                if (stream == null || stream.data == null)
-                {
-                    GlobalLoading.Instance.IsLoading = false;
-                    streamUpdater.Change(10000, Timeout.Infinite);
-                    return;
-                }
-                int count = stream.data.length;
-
-                List<ItemViewModel> newItems = new List<ItemViewModel>(Items);
-
-                foreach (var t in stream.data.timeline)
-                {
-                    if (LastTime < t.time)
-                    {
-                        LastTime = t.time;
-                    }
-                    if (LastTime < t.modified)
-                    {
-                        LastTime = t.modified;
+                                Message = n.body
+                            });
+                        }
                     }
 
-                    ItemViewModel existingitem = null;
-                    existingitem = (from i in newItems where i.Id == t.id select i).FirstOrDefault();
+                    int count = stream.data.length;
 
-                    if (existingitem == null)
+                    List<ItemViewModel> newItems = new List<ItemViewModel>(Items);
+
+                    foreach (var t in stream.data.timeline)
                     {
-                        ItemViewModel newItem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString(), OrderTime = t.modified > t.time ? t.modified : t.time };
-                        if (!String.IsNullOrEmpty(t.meta))
+                        if (LastTime < t.time)
                         {
-                            newItem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;
+                            LastTime = t.time;
+                        }
+                        if (LastTime < t.modified)
+                        {
+                            LastTime = t.modified;
                         }
 
-                        JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> response = await App.Client.GetUsernamesAsync(new int[] { t.from });
-                        if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
-                            newItem.From = response.Object[0].username;
+                        ItemViewModel existingitem = null;
+                        existingitem = (from i in newItems where i.Id == t.id select i).FirstOrDefault();
 
-                        newItems.Add(newItem);
+                        if (existingitem == null)
+                        {
+                            ItemViewModel newItem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString(), OrderTime = t.modified > t.time ? t.modified : t.time };
+                            if (!String.IsNullOrEmpty(t.meta))
+                            {
+                                newItem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;
+                            }
+
+                            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> response = await App.Client.GetUsernamesAsync(new int[] { t.from });
+                            if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
+                                newItem.From = response.Object[0].username;
+
+                            newItems.Add(newItem);
+                        }
+                        else
+                        {
+                            existingitem.Message = t.message;
+                            existingitem.CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount);
+                            existingitem.From = t.from.ToString();
+                            existingitem.OrderTime = t.modified > t.time ? t.modified : t.time;
+
+                            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> response = await App.Client.GetUsernamesAsync(new int[] { t.from });
+
+                            if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
+                                existingitem.From = response.Object[0].username;
+                        }
                     }
-                    else
-                    {
-                        existingitem.Message = t.message;
-                        existingitem.CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount);
-                        existingitem.From = t.from.ToString();
-                        existingitem.OrderTime = t.modified > t.time ? t.modified : t.time;
+                    newItems.Sort(itemComparison);
+                    newItems.Reverse();
 
-                        JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> response = await App.Client.GetUsernamesAsync(new int[] { t.from });
-
-                        if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
-                            existingitem.From = response.Object[0].username;
-                    }
+                    Items = new ObservableCollectionWithItemNotification<ItemViewModel>(newItems);
+                    this.IsDataLoaded = true;
                 }
-                newItems.Sort(itemComparison);
-                newItems.Reverse();
 
-                Items = new ObservableCollectionWithItemNotification<ItemViewModel>(newItems);
                 GlobalLoading.Instance.IsLoading = false;
-                this.IsDataLoaded = true;
                 streamUpdater.Change(10000, Timeout.Infinite);
                 return;
             }
+        }
+
+        private async void loadFriends()
+        {
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Friends> fargs = await App.Client.GetFriendsAsync();
+
+            if (fargs.IsSuccessful)
+            {
+                List<int> friends = new List<int>();
+
+                foreach (int id in fargs.Object.followers)
+                {
+                    friends.Add(id);
+                }
+
+                foreach (int id in fargs.Object.following)
+                {
+                    if (!friends.Contains(id)) friends.Add(id);
+                }
+
+                JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> uargs = await App.Client.GetUsernamesAsync(friends.ToArray());
+                foreach (int id in friends)
+                {
+                    AddFriend(new FriendViewModel(id)
+                    {
+                        Name = App.Client.Usernames.ContainsKey(id) ? App.Client.Usernames[id] : "User " + id,
+                        Image = "http://d.sparklr.me/i/t" + id + ".jpg"
+                    });
+                }
+            }
+        }
+
+        private ObservableCollection<FriendViewModel> _friends;
+        public ObservableCollection<FriendViewModel> Friends
+        {
+            get
+            {
+                return new ObservableCollection<FriendViewModel>(_friends);
+            }
+        }
+
+        ObservableCollection<GroupedObservableCollection<FriendViewModel>> _groupedItems;
+        public ObservableCollection<GroupedObservableCollection<FriendViewModel>> GroupedItems
+        {
+            get
+            {
+                return _groupedItems;
+            }
+            set
+            {
+                if (_groupedItems != value)
+                {
+                    _groupedItems = value;
+                    NotifyPropertyChanged("GroupedItems");
+                }
+            }
+        }
+
+
+        private int _newCount = 0;
+        public int NewCount
+        {
+            get
+            {
+                return _newCount;
+            }
+            set
+            {
+                if (value != _newCount)
+                {
+                    _newCount = value;
+                    NotifyPropertyChanged("NewCount");
+                }
+            }
+        }
+
+        private ObservableCollection<NotificationViewModel> _notifications = new ObservableCollection<NotificationViewModel>();
+        public ObservableCollection<NotificationViewModel> Notifications
+        {
+            get
+            {
+                return _notifications;
+            }
+            private set
+            {
+                if (_notifications != value)
+                {
+                    _notifications = value;
+                    NotifyPropertyChanged("Notifications");
+                }
+            }
+        }
+
+
+        public void AddFriend(FriendViewModel f)
+        {
+            _friends.Add(f);
+            GroupedItems.AddFriend(f);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

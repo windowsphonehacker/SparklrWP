@@ -18,7 +18,7 @@ namespace SparklrWP
             if (NavigationContext.QueryString.TryGetValue("selectedItem", out selectedIndex))
             {
                 int index = int.Parse(selectedIndex);
-                DataContext = App.PostsViewModel.Items[index];
+                DataContext = App.MainViewModel.Items[index];
             }
         }
 

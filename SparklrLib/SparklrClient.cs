@@ -16,6 +16,11 @@ namespace SparklrLib
     public class SparklrClient
     {
         /// <summary>
+        /// Is raised when the login details are invalid.
+        /// </summary>
+        public event EventHandler CredentialsExpired;
+
+        /// <summary>
         /// Gets or sets the authentication token.
         /// </summary>
         /// <value>
@@ -208,6 +213,11 @@ namespace SparklrLib
             }
             catch (WebException ex)
             {
+                if (((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.Forbidden)
+                {
+                    raiseCredentialsExpired();
+                }
+
                 return new JSONRequestEventArgs<T>()
                 {
                     IsSuccessful = false,
@@ -513,6 +523,12 @@ namespace SparklrLib
         public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserAsync(int userid)
         {
             return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + userid);
+        }
+
+        private void raiseCredentialsExpired()
+        {
+            if (CredentialsExpired != null)
+                CredentialsExpired(this, null);
         }
     }
 }

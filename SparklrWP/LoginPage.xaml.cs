@@ -145,7 +145,7 @@ namespace SparklrWP
                 }
                 else
                 {
-                    NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                    NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
                 }
             }
         }
