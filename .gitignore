@@ -123,3 +123,7 @@ ModelManifest.xml
 
 #Project specific
 aviaryapikey.txt
+
+#Performance analysis files
+PerfLogs/
+*.sap
