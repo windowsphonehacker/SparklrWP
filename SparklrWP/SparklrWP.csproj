@@ -276,8 +276,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Resource Include="Login-Arrow.png" />
-    <Resource Include="Login.PNG" />
-    <Resource Include="Pivoit.PNG" />
   </ItemGroup>
   <ItemGroup>
     <BlendEmbeddedFont Include="Fonts\Courgette-Regular.ttf">
