@@ -58,7 +58,7 @@ namespace SparklrWP.Pages
                 return;
 
             // Navigate to the new page
-            NavigationService.Navigate(new Uri("/DetailsPage.xaml?selectedItem=" + MainListBox.UnderlyingListBox.SelectedIndex, UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/DetailsPage.xaml?selectedItem=" + MainListBox.UnderlyingListBox.SelectedIndex, UriKind.Relative));
 
             // Reset selected index to -1 (no selection)
             MainListBox.UnderlyingListBox.SelectedIndex = -1;

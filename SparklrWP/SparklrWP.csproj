@@ -155,7 +155,7 @@
     <Compile Include="Controls\SparklrText.xaml.cs">
       <DependentUpon>SparklrText.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DetailsPage.xaml.cs">
+    <Compile Include="Pages\DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="FirstRun.xaml.cs">
@@ -196,6 +196,7 @@
     <Compile Include="Utils\StringExtensions.cs" />
     <Compile Include="Utils\Task.cs" />
     <Compile Include="ViewModels\FriendViewModel.cs" />
+    <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\NotificationViewModel.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
@@ -231,7 +232,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="DetailsPage.xaml">
+    <Page Include="Pages\DetailsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -247,6 +248,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <DesignData Include="SampleData\PostViewModelSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
     <Page Include="SampleData\UserProfileViewModelSampleData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

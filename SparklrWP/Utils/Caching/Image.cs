@@ -177,7 +177,12 @@ namespace SparklrWP.Utils.Caching
                         ExtendedImage cachedImage = new ExtendedImage();
                         using (IsolatedStorageFileStream cachedFile = storage.OpenFile(file, FileMode.Open, FileAccess.Read))
                         {
-                            cachedImage.SetSource(cachedFile);
+                            BitmapImage image = new BitmapImage();
+                            image.SetSource(cachedFile);
+
+                            WriteableBitmap tmp = new WriteableBitmap(image);
+                            cachedImage = tmp.ToImage();
+
 #if DEBUG
                             App.logger.log("Loaded image {0} from cached file {1}", url, file);
 #endif

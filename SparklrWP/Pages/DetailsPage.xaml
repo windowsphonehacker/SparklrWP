@@ -7,7 +7,7 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
+	d:DataContext="{d:DesignData ../SampleData/PostViewModelSampleData.xaml}"
 	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696" 
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
 	FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -16,7 +16,7 @@
 	shell:SystemTray.IsVisible="True">
 
     <!--Data context is set to sample data above and first item in sample data collection below and LayoutRoot contains the root grid where all other page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="#FF454050" d:DataContext="{Binding Items[0]}">
+    <Grid x:Name="LayoutRoot" Background="#FF454050">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -25,7 +25,7 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="0,17,0,38">
             <TextBlock x:Name="PageTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-            <TextBlock x:Name="ListTitle" Text="{Binding From}" Margin="0,-6,0,0" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right" Width="217">
+            <TextBlock x:Name="ListTitle" Text="{Binding MainPost.From}" Margin="0,-6,0,0" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right" Width="217">
             	<TextBlock.Projection>
             		<PlaneProjection GlobalOffsetX="-117"/>
             	</TextBlock.Projection>
@@ -34,23 +34,28 @@
 
         <!--ContentPanel contains details text. Place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            
-            <ScrollViewer VerticalAlignment="Top">
-                <ListBox Height="464" VerticalAlignment="Top">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <StackPanel Orientation="Vertical">
-                        <sparklrControls:SparklrText Post="{Binding}" Foreground="White" />
-                    </StackPanel>
-                    
-                </ListBox>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="0">
+                <StackPanel Orientation="Vertical">
+                    <sparklrControls:SparklrText Post="{Binding MainPost}" />
+                    <ListBox ItemsSource="{Binding Comments}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <sparklrControls:SparklrText Text="{Binding Message}" CommentCountVisibility="Collapsed" Username="{Binding From}" UserbarLocation="Top" Margin="0,7" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
             </ScrollViewer>
-        </Grid>
-        <Grid VerticalAlignment="Bottom" Grid.Row="1">
-            <TextBox TextWrapping="Wrap" Text="Comment Here..." VerticalAlignment="Bottom"/>
+            <TextBox Grid.Row="2" TextWrapping="Wrap" Text="Comment Here..." VerticalAlignment="Bottom"/>
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>

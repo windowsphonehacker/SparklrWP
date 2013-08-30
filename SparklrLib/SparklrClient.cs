@@ -405,6 +405,17 @@ namespace SparklrLib
         }
 
         /// <summary>
+        /// Retreives thes post info from the server
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public async Task<JSONRequestEventArgs<Objects.Responses.Work.Post>> GetPostInfo(int id)
+        {
+            JSONRequestEventArgs<Objects.Responses.Work.Post> args = await requestJsonObjectAsync<Objects.Responses.Work.Post>("/work/post/" + id.ToString());
+            return args;
+        }
+
+        /// <summary>
         /// Returns more items from the stream
         /// </summary>
         /// <param name="startTime"></param>

@@ -420,54 +420,62 @@ namespace SparklrWP.Controls
         private void updateText(string value)
         {
             messageContentParagraph.Inlines.Clear();
-            //Split on every hashtag
-            string[] splittedTags = hashTagRegex.Split(value);
 
-            //Iterate over the parts
-            foreach (string s in splittedTags)
+            if (value == "☝")
+            {
+                messageContentParagraph.Inlines.Add(new Run() { Text = "likes this post.", FontStyle = FontStyles.Italic });
+            }
+            else
             {
 
-                if (hashTagRegex.IsMatch(s))
-                {
-                    //If the hashtag regex matches the substring, we only have a hashtag
-                    messageContentParagraph.Inlines.Add(getHighlightedInline(s));
-                }
-                else
-                {
-                    //See if the part contains at least one mention
-                    if (userMentionRegex.IsMatch(s))
-                    {
-                        //split the mentions
-                        string[] usernameParts = userMentionRegex.Split(s);
+                //Split on every hashtag
+                string[] splittedTags = hashTagRegex.Split(value);
 
-                        foreach (string username in usernameParts)
-                        {
-                            if (userMentionRegex.IsMatch(username))
-                                messageContentParagraph.Inlines.Add(getAsInlineUsername(username));
-                            else
-                            {
-                                //Check if we still have urls in here
-                                if (urlRegex.IsMatch(username))
-                                {
-                                    replaceUrls(username);
-                                }
-                                else
-                                    messageContentParagraph.Inlines.Add(getAsInline(username));
-                            }
-                        }
-                    }
-                    else if (urlRegex.IsMatch(s))
+                //Iterate over the parts
+                foreach (string s in splittedTags)
+                {
+
+                    if (hashTagRegex.IsMatch(s))
                     {
-                        replaceUrls(s);
+                        //If the hashtag regex matches the substring, we only have a hashtag
+                        messageContentParagraph.Inlines.Add(getHighlightedInline(s));
                     }
                     else
                     {
-                        //The substring doesn't contain username
-                        messageContentParagraph.Inlines.Add(getAsInline(s));
+                        //See if the part contains at least one mention
+                        if (userMentionRegex.IsMatch(s))
+                        {
+                            //split the mentions
+                            string[] usernameParts = userMentionRegex.Split(s);
+
+                            foreach (string username in usernameParts)
+                            {
+                                if (userMentionRegex.IsMatch(username))
+                                    messageContentParagraph.Inlines.Add(getAsInlineUsername(username));
+                                else
+                                {
+                                    //Check if we still have urls in here
+                                    if (urlRegex.IsMatch(username))
+                                    {
+                                        replaceUrls(username);
+                                    }
+                                    else
+                                        messageContentParagraph.Inlines.Add(getAsInline(username));
+                                }
+                            }
+                        }
+                        else if (urlRegex.IsMatch(s))
+                        {
+                            replaceUrls(s);
+                        }
+                        else
+                        {
+                            //The substring doesn't contain username
+                            messageContentParagraph.Inlines.Add(getAsInline(s));
+                        }
                     }
                 }
             }
-
             this.InvalidateMeasure();
         }
 

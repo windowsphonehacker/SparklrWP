@@ -18,15 +18,13 @@ namespace SparklrWP
             if (NavigationContext.QueryString.TryGetValue("selectedItem", out selectedIndex))
             {
                 int index = int.Parse(selectedIndex);
-                DataContext = App.MainViewModel.Items[index];
+                DataContext = new PostViewModel(App.MainViewModel.Items[index]);
             }
         }
 
         private void HeartClick(object sender, System.Windows.RoutedEventArgs e)
         {
             //Preform Like
-
-
         }
     }
 }

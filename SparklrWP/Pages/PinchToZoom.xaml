@@ -63,7 +63,7 @@
 	</phone:PhoneApplicationPage.Foreground>
 <!--LayoutRoot ist das Stammraster, in dem alle anderen Seiteninhalte platziert werden-->
 	<Grid x:Name="LayoutRoot" Background="Transparent">
-		<Image Grid.Row="0" x:Name="ZoomableImage" Stretch="None"  RenderTransformOrigin="0,0">
+		<Image Grid.Row="0" x:Name="ZoomableImage" Stretch="Uniform"  RenderTransformOrigin="0,0">
 			<toolkit:GestureService.GestureListener>
 				<toolkit:GestureListener PinchStarted="GestureListener_PinchStarted" PinchDelta="GestureListener_PinchDelta" DragDelta="GestureListener_DragDelta" DoubleTap="GestureListener_DoubleTap" />
 			</toolkit:GestureService.GestureListener>
