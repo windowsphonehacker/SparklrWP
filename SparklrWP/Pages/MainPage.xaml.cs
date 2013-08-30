@@ -54,14 +54,14 @@ namespace SparklrWP.Pages
         private void MainListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // If selected index is -1 (no selection) do nothing
-            if (MainListBox.SelectedIndex == -1)
+            if (MainListBox.UnderlyingListBox.SelectedIndex == -1)
                 return;
 
             // Navigate to the new page
-            NavigationService.Navigate(new Uri("/DetailsPage.xaml?selectedItem=" + MainListBox.SelectedIndex, UriKind.Relative));
+            NavigationService.Navigate(new Uri("/DetailsPage.xaml?selectedItem=" + MainListBox.UnderlyingListBox.SelectedIndex, UriKind.Relative));
 
             // Reset selected index to -1 (no selection)
-            MainListBox.SelectedIndex = -1;
+            MainListBox.UnderlyingListBox.SelectedIndex = -1;
         }
 
         // Load data for the ViewModel Items
@@ -119,6 +119,16 @@ namespace SparklrWP.Pages
                 NotificationAppear.Begin();
                 popupVisible = true;
             }
+        }
+
+        private void MainListBox_TopRefresh(object sender, EventArgs e)
+        {
+            App.MainViewModel.Update();
+        }
+
+        private void MainListBox_LoadMore(object sender, EventArgs e)
+        {
+            App.MainViewModel.LoadMore();
         }
     }
 }

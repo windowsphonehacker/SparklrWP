@@ -166,32 +166,48 @@ namespace SparklrWP.Utils.Caching
         /// <returns>A Bitmap with the image</returns>
         public async static Task<ExtendedImage> LoadCachedImageFromUrlAsync(Uri url)
         {
-            using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
+            try
             {
-                string file = Path.Combine(CacheFolder, getCachenameFromUri(url));
-
-                if (cacheContainsUri(url))
+                using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    ExtendedImage cachedImage = new ExtendedImage();
-                    using (IsolatedStorageFileStream cachedFile = storage.OpenFile(file, FileMode.Open, FileAccess.Read))
+                    string file = Path.Combine(CacheFolder, getCachenameFromUri(url));
+
+                    if (cacheContainsUri(url))
                     {
-                        cachedImage.SetSource(cachedFile);
+                        ExtendedImage cachedImage = new ExtendedImage();
+                        using (IsolatedStorageFileStream cachedFile = storage.OpenFile(file, FileMode.Open, FileAccess.Read))
+                        {
+                            cachedImage.SetSource(cachedFile);
 #if DEBUG
-                        App.logger.log("Loaded image {0} from cached file {1}", url, file);
+                            App.logger.log("Loaded image {0} from cached file {1}", url, file);
 #endif
-                        return cachedImage;
+                            return cachedImage;
+                        }
+                    }
+                    else
+                    {
+                        ExtendedImage loadedImage = await Helpers.LoadImageFromUrlAsync(url);
+
+                        //GIF files don't support saving with imagetools
+                        if (!url.ToString().EndsWith("gif", StringComparison.InvariantCultureIgnoreCase))
+                            saveImageToCache(loadedImage, file, storage);
+
+                        return loadedImage;
                     }
                 }
-                else
+            }
+            catch (Exception e)
+            {
+                if (e is IOException)
                 {
-                    ExtendedImage loadedImage = await Helpers.LoadImageFromUrlAsync(url);
-
-                    //GIF files don't support saving with imagetools
-                    if (!url.ToString().EndsWith("gif", StringComparison.InvariantCultureIgnoreCase))
-                        saveImageToCache(loadedImage, file, storage);
-
-                    return loadedImage;
+#if DEBUG
+                    App.logger.log("Error loading from cache: {0}", url);
+#endif
                 }
+#if DEBUG
+                throw;
+#endif
+                return null;
             }
         }
 

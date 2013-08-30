@@ -77,6 +77,11 @@ namespace SparklrWP
             }
         }
 
+        public void Update()
+        {
+            this.loadData(true);
+        }
+
         public bool IsDataLoaded
         {
             get;
@@ -100,6 +105,14 @@ namespace SparklrWP
 
             JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await App.Client.GetBeaconStreamAsync(LastTime);
 
+            await import(args);
+
+            GlobalLoading.Instance.IsLoading = false;
+            streamUpdater.Change(10000, Timeout.Infinite);
+        }
+
+        private async System.Threading.Tasks.Task import(JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args)
+        {
             if (args.IsSuccessful)
             {
                 SparklrLib.Objects.Responses.Beacon.Stream stream = args.Object;
@@ -179,11 +192,21 @@ namespace SparklrWP
                     }
 #endif
                 }
-
-                GlobalLoading.Instance.IsLoading = false;
-                streamUpdater.Change(10000, Timeout.Infinite);
-                return;
             }
+        }
+
+
+        public async void LoadMore()
+        {
+            streamUpdater.Change(Timeout.Infinite, Timeout.Infinite);
+            GlobalLoading.Instance.IsLoading = true;
+
+            //TODO: Implement properly
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> moreItems = await App.Client.GetMoreItems(LastTime);
+            await import(moreItems);
+
+            GlobalLoading.Instance.IsLoading = false;
+            streamUpdater.Change(10000, Timeout.Infinite);
         }
 
         private async void loadFriends()
