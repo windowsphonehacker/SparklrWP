@@ -266,7 +266,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\packages.config" />
-    <None Include="SparklrWP_2013_08_30_13_58_25.sap" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationIcon.png">
