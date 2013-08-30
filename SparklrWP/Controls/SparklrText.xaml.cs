@@ -323,11 +323,15 @@ namespace SparklrWP.Controls
         {
             if (messageImage != null)
             {
+                messageImage.Stop();
+
                 if (messageImage.Source != null & messageImage.Source.Frames != null)
                     messageImage.Source.Frames.Clear();
 
                 messageImage.Source = null;
                 messageImage = null;
+
+                GC.Collect();
             }
         }
 
@@ -351,6 +355,11 @@ namespace SparklrWP.Controls
                     messageImage.Source = loaded;
                     //TODO: image.SetSource(loaded.ToBitmap());
                     refreshVisibility();
+                }
+                else
+                {
+                    loaded = null;
+                    disposeMessageImage();
                 }
             }
             catch (WebException)

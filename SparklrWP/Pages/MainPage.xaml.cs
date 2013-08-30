@@ -36,8 +36,15 @@ namespace SparklrWP.Pages
                 Utils.Caching.Image.CleanImageCache();
             };
 
+            ApplicationBarMenuItem garbageCollect = new ApplicationBarMenuItem("DEBUG: Run GC");
+            garbageCollect.Click += (sender, e) =>
+            {
+                GC.Collect();
+            };
+
             this.ApplicationBar.MenuItems.Add(clearCache);
             this.ApplicationBar.MenuItems.Add(cleanCache);
+            this.ApplicationBar.MenuItems.Add(garbageCollect);
 #endif
             App.BackgroundTask = new Task();
         }
