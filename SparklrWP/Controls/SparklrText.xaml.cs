@@ -1,4 +1,6 @@
-﻿using Microsoft.Phone.Controls;
+﻿extern alias ImageToolsDLL;
+using ImageToolsDLL::ImageTools;
+using Microsoft.Phone.Controls;
 using Microsoft.Xna.Framework.Media;
 using System;
 using System.ComponentModel;
@@ -56,10 +58,10 @@ namespace SparklrWP.Controls
 
         private static void commentCountVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
- 	        SparklrText control = d as SparklrText;
+            SparklrText control = d as SparklrText;
             control.CommentCountVisibility = (Visibility)e.NewValue;
         }
-        
+
         static void userbarLocationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             SparklrText control = d as SparklrText;
@@ -321,12 +323,12 @@ namespace SparklrWP.Controls
             try
             {
                 string oldLink = String.Copy(value);
-                BitmapImage loaded = await Utils.Caching.Image.LoadCachedImageFromUrlAsync(value);
+                ExtendedImage loaded = await Utils.Caching.Image.LoadCachedImageFromUrlAsync(value);
 
                 if (oldLink == this.imagelocation)
                 {
                     MessageImage.Source = loaded;
-                    image = loaded;
+                    //TODO: image.SetSource(loaded.ToBitmap());
                     refreshVisibility();
                 }
             }

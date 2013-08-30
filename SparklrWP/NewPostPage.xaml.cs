@@ -1,4 +1,5 @@
-﻿using AviarySDK;
+﻿extern alias AviarySDKDLL;
+using AviarySDKDLL::AviarySDK;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Tasks;
 using SparklrLib.Objects;

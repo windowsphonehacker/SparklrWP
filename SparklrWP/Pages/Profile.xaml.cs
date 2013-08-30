@@ -1,4 +1,6 @@
-﻿using Microsoft.Phone.Controls;
+﻿extern alias ImageToolsDLL;
+using ImageToolsDLL::ImageTools;
+using Microsoft.Phone.Controls;
 using SparklrLib.Objects;
 using System;
 using System.Windows.Media;
@@ -24,7 +26,7 @@ namespace SparklrWP.Pages
             if (e.PropertyName == "BackgroundImage")
             {
                 ImageBrush image = new ImageBrush();
-                image.ImageSource = await Utils.Caching.Image.LoadCachedImageFromUrlAsync(model.BackgroundImage);
+                image.ImageSource = ImageToolsDLL.ImageTools.ImageExtensions.ToBitmap(await Utils.Caching.Image.LoadCachedImageFromUrlAsync(model.BackgroundImage));
                 image.Stretch = Stretch.UniformToFill;
                 image.Opacity = 0;
                 MainPanorama.Background = image;

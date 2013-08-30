@@ -1,4 +1,6 @@
-﻿using System;
+﻿extern alias ImageToolsDLL;
+using ImageToolsDLL::ImageTools;
+using System;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
@@ -55,6 +57,8 @@ namespace SparklrWP.Utils.Caching
         /// </summary>
         static Image()
         {
+            ImageToolsHelper.InitializeImageTools();
+
             using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
             {
 #if DEBUG
@@ -150,7 +154,7 @@ namespace SparklrWP.Utils.Caching
         /// </summary>
         /// <param name="url">An absolute URI pointing to the image</param>
         /// <returns>A Bitmap with the image</returns>
-        public static Task<BitmapImage> LoadCachedImageFromUrlAsync(String url)
+        public static Task<ExtendedImage> LoadCachedImageFromUrlAsync(String url)
         {
             return LoadCachedImageFromUrlAsync(new Uri(url));
         }
@@ -160,7 +164,7 @@ namespace SparklrWP.Utils.Caching
         /// </summary>
         /// <param name="url">An absolute URI pointing to the image</param>
         /// <returns>A Bitmap with the image</returns>
-        public async static Task<BitmapImage> LoadCachedImageFromUrlAsync(Uri url)
+        public async static Task<ExtendedImage> LoadCachedImageFromUrlAsync(Uri url)
         {
             using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
             {
@@ -168,7 +172,7 @@ namespace SparklrWP.Utils.Caching
 
                 if (cacheContainsUri(url))
                 {
-                    BitmapImage cachedImage = new BitmapImage();
+                    ExtendedImage cachedImage = new ExtendedImage();
                     using (IsolatedStorageFileStream cachedFile = storage.OpenFile(file, FileMode.Open, FileAccess.Read))
                     {
                         cachedImage.SetSource(cachedFile);
@@ -180,20 +184,24 @@ namespace SparklrWP.Utils.Caching
                 }
                 else
                 {
-                    BitmapImage loadedImage = await Helpers.LoadImageFromUrlAsync(url);
-                    saveImageToCache(loadedImage, file, storage);
+                    ExtendedImage loadedImage = await Helpers.LoadImageFromUrlAsync(url);
+
+                    //GIF files don't support saving with imagetools
+                    if (!url.ToString().EndsWith("gif", StringComparison.InvariantCultureIgnoreCase))
+                        saveImageToCache(loadedImage, file, storage);
+
                     return loadedImage;
                 }
             }
         }
 
-        private static void saveImageToCache(BitmapImage image, string filename, IsolatedStorageFile storage)
+        private static void saveImageToCache(ExtendedImage image, string filename, IsolatedStorageFile storage)
         {
             try
             {
                 using (IsolatedStorageFileStream cachedFile = storage.OpenFile(filename, FileMode.Create))
                 {
-                    WriteableBitmap bitmap = new WriteableBitmap(image);
+                    WriteableBitmap bitmap = ImageExtensions.ToBitmap(image);
                     bitmap.SaveJpeg(cachedFile, bitmap.PixelWidth, bitmap.PixelHeight, 0, 80);
 
 #if DEBUG

@@ -44,7 +44,7 @@ namespace SparklrWP.Pages
 
         private async void loadImage(string location)
         {
-            ZoomableImage.Source = await Utils.Helpers.LoadImageFromUrlAsync(location);
+            ZoomableImage.Source = ImageTools.ImageExtensions.ToBitmap(await Utils.Helpers.LoadImageFromUrlAsync(location));
             LoadingFinished.Begin();
         }
 

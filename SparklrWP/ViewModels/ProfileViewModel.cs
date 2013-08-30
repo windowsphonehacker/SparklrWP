@@ -1,4 +1,5 @@
-﻿using System;
+﻿extern alias ImageToolsDLL;
+using System;
 using System.ComponentModel;
 using System.Windows.Media;
 
@@ -117,7 +118,7 @@ namespace SparklrWP
 
         private async void updateProfileImage()
         {
-            ProfileImageSource = await Utils.Caching.Image.LoadCachedImageFromUrlAsync(ProfileImage);
+            ProfileImageSource = ImageToolsDLL.ImageTools.ImageExtensions.ToBitmap(await Utils.Caching.Image.LoadCachedImageFromUrlAsync(ProfileImage));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
