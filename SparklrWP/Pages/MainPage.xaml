@@ -86,7 +86,7 @@
             <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
             <controls:PivotItem x:Name="postsPivot" Header="Posts"  Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
                 <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-                    <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" Margin="-11,0,0,0" >
+                    <ListBox x:Name="MainListBox" ItemsSource="{Binding Items}" SelectionChanged="MainListBox_SelectionChanged" Margin="-11,0,0,0">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel MinWidth="456" MaxWidth="456" Margin="0,0,0,17">

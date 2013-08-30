@@ -1,4 +1,5 @@
 ﻿extern alias ImageToolsDLL;
+using ImageTools.Controls;
 using ImageToolsDLL::ImageTools;
 using Microsoft.Phone.Controls;
 using Microsoft.Xna.Framework.Media;
@@ -129,6 +130,8 @@ namespace SparklrWP.Controls
         private BitmapImage image;
         private Location userbarLocation = Location.Bottom;
         private Visibility commentCountVisibility = Visibility.Visible;
+
+        private AnimatedImage messageImage;
 
         /// <summary>
         /// The location of the userbar
@@ -290,11 +293,9 @@ namespace SparklrWP.Controls
                 if (imagelocation != value)
                 {
                     bool startLoading = false;
-                    if (String.IsNullOrEmpty(value))
-                    {
-                        MessageImage.Source = null;
-                    }
-                    else
+                    disposeMessageImage();
+
+                    if (!String.IsNullOrEmpty(value))
                     {
                         if (value.EndsWith(",[]"))
                             value = value.Replace(",[]", "");
@@ -318,6 +319,25 @@ namespace SparklrWP.Controls
             }
         }
 
+        private void disposeMessageImage()
+        {
+            if (messageImage != null)
+            {
+                if (messageImage.Source != null & messageImage.Source.Frames != null)
+                    messageImage.Source.Frames.Clear();
+
+                messageImage.Source = null;
+                messageImage = null;
+            }
+        }
+
+        private void createMessageImage()
+        {
+            messageImage = new AnimatedImage();
+            messageImage.Stretch = Stretch.UniformToFill;
+            MessageImageContainer.Content = messageImage;
+        }
+
         private async void loadImage(string value)
         {
             try
@@ -327,7 +347,8 @@ namespace SparklrWP.Controls
 
                 if (oldLink == this.imagelocation)
                 {
-                    MessageImage.Source = loaded;
+                    createMessageImage();
+                    messageImage.Source = loaded;
                     //TODO: image.SetSource(loaded.ToBitmap());
                     refreshVisibility();
                 }

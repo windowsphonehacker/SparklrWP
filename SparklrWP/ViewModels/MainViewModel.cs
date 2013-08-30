@@ -171,6 +171,13 @@ namespace SparklrWP
 
                     Items = new ObservableCollectionWithItemNotification<ItemViewModel>(newItems);
                     this.IsDataLoaded = true;
+#if DEBUG
+                    foreach (ItemViewModel i in Items)
+                    {
+                        if (i.ImageUrl != null)
+                            App.logger.log(i.ImageUrl);
+                    }
+#endif
                 }
 
                 GlobalLoading.Instance.IsLoading = false;

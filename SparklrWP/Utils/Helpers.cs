@@ -1,6 +1,7 @@
 ﻿extern alias ImageToolsDLL;
 using ImageToolsDLL::ImageTools;
 using System;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
@@ -26,33 +27,48 @@ namespace SparklrWP.Utils
         {
             WebClient client = new WebClient();
             ExtendedImage image = new ExtendedImage();
+            Stream source = await client.OpenReadTaskAsync(location);
 
             if (location.ToString().EndsWith("gif", StringComparison.InvariantCultureIgnoreCase))
             {
-                image.SetSource(await client.OpenReadTaskAsync(location));
+                image.SetSource(source);
 
                 TaskCompletionSource<ExtendedImage> imageLoaded = new TaskCompletionSource<ExtendedImage>();
 
-                image.LoadingCompleted += (sender, e) =>
-                    {
-                        imageLoaded.SetResult(image);
-                    };
+                EventHandler loadingCompleteHandler = new EventHandler((sender, e) =>
+                {
+                    imageLoaded.SetResult(image);
+                });
 
-                image.LoadingFailed += (sender, e) =>
-                    {
-                        imageLoaded.SetResult(null);
-                    };
+                EventHandler<UnhandledExceptionEventArgs> loadingFailedHandler = new EventHandler<UnhandledExceptionEventArgs>((sender, e) =>
+                {
+                    imageLoaded.SetResult(image);
+#if DEBUG
+                    if (System.Diagnostics.Debugger.IsAttached)
+                        System.Diagnostics.Debugger.Break();
+#endif
+                });
+
+
+
+                image.LoadingCompleted += loadingCompleteHandler;
+                image.LoadingFailed += loadingFailedHandler;
 
                 image = await imageLoaded.Task;
+
+                //Remove handlers, otherwise the object might be kept in the memory
+                image.LoadingCompleted -= loadingCompleteHandler;
+                image.LoadingFailed -= loadingFailedHandler;
             }
             else
             {
                 BitmapImage bmp = new BitmapImage();
-                bmp.SetSource(await client.OpenReadTaskAsync(location));
+                bmp.SetSource(source);
                 WriteableBitmap writeable = new WriteableBitmap(bmp);
                 image = ImageExtensions.ToImage(writeable);
             }
 
+            source.Close();
             return image;
         }
 
