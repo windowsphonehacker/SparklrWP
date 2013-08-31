@@ -23,13 +23,13 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="0,17,0,38">
-            <TextBlock x:Name="PageTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-            <TextBlock x:Name="ListTitle" Text="{Binding MainPost.From}" Margin="0,-6,0,0" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right" Width="217">
-            	<TextBlock.Projection>
-            		<PlaneProjection GlobalOffsetX="-117"/>
-            	</TextBlock.Projection>
-            </TextBlock>
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,12,38">
+            <TextBlock x:Name="PageTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Margin="0,0,12,0"/>
+            <StackPanel Orientation="Horizontal">
+                <Image x:Name="ProfileImage" Width="100" Height="100" Source="{Binding DataContext.ProfileImageSource, ElementName=ProfilePage}"  Stretch="UniformToFill" Opacity="0" />
+                <TextBlock x:Name="ListTitle" Text="{Binding MainPost.From}" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right"/>
+                   
+            </StackPanel>
         </StackPanel>
 
         <!--ContentPanel contains details text. Place additional content here-->
@@ -55,7 +55,7 @@
                     </ListBox>
                 </StackPanel>
             </ScrollViewer>
-            <TextBox Grid.Row="2" TextWrapping="Wrap" Text="Comment Here..." VerticalAlignment="Bottom"/>
+            <TextBox Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>

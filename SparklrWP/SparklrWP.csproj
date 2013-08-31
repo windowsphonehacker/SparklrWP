@@ -155,6 +155,9 @@
     <Compile Include="Controls\SparklrText.xaml.cs">
       <DependentUpon>SparklrText.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
@@ -220,6 +223,10 @@
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Pages\About.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
@@ -283,7 +290,11 @@
     <Content Include="ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\4.jpg" />
     <Content Include="Assets\AppBar\appbar.add.rest.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\AppBar\appbar.favs.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Assets\AppBar\appbar.feature.camera.rest.png">
@@ -295,6 +306,11 @@
     <Content Include="Assets\AppBar\appbar.refresh.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\t163.jpg" />
+    <Content Include="Assets\t18.jpg" />
+    <Content Include="Assets\t19.jpg" />
+    <Content Include="Assets\t427.jpg" />
+    <Content Include="Assets\t591.jpg" />
     <Content Include="Icons\appbar.apply.rest.png" />
     <Content Include="Icons\appbar.cancel.rest.png" />
     <Content Include="Icons\appbar.save.rest.png" />

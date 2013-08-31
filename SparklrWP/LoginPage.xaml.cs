@@ -182,7 +182,7 @@ namespace SparklrWP
 
         private void about_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            MessageBox.Show("Sparklr Branding © Jonathan Warner \n\n Application Development Team: \n\nMarocco2 (design!)\njessenic (code!)\nEaterOfCorpses (code-design!)\nTheInterframe (code-design!)\nChrisk (code-design!)\n\n Big Thanks to Jonathan!", "About Sparklr WP V1.0", MessageBoxButton.OK);
+            NavigationService.Navigate(new Uri("/Pages/About.xaml", UriKind.Relative));
         }
 
         private void checkEnter_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
