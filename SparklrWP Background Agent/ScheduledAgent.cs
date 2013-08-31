@@ -5,8 +5,11 @@ using SparklrLib.Objects;
 using SparklrLib.Objects.Responses.Beacon;
 using System;
 using System.Collections.Generic;
+using System.Windows.Media.Imaging;
 using System.IO.IsolatedStorage;
 using System.Security.Cryptography;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Text;
 using System.Windows;
 namespace SparklrWP_Background_Agent
@@ -70,12 +73,20 @@ namespace SparklrWP_Background_Agent
                         }
                         else
                         {
-                            return "{0} commented: " + not.body;
+                            return "{0} commented " + not.body + ".";
                         }
+                    }
+                    else if(not.type == 2)
+                    {
+                        return "{0} mentioned you.";
+                    }
+                    else if (not.type == 3)
+                    {
+                        return "{0} messaged you.";
                     }
                     else
                     {
-                        return "{0} mentioned you";
+                        return "{0} did something to you.";
                     }
                 };
 
@@ -87,17 +98,17 @@ namespace SparklrWP_Background_Agent
                     {
                         Stream strm = args.Object;
 
+#if DEBUG
                         if (strm.notifications == null)
                             strm.notifications = new List<Notification>();
-#if DEBUG
                         strm.notifications.Add(new Notification()
                        {
                            from = 4,
                            type = 1,
-                           body = "Debug test"
+                           body = "ILY"
                        });
 #endif
-                        if (strm.notifications != null)
+                        if (strm.notifications != null && strm.notifications.Count > 0)
                         {
 
                             List<int> userIds = new List<int>();
@@ -110,28 +121,51 @@ namespace SparklrWP_Background_Agent
                             }
                             JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> unargs = await client.GetUsernamesAsync(userIds.ToArray()); if (unargs.IsSuccessful)
                             {
-                                foreach (Notification not in strm.notifications)
-                                {
-                                    ShellToast notif = new ShellToast();
-                                    notif.Title = "Sparklr*";
-                                    notif.Content = String.Format(textGenerator(not), client.Usernames[not.from]);
-                                    notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
-                                    notif.Show();
-                                }
                                 if (unargs.IsSuccessful)
                                 {
 
                                     foreach (ShellTile til in ShellTile.ActiveTiles)
                                     {
-                                        StandardTileData data = new StandardTileData();
+                                        Mangopollo.Tiles.FlipTileData data = new Mangopollo.Tiles.FlipTileData();
                                         data.Title = "Sparklr*";
-                                        data.BackContent = String.Format(textGenerator(strm.notifications[0]), client.Usernames[strm.notifications[0].from]);
                                         System.Net.WebClient wc = new System.Net.WebClient();
-                                        //wc.D
-                                        //data.BackgroundImage = new Uri("http://d.sparklr.me/i/" + strm.notifications[0].from + ".jpg");
-                                        data.BackTitle = "Sparklr*";
-                                        data.Count = strm.notifications.Count;
-                                        til.Update(data);
+                                        IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication();
+                                        if (storage.FileExists("/Shared/ShellContent/tile.jpg"))
+                                        {
+                                            storage.DeleteFile("/Shared/ShellContent/tile.jpg");
+                                        }
+                                        System.IO.Stream ily = await wc.OpenReadTaskAsync(new Uri("http://d.sparklr.me/i/" + strm.notifications[0].from + ".jpg"));
+                                        await Deployment.Current.Dispatcher.InvokeAsync(() => {
+                                            BitmapImage img = new BitmapImage();
+                                            try{
+
+                                                img.SetSource(ily);
+                                            ily.Dispose();
+
+
+                                            WriteableBitmap f = new WriteableBitmap(336,336);
+                                            Tile l = new Tile();
+                                            l.img.Source = img;
+                                            l.textBlock.Text = Microsoft.Phone.Info.DeviceStatus.ApplicationMemoryUsageLimit + "/" + (Microsoft.Phone.Info.DeviceStatus.ApplicationCurrentMemoryUsage-Microsoft.Phone.Info.DeviceStatus.ApplicationMemoryUsageLimit).ToString();
+                                            l.Measure(new Size(336, 336));
+                                            l.Arrange(new Rect(0, 0, 336, 336));
+                                            f.Render(l, null);
+                                            f.Invalidate();
+                                            using (IsolatedStorageFileStream str = storage.CreateFile("/Shared/ShellContent/tile.jpg"))
+                                            {
+                                                f.SaveJpeg(str, 336, 336, 0, 100);
+                                                str.Close();
+                                            }
+                                            data.Title = "Sparklr*";
+                                            data.BackgroundImage = new Uri("/Background.png", UriKind.Relative);
+                                            data.BackBackgroundImage = new Uri("isostore:/Shared/ShellContent/tile.jpg", UriKind.Absolute);
+                                            til.Update(data);
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                e.ToString();
+                                            }
+                                        });
                                     }
 
                                     foreach (Notification not in strm.notifications)
@@ -139,7 +173,6 @@ namespace SparklrWP_Background_Agent
                                         ShellToast notif = new ShellToast();
                                         notif.Title = "Sparklr*";
                                         notif.Content = String.Format(textGenerator(not), client.Usernames[not.from]);
-                                        notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
                                         notif.Show();
                                     }
                                 }
@@ -150,10 +183,10 @@ namespace SparklrWP_Background_Agent
                                         ShellToast notif = new ShellToast();
                                         notif.Title = "Sparklr*";
                                         notif.Content = String.Format(textGenerator(not), "Someone");
-                                        notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
                                         notif.Show();
                                     }
                                 }
+                                NotifyComplete();
                             }
                             else
                             {
@@ -162,15 +195,26 @@ namespace SparklrWP_Background_Agent
                                     ShellToast notif = new ShellToast();
                                     notif.Title = "Sparklr*";
                                     notif.Content = String.Format(textGenerator(not), "Someone");
-                                    notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
                                     notif.Show();
                                 }
                             }
+                            NotifyComplete();
+                        }
+                        else
+                        {
+                            NotifyComplete();
                         }
                     }
                 }
+                else
+                {
+                    NotifyComplete();
+                }
             }
-            NotifyComplete();
+            else
+            {
+                NotifyComplete();
+            }
         }
     }
 }

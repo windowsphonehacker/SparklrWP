@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="SparklrWP_Background_Agent.Tile"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    Height="336"
+	Width="336">
+    
+    <Grid x:Name="LayoutRoot" Background="Black">
+        <Image x:Name="img" Opacity="0.5" Stretch="UniformToFill"></Image>
+		<TextBlock x:Name="textBlock" Text="jonathan commented ILY." Width="236" Height="236" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="32" TextWrapping="Wrap" Margin="50" />
+    </Grid>
+</UserControl>
