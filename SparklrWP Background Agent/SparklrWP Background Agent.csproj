@@ -21,6 +21,7 @@
     <BackgroundAgentType>ScheduledTaskAgent</BackgroundAgentType>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,7 +45,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mangopollo">
+      <HintPath>..\packages\Mangopollo.1.3\lib\sl4-windowsphone71\Mangopollo.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -66,10 +71,19 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="mscorlib.extensions" />
+    <Reference Include="WriteableBitmapExWinPhone">
+      <HintPath>..\packages\WriteableBitmapEx.1.0.8.0\lib\sl4-wp71\WriteableBitmapExWinPhone.dll</HintPath>
+    </Reference>
+    <Reference Include="WriteableBitmapExWinPhoneXnaDependant">
+      <HintPath>..\packages\WriteableBitmapEx.1.0.8.0\lib\sl4-wp71\WriteableBitmapExWinPhoneXnaDependant.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ScheduledAgent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tile.xaml.cs">
+      <DependentUpon>Tile.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SparklrLib\SparklrLib.csproj">
@@ -79,6 +93,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\iconic.png" />
+    <Content Include="Assets\smalliconic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Tile.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

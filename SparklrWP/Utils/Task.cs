@@ -9,14 +9,10 @@ namespace SparklrWP.Utils
 
         public Task()
         {
-            periodicTask = ScheduledActionService.Find(periodicTaskName) as PeriodicTask;
 #if DEBUG
-            if (periodicTask != null)
-            {
-                ScheduledActionService.Remove(periodicTaskName);
-                periodicTask = null;
-            }
+            ScheduledActionService.Remove(periodicTaskName);
 #endif
+            periodicTask = ScheduledActionService.Find(periodicTaskName) as PeriodicTask;
             if (periodicTask == null)
             {
                 periodicTask = new PeriodicTask(periodicTaskName);
