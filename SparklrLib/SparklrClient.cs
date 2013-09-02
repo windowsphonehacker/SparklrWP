@@ -185,19 +185,23 @@ namespace SparklrLib
             WebException exc;
             try
             {
-                HttpWebResponse streamResp = (HttpWebResponse)await streamReq.GetResponseAsync();
                 T desiredObject = default(T);
-                using(Stream respStr = streamResp.GetResponseStream())
+                using (HttpWebResponse streamResp = (HttpWebResponse)await streamReq.GetResponseAsync())
+                using (Stream respStr = streamResp.GetResponseStream())
                 using (StreamReader strReader = new StreamReader(respStr, Encoding.UTF8))
-                using (JsonReader reader = new JsonTextReader(strReader))
                 {
                     try
                     {
                         JsonSerializer serializer = new JsonSerializer();
-                        desiredObject = serializer.Deserialize<T>(reader);
+                        string response = await strReader.ReadToEndAsync();
+                        desiredObject = JsonConvert.DeserializeObject<T>(response);
                     }
                     catch (Exception ex)
                     {
+#if DEBUG
+                        if (System.Diagnostics.Debugger.IsAttached)
+                            System.Diagnostics.Debugger.Break();
+#endif
                         return new JSONRequestEventArgs<T>()
                         {
                             IsSuccessful = false,
@@ -206,7 +210,7 @@ namespace SparklrLib
                         };
                     }
                 }
-                streamResp.Dispose();
+
                 return new JSONRequestEventArgs<T>()
                 {
                     IsSuccessful = true,
