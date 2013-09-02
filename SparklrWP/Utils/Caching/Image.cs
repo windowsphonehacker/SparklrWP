@@ -150,55 +150,61 @@ namespace SparklrWP.Utils.Caching
         }
 
         /// <summary>
-        /// Loads an image asynchronously. If the image is already cached, it will be loaded from the cache. Otherwise it will be added to the cache
+        /// Loads an image asynchronously. If the image is already cached, it will be loaded from cache.
         /// </summary>
-        /// <param name="url">An absolute URI pointing to the image</param>
-        /// <returns>A Bitmap with the image</returns>
-        public static Task<ExtendedImage> LoadCachedImageFromUrlAsync(String url)
+        /// <typeparam name="T">The type of the image to load. Can be BitmapImage or ExtendedImage</typeparam>
+        /// <param name="url">The location if the image</param>
+        /// <returns></returns>
+        public static Task<object> LoadCachedImageFromUrlAsync<T>(String url)
         {
-            return LoadCachedImageFromUrlAsync(new Uri(url));
+            return LoadCachedImageFromUrlAsync<T>(new Uri(url));
         }
 
         /// <summary>
         /// Loads an image asynchronously. If the image is already cached, it will be loaded from the cache. Otherwise it will be added to the cache
         /// </summary>
         /// <param name="url">An absolute URI pointing to the image</param>
+        /// <typeparam name="T">The type of the image to load. Can be ExtendedImage or BitmapImage</typeparam>
         /// <returns>A Bitmap with the image</returns>
-        public async static Task<ExtendedImage> LoadCachedImageFromUrlAsync(Uri url)
+        public async static Task<object> LoadCachedImageFromUrlAsync<T>(Uri url)
         {
             try
             {
-                using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
+                if (typeof(T) == typeof(ExtendedImage))
                 {
-                    string file = Path.Combine(CacheFolder, getCachenameFromUri(url));
-
-                    if (cacheContainsUri(url))
+                    //We want to load a animated GIF file. These don't support caching so we can load it directly.
+                    return await Utils.Helpers.LoadExtendedImageFromUrlAsync(url);
+                }
+                else if (typeof(T) == typeof(BitmapImage))
+                {
+                    //We are using the Silverlight load methods. These support caching.
+                    using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
                     {
-                        ExtendedImage cachedImage = new ExtendedImage();
-                        using (IsolatedStorageFileStream cachedFile = storage.OpenFile(file, FileMode.Open, FileAccess.Read))
+                        string file = Path.Combine(CacheFolder, getCachenameFromUri(url));
+
+                        if (cacheContainsUri(url))
                         {
-                            BitmapImage image = new BitmapImage();
-                            image.SetSource(cachedFile);
-
-                            WriteableBitmap tmp = new WriteableBitmap(image);
-                            cachedImage = tmp.ToImage();
-
+                            BitmapImage cachedImage = new BitmapImage();
+                            using (IsolatedStorageFileStream cachedFile = storage.OpenFile(file, FileMode.Open, FileAccess.Read))
+                            {
+                                cachedImage.SetSource(cachedFile);
 #if DEBUG
-                            App.logger.log("Loaded image {0} from cached file {1}", url, file);
+                                App.logger.log("Loaded image {0} from cached file {1}", url, file);
 #endif
-                            return cachedImage;
+                                return cachedImage;
+                            }
+                        }
+                        else
+                        {
+                            BitmapImage loadedImage = await Helpers.LoadImageFromUrlAsync(url);
+                            saveImageToCache(loadedImage, file, storage);
+                            return loadedImage;
                         }
                     }
-                    else
-                    {
-                        ExtendedImage loadedImage = await Helpers.LoadImageFromUrlAsync(url);
-
-                        //GIF files don't support saving with imagetools
-                        if (!url.ToString().EndsWith("gif", StringComparison.InvariantCultureIgnoreCase))
-                            saveImageToCache(loadedImage, file, storage);
-
-                        return loadedImage;
-                    }
+                }
+                else
+                {
+                    throw new NotSupportedException("You can only load ExtendedImage and SourceImage.");
                 }
             }
             catch (Exception e)
@@ -216,13 +222,19 @@ namespace SparklrWP.Utils.Caching
             }
         }
 
-        private static void saveImageToCache(ExtendedImage image, string filename, IsolatedStorageFile storage)
+        /// <summary>
+        /// Saves an Image to the cache
+        /// </summary>
+        /// <param name="image">The image to save</param>
+        /// <param name="filename">The filename to save (full relative path)</param>
+        /// <param name="storage">The isolated storage of the application</param>
+        private static void saveImageToCache(BitmapImage image, string filename, IsolatedStorageFile storage)
         {
             try
             {
                 using (IsolatedStorageFileStream cachedFile = storage.OpenFile(filename, FileMode.Create))
                 {
-                    WriteableBitmap bitmap = ImageExtensions.ToBitmap(image);
+                    WriteableBitmap bitmap = new WriteableBitmap(image);
                     bitmap.SaveJpeg(cachedFile, bitmap.PixelWidth, bitmap.PixelHeight, 0, 80);
 
 #if DEBUG
@@ -237,6 +249,7 @@ namespace SparklrWP.Utils.Caching
 #endif
             }
         }
+
 
         /// <summary>
         /// Checks if the image exists in the cache

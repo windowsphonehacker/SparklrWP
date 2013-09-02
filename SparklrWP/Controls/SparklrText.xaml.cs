@@ -1,6 +1,4 @@
 ﻿extern alias ImageToolsDLL;
-using ImageTools.Controls;
-using ImageToolsDLL::ImageTools;
 using Microsoft.Phone.Controls;
 using Microsoft.Xna.Framework.Media;
 using System;
@@ -127,11 +125,8 @@ namespace SparklrWP.Controls
         private string imagelocation;
         private int? comments;
         private ItemViewModel post;
-        private BitmapImage image;
         private Location userbarLocation = Location.Bottom;
         private Visibility commentCountVisibility = Visibility.Visible;
-
-        private AnimatedImage messageImage;
 
         /// <summary>
         /// The location of the userbar
@@ -292,21 +287,14 @@ namespace SparklrWP.Controls
             {
                 if (imagelocation != value)
                 {
-                    bool startLoading = false;
-                    disposeMessageImage();
-
                     if (!String.IsNullOrEmpty(value))
                     {
                         if (value.EndsWith(",[]"))
                             value = value.Replace(",[]", "");
-
-                        startLoading = true;
                     }
 
+                    postImage.ImageSource = value;
                     imagelocation = value;
-
-                    if (startLoading)
-                        loadImage(value);
                 }
             }
         }
@@ -316,58 +304,6 @@ namespace SparklrWP.Controls
             get
             {
                 return String.IsNullOrEmpty(this.text) ? Visibility.Collapsed : Visibility.Visible;
-            }
-        }
-
-        private void disposeMessageImage()
-        {
-            if (messageImage != null)
-            {
-                messageImage.Stop();
-
-                if (messageImage.Source != null & messageImage.Source.Frames != null)
-                    messageImage.Source.Frames.Clear();
-
-                messageImage.Source = null;
-                messageImage = null;
-
-                GC.Collect();
-            }
-        }
-
-        private void createMessageImage()
-        {
-            messageImage = new AnimatedImage();
-            messageImage.Stretch = Stretch.UniformToFill;
-            MessageImageContainer.Content = messageImage;
-        }
-
-        private async void loadImage(string value)
-        {
-            try
-            {
-                string oldLink = String.Copy(value);
-                ExtendedImage loaded = await Utils.Caching.Image.LoadCachedImageFromUrlAsync(value);
-
-                if (oldLink == this.imagelocation)
-                {
-                    createMessageImage();
-                    messageImage.Source = loaded;
-                    //TODO: image.SetSource(loaded.ToBitmap());
-                    refreshVisibility();
-                }
-                else
-                {
-                    loaded = null;
-                    disposeMessageImage();
-                }
-            }
-            catch (WebException)
-            {
-#if DEBUG
-                if (System.Diagnostics.Debugger.IsAttached)
-                    System.Diagnostics.Debugger.Break();
-#endif
             }
         }
 
@@ -400,6 +336,12 @@ namespace SparklrWP.Controls
         {
             InitializeComponent();
             this.LayoutRoot.DataContext = this;
+            postImage.ImageUpdated += postImage_ImageUpdated;
+        }
+
+        void postImage_ImageUpdated(object sender, EventArgs e)
+        {
+            refreshVisibility();
         }
 
         /// <summary>
@@ -410,6 +352,7 @@ namespace SparklrWP.Controls
             userbar.Visibility = UserbarVisibility;
             ImageContainer.Visibility = ImageVisibility;
             messageContentContainer.Visibility = TextVisibility;
+            SaveImageMenuEntry.IsEnabled = postImage.CurrentImageMode == ExtendedImageMode.StaticImage;
             this.InvalidateMeasure();
         }
 
@@ -615,12 +558,11 @@ namespace SparklrWP.Controls
         //TODO: extract to Util namespace
         private void SaveImageToPhone_Click(object sender, RoutedEventArgs e)
         {
-            if (image != null)
+            if (postImage.Image != null)
             {
                 try
                 {
                     string filename = String.Format("{0}", Guid.NewGuid().ToString("N"));
-                    WriteableBitmap bmp = new WriteableBitmap(image);
 
                     if (ImageLocation.StartsWith("http://d.sparklr.me/i/t", StringComparison.InvariantCultureIgnoreCase))
                     {
@@ -643,6 +585,8 @@ namespace SparklrWP.Controls
                     }
                     else
                     {
+                        WriteableBitmap bmp = new WriteableBitmap(postImage.Image);
+
                         using (MemoryStream ms = new MemoryStream())
                         {
                             bmp.SaveJpeg(ms, bmp.PixelWidth, bmp.PixelHeight, 0, 85);

@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace SparklrWP
 {
@@ -118,7 +119,7 @@ namespace SparklrWP
 
         private async void updateProfileImage()
         {
-            ProfileImageSource = ImageToolsDLL.ImageTools.ImageExtensions.ToBitmap(await Utils.Caching.Image.LoadCachedImageFromUrlAsync(ProfileImage));
+            ProfileImageSource = (BitmapImage)await Utils.Caching.Image.LoadCachedImageFromUrlAsync<BitmapImage>(ProfileImage);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -19,11 +19,11 @@ namespace SparklrWP.Utils
         }
 
         /// <summary>
-        /// Loads an image from an Url asynchronously
+        /// Loads an extended image from an Url asynchronously
         /// </summary>
         /// <param name="location">The location of the image</param>
         /// <returns>A BitmapImage, that can be set as a source</returns>
-        public static async Task<ExtendedImage> LoadImageFromUrlAsync(Uri location)
+        public static async Task<ExtendedImage> LoadExtendedImageFromUrlAsync(Uri location)
         {
             WebClient client = new WebClient();
             ExtendedImage image = new ExtendedImage();
@@ -73,13 +73,37 @@ namespace SparklrWP.Utils
         }
 
         /// <summary>
+        /// Loads an extended image from an Url asynchronously
+        /// </summary>
+        /// <param name="location">The location of the image</param>
+        /// <returns>A BitmapImage, that can be set as a source</returns>
+        public static Task<ExtendedImage> LoadExtendedImageFromUrlAsync(string location)
+        {
+            return LoadExtendedImageFromUrlAsync(new Uri(location));
+        }
+
+        /// <summary>
         /// Loads an image from an Url asynchronously
         /// </summary>
         /// <param name="location">The location of the image</param>
         /// <returns>A BitmapImage, that can be set as a source</returns>
-        public static Task<ExtendedImage> LoadImageFromUrlAsync(string location)
+        public static async Task<BitmapImage> LoadImageFromUrlAsync(Uri location)
+        {
+            WebClient client = new WebClient();
+            BitmapImage image = new BitmapImage();
+            image.SetSource(await client.OpenReadTaskAsync(location));
+            return image;
+        }
+
+        /// <summary>
+        /// Loads an image from an Url asynchronously
+        /// </summary>
+        /// <param name="location">The location of the image</param>
+        /// <returns>A BitmapImage, that can be set as a source</returns>
+        public static Task<BitmapImage> LoadImageFromUrlAsync(string location)
         {
             return LoadImageFromUrlAsync(new Uri(location));
         }
+
     }
 }

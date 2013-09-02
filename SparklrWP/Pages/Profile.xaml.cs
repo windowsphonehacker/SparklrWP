@@ -5,6 +5,7 @@ using SparklrLib.Objects;
 using System;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 
 namespace SparklrWP.Pages
@@ -26,7 +27,7 @@ namespace SparklrWP.Pages
             if (e.PropertyName == "BackgroundImage")
             {
                 ImageBrush image = new ImageBrush();
-                image.ImageSource = ImageToolsDLL.ImageTools.ImageExtensions.ToBitmap(await Utils.Caching.Image.LoadCachedImageFromUrlAsync(model.BackgroundImage));
+                image.ImageSource = (BitmapImage)await Utils.Caching.Image.LoadCachedImageFromUrlAsync<BitmapImage>(model.BackgroundImage);
                 image.Stretch = Stretch.UniformToFill;
                 image.Opacity = 0;
                 MainPanorama.Background = image;
