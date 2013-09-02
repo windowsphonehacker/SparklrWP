@@ -95,9 +95,11 @@ namespace SparklrWP
 
         private async void loginButton_Click(object sender, RoutedEventArgs e)
         {
+            loadingOverlay.StartLoading();
             GlobalLoading.Instance.IsLoading = true;
             LoginEventArgs loginargs = await App.Client.LoginAsync(usernameBox.Text, passwordBox.Password);
 
+            loadingOverlay.FinishLoading();
             GlobalLoading.Instance.IsLoading = false;
             if (!loginargs.IsSuccessful)
             {

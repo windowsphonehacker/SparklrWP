@@ -155,6 +155,9 @@
     <Compile Include="Controls\ExtendedListBox.xaml.cs">
       <DependentUpon>ExtendedListBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\LoadingOverlay.xaml.cs">
+      <DependentUpon>LoadingOverlay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SparklrText.xaml.cs">
       <DependentUpon>SparklrText.xaml</DependentUpon>
     </Compile>
@@ -219,6 +222,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ExtendedListBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\LoadingOverlay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
