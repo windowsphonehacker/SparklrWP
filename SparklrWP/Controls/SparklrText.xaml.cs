@@ -54,6 +54,16 @@ namespace SparklrWP.Controls
         /// </summary>
         public static readonly DependencyProperty CommentCountVisibilityProperty = DependencyProperty.Register("CommentCountVisibility", typeof(Visibility), typeof(object), new PropertyMetadata(commentCountVisibilityChanged));
 
+        /// <summary>
+        /// Specifies if the element can be deleted by the used
+        /// </summary>
+        public static readonly DependencyProperty IsDeletableProperty = DependencyProperty.Register("IsDeletable", typeof(bool), typeof(object), new PropertyMetadata(isDeletableChanged));
+
+        private static void isDeletableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            SparklrText control = d as SparklrText;
+            control.IsDeletable = (bool)e.NewValue;
+        }
 
         private static void commentCountVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -120,9 +130,12 @@ namespace SparklrWP.Controls
         private SolidColorBrush accentColor = GetColorFromHex("FF454050");
         private SolidColorBrush accentBackgroundColor = new SolidColorBrush(Colors.White);
 
+        public event EventHandler Delete;
+
         private string text;
         private string username;
         private string imagelocation;
+        private bool isDeletable;
         private int? comments;
         private ItemViewModel post;
         private Location userbarLocation = Location.Bottom;
@@ -206,6 +219,22 @@ namespace SparklrWP.Controls
                 {
                     text = value;
                     updateText(value);
+                    refreshVisibility();
+                }
+            }
+        }
+
+        public bool IsDeletable
+        {
+            get
+            {
+                return isDeletable;
+            }
+            set
+            {
+                if (isDeletable != value)
+                {
+                    isDeletable = value;
                     refreshVisibility();
                 }
             }
@@ -353,6 +382,8 @@ namespace SparklrWP.Controls
             ImageContainer.Visibility = ImageVisibility;
             messageContentContainer.Visibility = TextVisibility;
             SaveImageMenuEntry.IsEnabled = postImage.CurrentImageMode == ExtendedImageMode.StaticImage;
+            PostContextMenu.Visibility = IsDeletable ? Visibility.Visible : Visibility.Collapsed;
+            PostContextMenu.IsEnabled = IsDeletable;
             this.InvalidateMeasure();
         }
 
@@ -618,6 +649,17 @@ namespace SparklrWP.Controls
             location = HttpUtility.UrlEncode(location);
 
             (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(String.Format("/Pages/PinchToZoom.xaml?image={0}", location), UriKind.Relative));
+        }
+
+        private void DeletePost_Click(object sender, RoutedEventArgs e)
+        {
+            if (Delete != null)
+                Delete(this, null);
+        }
+
+        private void messageContentContainer_Hold(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            e.Handled = !IsDeletable;
         }
     }
 }

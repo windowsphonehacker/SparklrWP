@@ -34,9 +34,14 @@
                     </toolkit:ContextMenu>
                 </toolkit:ContextMenuService.ContextMenu>
             </Grid>
-        <RichTextBox Grid.Row="1" Background="White" Foreground="Black" Padding="5,7,5,2" x:Name="messageContentContainer">
+        <RichTextBox Grid.Row="1" Background="White" Foreground="Black" Padding="5,7,5,2" x:Name="messageContentContainer" Hold="messageContentContainer_Hold">
             <Paragraph FontSize="26" x:Name="messageContentParagraph">
             </Paragraph>
+            <toolkit:ContextMenuService.ContextMenu>
+                <toolkit:ContextMenu x:Name="PostContextMenu">
+                    <toolkit:MenuItem Header="Delete" x:Name="DeletePost" Click="DeletePost_Click" />
+                </toolkit:ContextMenu>
+            </toolkit:ContextMenuService.ContextMenu>
         </RichTextBox>
         <Grid Grid.Row="2" Margin="12,0" Background="#FF2A2339" x:Name="userbar" Visibility="Collapsed">
             <Grid.ColumnDefinitions>

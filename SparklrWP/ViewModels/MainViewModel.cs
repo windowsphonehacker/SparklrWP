@@ -50,7 +50,10 @@ namespace SparklrWP
         void streamUpdater_Tick(object state)
         {
             //The streamUpdater is stopped in loadData to prevent multiple requests
-            loadData();
+            System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                loadData();
+            });
         }
 
         private ObservableCollectionWithItemNotification<ItemViewModel> _items;
@@ -154,7 +157,7 @@ namespace SparklrWP
 
                         if (existingitem == null)
                         {
-                            ItemViewModel newItem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString(), OrderTime = t.modified > t.time ? t.modified : t.time };
+                            ItemViewModel newItem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString(), AuthorId = t.from, OrderTime = t.modified > t.time ? t.modified : t.time };
                             if (!String.IsNullOrEmpty(t.meta))
                             {
                                 newItem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;

@@ -49,19 +49,19 @@
                         </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <sparklrControls:SparklrText Text="{Binding Message}" CommentCountVisibility="Collapsed" Username="{Binding From}" UserbarLocation="Top" Margin="0,7" />
+                                <sparklrControls:SparklrText Text="{Binding Message}" CommentCountVisibility="Collapsed" Username="{Binding From}" IsDeletable="{Binding Deletable}" Delete="SparklrText_Delete" UserbarLocation="Top" Margin="0,7" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </StackPanel>
             </ScrollViewer>
-            <TextBox Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Bottom"/>
+            <TextBox Grid.Row="2" x:Name="CommentTextbox" TextWrapping="Wrap" VerticalAlignment="Bottom" KeyDown="CommentTextBox_KeyDown" />
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="#FF2A2339">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New reply (no functional)"/>
-			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.heart.png" Text="Like (no functional)"/>
+			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.heart.png" Text="Like" Click="HeartClick" />
 			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.refresh.rest.png" Text="Repost (no functional)"/>
             <shell:ApplicationBar.MenuItems>
             </shell:ApplicationBar.MenuItems>

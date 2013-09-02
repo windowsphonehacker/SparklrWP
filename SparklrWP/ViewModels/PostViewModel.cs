@@ -9,6 +9,8 @@ namespace SparklrWP
     public class PostViewModel : INotifyPropertyChanged
     {
         public int Id { get; private set; }
+        public bool Liked { get; private set; }
+        public int LikeID { get; private set; }
 
         public PostViewModel(ItemViewModel post)
         {
@@ -96,6 +98,10 @@ namespace SparklrWP
         {
             GlobalLoading.Instance.IsLoading = true;
 
+            comments.Clear();
+            LikeID = -1;
+            Liked = false;
+
             JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Post> post = await App.Client.GetPostInfo(this.Id);
 
             if (post != null && post.IsSuccessful && post.Object.comments != null)
@@ -104,6 +110,12 @@ namespace SparklrWP
                 {
                     if (c != null)
                     {
+                        if (c.message == SparklrLib.SparklrClient.LikesEscape && c.from == App.Client.UserId)
+                        {
+                            Liked = true;
+                            LikeID = c.id;
+                        }
+
                         string from = c.from.ToString();
 
                         JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> response = await App.Client.GetUsernamesAsync(new int[] { c.from });
@@ -114,13 +126,19 @@ namespace SparklrWP
                         comments.Add(new ItemViewModel(c.id)
                             {
                                 Message = c.message,
-                                From = from
+                                From = from,
+                                Deletable = App.Client.UserId == c.from
                             });
                     }
                 }
             }
 
             GlobalLoading.Instance.IsLoading = false;
+        }
+
+        public void RefreshComments()
+        {
+            loadComments();
         }
     }
 }

@@ -15,6 +15,8 @@ namespace SparklrLib
     /// </summary>
     public class SparklrClient
     {
+        public const string LikesEscape = "☝";
+
         /// <summary>
         /// Is raised when the login details are invalid.
         /// </summary>
@@ -160,7 +162,7 @@ namespace SparklrLib
 
             try
             {
-                if (postdata != "")
+                if (!String.IsNullOrEmpty(postdata))
                 {
                     streamReq.Method = "POST";
                     using (Stream postStream = await streamReq.GetRequestStreamAsync())
@@ -586,9 +588,34 @@ namespace SparklrLib
         {
             return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + username);
         }
+
         public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserAsync(int userid)
         {
             return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + userid);
+        }
+
+        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> PostCommentAsync(int authorid, int postid, string comment)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/comment", new Objects.Requests.Work.Comment()
+            {
+                to = authorid,
+                id = postid,
+                comment = comment
+            }, null, "POST");
+        }
+
+        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> LikePostAsync(int authorid, int postid)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/like", new Objects.Requests.Work.Like()
+            {
+                to = authorid,
+                id = postid
+            }, null, "POST");
+        }
+
+        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> DeleteCommentAsync(int commentid)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/delete/comment/" + commentid.ToString());
         }
 
         private void raiseCredentialsExpired()

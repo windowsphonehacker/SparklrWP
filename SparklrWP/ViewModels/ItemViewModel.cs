@@ -7,6 +7,7 @@ namespace SparklrWP
     {
         public int Id { get; private set; }
         public int OrderTime { get; set; }
+        public int AuthorId { get; set; }
 
         public ItemViewModel(int Id)
         {
@@ -65,6 +66,23 @@ namespace SparklrWP
                 {
                     _commentCount = value;
                     NotifyPropertyChanged("CommentCount");
+                }
+            }
+        }
+
+        private bool _deletable;
+        public bool Deletable
+        {
+            get
+            {
+                return _deletable;
+            }
+            set
+            {
+                if (value != _deletable)
+                {
+                    _deletable = value;
+                    NotifyPropertyChanged("Deletable");
                 }
             }
         }
