@@ -685,10 +685,7 @@ namespace SparklrWP.Controls
                                 library.SavePicture(filename, ms);
                             }
 
-                            ToastPrompt p = new ToastPrompt();
-                            p.Title = "Yay!";
-                            p.Message = "We downloaded the image. You can now view it in the Image hub.";
-                            p.Show();
+                            Helpers.Notify("Yay!", "We've downloaded the image. You can now view it in the Image hub.");
                         }
                     }
                 }

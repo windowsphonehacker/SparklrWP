@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Controls;
+using SparklrWP.Utils;
 using System.Windows;
 using System.Windows.Navigation;
 
@@ -108,10 +109,7 @@ namespace SparklrWP
                 SparklrLib.Objects.JSONRequestEventArgs<SparklrLib.Objects.Responses.Generic> response = await App.Client.Repost(p.MainPost.Id, e.Result ?? "");
                 if (response.IsSuccessful)
                 {
-                    Coding4Fun.Toolkit.Controls.ToastPrompt n = new Coding4Fun.Toolkit.Controls.ToastPrompt();
-                    n.Title = "Success!";
-                    n.Message = "We reposted the post!";
-                    n.Show();
+                    Helpers.Notify("Success!", "The post has been reposted.");
                 }
                 else
                 {
