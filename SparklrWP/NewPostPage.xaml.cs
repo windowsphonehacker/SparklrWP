@@ -17,6 +17,7 @@ namespace SparklrWP
     {
         readonly PhotoChooserTask _photoChooserTask;
         Stream _photoStr;
+
         public NewPostPage()
         {
             InitializeComponent();
@@ -28,7 +29,7 @@ namespace SparklrWP
         {
             if (messageBox.Text == "" && _photoStr == null)
             {
-                MessageBox.Show("You need to say something! You can't post an empty message!", "Sorry", MessageBoxButton.OK);
+                Utils.Helpers.Notify("You need to say something! You can't post an empty message!");
             }
             else
             {
@@ -48,10 +49,8 @@ namespace SparklrWP
                     }
                     else
                     {
-                        MessageBox.Show("Your status has been posted!", "Yay!", MessageBoxButton.OK);
-
+                        Utils.Helpers.Notify("Yay!", "Your status has been posted!");
                         NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
-
                     }
                 }
 

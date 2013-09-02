@@ -618,6 +618,16 @@ namespace SparklrLib
             return requestJsonObjectAsync<Objects.Responses.Generic>("/work/delete/comment/" + commentid.ToString());
         }
 
+        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> Repost(int postid)
+        {
+            return Repost(postid, "");
+        }
+
+        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> Repost(int postid, string reply)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/repost", new Objects.Requests.Work.Repost(postid, reply), null, "POST");
+        }
+
         private void raiseCredentialsExpired()
         {
             //Fire only once

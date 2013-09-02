@@ -1,11 +1,16 @@
 ﻿extern alias ImageToolsDLL;
+using Coding4Fun.Toolkit.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Xna.Framework.Media;
+using SparklrLib.Objects;
+using SparklrLib.Objects.Responses.Work;
+using SparklrWP.Utils;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -117,6 +122,11 @@ namespace SparklrWP.Controls
         /// Matches usernames like @test and @123
         /// </summary>
         private static Regex userMentionRegex = new Regex(@"(@[\w\b]*)", RegexOptions.Compiled);
+
+        /// <summary>
+        /// Matches the user id from "[1] Repost"
+        /// </summary>
+        private static Regex repostRegex = new Regex(@"^\[(\d+)\]", RegexOptions.Compiled);
 
         /// <summary>
         /// A regex that matches any url and captures the destination without the http(s)://
@@ -391,7 +401,7 @@ namespace SparklrWP.Controls
         /// Rebuilts and rehighlights the post
         /// </summary>
         /// <param name="value">The post content</param>
-        private void updateText(string value)
+        private async void updateText(string value)
         {
             messageContentParagraph.Inlines.Clear();
 
@@ -401,56 +411,102 @@ namespace SparklrWP.Controls
             }
             else
             {
+                string[] lines = value.Split(new String[] { "\r\n", "\n" }, StringSplitOptions.None);
 
-                //Split on every hashtag
-                string[] splittedTags = hashTagRegex.Split(value);
-
-                //Iterate over the parts
-                foreach (string s in splittedTags)
+                for (int i = 0; i < lines.Length; i++)
                 {
-
-                    if (hashTagRegex.IsMatch(s))
+                    if (repostRegex.IsMatch(lines[i]))
                     {
-                        //If the hashtag regex matches the substring, we only have a hashtag
-                        messageContentParagraph.Inlines.Add(getHighlightedInline(s));
+                        Match firstMatch = repostRegex.Match(lines[i]);
+                        int userId = Convert.ToInt32(firstMatch.Groups[1].Value);
+                        lines[i] = lines[i].Replace(String.Format("[{0}] ", userId), "");
+                        messageContentParagraph.Inlines.Add(await getRepostAsInline(userId));
                     }
-                    else
-                    {
-                        //See if the part contains at least one mention
-                        if (userMentionRegex.IsMatch(s))
-                        {
-                            //split the mentions
-                            string[] usernameParts = userMentionRegex.Split(s);
 
-                            foreach (string username in usernameParts)
-                            {
-                                if (userMentionRegex.IsMatch(username))
-                                    messageContentParagraph.Inlines.Add(getAsInlineUsername(username));
-                                else
-                                {
-                                    //Check if we still have urls in here
-                                    if (urlRegex.IsMatch(username))
-                                    {
-                                        replaceUrls(username);
-                                    }
-                                    else
-                                        messageContentParagraph.Inlines.Add(getAsInline(username));
-                                }
-                            }
-                        }
-                        else if (urlRegex.IsMatch(s))
+                    //Split on every hashtag
+                    string[] splittedTags = hashTagRegex.Split(lines[i]);
+
+                    //Iterate over the parts
+                    foreach (string s in splittedTags)
+                    {
+
+                        if (hashTagRegex.IsMatch(s))
                         {
-                            replaceUrls(s);
+                            //If the hashtag regex matches the substring, we only have a hashtag
+                            messageContentParagraph.Inlines.Add(getHighlightedInline(s));
                         }
                         else
                         {
-                            //The substring doesn't contain username
-                            messageContentParagraph.Inlines.Add(getAsInline(s));
+                            //See if the part contains at least one mention
+                            if (userMentionRegex.IsMatch(s))
+                            {
+                                //split the mentions
+                                string[] usernameParts = userMentionRegex.Split(s);
+
+                                foreach (string username in usernameParts)
+                                {
+                                    if (userMentionRegex.IsMatch(username))
+                                        messageContentParagraph.Inlines.Add(getAsInlineUsername(username));
+                                    else
+                                    {
+                                        //Check if we still have urls in here
+                                        if (urlRegex.IsMatch(username))
+                                        {
+                                            replaceUrls(username);
+                                        }
+                                        else
+                                            messageContentParagraph.Inlines.Add(getAsInline(username));
+                                    }
+                                }
+                            }
+                            else if (urlRegex.IsMatch(s))
+                            {
+                                replaceUrls(s);
+                            }
+                            else
+                            {
+                                //The substring doesn't contain username
+                                messageContentParagraph.Inlines.Add(getAsInline(s));
+                            }
                         }
+                    }
+
+                    if ((i + 1) < lines.Length)
+                    {
+                        messageContentParagraph.Inlines.Add(new LineBreak());
+                        messageContentParagraph.Inlines.Add(new LineBreak());
                     }
                 }
             }
             this.InvalidateMeasure();
+        }
+
+        private async Task<Inline> getRepostAsInline(int userId)
+        {
+            Span s = new Span();
+            Image author = new Image();
+            author.Source = (BitmapImage)await Utils.Caching.Image.LoadCachedImageFromUrlAsync<BitmapImage>(String.Format("http://d.sparklr.me/i/t{0}.jpg", userId));
+            author.Stretch = Stretch.UniformToFill;
+            author.Width = 28;
+            author.Height = 28;
+            InlineUIContainer container = new InlineUIContainer();
+            container.Child = author;
+
+            s.Inlines.Add(container);
+            s.Inlines.Add(" ");
+
+            JSONRequestEventArgs<Username[]> usernames = await App.Client.GetUsernamesAsync(new int[] { userId });
+
+            if (usernames.IsSuccessful && usernames.Object.Length > 0)
+            {
+                s.Inlines.Add(getAsInlineUsername(usernames.Object[0].username));
+            }
+            else
+            {
+                s.Inlines.Add(getAsInlineUsername(userId.ToString()));
+            }
+            s.Inlines.Add(": ");
+            return s;
         }
 
 
@@ -607,12 +663,12 @@ namespace SparklrWP.Controls
                                 {
                                     library.SavePicture(filename, dE.Result);
                                 }
-                                MessageBox.Show("Hooray! We downloaded the image. You can now admire it via the Image hub.");
+                                Helpers.Notify("Hooray!", "We've downloaded the image. You can now view it in the Image hub.");
                             };
 
                         downloader.OpenReadAsync(new Uri(location));
 
-                        MessageBox.Show("We are now downloading the image in the beackground. We will tell you when everything is ready!");
+                        Helpers.Notify("Soon...", "...we will finish the download of your image. Stay tuned!");
                     }
                     else
                     {
@@ -629,7 +685,10 @@ namespace SparklrWP.Controls
                                 library.SavePicture(filename, ms);
                             }
 
-                            MessageBox.Show("Yay! We saved the image to your gallery. You can now admire it everytime you want!");
+                            ToastPrompt p = new ToastPrompt();
+                            p.Title = "Yay!";
+                            p.Message = "We downloaded the image. You can now view it in the Image hub.";
+                            p.Show();
                         }
                     }
                 }

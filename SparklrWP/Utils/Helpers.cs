@@ -1,4 +1,5 @@
 ﻿extern alias ImageToolsDLL;
+using Coding4Fun.Toolkit.Controls;
 using ImageToolsDLL::ImageTools;
 using System;
 using System.IO;
@@ -103,6 +104,30 @@ namespace SparklrWP.Utils
         public static Task<BitmapImage> LoadImageFromUrlAsync(string location)
         {
             return LoadImageFromUrlAsync(new Uri(location));
+        }
+
+        /// <summary>
+        /// Displays a non intrusive toast notification
+        /// </summary>
+        /// <param name="text">The text to display</param>
+        public static void Notify(string text)
+        {
+            ToastPrompt p = new ToastPrompt();
+            p.Message = text;
+            p.Show();
+        }
+
+        /// <summary>
+        /// Displays a non intrusive toast notification
+        /// </summary>
+        /// <param name="text">The text to display</param>
+        /// <param name="caption">The title of the message</param>
+        public static void Notify(string caption, string text)
+        {
+            ToastPrompt p = new ToastPrompt();
+            p.Message = text;
+            p.Title = caption;
+            p.Show();
         }
 
     }

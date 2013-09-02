@@ -90,5 +90,34 @@ namespace SparklrWP
                     refreshComments();
             }
         }
+
+        private void RepostButton_Click(object sender, System.EventArgs e)
+        {
+            Coding4Fun.Toolkit.Controls.InputPrompt prompt = new Coding4Fun.Toolkit.Controls.InputPrompt();
+            prompt.Title = "Repost";
+            prompt.Message = "If you want you can add a message to the repost.";
+            prompt.Completed += prompt_Completed;
+            prompt.Show();
+        }
+
+        private async void prompt_Completed(object sender, Coding4Fun.Toolkit.Controls.PopUpEventArgs<string, Coding4Fun.Toolkit.Controls.PopUpResult> e)
+        {
+            if (e.PopUpResult == Coding4Fun.Toolkit.Controls.PopUpResult.Ok)
+            {
+                PostViewModel p = this.DataContext as PostViewModel;
+                SparklrLib.Objects.JSONRequestEventArgs<SparklrLib.Objects.Responses.Generic> response = await App.Client.Repost(p.MainPost.Id, e.Result ?? "");
+                if (response.IsSuccessful)
+                {
+                    Coding4Fun.Toolkit.Controls.ToastPrompt n = new Coding4Fun.Toolkit.Controls.ToastPrompt();
+                    n.Title = "Success!";
+                    n.Message = "We reposted the post!";
+                    n.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Something went wrong...", "...and we were unable to repost. Please try again later.", MessageBoxButton.OK);
+                }
+            }
+        }
     }
 }

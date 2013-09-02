@@ -62,7 +62,7 @@
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="#FF2A2339">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New reply (no functional)"/>
 			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.heart.png" Text="Like" Click="HeartClick" />
-			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.refresh.rest.png" Text="Repost (no functional)"/>
+			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.refresh.rest.png" Text="Repost" Click="RepostButton_Click"/>
             <shell:ApplicationBar.MenuItems>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
