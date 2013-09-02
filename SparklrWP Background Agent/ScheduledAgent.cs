@@ -128,44 +128,10 @@ namespace SparklrWP_Background_Agent
                                     {
                                         Mangopollo.Tiles.FlipTileData data = new Mangopollo.Tiles.FlipTileData();
                                         data.Title = "Sparklr*";
-                                        System.Net.WebClient wc = new System.Net.WebClient();
-                                        IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication();
-                                        if (storage.FileExists("/Shared/ShellContent/tile.jpg"))
-                                        {
-                                            storage.DeleteFile("/Shared/ShellContent/tile.jpg");
-                                        }
-                                        System.IO.Stream ily = await wc.OpenReadTaskAsync(new Uri("http://d.sparklr.me/i/" + strm.notifications[0].from + ".jpg"));
-                                        await Deployment.Current.Dispatcher.InvokeAsync(() => {
-                                            BitmapImage img = new BitmapImage();
-                                            try{
-
-                                                img.SetSource(ily);
-                                            ily.Dispose();
-
-
-                                            WriteableBitmap f = new WriteableBitmap(336,336);
-                                            Tile l = new Tile();
-                                            l.img.Source = img;
-                                            l.textBlock.Text = Microsoft.Phone.Info.DeviceStatus.ApplicationMemoryUsageLimit + "/" + (Microsoft.Phone.Info.DeviceStatus.ApplicationCurrentMemoryUsage-Microsoft.Phone.Info.DeviceStatus.ApplicationMemoryUsageLimit).ToString();
-                                            l.Measure(new Size(336, 336));
-                                            l.Arrange(new Rect(0, 0, 336, 336));
-                                            f.Render(l, null);
-                                            f.Invalidate();
-                                            using (IsolatedStorageFileStream str = storage.CreateFile("/Shared/ShellContent/tile.jpg"))
-                                            {
-                                                f.SaveJpeg(str, 336, 336, 0, 100);
-                                                str.Close();
-                                            }
-                                            data.Title = "Sparklr*";
-                                            data.BackgroundImage = new Uri("/Background.png", UriKind.Relative);
-                                            data.BackBackgroundImage = new Uri("isostore:/Shared/ShellContent/tile.jpg", UriKind.Absolute);
-                                            til.Update(data);
-                                            }
-                                            catch (Exception e)
-                                            {
-                                                e.ToString();
-                                            }
-                                        });
+                                        data.Title = "Sparklr*";
+                                        data.BackgroundImage = new Uri("/Background.png", UriKind.Relative);
+                                        data.BackBackgroundImage = new Uri("http://til.eaterofcorps.es/?url=http%3A%2F%2Fd.sparklr.me%2Fi%2F"+strm.notifications[0].from+".jpg&text=" + Uri.EscapeDataString(String.Format(textGenerator(strm.notifications[0]),client.Usernames[strm.notifications[0].from])));
+                                        til.Update(data);
                                     }
 
                                     foreach (Notification not in strm.notifications)
