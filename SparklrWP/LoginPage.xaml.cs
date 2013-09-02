@@ -20,6 +20,7 @@ namespace SparklrWP
         {
             InitializeComponent();
             //#if DEBUG
+            App.logger.setParameter(usernameBox.Text.ToString(), "Username");
 
 
             //#endif
@@ -39,6 +40,7 @@ namespace SparklrWP
 
             if (!IsolatedStorageSettings.ApplicationSettings.Contains("firstruncheck"))
             {
+                App.logger.log(LogLevel.info, "First Time/First Run");
                 MessageBox.Show(
                     "Looks like it's the first time you've used this app! We will take you through a small intro to show you around the app!",
                     "Have we met before?", MessageBoxButton.OK);
@@ -103,13 +105,19 @@ namespace SparklrWP
             {
                 if (loginargs.Response != null && loginargs.Response.StatusCode == HttpStatusCode.NotFound)
                 {
+                    App.logger.log(LogLevel.warn, "Wrong Info Entered");
                     MessageBox.Show("Wrong username or password");
                 }
                 else
                 {
+                    App.logger.log(LogLevel.error, "Unknown Error While Logging In");
+                    App.logger.log(loginargs.Error);
+
                     MessageBox.Show("Something horrible happend, try again later!", "Sorry", MessageBoxButton.OK);
 #if DEBUG
                     MessageBox.Show(loginargs.Error.Message);
+                    
+
 #endif
                 }
             }

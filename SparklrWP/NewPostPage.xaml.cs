@@ -28,6 +28,8 @@ namespace SparklrWP
         {
             if (messageBox.Text == "" && _photoStr == null)
             {
+                App.logger.log(LogLevel.warn, "MessageBox Left Empty");
+
                 MessageBox.Show("You need to say something! You can't post an empty message!", "Sorry", MessageBoxButton.OK);
             }
             else
