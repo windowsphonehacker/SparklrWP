@@ -1,5 +1,4 @@
 ﻿extern alias ImageToolsDLL;
-using ImageToolsDLL::ImageTools;
 using Microsoft.Phone.Controls;
 using SparklrLib.Objects;
 using System;
@@ -74,6 +73,16 @@ namespace SparklrWP.Pages
                         if (model.Bio.Trim() == "")
                         {
                             model.Bio = usargs.Object.name + " is too shy to write something about his/herself maybe check again later!";
+                        }
+
+                        foreach (var item in usargs.Object.timeline)
+                        {
+                            model.Posts.Add(new ItemViewModel(item.id)
+                            {
+                                AuthorId = item.from,
+                                Message = item.message,
+                                CommentCount = item.commentcount ?? 0
+                            });
                         }
                     });
                 }

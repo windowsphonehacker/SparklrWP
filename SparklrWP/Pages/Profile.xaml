@@ -7,33 +7,33 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:controlsPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls" 
-    xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
+	xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
 	x:Class="SparklrWP.Pages.Profile" 
 	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
 	FontSize="{StaticResource PhoneFontSizeNormal}"
 	Foreground="{StaticResource PhoneForegroundBrush}"
 	SupportedOrientations="Portrait"  Orientation="Portrait"
-	shell:SystemTray.IsVisible="False" Background="#FF454050"
-    d:DataContext="{d:DesignData ../SampleData/UserProfileViewModelSampleData.xaml}"
-    x:Name="ProfilePage">
+	shell:SystemTray.IsVisible="False" Background="Black"
+	d:DataContext="{d:DesignData ../SampleData/UserProfileViewModelSampleData.xaml}"
+	x:Name="ProfilePage">
 	<phone:PhoneApplicationPage.ApplicationBar>
-		<shell:ApplicationBar BackgroundColor="#FF2A2339">
+		<shell:ApplicationBar BackgroundColor="#FF2A2339" Mode="Minimized">
 			<shell:ApplicationBarIconButton x:Name="followButton" Text="Follow" IconUri="/Assets/AppBar/ApplicationBar.Add.png"/>
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
 <!--LayoutRoot contains the root grid where all other page content is placed-->
 	<Grid x:Name="LayoutRoot">
-        <Grid.Resources>
-            <ResourceDictionary>
-                <Storyboard x:Key="FadeInAnimation" x:Name="FadeInStoryboard">
-                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" x:Name="FadeInAnimation">
-                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                        <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
-                    </DoubleAnimationUsingKeyFrames>
-                </Storyboard>
-            </ResourceDictionary>
-        </Grid.Resources>
+		<Grid.Resources>
+			<ResourceDictionary>
+				<Storyboard x:Key="FadeInAnimation" x:Name="FadeInStoryboard">
+					<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" x:Name="FadeInAnimation">
+						<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+						<EasingDoubleKeyFrame KeyTime="0:0:1" Value="0.8"/>
+					</DoubleAnimationUsingKeyFrames>
+				</Storyboard>
+			</ResourceDictionary>
+		</Grid.Resources>
 		<controls:Panorama x:Name="MainPanorama">
 			<controls:Panorama.Resources>
 				<Style x:Key="PanoramaFadedStyle" TargetType="controls:Panorama">
@@ -57,8 +57,6 @@
 									<controlsPrimitives:PanningBackgroundLayer x:Name="BackgroundLayer" HorizontalAlignment="Left" Grid.RowSpan="2">
 										<Border x:Name="background" Background="{TemplateBinding Background}" CacheMode="BitmapCache"/>
 									</controlsPrimitives:PanningBackgroundLayer>
-                                    <Rectangle Grid.Row="0" Fill="#aa2A2339" Margin="0,44,0,35"></Rectangle>
-                                    <Rectangle Fill="#cc2A2339" Grid.Row="1" Margin="0,20,0,0" Height="60" VerticalAlignment="Top"></Rectangle>
 									<controlsPrimitives:PanningTitleLayer x:Name="TitleLayer" CacheMode="BitmapCache" ContentTemplate="{TemplateBinding TitleTemplate}" Content="{TemplateBinding Title}" FontSize="187" FontFamily="{StaticResource PhoneFontFamilyLight}" HorizontalAlignment="Left" Margin="10,-76,0,9" Grid.Row="0"/>
 									<controlsPrimitives:PanningLayer x:Name="ItemsLayer" HorizontalAlignment="Left" Grid.Row="1">
 										<ItemsPresenter x:Name="items"/>
@@ -72,22 +70,22 @@
 			<controls:Panorama.TitleTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal" Margin="0,85,0,0">
-                        <Image x:Name="ProfileImage" Width="100" Height="100" Source="{Binding Path=DataContext.ProfileImageSource, ElementName=ProfilePage}"  Stretch="UniformToFill" Opacity="0" >
-                            <Image.Triggers>
-                                <EventTrigger RoutedEvent="Image.Loaded">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ProfileImage">
-                                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
-                                            </DoubleAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                            </Image.Triggers>
-                        </Image>
-                        <StackPanel Margin="20,10,10,10">
-                            <TextBlock Text="{Binding Path=DataContext.Handle, ElementName=ProfilePage}" FontSize="75" />
+						<Image x:Name="ProfileImage" Width="100" Height="100" Source="{Binding Path=DataContext.ProfileImageSource, ElementName=ProfilePage}"  Stretch="UniformToFill" Opacity="0" >
+							<Image.Triggers>
+								<EventTrigger RoutedEvent="Image.Loaded">
+									<BeginStoryboard>
+										<Storyboard>
+											<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ProfileImage">
+												<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+												<EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+											</DoubleAnimationUsingKeyFrames>
+										</Storyboard>
+									</BeginStoryboard>
+								</EventTrigger>
+							</Image.Triggers>
+						</Image>
+						<StackPanel Margin="20,10,10,10">
+							<TextBlock Text="{Binding Path=DataContext.Handle, ElementName=ProfilePage}" FontSize="75" />
 						</StackPanel>
 					</StackPanel>
 				</DataTemplate>
@@ -103,30 +101,26 @@
 			</controls:Panorama.Style>
 			
 			<!--Panorama item one-->
-			<controls:PanoramaItem Header="About">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Rectangle Grid.Row="0" Fill="#cc2A2339" />
-                    
-                    <!-- TODO: implement sparklrText once it is customizable enough -->
-                    <TextBlock Padding="5" Grid.Row="0" Text="{Binding Bio}" TextWrapping="Wrap" />
-                </Grid>
-            </controls:PanoramaItem>
+			<controls:PanoramaItem Header="about">
+				<TextBlock Padding="5" Grid.Row="0" Text="{Binding Bio}" TextWrapping="Wrap" />
+			</controls:PanoramaItem>
 
 			<!--Panorama item two-->
-			<controls:PanoramaItem Header="Posts">
+			<controls:PanoramaItem Header="posts">
+                <ListBox ItemsSource="{Binding Posts}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Message}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PanoramaItem>
+
+			<controls:PanoramaItem Header="photos">
 				<Grid/>
 			</controls:PanoramaItem>
 
-			<controls:PanoramaItem Header="Photos">
-				<Grid/>
-			</controls:PanoramaItem>
-
-			<controls:PanoramaItem Header="Mentions">
+			<controls:PanoramaItem Header="mentions">
 				<Grid/>
 			</controls:PanoramaItem>
 		</controls:Panorama>

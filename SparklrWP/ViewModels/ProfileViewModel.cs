@@ -1,5 +1,6 @@
 ﻿extern alias ImageToolsDLL;
 using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -14,6 +15,8 @@ namespace SparklrWP
         private string _bio;
         private ImageSource _profileImageSource;
         private int _id;
+
+        public ObservableCollection<ItemViewModel> Posts = new ObservableCollection<ItemViewModel>();
 
         public string Handle
         {

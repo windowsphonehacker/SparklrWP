@@ -1,5 +1,4 @@
 ﻿extern alias ImageToolsDLL;
-using Coding4Fun.Toolkit.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Xna.Framework.Media;
 using SparklrLib.Objects;
@@ -485,7 +484,10 @@ namespace SparklrWP.Controls
         {
             Span s = new Span();
             Image author = new Image();
-            author.Source = (BitmapImage)await Utils.Caching.Image.LoadCachedImageFromUrlAsync<BitmapImage>(String.Format("http://d.sparklr.me/i/t{0}.jpg", userId));
+
+            object loaded = await Utils.Caching.Image.LoadCachedImageFromUrlAsync<BitmapImage>(String.Format("http://d.sparklr.me/i/t{0}.jpg", userId));
+
+            author.Source = (BitmapImage)loaded;
             author.Stretch = Stretch.UniformToFill;
             author.Width = 28;
             author.Height = 28;

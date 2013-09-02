@@ -45,14 +45,14 @@
         </RichTextBox>
         <Grid Grid.Row="2" Margin="12,0" Background="#FF2A2339" x:Name="userbar" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" Foreground="White" FontSize="24" x:Name="usernameTextBlock" />
             <StackPanel Grid.Column="1" Orientation="Horizontal" x:Name="commentCountContainer">
                 <TextBlock Grid.Column="1" Foreground="White" FontSize="24" x:Name="commentCountTextBlock" />
-                <Image Source="appbar.message.send.png" Width="35" Height="35" HorizontalAlignment="Left" />
+                <Image Source="appbar.message.send.png" Width="35" Height="35" HorizontalAlignment="Right" />
             </StackPanel>
         </Grid>
     </Grid>

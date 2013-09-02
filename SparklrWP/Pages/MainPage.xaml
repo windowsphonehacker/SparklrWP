@@ -74,7 +74,7 @@
                 <DataTemplate>
                     <Grid>
                         <TextBlock Text="{Binding}" HorizontalAlignment="Stretch" />
-                        <Border x:Name="BorderNotification" Background="White" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,-10" Tap="BorderNotification_Tap" Height="60" Width="60">
+                        <Border x:Name="BorderNotification" Background="White" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,-20" Tap="BorderNotification_Tap" Height="60" Width="60">
                             <TextBlock Name="NotificationCount" Foreground="#FF2A2339" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
                         </Border>
                     </Grid>
@@ -84,7 +84,7 @@
 
 
             <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
-            <controls:PivotItem Header="Posts"  Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
+            <controls:PivotItem Header="posts"  Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
                 <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                     <sparklrControls:ExtendedListBox x:Name="MainListBox" ItemsSource="{Binding Items}" UnderlyingSelectionChanged="MainListBox_SelectionChanged" TopRefresh="MainListBox_TopRefresh" LoadMore="MainListBox_LoadMore" Margin="-11,0,0,0">
                         <sparklrControls:ExtendedListBox.ItemTemplate>
@@ -98,7 +98,7 @@
                 </Grid>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="Friends">
+            <controls:PivotItem Header="friends">
                 <toolkit:LongListSelector Background="{x:Null}" ItemsSource="{Binding GroupedItems}">
                     <!-- Template for the letters inside the list -->
                     <toolkit:LongListSelector.GroupHeaderTemplate>
@@ -137,7 +137,7 @@
                 </toolkit:LongListSelector>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="My profile">
+            <controls:PivotItem Header="my profile">
                 <Grid/>
             </controls:PivotItem>
         </controls:Pivot>

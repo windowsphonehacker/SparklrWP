@@ -57,30 +57,33 @@ namespace SparklrWP.Utils.Caching
         /// </summary>
         static Image()
         {
-            ImageToolsHelper.InitializeImageTools();
-
-            using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
+            if (!System.ComponentModel.DesignerProperties.IsInDesignTool)
             {
-#if DEBUG
-                //Set to false to keep the files in the cache
-                if (true)
+                ImageToolsHelper.InitializeImageTools();
+
+                using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
                 {
-                    ClearImageCache();
-                    App.logger.log("Deleted cache content because DEBUG flag was set");
-                }
+#if DEBUG
+                    //Set to false to keep the files in the cache
+                    if (true)
+                    {
+                        ClearImageCache();
+                        App.logger.log("Deleted cache content because DEBUG flag was set");
+                    }
 #endif
 
-                //Make sure that the directory exists
-                if (!storage.DirectoryExists(CacheFolder))
-                {
-                    storage.CreateDirectory(CacheFolder);
+                    //Make sure that the directory exists
+                    if (!storage.DirectoryExists(CacheFolder))
+                    {
+                        storage.CreateDirectory(CacheFolder);
 #if DEBUG
-                    App.logger.log("Created folder {0}", CacheFolder);
+                        App.logger.log("Created folder {0}", CacheFolder);
+#endif
+                    }
+#if DEBUG
+                    App.logger.log("Isolated storage is using {0} of {1} bytes", storage.AvailableFreeSpace, storage.Quota);
 #endif
                 }
-#if DEBUG
-                App.logger.log("Isolated storage is using {0} of {1} bytes", storage.AvailableFreeSpace, storage.Quota);
-#endif
             }
         }
 
