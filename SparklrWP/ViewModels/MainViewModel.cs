@@ -31,8 +31,7 @@ namespace SparklrWP
         public MainViewModel()
         {
             this.Items = new ObservableCollectionWithItemNotification<ItemViewModel>();
-            _friends = new ObservableCollection<FriendViewModel>();
-            GroupedItems = _friends.GroupFriends();
+            GroupedItems = (new ObservableCollectionWithItemNotification<FriendViewModel>()).GroupFriends();
 
             streamUpdater = new Timer(streamUpdater_Tick, null, Timeout.Infinite, Timeout.Infinite);
 
@@ -239,20 +238,22 @@ namespace SparklrWP
                         Image = "http://d.sparklr.me/i/t" + id + ".jpg"
                     });
                 }
+
+#if DEBUG
+                foreach (var group in GroupedItems)
+                {
+                    if (group.HasItems)
+                    {
+                        App.logger.log("Group {0} has the following entries:", group.Title);
+                        App.logger.log(String.Join<FriendViewModel>(", ", group.ToArray()));
+                    }
+                }
+#endif
             }
         }
 
-        private ObservableCollection<FriendViewModel> _friends;
-        public ObservableCollection<FriendViewModel> Friends
-        {
-            get
-            {
-                return new ObservableCollection<FriendViewModel>(_friends);
-            }
-        }
-
-        ObservableCollection<GroupedObservableCollection<FriendViewModel>> _groupedItems;
-        public ObservableCollection<GroupedObservableCollection<FriendViewModel>> GroupedItems
+        ObservableCollectionWithItemNotification<GroupedObservableCollection<FriendViewModel>> _groupedItems;
+        public ObservableCollectionWithItemNotification<GroupedObservableCollection<FriendViewModel>> GroupedItems
         {
             get
             {
@@ -303,10 +304,8 @@ namespace SparklrWP
             }
         }
 
-
         public void AddFriend(FriendViewModel f)
         {
-            _friends.Add(f);
             GroupedItems.AddFriend(f);
         }
 
@@ -327,8 +326,6 @@ namespace SparklrWP
 
         private void Dispose(bool disposing)
         {
-            //Dispose our disposable stuff
-
             if (streamUpdater != null)
                 streamUpdater.Dispose();
         }

@@ -88,5 +88,13 @@ namespace SparklrWP
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public override string ToString()
+        {
+            if (!String.IsNullOrEmpty(Name))
+                return Name;
+            else
+                return Id.ToString();
+        }
     }
 }
