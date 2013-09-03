@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 using SparklrWP.Utils;
 using System.Windows;
 using System.Windows.Navigation;
@@ -11,6 +12,10 @@ namespace SparklrWP
         public DetailsPage()
         {
             InitializeComponent();
+            if (CommentButton == null)
+            {
+                CommentButton = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
+            }
         }
 
         // When page is navigated to set data context to selected item in list
@@ -56,23 +61,32 @@ namespace SparklrWP
             }
         }
 
-        private async void CommentTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        private void CommentTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Enter)
             {
-                Focus();
-                PostViewModel p = this.DataContext as PostViewModel;
-                GlobalLoading.Instance.IsLoading = true;
-                SparklrLib.Objects.JSONRequestEventArgs<SparklrLib.Objects.Responses.Generic> response = await App.Client.PostCommentAsync(p.MainPost.AuthorId, p.MainPost.Id, CommentTextbox.Text);
-                GlobalLoading.Instance.IsLoading = false;
+                PostComment();
+            }
+        }
 
-                if (response == null || !response.IsSuccessful)
-                    MessageBox.Show("We were unable to post your comment. Please try again later...", "Oops...", MessageBoxButton.OK);
-                else
-                {
-                    refreshComments();
-                    CommentTextbox.Text = "";
-                }
+        private async void PostComment()
+        {
+            CommentButton.IsEnabled = false;
+            Focus();
+            PostViewModel p = this.DataContext as PostViewModel;
+            GlobalLoading.Instance.IsLoading = true;
+            SparklrLib.Objects.JSONRequestEventArgs<SparklrLib.Objects.Responses.Generic> response = await App.Client.PostCommentAsync(p.MainPost.AuthorId, p.MainPost.Id, CommentTextbox.Text);
+            GlobalLoading.Instance.IsLoading = false;
+
+            if (response == null || !response.IsSuccessful)
+            {
+                MessageBox.Show("We were unable to post your comment. Please try again later...", "Oops...", MessageBoxButton.OK);
+                CommentButton.IsEnabled = true;
+            }
+            else
+            {
+                refreshComments();
+                CommentTextbox.Text = "";
             }
         }
 
@@ -116,6 +130,16 @@ namespace SparklrWP
                     MessageBox.Show("Something went wrong...", "...and we were unable to repost. Please try again later.", MessageBoxButton.OK);
                 }
             }
+        }
+
+        private void CommentButton_Click(object sender, System.EventArgs e)
+        {
+            PostComment();
+        }
+
+        private void CommentTextbox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            CommentButton.IsEnabled = CommentTextbox.Text.Length > 0;
         }
     }
 }

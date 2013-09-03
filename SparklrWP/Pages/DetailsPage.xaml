@@ -28,7 +28,7 @@
             <StackPanel Orientation="Horizontal">
                 <Image x:Name="ProfileImage" Width="100" Height="100" Source="{Binding DataContext.ProfileImageSource, ElementName=ProfilePage}"  Stretch="UniformToFill" Opacity="0" />
                 <TextBlock x:Name="ListTitle" Text="{Binding MainPost.From}" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right"/>
-                   
+
             </StackPanel>
         </StackPanel>
 
@@ -55,14 +55,14 @@
                     </ListBox>
                 </StackPanel>
             </ScrollViewer>
-            <TextBox Grid.Row="2" x:Name="CommentTextbox" TextWrapping="Wrap" VerticalAlignment="Bottom" KeyDown="CommentTextBox_KeyDown" />
+            <TextBox Grid.Row="2" x:Name="CommentTextbox" TextWrapping="Wrap" VerticalAlignment="Bottom" KeyDown="CommentTextBox_KeyDown" InputScope="Chat" AcceptsReturn="True" TextChanged="CommentTextbox_TextChanged" />
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="#FF2A2339">
-            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New reply (no functional)"/>
-			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.heart.png" Text="Like" Click="HeartClick" />
-			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.refresh.rest.png" Text="Repost" Click="RepostButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="CommentButton" IconUri="/Assets/AppBar/appbar.add.rest.png" Text="comment" IsEnabled="False" Click="CommentButton_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.heart.png" Text="Like" Click="HeartClick" />
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.refresh.rest.png" Text="Repost" Click="RepostButton_Click"/>
             <shell:ApplicationBar.MenuItems>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>

@@ -1,6 +1,7 @@
 ﻿extern alias AviarySDKDLL;
 using AviarySDKDLL::AviarySDK;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using SparklrLib.Objects;
 using System;
@@ -23,10 +24,15 @@ namespace SparklrWP
             InitializeComponent();
             _photoChooserTask = new PhotoChooserTask() { ShowCamera = true };
             _photoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
+            if (sendButton == null)
+            {
+                sendButton = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
+            }
         }
 
         private async void postButton_Click(object sender, EventArgs e)
         {
+            sendButton.IsEnabled = false;
             if (messageBox.Text == "" && _photoStr == null)
             {
                 Utils.Helpers.Notify("You need to say something! You can't post an empty message!");
@@ -54,8 +60,8 @@ namespace SparklrWP
                         NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
                     }
                 }
-
             }
+            sendButton.IsEnabled = true;
         }
 
         private void attachButton_Click(object sender, EventArgs e)
@@ -125,11 +131,13 @@ namespace SparklrWP
             {
                 PicThumbnail.Source = imgSource;
                 EditBorder.Visibility = Visibility.Visible;
+                sendButton.IsEnabled = true;
             }
             else
             {
                 PicThumbnail.Source = null;
                 EditBorder.Visibility = Visibility.Collapsed;
+                sendButton.IsEnabled = messageBox.Text.Length > 0;
             }
         }
 
@@ -176,6 +184,11 @@ namespace SparklrWP
             //Fix for CA1001
             if (_photoStr != null)
                 _photoStr.Close();
+        }
+
+        private void messageBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            sendButton.IsEnabled = messageBox.Text.Length > 0 || _photoStr != null;
         }
     }
 }
