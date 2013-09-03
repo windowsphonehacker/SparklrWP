@@ -1,7 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace SparklrWP.Pages
 {
@@ -43,9 +42,14 @@ namespace SparklrWP.Pages
             }
         }
 
-        private async void loadImage(string location)
+        private void loadImage(string location)
         {
-            ZoomableImage.Source = (BitmapImage)await Utils.Caching.Image.LoadCachedImageFromUrlAsync<BitmapImage>(location);
+            ZoomableImage.ImageSource = location;
+            ZoomableImage.ImageUpdated += PinchToZoom_ImageUpdated;
+        }
+
+        void PinchToZoom_ImageUpdated(object sender, System.EventArgs e)
+        {
             LoadingFinished.Begin();
         }
 

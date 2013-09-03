@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
+    xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
     x:Class="SparklrWP.Pages.PinchToZoom"
     SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d"
@@ -63,14 +64,14 @@
 	</phone:PhoneApplicationPage.Foreground>
 <!--LayoutRoot ist das Stammraster, in dem alle anderen Seiteninhalte platziert werden-->
 	<Grid x:Name="LayoutRoot" Background="Transparent">
-		<Image Grid.Row="0" x:Name="ZoomableImage" Stretch="Uniform"  RenderTransformOrigin="0,0">
+		<sparklrControls:ExtendedImageControl Grid.Row="0" x:Name="ZoomableImage" Stretch="Uniform"  RenderTransformOrigin="0,0">
 			<toolkit:GestureService.GestureListener>
 				<toolkit:GestureListener PinchStarted="GestureListener_PinchStarted" PinchDelta="GestureListener_PinchDelta" DragDelta="GestureListener_DragDelta" DoubleTap="GestureListener_DoubleTap" />
 			</toolkit:GestureService.GestureListener>
-			<Image.RenderTransform>
+            <sparklrControls:ExtendedImageControl.RenderTransform>
 				<CompositeTransform ScaleX="1" ScaleY="1" TranslateX="0" TranslateY="0" />
-			</Image.RenderTransform>
-		</Image>
+            </sparklrControls:ExtendedImageControl.RenderTransform>
+        </sparklrControls:ExtendedImageControl>
         <Border Grid.Row="0" Background="Black" x:Name="loadingContainer">
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
                 <TextBlock TextAlignment="Center">
