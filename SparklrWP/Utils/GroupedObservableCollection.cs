@@ -34,13 +34,18 @@ namespace SparklrWP.Utils
                 return this.Count > 0;
             }
         }
+
+        protected override void InsertItem(int index, T item)
+        {
+            base.InsertItem(index, item);
+        }
     }
 
     static class CollectionExtensions
     {
-        public static ObservableCollection<GroupedObservableCollection<FriendViewModel>> GroupFriends(this ObservableCollection<FriendViewModel> initialCollection)
+        public static ObservableCollectionWithItemNotification<GroupedObservableCollection<FriendViewModel>> GroupFriends(this ObservableCollectionWithItemNotification<FriendViewModel> initialCollection)
         {
-            ObservableCollection<GroupedObservableCollection<FriendViewModel>> grouped = new ObservableCollection<GroupedObservableCollection<FriendViewModel>>();
+            ObservableCollectionWithItemNotification<GroupedObservableCollection<FriendViewModel>> grouped = new ObservableCollectionWithItemNotification<GroupedObservableCollection<FriendViewModel>>();
 
             // sort the input
             List<FriendViewModel> sorted = (from friend in initialCollection orderby friend.Name select friend).ToList<FriendViewModel>();
@@ -73,6 +78,9 @@ namespace SparklrWP.Utils
                 if (string.Compare(firstLetter, c.Title, System.StringComparison.InvariantCultureIgnoreCase) == 0)
                 {
                     c.Add(f);
+#if DEBUG
+                    App.logger.log("Added friend {0} to group {1}", f.Name, c.Title);
+#endif
                     break;
                 }
             }
