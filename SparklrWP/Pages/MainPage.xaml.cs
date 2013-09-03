@@ -81,7 +81,7 @@ namespace SparklrWP.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (this.NavigationContext.QueryString.ContainsKey("notification"))
+            if (this.NavigationContext.QueryString.ContainsKey("notification") && e.NavigationMode == NavigationMode.New)
             {
                 BorderNotification_Tap(this, new System.Windows.Input.GestureEventArgs());
             }
