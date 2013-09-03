@@ -76,7 +76,7 @@ namespace SparklrWP_Background_Agent
                             return "{0} commented " + not.body + ".";
                         }
                     }
-                    else if(not.type == 2)
+                    else if (not.type == 2)
                     {
                         return "{0} mentioned you.";
                     }
@@ -105,7 +105,7 @@ namespace SparklrWP_Background_Agent
                        {
                            from = 4,
                            type = 1,
-                           body = "ILY"
+                           body = "Debug test"
                        });
 #endif
                         if (strm.notifications != null && strm.notifications.Count > 0)
@@ -130,7 +130,7 @@ namespace SparklrWP_Background_Agent
                                         data.Title = "Sparklr*";
                                         data.Title = "Sparklr*";
                                         data.BackgroundImage = new Uri("/Background.png", UriKind.Relative);
-                                        data.BackBackgroundImage = new Uri("http://til.eaterofcorps.es/?url=http%3A%2F%2Fd.sparklr.me%2Fi%2F"+strm.notifications[0].from+".jpg&text=" + Uri.EscapeDataString(String.Format(textGenerator(strm.notifications[0]),client.Usernames[strm.notifications[0].from])));
+                                        data.BackBackgroundImage = new Uri("http://til.eaterofcorps.es/?url=http%3A%2F%2Fd.sparklr.me%2Fi%2F" + strm.notifications[0].from + ".jpg&text=" + Uri.EscapeDataString(String.Format(textGenerator(strm.notifications[0]), client.Usernames[strm.notifications[0].from])));
                                         til.Update(data);
                                     }
 
@@ -139,6 +139,7 @@ namespace SparklrWP_Background_Agent
                                         ShellToast notif = new ShellToast();
                                         notif.Title = "Sparklr*";
                                         notif.Content = String.Format(textGenerator(not), client.Usernames[not.from]);
+                                        notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
                                         notif.Show();
                                     }
                                 }
@@ -149,10 +150,10 @@ namespace SparklrWP_Background_Agent
                                         ShellToast notif = new ShellToast();
                                         notif.Title = "Sparklr*";
                                         notif.Content = String.Format(textGenerator(not), "Someone");
+                                        notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
                                         notif.Show();
                                     }
                                 }
-                                NotifyComplete();
                             }
                             else
                             {
@@ -161,26 +162,15 @@ namespace SparklrWP_Background_Agent
                                     ShellToast notif = new ShellToast();
                                     notif.Title = "Sparklr*";
                                     notif.Content = String.Format(textGenerator(not), "Someone");
+                                    notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
                                     notif.Show();
                                 }
                             }
-                            NotifyComplete();
-                        }
-                        else
-                        {
-                            NotifyComplete();
                         }
                     }
                 }
-                else
-                {
-                    NotifyComplete();
-                }
             }
-            else
-            {
-                NotifyComplete();
-            }
+            NotifyComplete();
         }
     }
 }
