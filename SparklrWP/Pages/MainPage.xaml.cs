@@ -20,6 +20,11 @@ namespace SparklrWP.Pages
 
             // Set the data context of the listbox control to the sample data
             LayoutRoot.DataContext = App.MainViewModel;
+
+            App.MainViewModel.BeforeItemAdded += MainViewModel_BeforeItemAdded;
+            App.MainViewModel.AfterItemAdded += MainViewModel_AfterItemAdded;
+            App.MainViewModel.Items.CollectionChanged += Items_CollectionChanged;
+
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
 
 #if DEBUG
@@ -47,6 +52,47 @@ namespace SparklrWP.Pages
             this.ApplicationBar.MenuItems.Add(garbageCollect);
 #endif
             App.BackgroundTask = new Task();
+        }
+
+        void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+
+        }
+
+        double distanceFromBottom = -1;
+
+        void MainViewModel_AfterItemAdded(object sender, EventArgs e)
+        {
+            if (distanceFromBottom >= 0)
+            {
+                MainListBox.UnderlyingListBox.UpdateLayout();
+                MainListBox.UpdateLayout();
+                ScrollViewer v = MainListBox.UnderlyingListBox.FindScrollViewer();
+                v.ScrollToVerticalOffset(v.ScrollableHeight - distanceFromBottom);
+                MainListBox.UnderlyingListBox.UpdateLayout();
+                MainListBox.UpdateLayout();
+
+#if DEBUG
+                v = MainListBox.UnderlyingListBox.FindScrollViewer();
+                App.logger.log("Distance from bottom updated: {0} (Height: {1}, Offset: {2})", v.ScrollableHeight - v.VerticalOffset, v.ScrollableHeight, v.VerticalOffset);
+#endif
+            }
+        }
+
+        void MainViewModel_BeforeItemAdded(object sender, EventArgs e)
+        {
+            ScrollViewer v = MainListBox.UnderlyingListBox.FindScrollViewer();
+            if (v != null)
+            {
+                distanceFromBottom = v.ScrollableHeight - v.VerticalOffset;
+#if DEBUG
+                App.logger.log("Distance from bottom is: {0} (Height: {1}, Offset: {2})", distanceFromBottom, v.ScrollableHeight, v.VerticalOffset);
+#endif
+            }
+            else
+            {
+                distanceFromBottom = -1;
+            }
         }
 
         public bool didFriends = false;

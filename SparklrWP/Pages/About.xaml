@@ -53,7 +53,7 @@
                     <TextBlock Height="95" TextWrapping="Wrap" Text="ChrisK" VerticalAlignment="Top" Width="355" TextAlignment="Center" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="66.667"/>
                 </StackPanel>
                 <TextBlock TextWrapping="Wrap">This application uses some great third party libraries.<LineBreak/>
-                    <Italic>Imagetools for Silverlight</Italic>, <Italic>The Windows Phone Toolkit</Italic> and <Italic>Mangopollo</Italic>, wich are released under the MP-PL:<LineBreak/>
+                    <Italic>Imagetools for Silverlight</Italic>, <Italic>The Windows Phone Toolkit</Italic>, <Italic>Mangopollo</Italic> and <Italic>WP7Contrib</Italic> wich are released under the MP-PL:<LineBreak/>
                     This license governs use of the accompanying software. If you use the software, you accept this license. If you do not accept the license, do not use the software.<LineBreak />
                     1. Definitions<LineBreak />
                     The terms "reproduce," "reproduction," "derivative works," and "distribution" have the same meaning here as under U.S. copyright law.<LineBreak />

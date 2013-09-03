@@ -5,6 +5,9 @@ using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace SparklrWP.Utils
@@ -130,5 +133,22 @@ namespace SparklrWP.Utils
             p.Show();
         }
 
+        /// <summary>
+        /// Finds a scroll viewer inside the specified parents visual tree.
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <returns></returns>
+        public static ScrollViewer FindScrollViewer(this DependencyObject parent)
+        {
+            var childCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (var i = 0; i < childCount; i++)
+            {
+                var elt = VisualTreeHelper.GetChild(parent, i);
+                if (elt is ScrollViewer) return (ScrollViewer)elt;
+                var result = FindScrollViewer(elt);
+                if (result != null) return result;
+            }
+            return null;
+        }
     }
 }

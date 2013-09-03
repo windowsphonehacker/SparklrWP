@@ -16,17 +16,8 @@ namespace SparklrWP
         /// The streamUpdater starts stream updates every 10 seconds.
         /// </summary>
         Timer streamUpdater;
-        Comparison<ItemViewModel> itemComparison = new Comparison<ItemViewModel>(
-            (p, q) =>
-            {
-                if (p.OrderTime > q.OrderTime)
-                    return 1;
-                else if (p.OrderTime < q.OrderTime)
-                    return -1;
-                else
-                    return 0;
-            }
-            );
+        public event EventHandler BeforeItemAdded;
+        public event EventHandler AfterItemAdded;
 
         public MainViewModel()
         {
@@ -138,8 +129,6 @@ namespace SparklrWP
 
                     int count = stream.data.length;
 
-                    List<ItemViewModel> newItems = new List<ItemViewModel>(Items);
-
                     foreach (var t in stream.data.timeline)
                     {
                         if (LastTime < t.time)
@@ -152,7 +141,7 @@ namespace SparklrWP
                         }
 
                         ItemViewModel existingitem = null;
-                        existingitem = (from i in newItems where i.Id == t.id select i).FirstOrDefault();
+                        existingitem = (from i in Items where i.Id == t.id select i).FirstOrDefault();
 
                         if (existingitem == null)
                         {
@@ -166,7 +155,7 @@ namespace SparklrWP
                             if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
                                 newItem.From = response.Object[0].username;
 
-                            newItems.Add(newItem);
+                            addItem(newItem);
                         }
                         else
                         {
@@ -181,10 +170,7 @@ namespace SparklrWP
                                 existingitem.From = response.Object[0].username;
                         }
                     }
-                    newItems.Sort(itemComparison);
-                    newItems.Reverse();
 
-                    Items = new ObservableCollectionWithItemNotification<ItemViewModel>(newItems);
                     this.IsDataLoaded = true;
 #if DEBUG
                     foreach (ItemViewModel i in Items)
@@ -197,6 +183,40 @@ namespace SparklrWP
             }
         }
 
+        private void addItem(ItemViewModel item)
+        {
+            if (Items == null)
+                Items = new ObservableCollectionWithItemNotification<ItemViewModel>();
+
+            if (BeforeItemAdded != null)
+                BeforeItemAdded(this, null);
+
+            if (Items.Count() == 0)
+            {
+                Items.Add(item);
+            }
+            else
+            {
+                int time = item.OrderTime;
+
+                for (int i = 0; i < Items.Count(); i++)
+                {
+                    if (Items[i].OrderTime < time)
+                    {
+                        Items.Insert(i, item);
+                        break;
+                    }
+                    else if (i + 1 == Items.Count())
+                    {
+                        Items.Add(item);
+                        break;
+                    }
+                }
+            }
+
+            if (AfterItemAdded != null)
+                AfterItemAdded(this, null);
+        }
 
         public async void LoadMore()
         {
