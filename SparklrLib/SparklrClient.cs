@@ -594,6 +594,16 @@ namespace SparklrLib
             return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + userid);
         }
 
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserMentionsAsync(int userid)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + userid + "/mentions");
+        }
+
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserPhotosAsync(int userid)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + userid + "/photos");
+        }
+
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> PostCommentAsync(int authorid, int postid, string comment)
         {
             return requestJsonObjectAsync<Objects.Responses.Generic>("/work/comment", new Objects.Requests.Work.Comment()

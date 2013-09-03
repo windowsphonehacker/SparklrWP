@@ -16,7 +16,11 @@ namespace SparklrWP
         private ImageSource _profileImageSource;
         private int _id;
 
-        public ObservableCollection<ItemViewModel> Posts = new ObservableCollection<ItemViewModel>();
+        //todo: implement properly
+        private ObservableCollection<ItemViewModel> active = new ObservableCollection<ItemViewModel>();
+        private ObservableCollection<ItemViewModel> posts = new ObservableCollection<ItemViewModel>();
+        private ObservableCollection<ItemViewModel> mentions = new ObservableCollection<ItemViewModel>();
+        private ObservableCollection<ItemViewModel> photos = new ObservableCollection<ItemViewModel>();
 
         public string Handle
         {
@@ -83,6 +87,71 @@ namespace SparklrWP
             }
         }
 
+        public ObservableCollection<ItemViewModel> Posts
+        {
+            get
+            {
+                return posts;
+            }
+            set
+            {
+                if (posts != value)
+                {
+                    posts = value;
+                    NotifyPropertyChanged("Posts");
+                }
+            }
+        }
+
+        public ObservableCollection<ItemViewModel> Mentions
+        {
+            get
+            {
+                return mentions;
+            }
+            set
+            {
+                if (mentions != value)
+                {
+                    mentions = value;
+                    NotifyPropertyChanged("Mentions");
+                }
+            }
+        }
+
+        public ObservableCollection<ItemViewModel> Photos
+        {
+            get
+            {
+                return photos;
+            }
+            set
+            {
+                if (photos != value)
+                {
+                    photos = value;
+                    NotifyPropertyChanged("Photos");
+                }
+            }
+        }
+
+        //Todo: implement properly
+        public ObservableCollection<ItemViewModel> Active
+        {
+            get
+            {
+                return active;
+            }
+            set
+            {
+                if (active != value)
+                {
+                    active = value;
+                    NotifyPropertyChanged("Active");
+                }
+            }
+        }
+
         public int ID
         {
             get
@@ -122,7 +191,14 @@ namespace SparklrWP
 
         private async void updateProfileImage()
         {
-            ProfileImageSource = (BitmapImage)await Utils.Caching.Image.LoadCachedImageFromUrlAsync<BitmapImage>(ProfileImage);
+            if (DesignerProperties.IsInDesignTool)
+            {
+                ProfileImageSource = new BitmapImage(new Uri(ProfileImage));
+            }
+            else
+            {
+                ProfileImageSource = (BitmapImage)await Utils.Caching.Image.LoadCachedImageFromUrlAsync<BitmapImage>(ProfileImage);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

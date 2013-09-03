@@ -4,6 +4,7 @@
 	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
 	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
 	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:controlsPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls" 
@@ -100,29 +101,50 @@
 				<StaticResource ResourceKey="PanoramaFadedStyle"/>
 			</controls:Panorama.Style>
 			
-			<!--Panorama item one-->
 			<controls:PanoramaItem Header="about">
 				<TextBlock Padding="5" Grid.Row="0" Text="{Binding Bio}" TextWrapping="Wrap" />
 			</controls:PanoramaItem>
 
-			<!--Panorama item two-->
-			<controls:PanoramaItem Header="posts">
-                <ListBox ItemsSource="{Binding Posts}">
+            
+			<controls:PanoramaItem Header="posts" x:Name="postPanorama">
+                <controls:PanoramaItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" MinWidth="400">
+                            <TextBlock>posts</TextBlock>
+                            <toolkit:ListPicker VerticalAlignment="Bottom" Width="220" SelectedIndex="0" FontSize="22" Margin="15,16" Background="#99ffffff" BorderBrush="Transparent" BorderThickness="0" Foreground="#77000000" x:Name="filterModePicker" Loaded="filterModePicker_Loaded" SelectionChanged="filterModePicker_SelectionChanged">
+                                <toolkit:ListPicker.HeaderTemplate>
+                                    <DataTemplate></DataTemplate>
+                                </toolkit:ListPicker.HeaderTemplate>
+                                <toolkit:ListPicker.Items>
+                                    <toolkit:ListPickerItem Content="posts from this user" Tag="posts" />
+                                    <toolkit:ListPickerItem Content="mentions of this user" Tag="mentions" />
+                                    <toolkit:ListPickerItem Content="photos by this user" Tag="photos" />
+                                </toolkit:ListPicker.Items>
+                            </toolkit:ListPicker>
+                        </StackPanel>
+                    </DataTemplate>
+                </controls:PanoramaItem.HeaderTemplate>
+                <ListBox ItemsSource="{Binding Active}" Grid.Row="1">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Message}" />
+                            <sparklrControls:SparklrText Post="{Binding}" Margin="0,2" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                 </ListBox>
             </controls:PanoramaItem>
-
-			<controls:PanoramaItem Header="photos">
-				<Grid/>
-			</controls:PanoramaItem>
-
-			<controls:PanoramaItem Header="mentions">
-				<Grid/>
-			</controls:PanoramaItem>
+            
+            <controls:PanoramaItem Header="more">
+                <StackPanel>
+                    <Button>message</Button>
+                    <Button>mention</Button>
+                    <Button>follow</Button>
+                </StackPanel>
+            </controls:PanoramaItem>
 		</controls:Panorama>
 	</Grid>
 </phone:PhoneApplicationPage>

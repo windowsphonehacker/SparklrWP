@@ -5,5 +5,9 @@
     Handle="Testuser"
     BackgroundImage="http://d.sparklr.me/i/b591.jpg"
     ProfileImage="http://d.sparklr.me/i/b591.jpg"
-    Bio="Hey guys, I'm a test user. I'm here to make sure that long texts are wrapped if they exceed the available space."
-    />
+    Bio="Hey guys, I'm a test user. I'm here to make sure that long texts are wrapped if they exceed the available space.">
+    <local:ProfileViewModel.Active>
+        <local:ItemViewModel Message="Hello there" />
+        <local:ItemViewModel Message="Message two" />
+    </local:ProfileViewModel.Active>
+</local:ProfileViewModel>
