@@ -28,7 +28,6 @@
             <StackPanel Orientation="Horizontal">
                 <Image x:Name="ProfileImage" Width="100" Height="100" Source="{Binding DataContext.ProfileImageSource, ElementName=ProfilePage}"  Stretch="UniformToFill" Opacity="0" />
                 <TextBlock x:Name="ListTitle" Text="{Binding MainPost.From}" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right"/>
-
             </StackPanel>
         </StackPanel>
 

@@ -39,7 +39,7 @@ namespace SparklrWP.Controls
 
         private static void textPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            SparklrText control = d as SparklrText;
+            SparklrTextBlock control = d as SparklrTextBlock;
             control.Text = e.NewValue.ToString();
         }
 

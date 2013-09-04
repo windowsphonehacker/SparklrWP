@@ -653,6 +653,16 @@ namespace SparklrLib
             return requestJsonObjectAsync<Objects.Responses.Generic>("/work/repost", new Objects.Requests.Work.Repost(postid, reply), null, "POST");
         }
 
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.Inbox>> GetInboxAsync()
+        {
+            return requestJsonObjectAsync<Objects.Responses.Work.Inbox>("/work/inbox");
+        }
+
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.Chat>> GetChatAsync(int otherid)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Work.Chat>("/work/chat/" + otherid.ToString());
+        }
+
         private void raiseCredentialsExpired()
         {
             //Fire only once

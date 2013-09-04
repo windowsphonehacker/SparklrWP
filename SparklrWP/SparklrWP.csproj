@@ -174,11 +174,17 @@
     <Compile Include="Pages\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ChatPage.xaml.cs">
+      <DependentUpon>ChatPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="FirstRun.xaml.cs">
       <DependentUpon>FirstRun.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\InboxPage.xaml.cs">
+      <DependentUpon>InboxPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -201,6 +207,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Caching\Image.cs" />
+    <Compile Include="Utils\Converters\BoolToBubbleMarginConverter.cs" />
+    <Compile Include="Utils\Converters\BoolToBubbleDirectionConverter.cs" />
+    <Compile Include="Utils\Converters\TimestampToRelativeTimeConverter.cs" />
     <Compile Include="Utils\FileSizeConvertExtensions.cs" />
     <Compile Include="Resources\AppResource.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -218,6 +227,8 @@
     <Compile Include="Utils\StringExtensions.cs" />
     <Compile Include="Utils\Task.cs" />
     <Compile Include="ViewModels\FriendViewModel.cs" />
+    <Compile Include="ViewModels\InboxViewModel.cs" />
+    <Compile Include="ViewModels\ChatViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
@@ -263,6 +274,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ChatPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\InboxPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
@@ -300,6 +319,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <DesignData Include="SampleData\SearchViewModelSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
+    <DesignData Include="SampleData\InboxViewModelSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
+    <DesignData Include="SampleData\ChatViewModelSampleData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>

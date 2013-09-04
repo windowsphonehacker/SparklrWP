@@ -138,7 +138,9 @@
             </controls:PivotItem>
 
             <controls:PivotItem Header="my profile">
-                <Grid/>
+                <StackPanel Orientation="Vertical">
+                    <Button Click="Button_Click">Inbox</Button>
+                </StackPanel>
             </controls:PivotItem>
         </controls:Pivot>
 

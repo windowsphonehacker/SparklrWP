@@ -181,5 +181,10 @@ namespace SparklrWP.Pages
         {
             NavigationService.Navigate(new Uri("/Pages/SearchPage.xaml", UriKind.Relative));
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/InboxPage.xaml", UriKind.Relative));
+        }
     }
 }
