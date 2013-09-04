@@ -21,8 +21,8 @@ namespace SparklrWP.Controls
     /// </summary>
     public sealed partial class ExtendedImageControl : UserControl, IDisposable
     {
-        public DependencyProperty ImageSourceProperty = DependencyProperty.Register("ImageSource", typeof(String), typeof(object), new PropertyMetadata(imageSourceChanged));
-        public DependencyProperty StretchProperty = DependencyProperty.Register("Stretch", typeof(Stretch), typeof(object), new PropertyMetadata(stretchChanged));
+        public DependencyProperty ImageSourceProperty = DependencyProperty.Register("ImageSource", typeof(String), typeof(FrameworkElement), new PropertyMetadata(imageSourceChanged));
+        public DependencyProperty StretchProperty = DependencyProperty.Register("Stretch", typeof(Stretch), typeof(FrameworkElement), new PropertyMetadata(stretchChanged));
 
         private static void stretchChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {

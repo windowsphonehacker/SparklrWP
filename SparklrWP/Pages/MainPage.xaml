@@ -113,7 +113,7 @@
                     <toolkit:LongListSelector.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Tag="{Binding Id}" Orientation="Horizontal" Tap="StackPanel_Tap">
-                                <Image Height="75" Width="75" Source="{Binding Image}" Margin="12,6" HorizontalAlignment="Left" />
+                                <sparklrControls:ExtendedImageControl Height="75" Width="75" ImageSource="{Binding Image}" Margin="12,6" HorizontalAlignment="Left" />
                                 <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" VerticalAlignment="Center" Margin="0,15,12,15" />
                             </StackPanel>
                         </DataTemplate>
@@ -174,7 +174,7 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="#FF2A2339">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New post" Click="ApplicationBarIconButton_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.feature.search.rest.png" IsEnabled="True" Text="Search"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.feature.search.rest.png" IsEnabled="True" Text="Search" Click="SearchIconButton_Click"/>
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem IsEnabled="True" Text="About" Click="about_click"/>
             </shell:ApplicationBar.MenuItems>

@@ -638,6 +638,11 @@ namespace SparklrLib
             return requestJsonObjectAsync<Objects.Responses.Generic>("/work/unfollow/" + userid.ToString());
         }
 
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.Search>> SearchAsync(string keyword)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Work.Search>("/work/search/" + HttpUtility.UrlEncode(keyword));
+        }
+
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> Repost(int postid)
         {
             return Repost(postid, "");

@@ -7,6 +7,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -149,6 +150,20 @@ namespace SparklrWP.Utils
                 if (result != null) return result;
             }
             return null;
+        }
+
+        /// <summary>
+        /// Updates the binding on a textbox
+        /// </summary>
+        /// <param name="textBox"></param>
+        public static void UpdateBinding(this TextBox textBox)
+        {
+            BindingExpression bindingExpression =
+                    textBox.GetBindingExpression(TextBox.TextProperty);
+            if (bindingExpression != null)
+            {
+                bindingExpression.UpdateSource();
+            }
         }
     }
 }

@@ -176,5 +176,10 @@ namespace SparklrWP.Pages
         {
             App.MainViewModel.LoadMore();
         }
+
+        private void SearchIconButton_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/SearchPage.xaml", UriKind.Relative));
+        }
     }
 }
