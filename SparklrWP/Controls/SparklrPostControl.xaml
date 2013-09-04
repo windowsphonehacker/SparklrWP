@@ -12,14 +12,27 @@
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="80" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <sparklr:SparklrTextBlock Margin="0,0,0,10" x:Name="mainControl" Grid.Row="1"></sparklr:SparklrTextBlock>
-        <Image x:Name="imageProfile" HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="60" RenderTransformOrigin="0.388,0.425" Source="/Assets/t427.jpg"/>
-        <TextBlock x:Name="textName" HorizontalAlignment="Left" Height="27" Margin="77,10,0,0" TextWrapping="Wrap" Text="EaterOfCorpses (@gabber)" VerticalAlignment="Top" Width="245"/>
-        <Button x:Name="bttnNotes" Content="224" Height="70" Margin="0,10,10,0" VerticalAlignment="Top" Background="#FF454050" BorderBrush="Black" FontFamily="Segoe UI Symbol" Width="70" FontSize="18" HorizontalAlignment="Right" Padding="0,3,0,5"/>
-        <Button x:Name="bttnLike" Content="&#xE006;" Height="70" Margin="0,10,69,0" VerticalAlignment="Top" Background="#FF454050" BorderBrush="Black" FontFamily="Segoe UI Symbol" HorizontalAlignment="Right" Width="70" FontSize="18"/>
-        <TextBlock x:Name="textNetwork" HorizontalAlignment="Left" Height="33" Margin="77,37,0,0" TextWrapping="Wrap" Text="&gt; /" VerticalAlignment="Top" Width="226"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Image Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" x:Name="imageProfile" Height="60" Width="60" Margin="5" Source="/Assets/t427.jpg"/>
+        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="textName" HorizontalAlignment="Left" Margin="10,0" Text="EaterOfCorpses (@gabber)" VerticalAlignment="Bottom" />
+        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="textNetwork" HorizontalAlignment="Left" Margin="10,0" Text="&gt; /" VerticalAlignment="Top" />
+        <Border Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Background="#FF5D4C68" Width="60" Height="60" Margin="0,5" Tap="Like_Tap">
+            <Image Source="../Assets/Heart.png" Margin="10" />
+        </Border>
+        <Border Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" Background="#FF5D4C68" Width="60" Height="60" Margin="5">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="notesText" Text="9999" FontSize="25" FontWeight="Light" MaxWidth="60" Foreground="White" />
+        </Border>
+        <!--<Button Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" x:Name="bttnNotes" Height="90" Width="90" Margin="0" Padding="0" Content="224" Background="#FF5D4C68" />-->
+        <!--<Button Grid.Row="0" Grid.Column="3" Grid.RowSpan="2" x:Name="bttnLike" Content="&#xE006;" Height="70" Background="#FF5D4C68" />-->
+        <sparklr:SparklrTextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="4" Margin="0,0,0,10" x:Name="mainControl" />
     </Grid>
 </UserControl>

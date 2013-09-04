@@ -48,7 +48,7 @@ namespace SparklrLib.Objects.Responses.Beacon
 
     public class Stream
     {
-        public Data data { get; set; }
+        public Timeline[] data { get; set; }
         public List<Notification> notifications { get; set; }
     }
 }

@@ -30,7 +30,8 @@ namespace SparklrWP
             //Warning: Possible issue where a internet conenction is not stable
 
             loadData();
-            loadFriends();
+            //TODO: Fix friends
+            //loadFriends();
         }
 
         /// <summary>
@@ -127,9 +128,9 @@ namespace SparklrWP
                         }
                     }
 
-                    int count = stream.data.length;
+                    int count = stream.data.Length;
 
-                    foreach (var t in stream.data.timeline)
+                    foreach (var t in stream.data)
                     {
                         if (LastTime < t.time)
                         {
@@ -145,7 +146,8 @@ namespace SparklrWP
 
                         if (existingitem == null)
                         {
-                            ItemViewModel newItem = new ItemViewModel(t.id) {
+                            ItemViewModel newItem = new ItemViewModel(t.id)
+                            {
                                 Message = t.message,
                                 CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount),
                                 From = t.from.ToString(),
