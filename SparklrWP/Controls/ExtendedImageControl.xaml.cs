@@ -76,7 +76,16 @@ namespace SparklrWP.Controls
                 if (stretch != value)
                 {
                     stretch = value;
-                    //TODO: implement stretch changes
+                    if(imageDisplay != null)
+                    if (imageDisplay is AnimatedImage)
+                    {
+                        (imageDisplay as AnimatedImage).Stretch = value;
+                    }
+                    else
+                    {
+                        (imageDisplay as Image).Stretch = value;
+                    }
+                    
                 }
             }
         }
@@ -109,6 +118,7 @@ namespace SparklrWP.Controls
                         if (ImageSource == loadedLocation)
                         {
                             AnimatedImage image = new AnimatedImage();
+                            image.Stretch = stretch;
                             image.Source = loadedImage;
                             LayoutRoot.Children.Add(image);
                             CurrentImageMode = ExtendedImageMode.AnimatedImage;
@@ -125,6 +135,7 @@ namespace SparklrWP.Controls
                         if (ImageSource == loadedLocation)
                         {
                             Image image = new Image();
+                            image.Stretch = stretch;
                             image.Source = loadedImage;
                             LayoutRoot.Children.Add(image);
                             CurrentImageMode = ExtendedImageMode.StaticImage;

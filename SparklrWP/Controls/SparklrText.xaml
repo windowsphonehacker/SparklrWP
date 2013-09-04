@@ -10,45 +10,25 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480" Padding="0" Margin="0">
-    
-    <Grid x:Name="LayoutRoot" toolkit:TiltEffect.IsTiltEnabled="True">     
-        
+
+    <Grid x:Name="LayoutRoot" toolkit:TiltEffect.IsTiltEnabled="True">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-            <Grid Width="432" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ImageContainer" Visibility="Collapsed" Tap="ImageContainer_Tap">
-            <sparklrControls:ExtendedImageControl x:Name="postImage" />
-            <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0" Visibility="{Binding Visibility, ElementName=messageContentContainer}">
-                    <Rectangle.Fill>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="Transparent" Offset="0.532"/>
-                            <GradientStop Color="White" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Rectangle.Fill>
-                </Rectangle>
-                <toolkit:ContextMenuService.ContextMenu>
-                    <toolkit:ContextMenu>
-                        <toolkit:MenuItem Header="Save to phone..." Click="SaveImageToPhone_Click" x:Name="SaveImageMenuEntry" />
-                    </toolkit:ContextMenu>
-                </toolkit:ContextMenuService.ContextMenu>
-            </Grid>
-        <RichTextBox Grid.Row="1" Background="White" Foreground="Black" Padding="5,7,5,2" x:Name="messageContentContainer" Hold="messageContentContainer_Hold">
-            <Paragraph FontSize="26" x:Name="messageContentParagraph">
-            </Paragraph>
-            <toolkit:ContextMenuService.ContextMenu>
-                <toolkit:ContextMenu x:Name="PostContextMenu">
-                    <toolkit:MenuItem Header="Delete" x:Name="DeletePost" Click="DeletePost_Click" />
-                </toolkit:ContextMenu>
-            </toolkit:ContextMenuService.ContextMenu>
-        </RichTextBox>
-        <Grid Grid.Row="2" Margin="12,0" Background="#FF2A2339" x:Name="userbar" Visibility="Collapsed">
+        <sparklrControls:SparklrTextBlock x:Name="sparklrText" Grid.Row="0" Hold="sparklrText_Hold" Background="White">
+        </sparklrControls:SparklrTextBlock>
+        <toolkit:ContextMenuService.ContextMenu>
+            <toolkit:ContextMenu x:Name="PostContextMenu">
+                <toolkit:MenuItem Header="Delete" x:Name="DeletePost" Click="DeletePost_Click" />
+            </toolkit:ContextMenu>
+        </toolkit:ContextMenuService.ContextMenu>
+        <Grid Grid.Row="1" Margin="12,0" Background="#FF2A2339" x:Name="userbar" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-
             <TextBlock Grid.Column="0" Foreground="White" FontSize="24" x:Name="usernameTextBlock" />
             <StackPanel Grid.Column="1" Orientation="Horizontal" x:Name="commentCountContainer">
                 <TextBlock Grid.Column="1" Foreground="White" FontSize="24" x:Name="commentCountTextBlock" />

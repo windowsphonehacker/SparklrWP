@@ -148,7 +148,7 @@ namespace SparklrWP
                             ItemViewModel newItem = new ItemViewModel(t.id) { Message = t.message, CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount), From = t.from.ToString(), AuthorId = t.from, OrderTime = t.modified > t.time ? t.modified : t.time };
                             if (!String.IsNullOrEmpty(t.meta))
                             {
-                                newItem.ImageUrl = "http://d.sparklr.me/i/t" + t.meta;
+                                newItem.ImageUrl = "http://d.sparklr.me/i/t" + t.imageUrl;
                             }
 
                             JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> response = await App.Client.GetUsernamesAsync(new int[] { t.from });

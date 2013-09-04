@@ -151,15 +151,22 @@
     </Compile>
     <Compile Include="Controls\ExtendedImageControl.xaml.cs">
       <DependentUpon>ExtendedImageControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\ExtendedListBox.xaml.cs">
       <DependentUpon>ExtendedListBox.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\LoadingOverlay.xaml.cs">
       <DependentUpon>LoadingOverlay.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controls\SparklrText.xaml.cs">
       <DependentUpon>SparklrText.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\SparklrTextBlock.xaml.cs">
+      <DependentUpon>SparklrTextBlock.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
@@ -234,6 +241,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\SparklrText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SparklrTextBlock.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -337,6 +348,7 @@
     <Content Include="Assets\t19.jpg" />
     <Content Include="Assets\t427.jpg" />
     <Content Include="Assets\t591.jpg" />
+    <Content Include="Controls\appbar.message.send.png" />
     <Content Include="Icons\appbar.apply.rest.png" />
     <Content Include="Icons\appbar.cancel.rest.png" />
     <Content Include="Icons\appbar.save.rest.png" />
@@ -360,9 +372,6 @@
     </Content>
     <Resource Include="Assets\Attachment.png" />
     <Resource Include="Assets\bg.jpg" />
-    <Content Include="Controls\appbar.message.send.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Resource Include="Login-Arrow.png" />
   </ItemGroup>
   <ItemGroup>
