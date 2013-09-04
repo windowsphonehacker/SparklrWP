@@ -1,7 +1,10 @@
 ﻿extern alias ImageToolsDLL;
 using Microsoft.Phone.Controls;
 using SparklrLib.Objects;
+using SparklrLib.Objects.Responses;
+using SparklrLib.Objects.Responses.Work;
 using System;
+using System.Net;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -65,15 +68,7 @@ namespace SparklrWP.Pages
 
                 if (usargs.IsSuccessful)
                 {
-                    model.Handle = "@" + usargs.Object.handle;
-                    model.BackgroundImage = "http://d.sparklr.me/i/b" + model.ID + ".jpg";
-                    model.ProfileImage = "http://d.sparklr.me/i/" + model.ID + ".jpg";
-
-                    model.Bio = usargs.Object.bio;
-                    if (model.Bio.Trim() == "")
-                    {
-                        model.Bio = usargs.Object.name + " is too shy to write something about his/herself maybe check again later!";
-                    }
+                    refreshUserDetails(usargs);
 
                     foreach (var item in usargs.Object.timeline)
                     {
@@ -104,6 +99,20 @@ namespace SparklrWP.Pages
                         }
                     }
                 }
+            }
+        }
+
+        private void refreshUserDetails(JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.User> usargs)
+        {
+            model.Handle = "@" + usargs.Object.handle;
+            model.BackgroundImage = "http://d.sparklr.me/i/b" + model.ID + ".jpg";
+            model.ProfileImage = "http://d.sparklr.me/i/" + model.ID + ".jpg";
+            model.Following = usargs.Object.following;
+
+            model.Bio = usargs.Object.bio;
+            if (model.Bio.Trim() == "")
+            {
+                model.Bio = usargs.Object.name + " is too shy to write something about his/herself maybe check again later!";
             }
         }
 
@@ -143,6 +152,38 @@ namespace SparklrWP.Pages
                         break;
                 }
             }
+        }
+
+        private void MentionButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri(String.Format("/NewPostPage.xaml?content={0}", HttpUtility.UrlEncode(String.Format(model.Handle))), UriKind.Relative));
+        }
+
+        private async void FollowButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (!model.Following)
+            {
+                JSONRequestEventArgs<Generic> response = await App.Client.FollowAsync(model.ID);
+
+                if (response.IsSuccessful)
+                {
+                    Utils.Helpers.Notify(String.Format("You are now following {0}", model.Handle));
+                }
+            }
+            else
+            {
+                JSONRequestEventArgs<Generic> response = await App.Client.UnfollowAsync(model.ID);
+
+                if (response.IsSuccessful)
+                {
+                    Utils.Helpers.Notify(String.Format("You are no longer following {0}", model.Handle));
+                }
+            }
+
+            App.MainViewModel.RefreshFriends();
+            JSONRequestEventArgs<User> userargs = await App.Client.GetUserAsync(model.ID);
+            if (userargs.IsSuccessful)
+                refreshUserDetails(userargs);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace SparklrWP
 
         public MainViewModel()
         {
-            this.Items = new ObservableCollectionWithItemNotification<ItemViewModel>();
+            Items = new ObservableCollectionWithItemNotification<ItemViewModel>();
             GroupedItems = (new ObservableCollectionWithItemNotification<FriendViewModel>()).GroupFriends();
 
             streamUpdater = new Timer(streamUpdater_Tick, null, Timeout.Infinite, Timeout.Infinite);
@@ -348,6 +348,12 @@ namespace SparklrWP
         {
             if (streamUpdater != null)
                 streamUpdater.Dispose();
+        }
+
+        public void RefreshFriends()
+        {
+            GroupedItems = (new ObservableCollectionWithItemNotification<FriendViewModel>()).GroupFriends();
+            loadFriends();
         }
     }
 }

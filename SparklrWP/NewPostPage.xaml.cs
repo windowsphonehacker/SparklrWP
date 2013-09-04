@@ -6,6 +6,7 @@ using Microsoft.Phone.Tasks;
 using SparklrLib.Objects;
 using System;
 using System.IO;
+using System.Net;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -18,6 +19,7 @@ namespace SparklrWP
     {
         readonly PhotoChooserTask _photoChooserTask;
         Stream _photoStr;
+        bool setfocus = false;
 
         public NewPostPage()
         {
@@ -27,6 +29,18 @@ namespace SparklrWP
             if (sendButton == null)
             {
                 sendButton = (ApplicationBarIconButton)ApplicationBar.Buttons[0];
+            }
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            string content = "";
+            if (NavigationContext.QueryString.TryGetValue("content", out content))
+            {
+                messageBox.Text = String.Format("{0} ", HttpUtility.UrlDecode(content));
+                setfocus = true;
             }
         }
 
@@ -189,6 +203,16 @@ namespace SparklrWP
         private void messageBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             sendButton.IsEnabled = messageBox.Text.Length > 0 || _photoStr != null;
+        }
+
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (setfocus)
+            {
+                messageBox.Select(messageBox.Text.Length, 0);
+                messageBox.Focus();
+                setfocus = false;
+            }
         }
     }
 }

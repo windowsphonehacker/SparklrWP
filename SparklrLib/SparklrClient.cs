@@ -628,6 +628,16 @@ namespace SparklrLib
             return requestJsonObjectAsync<Objects.Responses.Generic>("/work/delete/comment/" + commentid.ToString());
         }
 
+        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> FollowAsync(int userid)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/follow/" + userid.ToString());
+        }
+
+        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> UnfollowAsync(int userid)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/unfollow/" + userid.ToString());
+        }
+
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> Repost(int postid)
         {
             return Repost(postid, "");

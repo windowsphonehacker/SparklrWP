@@ -141,8 +141,8 @@
             <controls:PanoramaItem Header="more">
                 <StackPanel>
                     <Button>message</Button>
-                    <Button>mention</Button>
-                    <Button>follow</Button>
+                    <Button Click="MentionButton_Click">mention</Button>
+                    <Button Content="{Binding FollowButtonCaption}" Click="FollowButton_Click" />
                 </StackPanel>
             </controls:PanoramaItem>
 		</controls:Panorama>

@@ -15,6 +15,7 @@ namespace SparklrWP
         private string _bio;
         private ImageSource _profileImageSource;
         private int _id;
+        private bool _following;
 
         //todo: implement properly
         private ObservableCollection<ItemViewModel> active = new ObservableCollection<ItemViewModel>();
@@ -34,6 +35,31 @@ namespace SparklrWP
                 {
                     _handle = value;
                     NotifyPropertyChanged("Handle");
+                }
+            }
+        }
+
+        public string FollowButtonCaption
+        {
+            get
+            {
+                return _following ? "unfollow" : "follow";
+            }
+        }
+
+        public bool Following
+        {
+            get
+            {
+                return _following;
+            }
+            set
+            {
+                if (_following != value)
+                {
+                    _following = value;
+                    NotifyPropertyChanged("Following");
+                    NotifyPropertyChanged("FollowButtonCaption");
                 }
             }
         }
