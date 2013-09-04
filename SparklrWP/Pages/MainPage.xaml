@@ -84,13 +84,13 @@
 
 
             <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
-            <controls:PivotItem Header="posts"  Margin="9,-7,0,0" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
+            <controls:PivotItem Header="posts" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
                 <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                     <sparklrControls:ExtendedListBox x:Name="MainListBox" ItemsSource="{Binding Items}" UnderlyingSelectionChanged="MainListBox_SelectionChanged" TopRefresh="MainListBox_TopRefresh" LoadMore="MainListBox_LoadMore" Margin="-11,0,0,0">
                         <sparklrControls:ExtendedListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel MinWidth="456" MaxWidth="456" Margin="0,0,0,17">
-                                    <sparklrControls:SparklrText Post="{Binding}" />
+                                <StackPanel Margin="0,0,0,10">
+                                    <sparklrControls:SparklrPostControl Post="{Binding}" />
                                 </StackPanel>
                             </DataTemplate>
                         </sparklrControls:ExtendedListBox.ItemTemplate>

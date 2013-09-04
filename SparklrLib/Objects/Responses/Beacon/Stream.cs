@@ -26,7 +26,7 @@ namespace SparklrLib.Objects.Responses.Beacon
         public int? origid { get; set; }
         public int? commentcount { get; set; }
         public int modified { get; set; }
-        public int network { get; set; }
+        public string network { get; set; }
     }
 
     public class Data

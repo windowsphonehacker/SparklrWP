@@ -3,13 +3,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sparklr="clr-namespace:SparklrWP.Controls"
     mc:Ignorable="d"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="480" d:DesignWidth="480">
-    
-    <Grid x:Name="LayoutRoot" Background="{StaticResource PhoneChromeBrush}">
+    Foreground="Black"
+    d:DesignWidth="480" Background="White">
 
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <sparklr:SparklrTextBlock Margin="0,0,0,10" x:Name="mainControl" Grid.Row="1"></sparklr:SparklrTextBlock>
+        <Image x:Name="imageProfile" HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="60" RenderTransformOrigin="0.388,0.425" Source="/Assets/t427.jpg"/>
+        <TextBlock x:Name="textName" HorizontalAlignment="Left" Height="27" Margin="77,10,0,0" TextWrapping="Wrap" Text="EaterOfCorpses (@gabber)" VerticalAlignment="Top" Width="245"/>
+        <Button x:Name="bttnNotes" Content="224" Height="70" Margin="0,10,10,0" VerticalAlignment="Top" Background="#FF454050" BorderBrush="Black" FontFamily="Segoe UI Symbol" Width="70" FontSize="18" HorizontalAlignment="Right" Padding="0,3,0,5"/>
+        <Button x:Name="bttnLike" Content="&#xE006;" Height="70" Margin="0,10,69,0" VerticalAlignment="Top" Background="#FF454050" BorderBrush="Black" FontFamily="Segoe UI Symbol" HorizontalAlignment="Right" Width="70" FontSize="18"/>
+        <TextBlock x:Name="textNetwork" HorizontalAlignment="Left" Height="33" Margin="77,37,0,0" TextWrapping="Wrap" Text="&gt; /" VerticalAlignment="Top" Width="226"/>
     </Grid>
 </UserControl>

@@ -95,6 +95,7 @@ namespace SparklrWP.Controls
 
                     postImage.ImageSource = value;
                     imagelocation = value;
+                    refreshVisibility();
                 }
             }
         }

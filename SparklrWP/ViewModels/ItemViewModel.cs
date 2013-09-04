@@ -36,6 +36,23 @@ namespace SparklrWP
             }
         }
 
+        private string _network;
+        public string Network
+        {
+            get
+            {
+                return _network;
+            }
+            set
+            {
+                if (value != _network)
+                {
+                    _network = value;
+                    NotifyPropertyChanged("Network");
+                }
+            }
+        }
+
         private string _message;
         public string Message
         {

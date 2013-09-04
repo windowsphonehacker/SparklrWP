@@ -25,7 +25,7 @@
             </toolkit:ContextMenuService.ContextMenu>
         </Grid>
         <RichTextBox Grid.Row="1" Background="White" Foreground="Black" Padding="5,7,5,2" x:Name="messageContentContainer">
-            <Paragraph FontSize="26" x:Name="messageContentParagraph">
+            <Paragraph FontSize="18" x:Name="messageContentParagraph">
             </Paragraph>
         </RichTextBox>
     </Grid>
