@@ -161,6 +161,9 @@
       <DependentUpon>LoadingOverlay.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\SparklrPostControl.xaml.cs">
+      <DependentUpon>SparklrPostControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SparklrText.xaml.cs">
       <DependentUpon>SparklrText.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -237,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LoadingOverlay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SparklrPostControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

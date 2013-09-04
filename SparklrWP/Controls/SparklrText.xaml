@@ -9,9 +9,10 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    d:DesignHeight="480" d:DesignWidth="480" Padding="0" Margin="0">
+    Background="White"
+    d:DesignHeight="480" d:DesignWidth="480" Padding="12,0" Margin="0">
 
-    <Grid x:Name="LayoutRoot" toolkit:TiltEffect.IsTiltEnabled="True">
+    <Grid x:Name="LayoutRoot" toolkit:TiltEffect.IsTiltEnabled="True" Background="White">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -19,12 +20,7 @@
         </Grid.RowDefinitions>
         <sparklrControls:SparklrTextBlock x:Name="sparklrText" Grid.Row="0" Hold="sparklrText_Hold" Background="White">
         </sparklrControls:SparklrTextBlock>
-        <toolkit:ContextMenuService.ContextMenu>
-            <toolkit:ContextMenu x:Name="PostContextMenu">
-                <toolkit:MenuItem Header="Delete" x:Name="DeletePost" Click="DeletePost_Click" />
-            </toolkit:ContextMenu>
-        </toolkit:ContextMenuService.ContextMenu>
-        <Grid Grid.Row="1" Margin="12,0" Background="#FF2A2339" x:Name="userbar" Visibility="Collapsed">
+        <Grid Grid.Row="1" Background="#FF2A2339" x:Name="userbar" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition />
@@ -36,4 +32,9 @@
             </StackPanel>
         </Grid>
     </Grid>
+    <toolkit:ContextMenuService.ContextMenu>
+        <toolkit:ContextMenu x:Name="PostContextMenu">
+            <toolkit:MenuItem Header="Delete" x:Name="DeletePost" Click="DeletePost_Click" />
+        </toolkit:ContextMenu>
+    </toolkit:ContextMenuService.ContextMenu>
 </UserControl>

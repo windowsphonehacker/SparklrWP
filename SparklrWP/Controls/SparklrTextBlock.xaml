@@ -11,12 +11,12 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     d:DesignHeight="480" d:DesignWidth="480">
 
-    <Grid x:Name="LayoutRoot" Background="{x:Null}">
+    <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Height="432" Width="432" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="ImageContainer" Tap="ImageContainer_Tap" Margin="5" Background="Black">
+        <Grid Height="432" Grid.Row="0" VerticalAlignment="Center" x:Name="ImageContainer" Tap="ImageContainer_Tap" Margin="5" Background="Black">
             <sparklrControls:ExtendedImageControl x:Name="postImage" Stretch="None" />
             <toolkit:ContextMenuService.ContextMenu>
                 <toolkit:ContextMenu>
