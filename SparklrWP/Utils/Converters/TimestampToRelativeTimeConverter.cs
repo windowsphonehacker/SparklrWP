@@ -18,29 +18,33 @@ namespace SparklrWP.Utils.Converters
 
                 TimeSpan delta = DateTime.UtcNow.Subtract(time);
 
-                if (delta.Days > 1)
+                if (delta.TotalDays >= 2)
                 {
-                    return String.Format("{0} days ago", delta.Days);
+                    return String.Format("{0:0} days ago", delta.TotalDays);
                 }
-                else if (delta.Days == 1)
+                else if (delta.TotalDays > 1)
                 {
                     return "one day ago";
                 }
-                else if (delta.Hours > 1)
+                else if (delta.TotalHours >= 2)
                 {
-                    return String.Format("{0} hours ago", delta.Hours);
+                    return String.Format("{0:0} hours ago", delta.TotalHours);
                 }
-                else if (delta.Minutes > 1)
+                else if (delta.TotalHours > 1)
                 {
-                    return String.Format("{0} minutes ago", delta.Minutes);
+                    return "one hour ago";
                 }
-                else if (delta.Minutes == 1)
+                else if (delta.TotalMinutes >= 2)
+                {
+                    return String.Format("{0:0} minutes ago", delta.TotalMinutes);
+                }
+                else if (delta.TotalMinutes > 1)
                 {
                     return "one minute ago";
                 }
-                else if (delta.Seconds > 10)
+                else if (delta.TotalSeconds > 10)
                 {
-                    return String.Format("{0} seconds ago", delta.Seconds);
+                    return String.Format("{0:0} seconds ago", delta.TotalSeconds);
                 }
                 else
                 {
