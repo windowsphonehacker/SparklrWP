@@ -68,6 +68,7 @@ namespace SparklrWP
 
         }
 
+        static internal bool SuppressNotifications = false;
         private int previousNotifications = 0;
         void SparklrClient_NotificationsReceived(object sender, SparklrLib.Objects.NotificationEventArgs e)
         {
@@ -76,7 +77,8 @@ namespace SparklrWP
             {
                 if (e.Notifications.Length != previousNotifications)
                 {
-                    Helpers.Notify(String.Format("You have {0} notifications.", e.Notifications.Length));
+                    if (!SuppressNotifications)
+                        Helpers.Notify(String.Format("You have {0} notifications.", e.Notifications.Length));
                     previousNotifications = e.Notifications.Length;
                 }
 

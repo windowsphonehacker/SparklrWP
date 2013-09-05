@@ -185,5 +185,10 @@ namespace SparklrWP.Pages
             if (userargs.IsSuccessful)
                 refreshUserDetails(userargs);
         }
+
+        private void MessageButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/ChatPage.xaml?id=" + model.ID, UriKind.Relative));
+        }
     }
 }

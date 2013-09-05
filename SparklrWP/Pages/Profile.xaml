@@ -140,7 +140,7 @@
             
             <controls:PanoramaItem Header="more">
                 <StackPanel>
-                    <Button>message</Button>
+                    <Button Click="MessageButton_Click">message</Button>
                     <Button Click="MentionButton_Click">mention</Button>
                     <Button Content="{Binding FollowButtonCaption}" Click="FollowButton_Click" />
                 </StackPanel>

@@ -92,25 +92,27 @@ namespace SparklrWP
                 Posts.Clear();
                 Users.Clear();
 
-                foreach (SearchUser user in results.Object.users)
-                {
-                    Users.Add(new FriendViewModel(user.id)
-                        {
-                            Name = user.username,
-                            Image = "http://d.sparklr.me/i/t" + user.id + ".jpg"
-                        });
-                }
+                if (results.Object.users != null)
+                    foreach (SearchUser user in results.Object.users)
+                    {
+                        Users.Add(new FriendViewModel(user.id)
+                            {
+                                Name = user.username,
+                                Image = "http://d.sparklr.me/i/t" + user.id + ".jpg"
+                            });
+                    }
 
-                foreach (SearchPost post in results.Object.posts)
-                {
-                    Posts.Add(new ItemViewModel(post.id)
-                        {
-                            AuthorId = post.from,
-                            Message = post.message,
-                            CommentCount = post.commentcount ?? 0,
-                            ImageUrl = !String.IsNullOrEmpty(post.meta) ? String.Format("http://d.sparklr.me/i/t{0}", post.meta) : null
-                        });
-                }
+                if (results.Object.posts != null)
+                    foreach (SearchPost post in results.Object.posts)
+                    {
+                        Posts.Add(new ItemViewModel(post.id)
+                            {
+                                AuthorId = post.from,
+                                Message = post.message,
+                                CommentCount = post.commentcount ?? 0,
+                                ImageUrl = !String.IsNullOrEmpty(post.meta) ? String.Format("http://d.sparklr.me/i/t{0}", post.meta) : null
+                            });
+                    }
             }
             else
             {

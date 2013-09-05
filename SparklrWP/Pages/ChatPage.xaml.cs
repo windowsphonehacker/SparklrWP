@@ -1,6 +1,8 @@
 ﻿using Microsoft.Phone.Controls;
+using SparklrWP.Utils;
 using System;
 using System.Windows;
+using System.Windows.Input;
 
 namespace SparklrWP.Pages
 {
@@ -57,6 +59,16 @@ namespace SparklrWP.Pages
         {
             if (loadingOverlay.Visibility == System.Windows.Visibility.Visible)
                 loadingOverlay.FinishLoading();
+        }
+
+        private void ChatBubbleTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                chatBubbleTextBox.UpdateBinding();
+                model.sendMessage();
+                Focus();
+            }
         }
     }
 }

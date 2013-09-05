@@ -227,6 +227,7 @@
     <Compile Include="Utils\ListToGroupedListConverter.cs" />
     <Compile Include="Utils\MemoryDiagnosticsHelper.cs" />
     <Compile Include="Utils\ObservableCollectionWithItemNotification.cs" />
+    <Compile Include="Utils\SmartDispatcher.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
     <Compile Include="Utils\Task.cs" />
     <Compile Include="ViewModels\FriendViewModel.cs" />

@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using SparklrLib.Objects;
-using SparklrLib.Objects.Responses;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -488,7 +487,7 @@ namespace SparklrLib
                     int count;
                     while ((count = image.Read(array, 0, array.Length)) != 0)
                     {
-                       ms.Write(array, 0, count);
+                        ms.Write(array, 0, count);
                     }
 #else
                     image.CopyTo(ms);
@@ -664,6 +663,20 @@ namespace SparklrLib
         public Task<JSONRequestEventArgs<Objects.Responses.Work.Chat[]>> GetChatAsync(int otherid)
         {
             return requestJsonObjectAsync<Objects.Responses.Work.Chat[]>("/work/chat/" + otherid.ToString());
+        }
+
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Chat>> GetBeaconChatAsync(int otherid, int since, int limit = 0)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Beacon.Chat>("/beacon/chat/" + otherid.ToString() + "?since=" + since.ToString() + "&n=" + limit.ToString());
+        }
+
+        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> PostChatMessageAsync(int recipient, string message)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/chat", new Objects.Requests.Work.Chat()
+                {
+                    to = recipient,
+                    message = message
+                }, "", "POST");
         }
 
         private void raiseCredentialsExpired()

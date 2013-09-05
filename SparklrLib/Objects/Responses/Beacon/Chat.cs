@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-
+﻿
 namespace SparklrLib.Objects.Responses.Beacon
 {
     public class ChatMessage
@@ -12,6 +11,6 @@ namespace SparklrLib.Objects.Responses.Beacon
 
     public class Chat : BeaconBase
     {
-        public List<ChatMessage> data { get; set; }
+        public ChatMessage[] data { get; set; }
     }
 }

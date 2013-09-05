@@ -69,7 +69,7 @@
                     </Style>
                 </ListBox.ItemContainerStyle>
             </ListBox>
-            <codingForFun:ChatBubbleTextBox Grid.Row="1" ChatBubbleDirection="LowerRight" Margin="75,0,0,5" />
+            <codingForFun:ChatBubbleTextBox Grid.Row="1" ChatBubbleDirection="LowerRight" Margin="75,0,0,5" KeyDown="ChatBubbleTextBox_KeyDown" Text="{Binding Message, Mode=TwoWay}" x:Name="chatBubbleTextBox" InputScope="Chat" />
         </Grid>
         <!-- Visibility set in code behind -->
         <sparklrControls:LoadingOverlay x:Name="loadingOverlay" Grid.Row="0" Grid.RowSpan="2" Visibility="Collapsed" />

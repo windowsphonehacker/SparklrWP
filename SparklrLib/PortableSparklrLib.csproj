@@ -39,6 +39,7 @@
     <Compile Include="Objects\JSONRequestEventArgs.cs" />
     <Compile Include="Objects\LoginEventArgs.cs" />
     <Compile Include="Objects\NotificationEventArgs.cs" />
+    <Compile Include="Objects\Requests\Work\Chat.cs" />
     <Compile Include="Objects\Requests\Work\Comment.cs" />
     <Compile Include="Objects\Requests\Work\Like.cs" />
     <Compile Include="Objects\Requests\Work\Post.cs" />

@@ -111,14 +111,17 @@ namespace SparklrWP.Utils
         }
 
         /// <summary>
-        /// Displays a non intrusive toast notification
+        /// Displays a non intrusive toast notification. Thread safe.
         /// </summary>
         /// <param name="text">The text to display</param>
         public static void Notify(string text)
         {
-            ToastPrompt p = new ToastPrompt();
-            p.Message = text;
-            p.Show();
+            SmartDispatcher.BeginInvoke(() =>
+            {
+                ToastPrompt p = new ToastPrompt();
+                p.Message = text;
+                p.Show();
+            });
         }
 
         /// <summary>

@@ -1,8 +1,10 @@
 using SparklrLib.Objects;
+using SparklrLib.Objects.Responses;
 using SparklrLib.Objects.Responses.Work;
 using SparklrWP.Utils;
 using System;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows;
 
 namespace SparklrWP
@@ -109,10 +111,38 @@ namespace SparklrWP
         }
     }
 
-    public class ChatViewModel : INotifyPropertyChanged
+    public sealed class ChatViewModel : INotifyPropertyChanged, IDisposable
     {
+        //TODO: Stop autoupdates when not focused
+        Timer updateScheduler;
+        int lastTime = 0;
+
+        private async void updateMessages(object state)
+        {
+            GlobalLoading.Instance.IsLoading = true;
+            //Deactivate the timer to prevent multiple updates
+            updateScheduler.Change(Timeout.Infinite, Timeout.Infinite);
+
+            App.SuppressNotifications = true;
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Chat> response = await App.Client.GetBeaconChatAsync(From, lastTime);
+            App.SuppressNotifications = false;
+
+            if (response.IsSuccessful)
+            {
+                foreach (SparklrLib.Objects.Responses.Beacon.ChatMessage i in response.Object.data)
+                {
+                    AddMessage(i);
+                }
+            }
+
+            //reschedule the timer
+            updateScheduler.Change(2000, Timeout.Infinite);
+            GlobalLoading.Instance.IsLoading = false;
+        }
+
         public ChatViewModel()
         {
+            updateScheduler = new Timer(updateMessages, null, 2, Timeout.Infinite);
         }
 
         public event EventHandler LoadingFinished;
@@ -130,6 +160,23 @@ namespace SparklrWP
                 {
                     _name = value;
                     NotifyPropertyChanged("Name");
+                }
+            }
+        }
+
+        private string _message = "";
+        public string Message
+        {
+            get
+            {
+                return _message;
+            }
+            set
+            {
+                if (Message != value)
+                {
+                    _message = value;
+                    NotifyPropertyChanged("Message");
                 }
             }
         }
@@ -185,15 +232,13 @@ namespace SparklrWP
 
                 foreach (Chat i in result.Object)
                 {
-                    Messages.Add(new ChatMessageModel()
-                    {
-                        From = i.from,
-                        To = i.to,
-                        CurrentUser = i.from == App.Client.UserId,
-                        Message = i.message,
-                        Time = i.time
-                    });
+                    AddMessage(i);
                 }
+
+                //TODO: prevent the last message from showing again
+
+                //Start automatic updates
+                updateScheduler.Change(2000, Timeout.Infinite);
 
                 if (LoadingFinished != null)
                     LoadingFinished(this, null);
@@ -201,6 +246,77 @@ namespace SparklrWP
             else
             {
                 MessageBox.Show("We're having trouble talking with sparklr. Please try again later.");
+            }
+        }
+
+        private void AddMessage(Chat item)
+        {
+            ChatMessageModel m = new ChatMessageModel()
+            {
+                From = item.from,
+                To = item.to,
+                CurrentUser = item.from == App.Client.UserId,
+                Message = item.message,
+                Time = item.time
+            };
+
+            insertItem(m);
+
+            if (item.time > lastTime)
+            {
+                lastTime = item.time;
+            }
+        }
+
+        private void AddMessage(SparklrLib.Objects.Responses.Beacon.ChatMessage item)
+        {
+            ChatMessageModel m = new ChatMessageModel()
+            {
+                From = item.from,
+                To = item.to,
+                CurrentUser = item.from == App.Client.UserId,
+                Message = item.message,
+                Time = item.time
+            };
+
+            insertItem(m);
+
+            if (item.time > lastTime)
+            {
+                lastTime = item.time;
+            }
+        }
+
+        private void insertItem(ChatMessageModel m)
+        {
+            if (Messages.Count == 0)
+            {
+                SmartDispatcher.BeginInvoke(() =>
+                            {
+                                Messages.Add(m);
+                            });
+            }
+            else
+            {
+                for (int i = 0; i < Messages.Count; i++)
+                {
+                    if (Messages[i].Time < m.Time)
+                    {
+                        SmartDispatcher.BeginInvoke(() =>
+                            {
+                                Messages.Insert(i, m);
+                            });
+                        break;
+                    }
+                    else if (i + 1 == Messages.Count)
+                    {
+                        SmartDispatcher.BeginInvoke(() =>
+                            {
+                                Messages.Add(m);
+                            });
+                        break;
+                    }
+                }
             }
         }
 
@@ -240,6 +356,38 @@ namespace SparklrWP
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public async void sendMessage()
+        {
+            if (!String.IsNullOrEmpty(Message))
+            {
+                GlobalLoading.Instance.IsLoading = true;
+
+                JSONRequestEventArgs<Generic> result = await App.Client.PostChatMessageAsync(From, Message);
+
+                if (result.IsSuccessful)
+                {
+                    Message = "";
+                }
+                else
+                {
+                    Helpers.Notify("Couldnt send your message :(");
+                }
+
+                GlobalLoading.Instance.IsLoading = false;
+            }
+            else
+            {
+                Helpers.Notify("Don't be so shy. Say something ;)");
+            }
+
+        }
+
+        public void Dispose()
+        {
+            if (updateScheduler != null)
+                updateScheduler.Dispose();
         }
     }
 }

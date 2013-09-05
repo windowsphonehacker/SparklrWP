@@ -18,14 +18,13 @@ namespace SparklrWP.Pages
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            ((TextBox)sender).UpdateBinding();
-
             if (e.Key == Key.Enter)
                 doSearch();
         }
 
         private void doSearch()
         {
+            searchTextBox.UpdateBinding();
             this.Focus();
             model.Search();
         }
@@ -38,6 +37,15 @@ namespace SparklrWP.Pages
         private void searchTextBox_ActionIconTapped(object sender, System.EventArgs e)
         {
             doSearch();
+        }
+
+        private void UserStackPanel_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            FriendViewModel i = ((StackPanel)sender).DataContext as FriendViewModel;
+            if (i != null)
+            {
+                NavigationService.Navigate(new System.Uri("/Pages/Profile.xaml?userId=" + i.Id.ToString(), System.UriKind.Relative));
+            }
         }
     }
 }

@@ -7,7 +7,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
-using System.Windows;
 
 namespace SparklrWP
 {
@@ -42,10 +41,7 @@ namespace SparklrWP
         void streamUpdater_Tick(object state)
         {
             //The streamUpdater is stopped in loadData to prevent multiple requests
-            System.Windows.Deployment.Current.Dispatcher.BeginInvoke(() =>
-            {
-                loadData();
-            });
+            loadData();
         }
 
         private ObservableCollectionWithItemNotification<ItemViewModel> _items;
@@ -64,7 +60,7 @@ namespace SparklrWP
                 {
                     _items = value;
 
-                    Deployment.Current.Dispatcher.BeginInvoke(() =>
+                    SmartDispatcher.BeginInvoke(() =>
                     {
                         NotifyPropertyChanged("Items");
                     });
@@ -185,10 +181,13 @@ namespace SparklrWP
                 Notifications.Clear();
                 foreach (Notification n in notifications)
                 {
-                    Notifications.Add(new NotificationViewModel(n.id)
+                    SmartDispatcher.BeginInvoke(() =>
                     {
-                        Message = n.body,
-                        From = n.from
+                        Notifications.Add(new NotificationViewModel(n.id)
+                        {
+                            Message = n.body,
+                            From = n.from
+                        });
                     });
                 }
             }
@@ -199,12 +198,18 @@ namespace SparklrWP
             if (Items == null)
                 Items = new ObservableCollectionWithItemNotification<ItemViewModel>();
 
-            if (BeforeItemAdded != null)
-                BeforeItemAdded(this, null);
+            SmartDispatcher.BeginInvoke(() =>
+                {
+                    if (BeforeItemAdded != null)
+                        BeforeItemAdded(this, null);
+                });
 
             if (Items.Count() == 0)
             {
-                Items.Add(item);
+                SmartDispatcher.BeginInvoke(() =>
+                    {
+                        Items.Add(item);
+                    });
             }
             else
             {
@@ -214,19 +219,28 @@ namespace SparklrWP
                 {
                     if (Items[i].OrderTime < time)
                     {
-                        Items.Insert(i, item);
+                        SmartDispatcher.BeginInvoke(() =>
+                            {
+                                Items.Insert(i, item);
+                            });
                         break;
                     }
                     else if (i + 1 == Items.Count())
                     {
-                        Items.Add(item);
+                        SmartDispatcher.BeginInvoke(() =>
+                            {
+                                Items.Add(item);
+                            });
                         break;
                     }
                 }
             }
 
-            if (AfterItemAdded != null)
-                AfterItemAdded(this, null);
+            SmartDispatcher.BeginInvoke(() =>
+                {
+                    if (AfterItemAdded != null)
+                        AfterItemAdded(this, null);
+                });
         }
 
         public async void LoadMore()
@@ -313,7 +327,10 @@ namespace SparklrWP
                 if (value != _newCount)
                 {
                     _newCount = value;
-                    NotifyPropertyChanged("NewCount");
+                    SmartDispatcher.BeginInvoke(() =>
+                        {
+                            NotifyPropertyChanged("NewCount");
+                        });
                 }
             }
         }
