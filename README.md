@@ -1,4 +1,4 @@
-#SparklrWP [![Build Status](http://ci.dy.fi/job/SparklrWP/badge/icon)](http://ci.dy.fi/job/SparklrWP/)
+#SparklrWP [![Build Status](https://ci.dy.fi/job/SparklrWP/badge/icon)](http://ci.dy.fi/job/SparklrWP/)
 SparklrWP is an upcoming client for the social network [sparklr*](http://www.sparklr.me), which is currently in a closed beta phase. Although this app is created by a bunch of third-party-devs, we can say that we offer the first dedicated app for the growing social network.
 
 ##How do I get it?
