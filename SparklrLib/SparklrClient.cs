@@ -658,9 +658,9 @@ namespace SparklrLib
             return requestJsonObjectAsync<Objects.Responses.Work.Inbox>("/work/inbox");
         }
 
-        public Task<JSONRequestEventArgs<Objects.Responses.Work.Chat>> GetChatAsync(int otherid)
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.Chat[]>> GetChatAsync(int otherid)
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.Chat>("/work/chat/" + otherid.ToString());
+            return requestJsonObjectAsync<Objects.Responses.Work.Chat[]>("/work/chat/" + otherid.ToString());
         }
 
         private void raiseCredentialsExpired()

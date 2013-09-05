@@ -76,16 +76,16 @@ namespace SparklrWP.Controls
                 if (stretch != value)
                 {
                     stretch = value;
-                    if(imageDisplay != null)
-                    if (imageDisplay is AnimatedImage)
-                    {
-                        (imageDisplay as AnimatedImage).Stretch = value;
-                    }
-                    else
-                    {
-                        (imageDisplay as Image).Stretch = value;
-                    }
-                    
+                    if (imageDisplay != null)
+                        if (imageDisplay is AnimatedImage)
+                        {
+                            (imageDisplay as AnimatedImage).Stretch = value;
+                        }
+                        else
+                        {
+                            (imageDisplay as Image).Stretch = value;
+                        }
+
                 }
             }
         }
@@ -105,7 +105,13 @@ namespace SparklrWP.Controls
 
         private async void loadImage()
         {
-            if (!String.IsNullOrEmpty(ImageSource))
+            if (System.ComponentModel.DesignerProperties.IsInDesignTool)
+            {
+                Image b = new Image();
+                b.Source = new BitmapImage(new Uri(ImageSource));
+                imageDisplay = b;
+            }
+            else if (!String.IsNullOrEmpty(ImageSource))
             {
                 string loadedLocation = String.Copy(ImageSource);
 

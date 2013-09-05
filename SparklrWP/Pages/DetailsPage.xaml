@@ -7,7 +7,8 @@
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	d:DataContext="{d:DesignData ../SampleData/PostViewModelSampleData.xaml}"
+	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
+    d:DataContext="{d:DesignData ../SampleData/PostViewModelSampleData.xaml}"
 	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696" 
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
 	FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -54,7 +55,8 @@
                     </ListBox>
                 </StackPanel>
             </ScrollViewer>
-            <TextBox Grid.Row="2" x:Name="CommentTextbox" TextWrapping="Wrap" VerticalAlignment="Bottom" KeyDown="CommentTextBox_KeyDown" InputScope="Chat" AcceptsReturn="True" TextChanged="CommentTextbox_TextChanged" />
+            <!--<TextBox Grid.Row="2" x:Name="CommentTextbox" TextWrapping="Wrap" VerticalAlignment="Bottom" KeyDown="CommentTextBox_KeyDown" InputScope="Chat" AcceptsReturn="True" TextChanged="CommentTextbox_TextChanged" />-->
+            <toolkit:PhoneTextBox Grid.Row="2" x:Name="CommentTextbox" TextWrapping="Wrap" VerticalAlignment="Bottom" KeyDown="CommentTextBox_KeyDown" InputScope="Chat" AcceptsReturn="True" TextChanged="CommentTextbox_TextChanged" MaxLength="300" LengthIndicatorThreshold="230" DisplayedMaxLength="300" LengthIndicatorVisible="True" Hint="Comment" />
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>

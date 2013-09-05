@@ -24,11 +24,6 @@ namespace SparklrWP.Pages
                 doSearch();
         }
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            doSearch();
-        }
-
         private void doSearch()
         {
             this.Focus();
@@ -38,6 +33,11 @@ namespace SparklrWP.Pages
         private void LayoutRoot_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             searchTextBox.Focus();
+        }
+
+        private void searchTextBox_ActionIconTapped(object sender, System.EventArgs e)
+        {
+            doSearch();
         }
     }
 }

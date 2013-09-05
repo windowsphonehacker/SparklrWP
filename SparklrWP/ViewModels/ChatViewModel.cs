@@ -177,13 +177,13 @@ namespace SparklrWP
 
         private async void loadMessages()
         {
-            JSONRequestEventArgs<Chat> result = await App.Client.GetChatAsync(From);
+            JSONRequestEventArgs<Chat[]> result = await App.Client.GetChatAsync(From);
 
             if (result.IsSuccessful)
             {
                 Messages.Clear();
 
-                foreach (ChatItem i in result.Object)
+                foreach (Chat i in result.Object)
                 {
                     Messages.Add(new ChatMessageModel()
                     {

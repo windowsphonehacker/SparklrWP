@@ -75,6 +75,7 @@
     <Compile Include="Objects\BeaconStreamEventArgs.cs" />
     <Compile Include="Objects\JSONRequestEventArgs.cs" />
     <Compile Include="Objects\LoginEventArgs.cs" />
+    <Compile Include="Objects\Requests\Work\Chat.cs" />
     <Compile Include="Objects\Requests\Work\Comment.cs" />
     <Compile Include="Objects\Requests\Work\Repost.cs" />
     <Compile Include="Objects\Requests\Work\Like.cs" />
