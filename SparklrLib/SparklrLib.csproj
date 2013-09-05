@@ -80,10 +80,12 @@
     <Compile Include="Objects\Requests\Work\Repost.cs" />
     <Compile Include="Objects\Requests\Work\Like.cs" />
     <Compile Include="Objects\Requests\Work\Post.cs" />
+    <Compile Include="Objects\Responses\Beacon\BeaconBase.cs" />
     <Compile Include="Objects\Responses\Beacon\Chat.cs" />
     <Compile Include="Objects\Responses\Beacon\Comments.cs" />
     <Compile Include="Objects\Responses\Beacon\Stream.cs" />
     <Compile Include="Objects\Responses\Generic.cs" />
+    <Compile Include="Objects\Responses\NotificationEventArgs.cs" />
     <Compile Include="Objects\Responses\Work\Chat.cs" />
     <Compile Include="Objects\Responses\Work\Friends.cs" />
     <Compile Include="Objects\Responses\Work\Inbox.cs" />

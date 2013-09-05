@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SparklrLib.Objects;
+using SparklrLib.Objects.Responses;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +22,8 @@ namespace SparklrLib
         /// Is raised when the login details are invalid.
         /// </summary>
         public event EventHandler CredentialsExpired;
+
+        public static event EventHandler<NotificationEventArgs> NotificationsReceived;
 
         /// <summary>
         /// Gets or sets the authentication token.
@@ -672,6 +675,12 @@ namespace SparklrLib
                 if (CredentialsExpired != null)
                     CredentialsExpired(this, null);
             }
+        }
+
+        static internal void RaiseNotificationReceived(object sender, NotificationEventArgs e)
+        {
+            if (NotificationsReceived != null)
+                NotificationsReceived(sender, e);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace SparklrLib.Objects.Responses.Beacon
         public int time { get; set; }
     }
 
-    public class Comments
+    public class Comments : BeaconBase
     {
         public List<Comment> data { get; set; }
     }

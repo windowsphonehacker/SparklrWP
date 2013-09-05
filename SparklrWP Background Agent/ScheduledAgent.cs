@@ -5,11 +5,8 @@ using SparklrLib.Objects;
 using SparklrLib.Objects.Responses.Beacon;
 using System;
 using System.Collections.Generic;
-using System.Windows.Media.Imaging;
 using System.IO.IsolatedStorage;
 using System.Security.Cryptography;
-using System.Windows.Controls;
-using System.Windows.Media;
 using System.Text;
 using System.Windows;
 namespace SparklrWP_Background_Agent
@@ -100,15 +97,17 @@ namespace SparklrWP_Background_Agent
 
 #if DEBUG
                         if (strm.notifications == null)
-                            strm.notifications = new List<Notification>();
-                        strm.notifications.Add(new Notification()
-                       {
-                           from = 4,
-                           type = 1,
-                           body = "Debug test"
-                       });
+                        {
+                            strm.notifications = new Notification[1];
+                            strm.notifications[0] = new Notification()
+                               {
+                                   from = 4,
+                                   type = 1,
+                                   body = "Debug test"
+                               };
+                        }
 #endif
-                        if (strm.notifications != null && strm.notifications.Count > 0)
+                        if (strm.notifications != null && strm.notifications.Length > 0)
                         {
 
                             List<int> userIds = new List<int>();

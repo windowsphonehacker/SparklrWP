@@ -10,7 +10,7 @@ namespace SparklrLib.Objects.Responses.Beacon
         public string message { get; set; }
     }
 
-    public class Chat
+    public class Chat : BeaconBase
     {
         public List<ChatMessage> data { get; set; }
     }

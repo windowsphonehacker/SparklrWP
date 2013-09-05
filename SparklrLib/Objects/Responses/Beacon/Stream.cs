@@ -35,20 +35,8 @@ namespace SparklrLib.Objects.Responses.Beacon
         public int length { get; set; }
     }
 
-    public class Notification
-    {
-        public int id { get; set; }
-        public int from { get; set; }
-        public int to { get; set; }
-        public int type { get; set; }
-        public int time { get; set; }
-        public string body { get; set; }
-        public string action { get; set; }
-    }
-
-    public class Stream
+    public class Stream : BeaconBase
     {
         public Timeline[] data { get; set; }
-        public List<Notification> notifications { get; set; }
     }
 }

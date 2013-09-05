@@ -39,6 +39,7 @@ namespace SparklrWP
             MemoryDiagnosticsHelper.Start(TimeSpan.FromMilliseconds(500), true);
 #endif
             Client.CredentialsExpired += Client_CredentialsExpired;
+            SparklrClient.NotificationsReceived += SparklrClient_NotificationsReceived;
             // Standard Silverlight initialization
             InitializeComponent();
 
@@ -65,6 +66,25 @@ namespace SparklrWP
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
+        }
+
+        private int previousNotifications = 0;
+        void SparklrClient_NotificationsReceived(object sender, SparklrLib.Objects.Responses.NotificationEventArgs e)
+        {
+            //TODO: fully implement, e.g. navigate to Notifications on tap, show content of notification, etc.
+            if (e.Notifications.Length > 0)
+            {
+                if (e.Notifications.Length != previousNotifications)
+                {
+                    Helpers.Notify(String.Format("You have {0} notifications.", e.Notifications.Length));
+                    previousNotifications = e.Notifications.Length;
+                }
+
+                if (mainViewModel != null)
+                {
+                    mainViewModel.UpdateNotifications(e.Notifications);
+                }
+            }
         }
 
         private void Client_CredentialsExpired(object sender, EventArgs e)

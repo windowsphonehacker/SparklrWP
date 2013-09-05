@@ -1,4 +1,5 @@
 using SparklrLib.Objects;
+using SparklrLib.Objects.Responses.Beacon;
 using SparklrWP.Utils;
 using System;
 using System.Collections.Generic;
@@ -113,23 +114,6 @@ namespace SparklrWP
 
                 if (stream != null && stream.data != null)
                 {
-                    if (stream.notifications != null)
-                    {
-                        NewCount = stream.notifications.Count;
-
-                        Notifications.Clear();
-                        foreach (SparklrLib.Objects.Responses.Beacon.Notification n in stream.notifications)
-                        {
-                            Notifications.Add(new NotificationViewModel(n.id)
-                            {
-                                Message = n.body,
-                                From = n.from
-                            });
-                        }
-                    }
-
-                    int count = stream.data.Length;
-
                     foreach (var t in stream.data)
                     {
                         if (LastTime < t.time)
@@ -188,6 +172,24 @@ namespace SparklrWP
                             App.logger.log(i.ImageUrl);
                     }
 #endif
+                }
+            }
+        }
+
+        public void UpdateNotifications(Notification[] notifications)
+        {
+            if (notifications != null)
+            {
+                NewCount = notifications.Length;
+
+                Notifications.Clear();
+                foreach (Notification n in notifications)
+                {
+                    Notifications.Add(new NotificationViewModel(n.id)
+                    {
+                        Message = n.body,
+                        From = n.from
+                    });
                 }
             }
         }
