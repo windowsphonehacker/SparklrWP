@@ -20,7 +20,7 @@ using System.Windows.Markup;
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("c3074b8e-8b70-4c3a-8a8b-e0cc41a244ae")]
+[assembly: Guid("280ba6f6-7236-4067-a258-6e8510f629ad")]
 
 [assembly: AssemblyVersion("7.0.1.0")]
 [assembly: AssemblyFileVersion("7.0.1.0")]
@@ -28,7 +28,7 @@ using System.Windows.Markup;
 [assembly: CLSCompliant(false)] // IApplicationBar is not CLS-compliant, but its use matches the type of the platform's PhoneApplicationPage.ApplicationBar property
 [assembly: NeutralResourcesLanguage("en-US")]
 
-[assembly: XmlnsPrefix("clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit", "toolkit")]
-[assembly: XmlnsDefinition("clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit", "Microsoft.Phone.Controls")]
-[assembly: XmlnsPrefix("clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls.Toolkit", "toolkitPrimitives")]
-[assembly: XmlnsDefinition("clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls.Toolkit", "Microsoft.Phone.Controls.Primitives")]
+[assembly: XmlnsPrefix("clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated", "toolkit")]
+[assembly: XmlnsDefinition("clr-namespace:Microsoft.Phone.Control.Updateds;assembly=Microsoft.Phone.Controls.Toolkit.Updated", "Microsoft.Phone.Controls")]
+[assembly: XmlnsPrefix("clr-namespace:Microsoft.Phone.Controls.Updated.Primitives;assembly=Microsoft.Phone.Controls.Toolkit.Updated", "toolkitPrimitives")]
+[assembly: XmlnsDefinition("clr-namespace:Microsoft.Phone.Controls.Updated.Primitives;assembly=Microsoft.Phone.Controls.Toolkit.Updated", "Microsoft.Phone.Controls.Primitives")]
