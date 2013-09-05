@@ -1,5 +1,5 @@
 ﻿extern alias ImageToolsDLL;
-using Microsoft.Phone.Controls;
+using Microsoft.Phone.Controls.Updated;
 using SparklrLib.Objects;
 using SparklrLib.Objects.Responses;
 using SparklrLib.Objects.Responses.Work;
@@ -12,7 +12,7 @@ using System.Windows.Navigation;
 
 namespace SparklrWP.Pages
 {
-    public partial class Profile : PhoneApplicationPage
+    public partial class Profile : Microsoft.Phone.Controls.PhoneApplicationPage
     {
         ProfileViewModel model;
         ListPicker filterModePicker;

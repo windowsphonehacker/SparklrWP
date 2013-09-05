@@ -396,7 +396,7 @@ namespace SparklrWP
                         file.Close();
                     }
                 }
-                catch (IsolatedStorageException ex)
+                catch (IsolatedStorageException)
                 {
                     //Fix for CA2200
                     throw;

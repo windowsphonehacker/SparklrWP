@@ -21,7 +21,6 @@
             <RowDefinition Height="0.228*"/>
             <RowDefinition Height="0.772*"/>
         </Grid.RowDefinitions>
-
         <!--TitlePanel contains the name of the application and page title-->
 
         <!--TitlePanel contains the name of the application and page title-->

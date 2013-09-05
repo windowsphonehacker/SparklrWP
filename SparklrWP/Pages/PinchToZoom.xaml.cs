@@ -53,14 +53,14 @@ namespace SparklrWP.Pages
             LoadingFinished.Begin();
         }
 
-        private void GestureListener_PinchStarted(object sender, PinchStartedGestureEventArgs e)
+        private void GestureListener_PinchStarted(object sender, Microsoft.Phone.Controls.Updated.PinchStartedGestureEventArgs e)
         {
             _oldFinger1 = e.GetPosition(ZoomableImage, 0);
             _oldFinger2 = e.GetPosition(ZoomableImage, 1);
             _oldScaleFactor = 1;
         }
 
-        private void GestureListener_PinchDelta(object sender, PinchGestureEventArgs e)
+        private void GestureListener_PinchDelta(object sender, Microsoft.Phone.Controls.Updated.PinchGestureEventArgs e)
         {
             var scaleFactor = e.DistanceRatio / _oldScaleFactor;
             if (!IsScaleValid(scaleFactor))

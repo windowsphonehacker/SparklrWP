@@ -5,7 +5,6 @@ using SparklrLib.Objects;
 using SparklrLib.Objects.Responses.Work;
 using SparklrWP.Utils;
 using System;
-using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;

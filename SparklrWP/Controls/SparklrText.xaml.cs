@@ -1,20 +1,8 @@
 ﻿extern alias ImageToolsDLL;
-using Microsoft.Phone.Controls;
-using Microsoft.Xna.Framework.Media;
-using SparklrLib.Objects;
-using SparklrLib.Objects.Responses.Work;
-using SparklrWP.Utils;
 using System;
 using System.ComponentModel;
-using System.IO;
-using System.Net;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 
 namespace SparklrWP.Controls
 {

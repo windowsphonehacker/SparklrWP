@@ -22,7 +22,7 @@ namespace SparklrWP.Utils
                 {
                     ScheduledActionService.Add(periodicTask);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //TODO: Handle errors here (For example if there are too many background tasks already)
                 }

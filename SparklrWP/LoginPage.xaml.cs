@@ -118,7 +118,7 @@ namespace SparklrWP
                     MessageBox.Show("Something horrible happend, try again later!", "Sorry", MessageBoxButton.OK);
 #if DEBUG
                     MessageBox.Show(loginargs.Error.Message);
-                    
+
 
 #endif
                 }

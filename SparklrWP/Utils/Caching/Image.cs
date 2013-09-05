@@ -220,8 +220,9 @@ namespace SparklrWP.Utils.Caching
                 }
 #if DEBUG
                 throw;
-#endif
+#else
                 return null;
+#endif
             }
         }
 
