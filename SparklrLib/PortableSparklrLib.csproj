@@ -55,6 +55,7 @@
     <Compile Include="Objects\Responses\Work\User.cs" />
     <Compile Include="Objects\Responses\Work\Username.cs" />
     <Compile Include="Objects\SparklrEventArgs.cs" />
+    <Compile Include="PortableHelpers\HttpUtility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SparklrClient.cs" />
   </ItemGroup>
