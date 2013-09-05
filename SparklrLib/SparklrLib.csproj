@@ -75,6 +75,7 @@
     <Compile Include="Objects\BeaconStreamEventArgs.cs" />
     <Compile Include="Objects\JSONRequestEventArgs.cs" />
     <Compile Include="Objects\LoginEventArgs.cs" />
+    <Compile Include="Objects\NotificationEventArgs.cs" />
     <Compile Include="Objects\Requests\Work\Chat.cs" />
     <Compile Include="Objects\Requests\Work\Comment.cs" />
     <Compile Include="Objects\Requests\Work\Repost.cs" />
@@ -85,7 +86,6 @@
     <Compile Include="Objects\Responses\Beacon\Comments.cs" />
     <Compile Include="Objects\Responses\Beacon\Stream.cs" />
     <Compile Include="Objects\Responses\Generic.cs" />
-    <Compile Include="Objects\Responses\NotificationEventArgs.cs" />
     <Compile Include="Objects\Responses\Work\Chat.cs" />
     <Compile Include="Objects\Responses\Work\Friends.cs" />
     <Compile Include="Objects\Responses\Work\Inbox.cs" />

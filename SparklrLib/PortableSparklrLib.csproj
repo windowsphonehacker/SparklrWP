@@ -38,10 +38,12 @@
     <Compile Include="Objects\BeaconStreamEventArgs.cs" />
     <Compile Include="Objects\JSONRequestEventArgs.cs" />
     <Compile Include="Objects\LoginEventArgs.cs" />
+    <Compile Include="Objects\NotificationEventArgs.cs" />
     <Compile Include="Objects\Requests\Work\Comment.cs" />
     <Compile Include="Objects\Requests\Work\Like.cs" />
     <Compile Include="Objects\Requests\Work\Post.cs" />
     <Compile Include="Objects\Requests\Work\Repost.cs" />
+    <Compile Include="Objects\Responses\Beacon\BeaconBase.cs" />
     <Compile Include="Objects\Responses\Beacon\Chat.cs" />
     <Compile Include="Objects\Responses\Beacon\Comments.cs" />
     <Compile Include="Objects\Responses\Beacon\Stream.cs" />

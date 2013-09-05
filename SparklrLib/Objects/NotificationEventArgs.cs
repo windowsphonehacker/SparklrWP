@@ -1,7 +1,7 @@
 ﻿using SparklrLib.Objects.Responses.Beacon;
 using System;
 
-namespace SparklrLib.Objects.Responses
+namespace SparklrLib.Objects
 {
     public class NotificationEventArgs : EventArgs
     {

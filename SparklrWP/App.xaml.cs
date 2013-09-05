@@ -69,7 +69,7 @@ namespace SparklrWP
         }
 
         private int previousNotifications = 0;
-        void SparklrClient_NotificationsReceived(object sender, SparklrLib.Objects.Responses.NotificationEventArgs e)
+        void SparklrClient_NotificationsReceived(object sender, SparklrLib.Objects.NotificationEventArgs e)
         {
             //TODO: fully implement, e.g. navigate to Notifications on tap, show content of notification, etc.
             if (e.Notifications.Length > 0)
