@@ -17,7 +17,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid Height="432" Grid.Row="0" VerticalAlignment="Center" x:Name="ImageContainer" Tap="ImageContainer_Tap" Margin="5" Background="Black">
-            <sparklrControls:ExtendedImageControl x:Name="postImage" Stretch="None" Visibility="Collapsed" />
+            <sparklrControls:ExtendedImageControl x:Name="postImage" Stretch="None" />
             <toolkit:ContextMenuService.ContextMenu>
                 <toolkit:ContextMenu>
                     <toolkit:MenuItem Header="Save to phone..." Click="SaveImageToPhone_Click" x:Name="SaveImageMenuEntry" />
