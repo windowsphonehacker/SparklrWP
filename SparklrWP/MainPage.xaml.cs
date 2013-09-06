@@ -4,7 +4,7 @@ using SparklrLib.Objects;
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Controls;FAIL THE BUILD ;P
 namespace SparklrWP
 {
     public partial class MainPage : PhoneApplicationPage

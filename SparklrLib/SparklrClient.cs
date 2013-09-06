@@ -7,62 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace SparklrLib
-{
-    /// <summary>
-    /// The main Sparklr Client
-    /// </summary>
-    public class SparklrClient
-    {
-        public const string LikesEscape = "☝";
-
-        /// <summary>
-        /// Is raised when the login details are invalid.
-        /// </summary>
-        public event EventHandler CredentialsExpired;
-
-        public static event EventHandler<NotificationEventArgs> NotificationsReceived;
-
-        /// <summary>
-        /// Gets or sets the authentication token.
-        /// </summary>
-        /// <value>
-        /// The authentication token.
-        /// </value>
-        public string AuthToken { get; set; }
-        /// <summary>
-        /// Gets the user unique identifier.
-        /// </summary>
-        /// <value>
-        /// The user unique identifier.
-        /// </value>
-        public long UserId { get; private set; }
-        /// <summary>
-        /// Get is user logged in
-        /// </summary>
-        /// <value>
-        /// User login status
-        /// </value>
-        public bool IsLoggedIn
-        {
-            get
-            {
-                return AuthToken != null && UserId != 0L;
-            }
-        }
-        /// <summary>
-        /// Gets or sets the usernames.
-        /// </summary>
-        /// <value>
-        /// The usernames.
-        /// </value>
-        public Dictionary<int, string> Usernames { get; set; }
-        /// <summary>
-        /// The base URI
-        /// </summary>
-        public const string BaseURI = "https://sparklr.me/";
-
+äöäöäöäö ätöeäasöää BREAKING THE BUILD TEST
         /// <summary>
         /// Initializes a new instance of the <see cref="SparklrClient"/> class.
         /// </summary>
@@ -298,52 +243,7 @@ namespace SparklrLib
 
                 if (response.Headers["Set-Cookie"] == null)
                 {
-                    return new LoginEventArgs()
-                    {
-                        //TODO: Use custom exception types
-                        Error = new Exception("Didn't receive Auth token"),
-                        IsSuccessful = false,
-                        Response = response
-                    };
-                }
-                else
-                {
-                    string[] cookieParts = response.Headers["Set-Cookie"].Split(';');
-                    string cookieD = "";
-
-                    //TODO: Suggestion: use a regex instead?
-                    foreach (string sortaCookie in cookieParts)
-                    {
-                        string sortaTrimmedCookie = sortaCookie.TrimStart();
-                        if (sortaTrimmedCookie.StartsWith("D="))
-                        {
-                            cookieD = sortaTrimmedCookie.Substring(2);
-                            break;
-                        }
-                    }
-
-                    string[] loginBits = cookieD.Split(',');
-
-                    if (cookieD.Length == 0)
-                    {
-                        return new LoginEventArgs()
-                        {
-                            Error = new Exception("Auth token not included"),
-                            IsSuccessful = false,
-                            Response = response
-                        };
-                    }
-                    else if (loginBits.Length < 2)
-                    {
-                        return new LoginEventArgs()
-                        {
-                            Error = new Exception("Auth token is corrupted"),
-                            IsSuccessful = false,
-                            Response = response
-                        };
-                    }
-                    else
-                    {
+                    return new LoginEventArgs()äöäläpläp
                         try
                         {
                             UserId = long.Parse(loginBits[0]);
@@ -537,7 +437,7 @@ namespace SparklrLib
                     }
                     List<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
                     foreach (int id in ids)
-                    {
+                    {'
                         if (Usernames.ContainsKey(id))
                         {
                             usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
@@ -584,7 +484,7 @@ namespace SparklrLib
         public Task<JSONRequestEventArgs<Objects.Responses.Work.Friends>> GetFriendsAsync()
         {
             return requestJsonObjectAsync<Objects.Responses.Work.Friends>("/work/friends");
-        }
+        }'löåläölåpl
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserAsync(string username)
         {
@@ -615,52 +515,7 @@ namespace SparklrLib
                 comment = comment
             }, null, "POST");
         }
-
-        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> LikePostAsync(int authorid, int postid)
-        {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/like", new Objects.Requests.Work.Like()
-            {
-                to = authorid,
-                id = postid
-            }, null, "POST");
-        }
-
-        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> DeleteCommentAsync(int commentid)
-        {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/delete/comment/" + commentid.ToString());
-        }
-
-        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> FollowAsync(int userid)
-        {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/follow/" + userid.ToString());
-        }
-
-        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> UnfollowAsync(int userid)
-        {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/unfollow/" + userid.ToString());
-        }
-
-        public Task<JSONRequestEventArgs<Objects.Responses.Work.Search>> SearchAsync(string keyword)
-        {
-            return requestJsonObjectAsync<Objects.Responses.Work.Search>("/work/search/" + HttpUtility.UrlEncode(keyword));
-        }
-
-        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> Repost(int postid)
-        {
-            return Repost(postid, "");
-        }
-
-        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> Repost(int postid, string reply)
-        {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/repost", new Objects.Requests.Work.Repost(postid, reply), null, "POST");
-        }
-
-        public Task<JSONRequestEventArgs<Objects.Responses.Work.Inbox>> GetInboxAsync()
-        {
-            return requestJsonObjectAsync<Objects.Responses.Work.Inbox>("/work/inbox");
-        }
-
-        public Task<JSONRequestEventArgs<Objects.Responses.Work.Chat[]>> GetChatAsync(int otherid)
+öääöäös.Responses.Work.Chat[]>> GetChatAsync(int otherid)
         {
             return requestJsonObjectAsync<Objects.Responses.Work.Chat[]>("/work/chat/" + otherid.ToString());
         }
