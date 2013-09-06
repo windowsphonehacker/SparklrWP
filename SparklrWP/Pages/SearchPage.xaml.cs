@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Controls;
+using SparklrWP.Controls;
 using SparklrWP.Utils;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -45,6 +46,15 @@ namespace SparklrWP.Pages
             if (i != null)
             {
                 NavigationService.Navigate(new System.Uri("/Pages/Profile.xaml?userId=" + i.Id.ToString(), System.UriKind.Relative));
+            }
+        }
+
+        private void SparklrText_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            SparklrPostControl control = sender as SparklrPostControl;
+            if (control != null)
+            {
+                NavigationService.Navigate(new System.Uri("/Pages/DetailsPage.xaml?id=" + control.Post.Id, System.UriKind.Relative));
             }
         }
     }

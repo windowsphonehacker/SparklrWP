@@ -10,6 +10,13 @@ namespace SparklrLib.Objects.Responses.Work
         public int type { get; set; }
         public object flags { get; set; }
         public string meta { get; set; }
+        public string imageUrl
+        {
+            get
+            {
+                return meta.Split(',')[0];
+            }
+        }
         public int time { get; set; }
         public int @public { get; set; }
         public string message { get; set; }

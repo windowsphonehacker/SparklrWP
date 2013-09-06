@@ -418,7 +418,7 @@ namespace SparklrLib
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<JSONRequestEventArgs<Objects.Responses.Work.Post>> GetPostInfo(int id)
+        public async Task<JSONRequestEventArgs<Objects.Responses.Work.Post>> GetPostInfoAsync(int id)
         {
             JSONRequestEventArgs<Objects.Responses.Work.Post> args = await requestJsonObjectAsync<Objects.Responses.Work.Post>("/work/post/" + id.ToString());
             return args;

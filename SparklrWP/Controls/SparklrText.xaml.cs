@@ -13,7 +13,7 @@ namespace SparklrWP.Controls
     }
 
     [Description("Provides a control that can display a Sparklr post.")]
-    public partial class SparklrText : UserControl
+    public sealed partial class SparklrText : UserControl, IDisposable
     {
         public static readonly DependencyProperty UserbarLocationProperty = DependencyProperty.Register("UserbarLocation", typeof(Location), typeof(object), new PropertyMetadata(userbarLocationChanged));
         /// <summary>
@@ -39,7 +39,7 @@ namespace SparklrWP.Controls
         /// <summary>
         /// A ItemViewModel that contains all the required data.
         /// </summary>
-        public static readonly DependencyProperty PostProperty = DependencyProperty.Register("Post", typeof(ItemViewModel), typeof(object), new PropertyMetadata(postPropertyChanged));
+        public static readonly DependencyProperty PostProperty = DependencyProperty.Register("Post", typeof(PostItemViewModel), typeof(object), new PropertyMetadata(postPropertyChanged));
 
         /// <summary>
         /// Specifies if the comment numer is visible or not
@@ -78,7 +78,7 @@ namespace SparklrWP.Controls
         private static void postPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             SparklrText control = d as SparklrText;
-            control.Post = (ItemViewModel)e.NewValue;
+            control.Post = (PostItemViewModel)e.NewValue;
         }
 
         private static void imagelocationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -108,7 +108,7 @@ namespace SparklrWP.Controls
         private string imagelocation;
         private bool isDeletable;
         private int? comments;
-        private ItemViewModel post;
+        private PostItemViewModel post;
         private Location userbarLocation = Location.Bottom;
         private Visibility commentCountVisibility = Visibility.Visible;
 
@@ -212,7 +212,7 @@ namespace SparklrWP.Controls
         /// <summary>
         /// A underlying post. Configures everything else in here. As a workarounf for issue #33, you can't update the control with a post that has a diffrent ID
         /// </summary>
-        public ItemViewModel Post
+        public PostItemViewModel Post
         {
             get
             {
@@ -222,13 +222,46 @@ namespace SparklrWP.Controls
             {
                 if (post != value)
                 {
+                    if (Post != null)
+                    {
+                        Post.PropertyChanged -= Post_PropertyChanged;
+                    }
                     this.ImageLocation = value.ImageUrl;
-                    this.Username = value.From;
+                    this.Username = value.AuthorName;
                     this.Comments = value.CommentCount;
                     this.Text = value.Message;
 
                     post = value;
+                    Post.PropertyChanged += Post_PropertyChanged;
                 }
+            }
+        }
+
+        public void Dispose()
+        {
+            if (Post != null)
+                Post.PropertyChanged -= Post_PropertyChanged;
+        }
+
+        void Post_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "ImageUrl":
+                    this.ImageLocation = Post.ImageUrl;
+                    break;
+
+                case "Username":
+                    this.Username = Post.AuthorName;
+                    break;
+
+                case "CommentCount":
+                    this.Comments = Post.CommentCount;
+                    break;
+
+                case "Message":
+                    this.Text = Post.Message;
+                    break;
             }
         }
 

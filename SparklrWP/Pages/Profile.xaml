@@ -129,9 +129,7 @@
                 <sparklrControls:ExtendedListBox ItemsSource="{Binding Active}" Grid.Row="1">
                     <sparklrControls:ExtendedListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="0,0,0,10">
-                                <sparklrControls:SparklrPostControl Post="{Binding}" Margin="0,2"/>
-                            </StackPanel>
+                            <sparklrControls:SparklrPostControl Post="{Binding}" Margin="0,0,0,10" toolkit:TiltEffect.IsTiltEnabled="True" Tap="SparklrPostControl_Tap" />
                         </DataTemplate>
                     </sparklrControls:ExtendedListBox.ItemTemplate>
                 </sparklrControls:ExtendedListBox>

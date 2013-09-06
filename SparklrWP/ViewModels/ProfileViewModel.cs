@@ -18,10 +18,10 @@ namespace SparklrWP
         private bool _following;
 
         //todo: implement properly
-        private ObservableCollection<ItemViewModel> active = new ObservableCollection<ItemViewModel>();
-        private ObservableCollection<ItemViewModel> posts = new ObservableCollection<ItemViewModel>();
-        private ObservableCollection<ItemViewModel> mentions = new ObservableCollection<ItemViewModel>();
-        private ObservableCollection<ItemViewModel> photos = new ObservableCollection<ItemViewModel>();
+        private ObservableCollection<PostItemViewModel> active = new ObservableCollection<PostItemViewModel>();
+        private ObservableCollection<PostItemViewModel> posts = new ObservableCollection<PostItemViewModel>();
+        private ObservableCollection<PostItemViewModel> mentions = new ObservableCollection<PostItemViewModel>();
+        private ObservableCollection<PostItemViewModel> photos = new ObservableCollection<PostItemViewModel>();
 
         public string Handle
         {
@@ -113,7 +113,7 @@ namespace SparklrWP
             }
         }
 
-        public ObservableCollection<ItemViewModel> Posts
+        public ObservableCollection<PostItemViewModel> Posts
         {
             get
             {
@@ -129,7 +129,7 @@ namespace SparklrWP
             }
         }
 
-        public ObservableCollection<ItemViewModel> Mentions
+        public ObservableCollection<PostItemViewModel> Mentions
         {
             get
             {
@@ -145,7 +145,7 @@ namespace SparklrWP
             }
         }
 
-        public ObservableCollection<ItemViewModel> Photos
+        public ObservableCollection<PostItemViewModel> Photos
         {
             get
             {
@@ -162,7 +162,7 @@ namespace SparklrWP
         }
 
         //Todo: implement properly
-        public ObservableCollection<ItemViewModel> Active
+        public ObservableCollection<PostItemViewModel> Active
         {
             get
             {

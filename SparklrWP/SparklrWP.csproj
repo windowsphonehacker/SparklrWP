@@ -230,6 +230,7 @@
     <Compile Include="Utils\SmartDispatcher.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
     <Compile Include="Utils\Task.cs" />
+    <Compile Include="ViewModels\CommentModel.cs" />
     <Compile Include="ViewModels\FriendViewModel.cs" />
     <Compile Include="ViewModels\InboxViewModel.cs" />
     <Compile Include="ViewModels\ChatViewModel.cs" />
@@ -237,7 +238,7 @@
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\ProfileViewModel.cs" />
     <Compile Include="ViewModels\NotificationViewModel.cs" />
-    <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\PostItemViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="WPClogger.cs" />
   </ItemGroup>

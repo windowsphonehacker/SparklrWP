@@ -4,14 +4,14 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 namespace SparklrWP.Controls
 {
-    public partial class SparklrPostControl : UserControl
+    public sealed partial class SparklrPostControl : UserControl, IDisposable
     {
-        public static DependencyProperty PostProperty = DependencyProperty.Register("Post", typeof(ItemViewModel), typeof(SparklrPostControl), new PropertyMetadata(new PropertyChangedCallback(PostPropertyChanged)));
+        public static DependencyProperty PostProperty = DependencyProperty.Register("Post", typeof(PostItemViewModel), typeof(SparklrPostControl), new PropertyMetadata(new PropertyChangedCallback(PostPropertyChanged)));
 
         private static void PostPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             SparklrPostControl control = d as SparklrPostControl;
-            if (e.NewValue is ItemViewModel) control.Post = (ItemViewModel)e.NewValue;
+            if (e.NewValue is PostItemViewModel) control.Post = (PostItemViewModel)e.NewValue;
         }
 
         public SparklrPostControl()
@@ -19,10 +19,14 @@ namespace SparklrWP.Controls
             InitializeComponent();
         }
 
+        public void Dispose()
+        {
+            if (Post != null)
+                Post.PropertyChanged -= Post_PropertyChanged;
+        }
 
-
-        public ItemViewModel _post;
-        public ItemViewModel Post
+        public PostItemViewModel _post;
+        public PostItemViewModel Post
         {
             get
             {
@@ -30,20 +34,52 @@ namespace SparklrWP.Controls
             }
             set
             {
+                if (_post != value)
+                {
+                    if (Post != null)
+                        Post.PropertyChanged -= Post_PropertyChanged;
 
-                _post = value;
-                mainControl.Text = value.Message;
-                mainControl.ImageLocation = value.ImageUrl;
-                notesText.Text = value.CommentCount.ToString();
-                textNetwork.Text = "> /" + value.Network;
-                imageProfile.Source = new BitmapImage(new Uri("http://d.sparklr.me/i/t" + value.AuthorId + ".jpg"));
-                textName.Text = "@" + value.From;
+                    _post = value;
+                    Post.PropertyChanged += Post_PropertyChanged;
+                    mainControl.Text = value.Message;
+                    mainControl.ImageLocation = value.ImageUrl;
+                    notesText.Text = value.CommentCount.ToString();
+                    textNetwork.Text = "> /" + value.Network;
+                    //TODO: Rewrite to not block the UI and use caching (use extendedimagecontrol)
+                    imageProfile.Source = new BitmapImage(new Uri("http://d.sparklr.me/i/t" + value.AuthorId + ".jpg"));
+                    textName.Text = "@" + value.AuthorName;
+                }
+            }
+        }
+
+        void Post_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "Message":
+                    mainControl.Text = Post.Message;
+                    break;
+
+                case "ImageUrl":
+                    mainControl.ImageLocation = Post.ImageUrl;
+                    break;
+
+                case "CommentCount":
+                    notesText.Text = Post.CommentCount.ToString();
+                    break;
+
+                case "Network":
+                    textNetwork.Text = "> /" + Post.Network;
+                    break;
+
+                case "AuthorName":
+                    textName.Text = "@" + Post.AuthorName;
+                    break;
             }
         }
 
         private void Like_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-
         }
     }
 }

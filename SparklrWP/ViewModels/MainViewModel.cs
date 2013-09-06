@@ -21,7 +21,7 @@ namespace SparklrWP
 
         public MainViewModel()
         {
-            Items = new ObservableCollectionWithItemNotification<ItemViewModel>();
+            Items = new ObservableCollectionWithItemNotification<PostItemViewModel>();
             GroupedItems = (new ObservableCollectionWithItemNotification<FriendViewModel>()).GroupFriends();
 
             streamUpdater = new Timer(streamUpdater_Tick, null, Timeout.Infinite, Timeout.Infinite);
@@ -44,11 +44,11 @@ namespace SparklrWP
             loadData();
         }
 
-        private ObservableCollectionWithItemNotification<ItemViewModel> _items;
+        private ObservableCollectionWithItemNotification<PostItemViewModel> _items;
         /// <summary>
         /// A collection for ItemViewModel objects.
         /// </summary>
-        public ObservableCollectionWithItemNotification<ItemViewModel> Items
+        public ObservableCollectionWithItemNotification<PostItemViewModel> Items
         {
             get
             {
@@ -96,13 +96,13 @@ namespace SparklrWP
 
             JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await App.Client.GetBeaconStreamAsync(LastTime);
 
-            await import(args);
+            import(args);
 
             GlobalLoading.Instance.IsLoading = false;
             streamUpdater.Change(10000, Timeout.Infinite);
         }
 
-        private async System.Threading.Tasks.Task import(JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args)
+        private void import(JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args)
         {
             if (args.IsSuccessful)
             {
@@ -116,53 +116,42 @@ namespace SparklrWP
                         {
                             LastTime = t.time;
                         }
-                        if (LastTime < t.modified)
+                        if (t.modified != null && LastTime < (int)t.modified)
                         {
-                            LastTime = t.modified;
+                            LastTime = (int)t.modified;
                         }
 
-                        ItemViewModel existingitem = null;
+                        PostItemViewModel existingitem = null;
                         existingitem = (from i in Items where i.Id == t.id select i).FirstOrDefault();
 
                         if (existingitem == null)
                         {
-                            ItemViewModel newItem = new ItemViewModel(t.id)
-                            {
-                                Message = t.message,
-                                CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount),
-                                From = t.from.ToString(),
-                                AuthorId = t.from,
-                                OrderTime = t.modified > t.time ? t.modified : t.time,
-                                Network = t.network
-                            };
-                            if (!String.IsNullOrEmpty(t.meta))
-                            {
-                                newItem.ImageUrl = "http://d.sparklr.me/i/t" + t.imageUrl;
-                            }
-
-                            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> response = await App.Client.GetUsernamesAsync(new int[] { t.from });
-                            if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
-                                newItem.From = response.Object[0].username;
-
+                            PostItemViewModel newItem = new PostItemViewModel(
+                                t.id,
+                                t.from,
+                                t.message,
+                                null,
+                                null,
+                                t.commentcount ?? 0,
+                                null,
+                                t.from == App.Client.UserId,
+                                !String.IsNullOrEmpty(t.imageUrl) ? "http://d.sparklr.me/i/t" + t.imageUrl : null,
+                                t.network,
+                                t.modified ?? t.time,
+                                t.time,
+                                t.via);
+                            newItem.FillNamesAndImages();
                             addItem(newItem);
                         }
                         else
                         {
-                            existingitem.Message = t.message;
-                            existingitem.CommentCount = (t.commentcount == null ? 0 : (int)t.commentcount);
-                            existingitem.From = t.from.ToString();
-                            existingitem.OrderTime = t.modified > t.time ? t.modified : t.time;
-
-                            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> response = await App.Client.GetUsernamesAsync(new int[] { t.from });
-
-                            if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
-                                existingitem.From = response.Object[0].username;
+                            existingitem.UpdatePostInfo();
                         }
                     }
 
                     this.IsDataLoaded = true;
 #if DEBUG
-                    foreach (ItemViewModel i in Items)
+                    foreach (PostItemViewModel i in Items)
                     {
                         if (i.ImageUrl != null)
                             App.logger.log(i.ImageUrl);
@@ -193,10 +182,10 @@ namespace SparklrWP
             }
         }
 
-        private void addItem(ItemViewModel item)
+        private void addItem(PostItemViewModel item)
         {
             if (Items == null)
-                Items = new ObservableCollectionWithItemNotification<ItemViewModel>();
+                Items = new ObservableCollectionWithItemNotification<PostItemViewModel>();
 
             SmartDispatcher.BeginInvoke(() =>
                 {
@@ -250,7 +239,7 @@ namespace SparklrWP
 
             //TODO: Implement properly
             JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> moreItems = await App.Client.GetMoreItems(LastTime);
-            await import(moreItems);
+            import(moreItems);
 
             GlobalLoading.Instance.IsLoading = false;
             streamUpdater.Change(10000, Timeout.Infinite);

@@ -3,10 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:SparklrWP">
     <local:PostViewModel.MainPost>
-        <local:ItemViewModel From="Author" Message="Test" CommentCount="2"></local:ItemViewModel>
+        <local:PostItemViewModel AuthorName="Author" Message="Test" CommentCount="2"></local:PostItemViewModel>
     </local:PostViewModel.MainPost>
     <local:PostViewModel.Comments>
-        <local:ItemViewModel From="User" Message="Text" />
-        <local:ItemViewModel From="User" Message="Text2" />
+        <local:CommentModel AuthorName="User" Message="Text" />
+        <local:CommentModel AuthorName="User" Message="Text2" />
     </local:PostViewModel.Comments>
 </local:PostViewModel>

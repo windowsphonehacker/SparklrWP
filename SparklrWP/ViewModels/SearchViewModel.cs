@@ -30,8 +30,8 @@ namespace SparklrWP
             }
         }
 
-        private ObservableCollection<ItemViewModel> posts = new ObservableCollection<ItemViewModel>();
-        public ObservableCollection<ItemViewModel> Posts
+        private ObservableCollection<PostItemViewModel> posts = new ObservableCollection<PostItemViewModel>();
+        public ObservableCollection<PostItemViewModel> Posts
         {
             get
             {
@@ -105,13 +105,7 @@ namespace SparklrWP
                 if (results.Object.posts != null)
                     foreach (SearchPost post in results.Object.posts)
                     {
-                        Posts.Add(new ItemViewModel(post.id)
-                            {
-                                AuthorId = post.from,
-                                Message = post.message,
-                                CommentCount = post.commentcount ?? 0,
-                                ImageUrl = !String.IsNullOrEmpty(post.meta) ? String.Format("http://d.sparklr.me/i/t{0}", post.meta) : null
-                            });
+                        Posts.Add(new PostItemViewModel(post.id));
                     }
             }
             else

@@ -1,21 +1,22 @@
 ﻿using SparklrLib.Objects;
 using SparklrLib.Objects.Responses.Work;
+using SparklrWP.Utils;
+using SparklrWP.ViewModels;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace SparklrWP
 {
-    public class PostViewModel : INotifyPropertyChanged
+    public sealed class PostViewModel : INotifyPropertyChanged
     {
         public int Id { get; private set; }
         public bool Liked { get; private set; }
         public int LikeID { get; private set; }
 
-        public PostViewModel(ItemViewModel post)
+        public PostViewModel(PostItemViewModel post)
         {
             this.Id = post.Id;
-            Comments = new ObservableCollection<ItemViewModel>();
+            Comments = new ObservableCollectionWithItemNotification<CommentModel>();
             MainPost = post;
         }
 
@@ -25,8 +26,8 @@ namespace SparklrWP
 
         }
 
-        private ItemViewModel mainPost;
-        public ItemViewModel MainPost
+        private PostItemViewModel mainPost;
+        public PostItemViewModel MainPost
         {
             get
             {
@@ -37,14 +38,14 @@ namespace SparklrWP
                 if (mainPost != value)
                 {
                     mainPost = value;
-                    loadComments();
+                    loadComments(true);
                     NotifyPropertyChanged("MainPost");
                 }
             }
         }
 
-        private ObservableCollection<ItemViewModel> comments;
-        public ObservableCollection<ItemViewModel> Comments
+        private ObservableCollectionWithItemNotification<CommentModel> comments;
+        public ObservableCollectionWithItemNotification<CommentModel> Comments
         {
             get
             {
@@ -73,9 +74,9 @@ namespace SparklrWP
 
         public override bool Equals(object obj)
         {
-            if (obj is ItemViewModel)
+            if (obj is PostItemViewModel)
             {
-                ItemViewModel m = (ItemViewModel)obj;
+                PostItemViewModel m = (PostItemViewModel)obj;
                 return this.Id == m.Id;
             }
             else
@@ -94,46 +95,54 @@ namespace SparklrWP
             return String.Format("{0} - {1}", this.Id, this.MainPost.Message);
         }
 
-        private async void loadComments()
+        private async void loadComments(bool initial = false)
         {
-            GlobalLoading.Instance.IsLoading = true;
-
-            comments.Clear();
-            LikeID = -1;
-            Liked = false;
-
-            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Post> post = await App.Client.GetPostInfo(this.Id);
-
-            if (post != null && post.IsSuccessful && post.Object.comments != null)
+            if (initial && MainPost.Comments != null)
             {
-                foreach (Comment c in post.Object.comments)
+                Comments = MainPost.Comments;
+            }
+            else
+            {
+                GlobalLoading.Instance.IsLoading = true;
+
+                comments.Clear();
+                LikeID = -1;
+                Liked = false;
+
+                JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Post> post = await App.Client.GetPostInfoAsync(this.Id);
+
+                if (post != null && post.IsSuccessful && post.Object.comments != null)
                 {
-                    if (c != null)
+                    foreach (Comment c in post.Object.comments)
                     {
-                        if (c.message == SparklrLib.SparklrClient.LikesEscape && c.from == App.Client.UserId)
+                        if (c != null)
                         {
-                            Liked = true;
-                            LikeID = c.id;
-                        }
-
-                        string from = c.from.ToString();
-
-                        JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> response = await App.Client.GetUsernamesAsync(new int[] { c.from });
-
-                        if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
-                            from = response.Object[0].username;
-
-                        comments.Add(new ItemViewModel(c.id)
+                            if (c.message == SparklrLib.SparklrClient.LikesEscape && c.from == App.Client.UserId)
                             {
+                                Liked = true;
+                                LikeID = c.id;
+                            }
+
+                            string from = c.from.ToString();
+
+                            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> response = await App.Client.GetUsernamesAsync(new int[] { c.from });
+
+                            if (response.IsSuccessful && response.Object[0] != null && !string.IsNullOrEmpty(response.Object[0].username))
+                                from = response.Object[0].username;
+
+                            comments.Add(new CommentModel(c.id)
+                            {
+                                From = c.from,
                                 Message = c.message,
-                                From = from,
-                                Deletable = App.Client.UserId == c.from
+                                Time = c.time,
+                                Deletable = c.from == App.Client.UserId
                             });
+                        }
                     }
                 }
-            }
 
-            GlobalLoading.Instance.IsLoading = false;
+                GlobalLoading.Instance.IsLoading = false;
+            }
         }
 
         public void RefreshComments()

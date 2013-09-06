@@ -52,7 +52,7 @@
                 <ListBox ItemsSource="{Binding Posts}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <sparklrControls:SparklrText Post="{Binding}" Margin="0,2" />
+                            <sparklrControls:SparklrPostControl Post="{Binding}" Margin="0,2" toolkit:TiltEffect.IsTiltEnabled="True" Tap="SparklrText_Tap" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <ListBox.ItemContainerStyle>

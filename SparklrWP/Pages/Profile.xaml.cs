@@ -3,6 +3,7 @@ using Microsoft.Phone.Controls.Updated;
 using SparklrLib.Objects;
 using SparklrLib.Objects.Responses;
 using SparklrLib.Objects.Responses.Work;
+using SparklrWP.Controls;
 using System;
 using System.Net;
 using System.Windows.Media;
@@ -116,15 +117,24 @@ namespace SparklrWP.Pages
             }
         }
 
-        private static ItemViewModel generateItemViewModel(SparklrLib.Objects.Responses.Work.Timeline item)
+        private static PostItemViewModel generateItemViewModel(SparklrLib.Objects.Responses.Work.Timeline t)
         {
-            return new ItemViewModel(item.id)
-            {
-                AuthorId = item.from,
-                Message = item.message,
-                CommentCount = item.commentcount ?? 0,
-                ImageUrl = !String.IsNullOrEmpty(item.meta) ? String.Format("http://d.sparklr.me/i/t{0}", item.meta) : null
-            };
+            PostItemViewModel i = new PostItemViewModel(
+                                t.id,
+                                t.from,
+                                t.message,
+                                null,
+                                null,
+                                t.commentcount ?? 0,
+                                null,
+                                t.from == App.Client.UserId,
+                                !String.IsNullOrEmpty(t.meta) ? "http://d.sparklr.me/i/t" + t.imageUrl : null,
+                                t.network,
+                                t.modified ?? t.time,
+                                t.time,
+                                t.via);
+            i.FillNamesAndImages();
+            return i;
         }
 
         private void filterModePicker_Loaded(object sender, System.Windows.RoutedEventArgs e)
@@ -189,6 +199,13 @@ namespace SparklrWP.Pages
         private void MessageButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/Pages/ChatPage.xaml?id=" + model.ID, UriKind.Relative));
+        }
+
+        private void SparklrPostControl_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            SparklrPostControl control = sender as SparklrPostControl;
+            if (control != null)
+                NavigationService.Navigate(new Uri("/Pages/DetailsPage.xaml?id=" + control.Post.Id, UriKind.Relative));
         }
     }
 }

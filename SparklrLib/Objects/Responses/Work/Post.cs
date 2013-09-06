@@ -28,7 +28,7 @@ namespace SparklrLib.Objects.Responses.Work
         public int? origid { get; set; }
         public int? commentcount { get; set; }
         public int? modified { get; set; }
-        public int network { get; set; }
+        public string network { get; set; }
         public List<Comment> comments { get; set; }
     }
 }

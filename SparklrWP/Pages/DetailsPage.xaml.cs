@@ -1,6 +1,7 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SparklrWP.Utils;
+using System;
 using System.Windows;
 using System.Windows.Navigation;
 
@@ -26,6 +27,21 @@ namespace SparklrWP
             {
                 int index = int.Parse(selectedIndex);
                 DataContext = new PostViewModel(App.MainViewModel.Items[index]);
+            }
+            else if (NavigationContext.QueryString.TryGetValue("id", out selectedIndex))
+            {
+                int id = -1;
+                if (Int32.TryParse(selectedIndex, out id))
+                {
+                    DataContext = new PostViewModel(new PostItemViewModel(id));
+                }
+                else
+                {
+#if DEBUG
+                    if (System.Diagnostics.Debugger.IsAttached)
+                        System.Diagnostics.Debugger.Break();
+#endif
+                }
             }
         }
 
@@ -92,7 +108,7 @@ namespace SparklrWP
 
         private async void SparklrText_Delete(object sender, System.EventArgs e)
         {
-            ItemViewModel item = (sender as System.Windows.Controls.UserControl).DataContext as ItemViewModel;
+            PostItemViewModel item = (sender as System.Windows.Controls.UserControl).DataContext as PostItemViewModel;
             if (item != null)
             {
                 GlobalLoading.Instance.IsLoading = true;
