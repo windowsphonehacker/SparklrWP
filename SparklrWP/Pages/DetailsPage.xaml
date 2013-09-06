@@ -40,7 +40,17 @@
             </Grid.RowDefinitions>
             <ScrollViewer Grid.Row="0">
                 <StackPanel Orientation="Vertical">
+                    <!--<sparklrControls:ExtendedListBox >
+                        <sparklrControls:ExtendedListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <sparklrControls:SparklrPostControl Post="{Binding MainPost}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </sparklrControls:ExtendedListBox.ItemTemplate>
+                    </sparklrControls:ExtendedListBox>-->
                     <sparklrControls:SparklrText Post="{Binding MainPost}" />
+                    
                     <ListBox ItemsSource="{Binding Comments}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">

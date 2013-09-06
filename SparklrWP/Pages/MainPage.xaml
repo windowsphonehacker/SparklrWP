@@ -84,7 +84,7 @@
 
 
             <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
-            <controls:PivotItem Header="posts" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
+            <controls:PivotItem Header="Posts" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
                 <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                     <sparklrControls:ExtendedListBox x:Name="MainListBox" ItemsSource="{Binding Items}" UnderlyingSelectionChanged="MainListBox_SelectionChanged" TopRefresh="MainListBox_TopRefresh" LoadMore="MainListBox_LoadMore" Margin="-11,0,0,0">
                         <sparklrControls:ExtendedListBox.ItemTemplate>
@@ -98,7 +98,7 @@
                 </Grid>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="friends">
+            <controls:PivotItem Header="Friends">
                 <toolkit:LongListSelector Background="{x:Null}" ItemsSource="{Binding GroupedItems}">
                     <!-- Template for the letters inside the list -->
                     <toolkit:LongListSelector.GroupHeaderTemplate>
@@ -137,7 +137,7 @@
                 </toolkit:LongListSelector>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="my profile">
+            <controls:PivotItem Header="My profile">
                 <StackPanel Orientation="Vertical">
                     <Button Click="Button_Click">Inbox</Button>
                 </StackPanel>

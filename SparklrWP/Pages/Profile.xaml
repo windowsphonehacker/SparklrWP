@@ -19,8 +19,10 @@
 	d:DataContext="{d:DesignData ../SampleData/UserProfileViewModelSampleData.xaml}"
 	x:Name="ProfilePage">
 	<phone:PhoneApplicationPage.ApplicationBar>
-		<shell:ApplicationBar BackgroundColor="#FF2A2339" Mode="Minimized">
-			<shell:ApplicationBarIconButton x:Name="followButton" Text="Follow" IconUri="/Assets/AppBar/ApplicationBar.Add.png"/>
+		<shell:ApplicationBar BackgroundColor="#FF2A2339">
+            <shell:ApplicationBarIconButton Text="Follow" Click="FollowButton_Click" IconUri="/Assets/AppBar/ApplicationBar.Add.png"/>
+            <shell:ApplicationBarIconButton Text="Mention" Click="MentionButton_Click" IconUri="/Assets/AppBar/appbar.reply.people.png"/>
+            <shell:ApplicationBarIconButton Text="Message" Click="MessageButton_Click" IconUri="/Controls/appbar.message.send.png"/>
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
 <!--LayoutRoot contains the root grid where all other page content is placed-->
@@ -124,27 +126,24 @@
                         </StackPanel>
                     </DataTemplate>
                 </controls:PanoramaItem.HeaderTemplate>
-                <ListBox ItemsSource="{Binding Active}" Grid.Row="1">
-                    <ListBox.ItemTemplate>
+                <sparklrControls:ExtendedListBox ItemsSource="{Binding Active}" Grid.Row="1">
+                    <sparklrControls:ExtendedListBox.ItemTemplate>
                         <DataTemplate>
-                            <sparklrControls:SparklrText Post="{Binding}" Margin="0,2" />
+                            <StackPanel Margin="0,0,0,10">
+                                <sparklrControls:SparklrPostControl Post="{Binding}" Margin="0,2"/>
+                            </StackPanel>
                         </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                </ListBox>
+                    </sparklrControls:ExtendedListBox.ItemTemplate>
+                </sparklrControls:ExtendedListBox>
             </controls:PanoramaItem>
             
-            <controls:PanoramaItem Header="more">
+            <!--<controls:PanoramaItem Header="more">
                 <StackPanel>
                     <Button Click="MessageButton_Click">message</Button>
                     <Button Click="MentionButton_Click">mention</Button>
                     <Button Content="{Binding FollowButtonCaption}" Click="FollowButton_Click" />
                 </StackPanel>
-            </controls:PanoramaItem>
+            </controls:PanoramaItem>-->
 		</controls:Panorama>
 	</Grid>
 </phone:PhoneApplicationPage>
