@@ -43,24 +43,24 @@ namespace SparklrWP.Utils
 
     static class CollectionExtensions
     {
-        public static ObservableCollectionWithItemNotification<GroupedObservableCollection<FriendViewModel>> GroupFriends(this ObservableCollectionWithItemNotification<FriendViewModel> initialCollection)
+        public static ObservableCollectionWithItemNotification<GroupedObservableCollection<UserItemViewModel>> GroupFriends(this ObservableCollectionWithItemNotification<UserItemViewModel> initialCollection)
         {
-            ObservableCollectionWithItemNotification<GroupedObservableCollection<FriendViewModel>> grouped = new ObservableCollectionWithItemNotification<GroupedObservableCollection<FriendViewModel>>();
+            ObservableCollectionWithItemNotification<GroupedObservableCollection<UserItemViewModel>> grouped = new ObservableCollectionWithItemNotification<GroupedObservableCollection<UserItemViewModel>>();
 
             // sort the input
-            List<FriendViewModel> sorted = (from friend in initialCollection orderby friend.Name select friend).ToList<FriendViewModel>();
+            List<UserItemViewModel> sorted = (from friend in initialCollection orderby friend.Name select friend).ToList<UserItemViewModel>();
 
             string alphabet = "#abcdefghijklmnopqrstuvwxyz";
-            GroupedObservableCollection<FriendViewModel> tmp;
+            GroupedObservableCollection<UserItemViewModel> tmp;
 
 
             foreach (char c in alphabet)
             {
-                tmp = new GroupedObservableCollection<FriendViewModel>(c.ToString());
+                tmp = new GroupedObservableCollection<UserItemViewModel>(c.ToString());
 
-                List<FriendViewModel> friendStartingWithLetter = (from friend in sorted where friend.Name.StartsWith(c.ToString(), System.StringComparison.InvariantCultureIgnoreCase) select friend).ToList<FriendViewModel>();
+                List<UserItemViewModel> friendStartingWithLetter = (from friend in sorted where friend.Name.StartsWith(c.ToString(), System.StringComparison.InvariantCultureIgnoreCase) select friend).ToList<UserItemViewModel>();
 
-                foreach (FriendViewModel f in friendStartingWithLetter)
+                foreach (UserItemViewModel f in friendStartingWithLetter)
                     tmp.Add(f);
 
                 grouped.Add(tmp);
@@ -69,11 +69,11 @@ namespace SparklrWP.Utils
             return grouped;
         }
 
-        public static void AddFriend(this ObservableCollection<GroupedObservableCollection<FriendViewModel>> collection, FriendViewModel f)
+        public static void AddFriend(this ObservableCollection<GroupedObservableCollection<UserItemViewModel>> collection, UserItemViewModel f)
         {
             string firstLetter = f.Name[0].ToString();
 
-            foreach (GroupedObservableCollection<FriendViewModel> c in collection)
+            foreach (GroupedObservableCollection<UserItemViewModel> c in collection)
             {
                 if (string.Compare(firstLetter, c.Title, System.StringComparison.InvariantCultureIgnoreCase) == 0)
                 {

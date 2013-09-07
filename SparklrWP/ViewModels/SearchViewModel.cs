@@ -13,8 +13,8 @@ namespace SparklrWP
         {
         }
 
-        private ObservableCollection<FriendViewModel> users = new ObservableCollection<FriendViewModel>();
-        public ObservableCollection<FriendViewModel> Users
+        private ObservableCollection<UserItemViewModel> users = new ObservableCollection<UserItemViewModel>();
+        public ObservableCollection<UserItemViewModel> Users
         {
             get
             {
@@ -95,11 +95,7 @@ namespace SparklrWP
                 if (results.Object.users != null)
                     foreach (SearchUser user in results.Object.users)
                     {
-                        Users.Add(new FriendViewModel(user.id)
-                            {
-                                Name = user.username,
-                                Image = "http://d.sparklr.me/i/t" + user.id + ".jpg"
-                            });
+                        Users.Add(new UserItemViewModel(user.id, user.username, "http://d.sparklr.me/i/t" + user.id + ".jpg"));
                     }
 
                 if (results.Object.posts != null)

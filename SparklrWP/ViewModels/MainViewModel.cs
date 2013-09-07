@@ -22,7 +22,7 @@ namespace SparklrWP
         public MainViewModel()
         {
             Items = new ObservableCollectionWithItemNotification<PostItemViewModel>();
-            GroupedItems = (new ObservableCollectionWithItemNotification<FriendViewModel>()).GroupFriends();
+            GroupedItems = (new ObservableCollectionWithItemNotification<UserItemViewModel>()).GroupFriends();
 
             streamUpdater = new Timer(streamUpdater_Tick, null, Timeout.Infinite, Timeout.Infinite);
 
@@ -30,8 +30,7 @@ namespace SparklrWP
             //Warning: Possible issue where a internet conenction is not stable
 
             loadData();
-            //TODO: Fix friends
-            //loadFriends();
+            loadFriends();
         }
 
         /// <summary>
@@ -253,24 +252,15 @@ namespace SparklrWP
             {
                 List<int> friends = new List<int>();
 
-                foreach (int id in fargs.Object.followers)
+                foreach (int id in fargs.Object)
                 {
                     friends.Add(id);
-                }
-
-                foreach (int id in fargs.Object.following)
-                {
-                    if (!friends.Contains(id)) friends.Add(id);
                 }
 
                 JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> uargs = await App.Client.GetUsernamesAsync(friends.ToArray());
                 foreach (int id in friends)
                 {
-                    AddFriend(new FriendViewModel(id)
-                    {
-                        Name = App.Client.Usernames.ContainsKey(id) ? App.Client.Usernames[id] : "User " + id,
-                        Image = "http://d.sparklr.me/i/t" + id + ".jpg"
-                    });
+                    AddFriend(new UserItemViewModel(id, App.Client.Usernames[id], "http://d.sparklr.me/i/t" + id + ".jpg"));
                 }
 
 #if DEBUG
@@ -279,15 +269,15 @@ namespace SparklrWP
                     if (group.HasItems)
                     {
                         App.logger.log("Group {0} has the following entries:", group.Title);
-                        App.logger.log(String.Join<FriendViewModel>(", ", group.ToArray()));
+                        App.logger.log(String.Join<UserItemViewModel>(", ", group.ToArray()));
                     }
                 }
 #endif
             }
         }
 
-        ObservableCollectionWithItemNotification<GroupedObservableCollection<FriendViewModel>> _groupedItems;
-        public ObservableCollectionWithItemNotification<GroupedObservableCollection<FriendViewModel>> GroupedItems
+        ObservableCollectionWithItemNotification<GroupedObservableCollection<UserItemViewModel>> _groupedItems;
+        public ObservableCollectionWithItemNotification<GroupedObservableCollection<UserItemViewModel>> GroupedItems
         {
             get
             {
@@ -341,7 +331,7 @@ namespace SparklrWP
             }
         }
 
-        public void AddFriend(FriendViewModel f)
+        public void AddFriend(UserItemViewModel f)
         {
             GroupedItems.AddFriend(f);
         }
@@ -369,7 +359,7 @@ namespace SparklrWP
 
         public void RefreshFriends()
         {
-            GroupedItems = (new ObservableCollectionWithItemNotification<FriendViewModel>()).GroupFriends();
+            GroupedItems = (new ObservableCollectionWithItemNotification<UserItemViewModel>()).GroupFriends();
             loadFriends();
         }
     }

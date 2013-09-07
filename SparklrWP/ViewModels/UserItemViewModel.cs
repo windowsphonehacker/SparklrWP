@@ -1,17 +1,39 @@
-﻿using System;
+﻿using SparklrLib.Objects;
+using SparklrLib.Objects.Responses.Work;
+using System;
 using System.ComponentModel;
 
 namespace SparklrWP
 {
-    public class FriendViewModel : INotifyPropertyChanged
+    public class UserItemViewModel : INotifyPropertyChanged
     {
-        public FriendViewModel(int Id)
+        public UserItemViewModel(int Id)
         {
             this.Id = Id;
+            this.Image = "http://d.sparklr.me/i/t" + Id + ".jpg";
+            loadUserdata();
+        }
+
+        private async void loadUserdata()
+        {
+            JSONRequestEventArgs<Username[]> result = await App.Client.GetUsernamesAsync(new int[] { Id });
+
+            if (result.IsSuccessful && result.Object.Length > 0)
+            {
+                this.Name = result.Object[0].username;
+            }
+        }
+
+        public UserItemViewModel(int Id, string Name = null, string Image = null, bool isOnline = false)
+        {
+            this.Id = Id;
+            this.Name = Name;
+            this.Image = Image;
+            this.IsOnline = isOnline;
         }
 
         //For design
-        public FriendViewModel()
+        public UserItemViewModel()
         {
         }
 
@@ -22,7 +44,7 @@ namespace SparklrWP
             {
                 return _name;
             }
-            set
+            private set
             {
                 if (value != _name)
                 {
@@ -31,6 +53,7 @@ namespace SparklrWP
                 }
             }
         }
+
         private string _image;
         public string Image
         {
@@ -38,7 +61,7 @@ namespace SparklrWP
             {
                 return _image;
             }
-            set
+            private set
             {
                 if (value != _image)
                 {
@@ -47,6 +70,7 @@ namespace SparklrWP
                 }
             }
         }
+
         private bool _isOnline;
         public bool IsOnline
         {
@@ -54,7 +78,7 @@ namespace SparklrWP
             {
                 return _isOnline;
             }
-            set
+            private set
             {
                 if (value != _isOnline)
                 {
@@ -79,6 +103,7 @@ namespace SparklrWP
                 }
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(String propertyName)
         {

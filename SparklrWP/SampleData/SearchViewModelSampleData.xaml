@@ -3,10 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:SparklrWP" Keyword="Searchstring">
     <local:SearchViewModel.Users>
-        <local:FriendViewModel Name="Test1" />
-        <local:FriendViewModel Name="Test2" />
-        <local:FriendViewModel Name="Test3" />
-        <local:FriendViewModel Name="Test4" />
-        <local:FriendViewModel Name="Test5" />
+        <local:UserItemViewModel Name="Test1" />
+        <local:UserItemViewModel Name="Test2" />
+        <local:UserItemViewModel Name="Test3" />
+        <local:UserItemViewModel Name="Test4" />
+        <local:UserItemViewModel Name="Test5" />
     </local:SearchViewModel.Users>
 </local:SearchViewModel>

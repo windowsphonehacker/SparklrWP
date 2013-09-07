@@ -4,9 +4,9 @@ using SparklrLib.Objects;
 using SparklrLib.Objects.Responses;
 using SparklrLib.Objects.Responses.Work;
 using SparklrWP.Controls;
-using SparklrWP.Utils;
 using System;
 using System.Net;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -219,9 +219,12 @@ namespace SparklrWP.Pages
                 NavigationService.Navigate(new Uri("/Pages/DetailsPage.xaml?id=" + control.Post.Id, UriKind.Relative));
         }
 
-        private void PinProfileMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void PinProfileMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            Utils.TilesCreator.PinUserprofile(model.ID);
+            if (!await Utils.TilesCreator.PinUserprofile(model.ID))
+            {
+                MessageBox.Show("We could not create a tile for this user. Maybe he's already on your startscreen?", "We're sorry :(", MessageBoxButton.OK);
+            }
         }
     }
 }

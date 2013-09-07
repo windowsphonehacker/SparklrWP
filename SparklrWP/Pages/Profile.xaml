@@ -137,7 +137,7 @@
             
             <controls:PanoramaItem Header="">
                 <toolkit:WrapPanel>
-                    <toolkit:HubTile Size="Large" Title="{Binding Handle}" x:Name="userProfileTile" >
+                    <toolkit:HubTile Size="Large" Title="{Binding Handle}" x:Name="userProfileTile" Message="tap and hold to pin this user to your start screen." >
                         <toolkit:ContextMenuService.ContextMenu>
                             <toolkit:ContextMenu>
                                 <toolkit:MenuItem Header="Pin to start..." Click="PinProfileMenuItem_Click" />

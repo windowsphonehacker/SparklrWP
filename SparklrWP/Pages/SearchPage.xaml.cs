@@ -42,7 +42,7 @@ namespace SparklrWP.Pages
 
         private void UserStackPanel_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            FriendViewModel i = ((StackPanel)sender).DataContext as FriendViewModel;
+            UserItemViewModel i = ((StackPanel)sender).DataContext as UserItemViewModel;
             if (i != null)
             {
                 NavigationService.Navigate(new System.Uri("/Pages/Profile.xaml?userId=" + i.Id.ToString(), System.UriKind.Relative));

@@ -233,7 +233,7 @@
     <Compile Include="Utils\Task.cs" />
     <Compile Include="Utils\TilesCreator.cs" />
     <Compile Include="ViewModels\CommentModel.cs" />
-    <Compile Include="ViewModels\FriendViewModel.cs" />
+    <Compile Include="ViewModels\UserItemViewModel.cs" />
     <Compile Include="ViewModels\InboxViewModel.cs" />
     <Compile Include="ViewModels\ChatViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />

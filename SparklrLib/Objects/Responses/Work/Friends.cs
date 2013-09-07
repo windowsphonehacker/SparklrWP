@@ -1,10 +1,8 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace SparklrLib.Objects.Responses.Work
 {
-    public class Friends
+    public class Friends : List<int>
     {
-        public int[] followers { get; set; }
-        public int[] following { get; set; }
-        public int[] recommends { get; set; }
     }
 }
