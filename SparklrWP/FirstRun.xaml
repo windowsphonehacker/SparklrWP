@@ -10,7 +10,7 @@
 	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
 	x:Class="SparklrWP.FirstRun"
 	SupportedOrientations="Portrait" Orientation="Portrait"
-	shell:SystemTray.IsVisible="True">
+	shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
     <phone:PhoneApplicationPage.Resources>
         <Storyboard x:Name="HelloAni">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LayoutRoot">

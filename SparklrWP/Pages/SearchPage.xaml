@@ -14,7 +14,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    shell:SystemTray.IsVisible="True" d:DataContext="{d:DesignData ../SampleData/SearchViewModelSampleData.xaml}">
+    shell:SystemTray.IsVisible="True" d:DataContext="{d:DesignData ../SampleData/SearchViewModelSampleData.xaml}" Style="{StaticResource Animated}">
 
 
     <Grid x:Name="LayoutRoot" Background="#FF454050" Loaded="LayoutRoot_Loaded">

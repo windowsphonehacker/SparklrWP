@@ -11,7 +11,7 @@
     x:Class="SparklrWP.Pages.PinchToZoom"
     SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d"
-    shell:SystemTray.IsVisible="False">
+    shell:SystemTray.IsVisible="False" Style="{StaticResource Animated}">
 	<phone:PhoneApplicationPage.Resources>
 		<Storyboard x:Name="LoadingFinished">
 			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(Control.IsEnabled)" Storyboard.TargetName="progressBar">

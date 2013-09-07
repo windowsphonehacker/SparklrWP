@@ -15,7 +15,7 @@
     
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True" d:DataContext="{d:DesignData ../SampleData/ChatViewModelSampleData.xaml}">
+    shell:SystemTray.IsVisible="True" d:DataContext="{d:DesignData ../SampleData/ChatViewModelSampleData.xaml}" Style="{StaticResource Animated}">
 
     <Grid x:Name="LayoutRoot" Background="#FF454050">
         <Grid.Resources>

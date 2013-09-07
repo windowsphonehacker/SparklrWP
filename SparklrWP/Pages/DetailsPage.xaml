@@ -14,7 +14,7 @@
 	FontSize="{StaticResource PhoneFontSizeNormal}"
 	Foreground="{StaticResource PhoneForegroundBrush}"
 	SupportedOrientations="Portrait"  Orientation="Portrait" 
-	shell:SystemTray.IsVisible="True">
+	shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
 
     <!--Data context is set to sample data above and first item in sample data collection below and LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot" Background="#FF454050">

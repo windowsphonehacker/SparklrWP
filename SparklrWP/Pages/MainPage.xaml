@@ -15,7 +15,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True" Background="#FF454050">
+    shell:SystemTray.IsVisible="True" Background="#FF454050" Style="{StaticResource Animated}">
 	<phone:PhoneApplicationPage.Resources>
 		<Storyboard x:Name="NotificationAppear">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">

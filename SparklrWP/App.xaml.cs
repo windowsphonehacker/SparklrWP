@@ -8,6 +8,7 @@ using System.IO.IsolatedStorage;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Navigation;
 
 namespace SparklrWP
@@ -207,7 +208,11 @@ namespace SparklrWP
 
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
-            RootFrame = new PhoneApplicationFrame();
+            RootFrame = new Microsoft.Phone.Controls.Updated.TransitionFrame()
+                {
+                    Background = new SolidColorBrush(Colors.Transparent)
+                };
+
             RootFrame.Navigated += CompleteInitializePhoneApplication;
             RootFrame.Navigating += RootFrame_Navigating;
             GlobalLoading.Instance.Initialize(RootFrame);

@@ -11,7 +11,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
-    mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480">
+    mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="480" Style="{StaticResource Animated}">
 	<phone:PhoneApplicationPage.Resources>
 		<Storyboard x:Name="Ani1">
 			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.GlobalOffsetY)" Storyboard.TargetName="ContentPanel">
