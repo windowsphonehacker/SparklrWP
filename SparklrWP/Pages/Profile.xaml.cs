@@ -4,6 +4,7 @@ using SparklrLib.Objects;
 using SparklrLib.Objects.Responses;
 using SparklrLib.Objects.Responses.Work;
 using SparklrWP.Controls;
+using SparklrWP.Utils;
 using System;
 using System.Net;
 using System.Windows.Media;
@@ -115,6 +116,16 @@ namespace SparklrWP.Pages
             {
                 model.Bio = usargs.Object.name + " is too shy to write something about his/herself maybe check again later!";
             }
+
+            updateProfileTile();
+        }
+
+        private async void updateProfileTile()
+        {
+            if (await Utils.TilesCreator.CreateProfileTileImages(model.ID))
+            {
+                userProfileTile.Source = Utils.TilesCreator.LoadProfileTileImage(model.ID, Utils.TileSize.Wide);
+            }
         }
 
         private static PostItemViewModel generateItemViewModel(SparklrLib.Objects.Responses.Work.Timeline t)
@@ -164,12 +175,12 @@ namespace SparklrWP.Pages
             }
         }
 
-        private void MentionButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void MentionButton_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri(String.Format("/NewPostPage.xaml?content={0}", HttpUtility.UrlEncode(String.Format(model.Handle))), UriKind.Relative));
         }
 
-        private async void FollowButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private async void FollowButton_Click(object sender, EventArgs e)
         {
             if (!model.Following)
             {
@@ -196,7 +207,7 @@ namespace SparklrWP.Pages
                 refreshUserDetails(userargs);
         }
 
-        private void MessageButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void MessageButton_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/Pages/ChatPage.xaml?id=" + model.ID, UriKind.Relative));
         }
@@ -206,6 +217,11 @@ namespace SparklrWP.Pages
             SparklrPostControl control = sender as SparklrPostControl;
             if (control != null)
                 NavigationService.Navigate(new Uri("/Pages/DetailsPage.xaml?id=" + control.Post.Id, UriKind.Relative));
+        }
+
+        private void PinProfileMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Utils.TilesCreator.PinUserprofile(model.ID);
         }
     }
 }

@@ -135,6 +135,17 @@
                 </sparklrControls:ExtendedListBox>
             </controls:PanoramaItem>
             
+            <controls:PanoramaItem Header="">
+                <toolkit:WrapPanel>
+                    <toolkit:HubTile Size="Large" Title="{Binding Handle}" x:Name="userProfileTile" >
+                        <toolkit:ContextMenuService.ContextMenu>
+                            <toolkit:ContextMenu>
+                                <toolkit:MenuItem Header="Pin to start..." Click="PinProfileMenuItem_Click" />
+                            </toolkit:ContextMenu>
+                        </toolkit:ContextMenuService.ContextMenu>
+                    </toolkit:HubTile>
+                </toolkit:WrapPanel>
+            </controls:PanoramaItem>
             <!--<controls:PanoramaItem Header="more">
                 <StackPanel>
                     <Button Click="MessageButton_Click">message</Button>

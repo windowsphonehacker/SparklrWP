@@ -125,12 +125,19 @@ namespace SparklrWP_Background_Agent
 
                                     foreach (ShellTile til in ShellTile.ActiveTiles)
                                     {
-                                        Mangopollo.Tiles.FlipTileData data = new Mangopollo.Tiles.FlipTileData();
-                                        data.Title = "Sparklr*";
-                                        data.Title = "Sparklr*";
-                                        data.BackgroundImage = new Uri("/Background.png", UriKind.Relative);
-                                        data.BackBackgroundImage = new Uri("http://til.eaterofcorps.es/?url=http%3A%2F%2Fd.sparklr.me%2Fi%2F" + strm.notifications[0].from + ".jpg&text=" + Uri.EscapeDataString(String.Format(textGenerator(strm.notifications[0]), client.Usernames[strm.notifications[0].from])));
-                                        til.Update(data);
+                                        //Update only primary tile
+                                        if (til.NavigationUri.ToString() == "/")
+                                        {
+                                            Mangopollo.Tiles.FlipTileData data = new Mangopollo.Tiles.FlipTileData();
+                                            data.Title = "Sparklr*";
+                                            data.Title = "Sparklr*";
+                                            data.BackgroundImage = new Uri("/Background.png", UriKind.Relative);
+                                            data.BackBackgroundImage = new Uri("http://til.eaterofcorps.es/?url=http%3A%2F%2Fd.sparklr.me%2Fi%2F" + strm.notifications[0].from + ".jpg&text=" + Uri.EscapeDataString(String.Format(textGenerator(strm.notifications[0]), client.Usernames[strm.notifications[0].from])));
+                                            til.Update(data);
+
+                                            //We can only have one primary tily --> break
+                                            break;
+                                        }
                                     }
 
                                     foreach (Notification not in strm.notifications)

@@ -227,9 +227,11 @@
     <Compile Include="Utils\ListToGroupedListConverter.cs" />
     <Compile Include="Utils\MemoryDiagnosticsHelper.cs" />
     <Compile Include="Utils\ObservableCollectionWithItemNotification.cs" />
+    <Compile Include="Utils\ShellTileExtensions.cs" />
     <Compile Include="Utils\SmartDispatcher.cs" />
     <Compile Include="Utils\StringExtensions.cs" />
     <Compile Include="Utils\Task.cs" />
+    <Compile Include="Utils\TilesCreator.cs" />
     <Compile Include="ViewModels\CommentModel.cs" />
     <Compile Include="ViewModels\FriendViewModel.cs" />
     <Compile Include="ViewModels\InboxViewModel.cs" />
@@ -389,6 +391,9 @@
     <Content Include="Assets\t19.jpg" />
     <Content Include="Assets\t427.jpg" />
     <Content Include="Assets\t591.jpg" />
+    <Content Include="Assets\TileBackgrounds\Medium.png" />
+    <Content Include="Assets\TileBackgrounds\Small.png" />
+    <Content Include="Assets\TileBackgrounds\Wide.png" />
     <Content Include="Controls\appbar.message.send.png" />
     <Content Include="Icons\appbar.apply.rest.png" />
     <Content Include="Icons\appbar.cancel.rest.png" />
@@ -450,6 +455,7 @@
       <LastGenOutput>AppResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
