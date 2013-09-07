@@ -16,7 +16,7 @@ namespace SparklrLib.Objects.Responses.Work
         public override int GetHashCode()
         {
             return id;
-        } 
+        }
 
         public override bool Equals(object obj)
         {
@@ -59,11 +59,6 @@ namespace SparklrLib.Objects.Responses.Work
 
             // Return true if the fields match:
             return id == newid;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
     }
 }
