@@ -92,12 +92,17 @@ namespace SparklrWP.Utils
         /// </summary>
         /// <param name="location">The location of the image</param>
         /// <returns>A BitmapImage, that can be set as a source</returns>
-        public static async Task<BitmapImage> LoadImageFromUrlAsync(Uri location)
+        public static Task<BitmapImage> LoadImageFromUrlAsync(Uri location)
         {
-            WebClient client = new WebClient();
-            BitmapImage image = new BitmapImage();
-            image.SetSource(await client.OpenReadTaskAsync(location));
-            return image;
+            TaskCompletionSource<BitmapImage> loadingTask = new TaskCompletionSource<BitmapImage>();
+            SmartDispatcher.BeginInvoke(async () =>
+            {
+                WebClient client = new WebClient();
+                BitmapImage image = new BitmapImage();
+                image.SetSource(await client.OpenReadTaskAsync(location));
+                loadingTask.SetResult(image);
+            });
+            return loadingTask.Task;
         }
 
         /// <summary>

@@ -84,7 +84,7 @@
 
 
             <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
-            <controls:PivotItem Header="Posts" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
+            <controls:PivotItem Header="posts" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
                 <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                     <sparklrControls:ExtendedListBox x:Name="MainListBox" ItemsSource="{Binding Items}" UnderlyingSelectionChanged="MainListBox_SelectionChanged" TopRefresh="MainListBox_TopRefresh" LoadMore="MainListBox_LoadMore" Margin="-11,0,0,0">
                         <sparklrControls:ExtendedListBox.ItemTemplate>
@@ -96,7 +96,7 @@
                 </Grid>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="Friends">
+            <controls:PivotItem Header="friends">
                 <toolkit:LongListSelector Background="{x:Null}" ItemsSource="{Binding GroupedItems}">
                     <!-- Template for the letters inside the list -->
                     <toolkit:LongListSelector.GroupHeaderTemplate>
@@ -135,10 +135,25 @@
                 </toolkit:LongListSelector>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="My profile">
-                <StackPanel Orientation="Vertical">
+            <controls:PivotItem Header="profile">
+                <ListBox>
+                    <TextBlock Text="{Binding Username}" Style="{StaticResource PhoneTextTitle1Style}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <sparklrControls:ExtendedImageControl ImageSource="{Binding ProfileImage}" Width="125" Height="125" Stretch="UniformToFill" Margin="17,0,0,0" Grid.Column="0" />
+                        <TextBlock Text="{Binding About}" TextWrapping="Wrap" Grid.Column="1" Padding="17,0,0,0" Style="{StaticResource PhoneTextSubtleStyle}" />
+                    </Grid>
+                    <!--<TextBlock Style="{StaticResource PhoneTextSubtleStyle}">Tap on any item to edit it.</TextBlock>-->
                     <Button Click="Button_Click">Inbox</Button>
-                </StackPanel>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
             </controls:PivotItem>
         </controls:Pivot>
 
@@ -150,7 +165,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Style="{StaticResource PhoneTextExtraLargeStyle}">Notifications</TextBlock>
+            <TextBlock Grid.Row="0" Style="{StaticResource PhoneTextExtraLargeStyle}">notifications</TextBlock>
             <ScrollViewer Grid.Row="1">
                 <ListBox ItemsSource="{Binding Notifications}">
                     <ListBox.ItemTemplate>

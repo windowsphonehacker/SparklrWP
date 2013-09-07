@@ -1,5 +1,6 @@
 using SparklrLib.Objects;
 using SparklrLib.Objects.Responses.Beacon;
+using SparklrLib.Objects.Responses.Work;
 using SparklrWP.Utils;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,8 @@ namespace SparklrWP
             Items = new ObservableCollectionWithItemNotification<PostItemViewModel>();
             GroupedItems = (new ObservableCollectionWithItemNotification<UserItemViewModel>()).GroupFriends();
 
+            this.ProfileImage = "http://d.sparklr.me/i/" + App.Client.UserId + ".jpg";
+
             streamUpdater = new Timer(streamUpdater_Tick, null, Timeout.Infinite, Timeout.Infinite);
 
             //We do not start the updater here. It will be started by the callback of the reponse
@@ -31,6 +34,18 @@ namespace SparklrWP
 
             loadData();
             loadFriends();
+            loadUserDetails();
+        }
+
+        private async void loadUserDetails()
+        {
+            JSONRequestEventArgs<User> result = await App.Client.GetUserAsync((int)App.Client.UserId);
+
+            if (result.IsSuccessful)
+            {
+                this.About = result.Object.bio;
+                this.Username = result.Object.name;
+            }
         }
 
         /// <summary>
@@ -63,6 +78,69 @@ namespace SparklrWP
                     {
                         NotifyPropertyChanged("Items");
                     });
+                }
+            }
+        }
+
+        private string _username;
+        /// <summary>
+        /// The name of the current logged in user
+        /// </summary>
+        public string Username
+        {
+            get
+            {
+                return _username;
+            }
+            set
+            {
+                if (_username != value)
+                {
+                    _username = value;
+
+                    NotifyPropertyChanged("Username");
+                }
+            }
+        }
+
+        private string _about;
+        /// <summary>
+        /// The name of the current logged in user
+        /// </summary>
+        public string About
+        {
+            get
+            {
+                return _about;
+            }
+            set
+            {
+                if (_about != value)
+                {
+                    _about = value;
+
+                    NotifyPropertyChanged("About");
+                }
+            }
+        }
+
+        private string _profileImage;
+        /// <summary>
+        /// The name of the current logged in user
+        /// </summary>
+        public string ProfileImage
+        {
+            get
+            {
+                return _profileImage;
+            }
+            set
+            {
+                if (_profileImage != value)
+                {
+                    _profileImage = value;
+
+                    NotifyPropertyChanged("ProfileImage");
                 }
             }
         }
