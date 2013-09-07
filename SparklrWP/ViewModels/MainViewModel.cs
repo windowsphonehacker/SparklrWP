@@ -242,8 +242,10 @@ namespace SparklrWP
             if (notifications != null)
             {
                 NewCount = notifications.Length;
-
-                Notifications.Clear();
+                SmartDispatcher.BeginInvoke(() =>
+                    {
+                        Notifications.Clear();
+                    });
                 foreach (Notification n in notifications)
                 {
                     SmartDispatcher.BeginInvoke(() =>
