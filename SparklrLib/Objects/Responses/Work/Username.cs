@@ -61,5 +61,9 @@ namespace SparklrLib.Objects.Responses.Work
             return id == newid;
         }
 
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
