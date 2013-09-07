@@ -89,9 +89,7 @@
                     <sparklrControls:ExtendedListBox x:Name="MainListBox" ItemsSource="{Binding Items}" UnderlyingSelectionChanged="MainListBox_SelectionChanged" TopRefresh="MainListBox_TopRefresh" LoadMore="MainListBox_LoadMore" Margin="-11,0,0,0">
                         <sparklrControls:ExtendedListBox.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Margin="0,0,0,10">
-                                    <sparklrControls:SparklrPostControl Post="{Binding}" />
-                                </StackPanel>
+                                <sparklrControls:SparklrPostControl Margin="0,0,0,10" Post="{Binding}" />
                             </DataTemplate>
                         </sparklrControls:ExtendedListBox.ItemTemplate>
                     </sparklrControls:ExtendedListBox>
