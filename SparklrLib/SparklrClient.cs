@@ -61,7 +61,7 @@ namespace SparklrLib
         /// <summary>
         /// The base URI
         /// </summary>
-        public const string BaseURI = "https://sparklr.me/";
+        public const string BaseURI = "http://sparklr.me/";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SparklrClient"/> class.
@@ -431,14 +431,14 @@ namespace SparklrLib
         /// <param name="stream"></param>
         /// <param name="network"></param>
         /// <returns></returns>
-        public async Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetMoreItems(int startTime, int stream = 0, int network = 0)
+        public async Task<JSONRequestEventArgs<Objects.Responses.Work.Stream[]>> GetMoreItems(int startTime, int stream = 0, int network = 0)
         {
 #if DEBUG
             stream = 2;
             network = 1;
 #endif
             //TODO: implement properly
-            JSONRequestEventArgs<Objects.Responses.Beacon.Stream> args = await requestJsonObjectAsync<Objects.Responses.Beacon.Stream>("/beacon/stream/" + stream + "?since=0?starttime=" + startTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""));
+            JSONRequestEventArgs<Objects.Responses.Work.Stream[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Stream[]>("/work/stream/" + stream + "?since=0?starttime=" + startTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""));
             return args;
         }
 

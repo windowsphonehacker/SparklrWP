@@ -55,6 +55,7 @@
     <Compile Include="Objects\Responses\Work\OnlineFriends.cs" />
     <Compile Include="Objects\Responses\Work\Post.cs" />
     <Compile Include="Objects\Responses\Work\Search.cs" />
+    <Compile Include="Objects\Responses\Work\Stream.cs" />
     <Compile Include="Objects\Responses\Work\User.cs" />
     <Compile Include="Objects\Responses\Work\Username.cs" />
     <Compile Include="Objects\SparklrEventArgs.cs" />

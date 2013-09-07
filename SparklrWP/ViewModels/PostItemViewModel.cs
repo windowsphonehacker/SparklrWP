@@ -71,7 +71,7 @@ namespace SparklrWP
                 this.CommentCount = result.Object.commentcount;
                 //TODO: Add comments collection
                 this.Deletable = result.Object.from == App.Client.UserId;
-                this.ImageUrl = !String.IsNullOrEmpty(result.Object.meta) ? String.Format("http://d.sparklr.me/i/t{0}", result.Object.meta) : null;
+                this.ImageUrl = !String.IsNullOrEmpty(result.Object.meta) ? String.Format("http://d.sparklr.me/i/t{0}", result.Object.meta.Split(',')[0]) : null;
                 this.Message = result.Object.message;
                 this.Network = result.Object.network;
                 this.OrderTime = result.Object.modified ?? result.Object.time;

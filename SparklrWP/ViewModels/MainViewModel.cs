@@ -157,6 +157,7 @@ namespace SparklrWP
         }
 
         public int LastTime = 0;
+        public int FirstTime = int.MaxValue;
 
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
@@ -173,69 +174,67 @@ namespace SparklrWP
 
             JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await App.Client.GetBeaconStreamAsync(LastTime);
 
-            import(args);
+            if(args.IsSuccessful)
+                import(args.Object.data);
 
             GlobalLoading.Instance.IsLoading = false;
             streamUpdater.Change(10000, Timeout.Infinite);
         }
 
-        private void import(JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args)
+        private void import(SparklrLib.Objects.Responses.Beacon.Timeline[] data)
         {
-            if (args.IsSuccessful)
+            foreach (var t in data)
             {
-                SparklrLib.Objects.Responses.Beacon.Stream stream = args.Object;
-
-                if (stream != null && stream.data != null)
+                if (LastTime < t.time)
                 {
-                    foreach (var t in stream.data)
-                    {
-                        if (LastTime < t.time)
-                        {
-                            LastTime = t.time;
-                        }
-                        if (t.modified != null && LastTime < (int)t.modified)
-                        {
-                            LastTime = (int)t.modified;
-                        }
+                    LastTime = t.time;
+                }
+                if (t.modified != null && LastTime < (int)t.modified)
+                {
+                    LastTime = (int)t.modified;
+                }
 
-                        PostItemViewModel existingitem = null;
-                        existingitem = (from i in Items where i.Id == t.id select i).FirstOrDefault();
+                if (FirstTime > t.time)
+                {
+                    FirstTime = t.time;
+                }
 
-                        if (existingitem == null)
-                        {
-                            PostItemViewModel newItem = new PostItemViewModel(
-                                t.id,
-                                t.from,
-                                t.message,
-                                null,
-                                null,
-                                t.commentcount ?? 0,
-                                null,
-                                t.from == App.Client.UserId,
-                                !String.IsNullOrEmpty(t.imageUrl) ? "http://d.sparklr.me/i/t" + t.imageUrl : null,
-                                t.network,
-                                t.modified ?? t.time,
-                                t.time,
-                                t.via);
-                            newItem.FillNamesAndImages();
-                            addItem(newItem);
-                        }
-                        else
-                        {
-                            existingitem.UpdatePostInfo();
-                        }
-                    }
+                PostItemViewModel existingitem = null;
+                existingitem = (from i in Items where i.Id == t.id select i).FirstOrDefault();
 
-                    this.IsDataLoaded = true;
-#if DEBUG
-                    foreach (PostItemViewModel i in Items)
-                    {
-                        if (i.ImageUrl != null)
-                            App.logger.log(i.ImageUrl);
-                    }
-#endif
+                if (existingitem == null)
+                {
+                    PostItemViewModel newItem = new PostItemViewModel(
+                        t.id,
+                        t.from,
+                        t.message,
+                        null,
+                        null,
+                        t.commentcount ?? 0,
+                        null,
+                        t.from == App.Client.UserId,
+                        !String.IsNullOrEmpty(t.imageUrl) ? "http://d.sparklr.me/i/t" + t.imageUrl : null,
+                        t.network,
+                        t.modified ?? t.time,
+                        t.time,
+                        t.via);
+                    newItem.FillNamesAndImages();
+                    addItem(newItem);
+                }
+                else
+                {
+                    existingitem.UpdatePostInfo();
                 }
             }
+
+            this.IsDataLoaded = true;
+#if DEBUG
+            foreach (PostItemViewModel i in Items)
+            {
+                if (i.ImageUrl != null)
+                    App.logger.log(i.ImageUrl);
+            }
+#endif
         }
 
         public void UpdateNotifications(Notification[] notifications)
@@ -315,8 +314,8 @@ namespace SparklrWP
             GlobalLoading.Instance.IsLoading = true;
 
             //TODO: Implement properly
-            JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> moreItems = await App.Client.GetMoreItems(LastTime);
-            import(moreItems);
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Stream[]> moreItems = await App.Client.GetMoreItems(FirstTime);
+            import(moreItems.Object);
 
             GlobalLoading.Instance.IsLoading = false;
             streamUpdater.Change(10000, Timeout.Infinite);
