@@ -450,7 +450,10 @@ namespace SparklrWP
             PropertyChangedEventHandler handler = PropertyChanged;
             if (null != handler)
             {
-                handler(this, new PropertyChangedEventArgs(propertyName));
+                SmartDispatcher.BeginInvoke(() =>
+                {
+                    handler(this, new PropertyChangedEventArgs(propertyName));
+                });
             }
         }
 
