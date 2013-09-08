@@ -7,16 +7,15 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading;
 
 namespace SparklrWP
 {
     public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     {
-        /// <summary>
-        /// The streamUpdater starts stream updates every 10 seconds.
-        /// </summary>
-        Timer streamUpdater;
+        PeriodicTimer streamUpdater;
+
+        private const int updateInterval = 5000;
+
         public event EventHandler BeforeItemAdded;
         public event EventHandler AfterItemAdded;
 
@@ -27,14 +26,20 @@ namespace SparklrWP
 
             this.ProfileImage = "http://d.sparklr.me/i/" + App.Client.UserId + ".jpg";
 
-            streamUpdater = new Timer(streamUpdater_Tick, null, Timeout.Infinite, Timeout.Infinite);
+            streamUpdater = new PeriodicTimer(updateInterval, false);
+            streamUpdater.TimeoutElapsed += streamUpdater_TimeoutElapsed;
 
             //We do not start the updater here. It will be started by the callback of the reponse
             //Warning: Possible issue where a internet conenction is not stable
 
-            loadData();
+            loadData(true);
             loadFriends();
             loadUserDetails();
+        }
+
+        void streamUpdater_TimeoutElapsed(object sender, EventArgs e)
+        {
+            loadData(false);
         }
 
         private async void loadUserDetails()
@@ -46,16 +51,6 @@ namespace SparklrWP
                 this.About = result.Object.bio;
                 this.Username = result.Object.name;
             }
-        }
-
-        /// <summary>
-        /// Occures when the streamUpdater elapses
-        /// </summary>
-        /// <param name="state"></param>
-        void streamUpdater_Tick(object state)
-        {
-            //The streamUpdater is stopped in loadData to prevent multiple requests
-            loadData();
         }
 
         private ObservableCollectionWithItemNotification<PostItemViewModel> _items;
@@ -147,7 +142,7 @@ namespace SparklrWP
 
         public void Update()
         {
-            this.loadData(true);
+            this.loadData(false);
         }
 
         public bool IsDataLoaded
@@ -162,14 +157,9 @@ namespace SparklrWP
         /// <summary>
         /// Creates and adds a few ItemViewModel objects into the Items collection.
         /// </summary>
-        /// <param name="stopTimer">Indicates if the internal timer should be stopped</param>
-        private async void loadData(bool stopTimer = true)
+        /// <param name="startTimer">Indicates if the internal timer should be started</param>
+        private async void loadData(bool startTimer)
         {
-            //Stop the updater, to prevent multiple requests
-
-            if (stopTimer)
-                streamUpdater.Change(Timeout.Infinite, Timeout.Infinite);
-
             GlobalLoading.Instance.IsLoading = true;
 
             JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await App.Client.GetBeaconStreamAsync(LastTime);
@@ -178,7 +168,11 @@ namespace SparklrWP
                 import(args.Object.data);
 
             GlobalLoading.Instance.IsLoading = false;
-            streamUpdater.Change(10000, Timeout.Infinite);
+
+            if (startTimer)
+            {
+                streamUpdater.Start();
+            }
         }
 
         private void import(SparklrLib.Objects.Responses.Beacon.Timeline[] data)
@@ -312,7 +306,8 @@ namespace SparklrWP
 
         public async void LoadMore()
         {
-            streamUpdater.Change(Timeout.Infinite, Timeout.Infinite);
+            streamUpdater.Stop();
+
             GlobalLoading.Instance.IsLoading = true;
 
             //TODO: Implement properly
@@ -320,7 +315,8 @@ namespace SparklrWP
             import(moreItems.Object);
 
             GlobalLoading.Instance.IsLoading = false;
-            streamUpdater.Change(10000, Timeout.Infinite);
+
+            streamUpdater.Start();
         }
 
         private async void loadFriends()
@@ -341,10 +337,14 @@ namespace SparklrWP
                 {
                     var matching = from user in App.Client.Usernames where user.id == id select user;
                     string username = string.Empty;
-                    if(matching.Any()){
-                        if(matching.First().displayname != null){
+                    if (matching.Any())
+                    {
+                        if (matching.First().displayname != null)
+                        {
                             username = matching.First().displayname;
-                        }else if(matching.First().username != null){
+                        }
+                        else if (matching.First().username != null)
+                        {
                             username = matching.First().username;
                         }
                     }

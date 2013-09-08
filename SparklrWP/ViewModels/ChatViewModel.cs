@@ -4,7 +4,6 @@ using SparklrLib.Objects.Responses.Work;
 using SparklrWP.Utils;
 using System;
 using System.ComponentModel;
-using System.Threading;
 using System.Windows;
 
 namespace SparklrWP
@@ -113,15 +112,26 @@ namespace SparklrWP
 
     public sealed class ChatViewModel : INotifyPropertyChanged, IDisposable
     {
-        //TODO: Stop autoupdates when not focused
-        Timer updateScheduler;
+        PeriodicTimer chatUpdater;
+        private const int updateInterval = 2000;
         int lastTime = 0;
+        public event EventHandler LoadingFinished;
 
-        private async void updateMessages(object state)
+        public ChatViewModel()
+        {
+            chatUpdater = new PeriodicTimer(updateInterval, false);
+            chatUpdater.TimeoutElapsed += chatUpdater_TimeoutElapsed;
+            loadMessages();
+        }
+
+        void chatUpdater_TimeoutElapsed(object sender, EventArgs e)
+        {
+            updateMessages();
+        }
+
+        private async void updateMessages()
         {
             GlobalLoading.Instance.IsLoading = true;
-            //Deactivate the timer to prevent multiple updates
-            updateScheduler.Change(Timeout.Infinite, Timeout.Infinite);
 
             App.SuppressNotifications = true;
             JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Chat> response = await App.Client.GetBeaconChatAsync(From, lastTime);
@@ -135,17 +145,8 @@ namespace SparklrWP
                 }
             }
 
-            //reschedule the timer
-            updateScheduler.Change(2000, Timeout.Infinite);
             GlobalLoading.Instance.IsLoading = false;
         }
-
-        public ChatViewModel()
-        {
-            updateScheduler = new Timer(updateMessages, null, 2, Timeout.Infinite);
-        }
-
-        public event EventHandler LoadingFinished;
 
         private string _name = "";
         public string Name
@@ -238,7 +239,7 @@ namespace SparklrWP
                 //TODO: prevent the last message from showing again
 
                 //Start automatic updates
-                updateScheduler.Change(2000, Timeout.Infinite);
+                chatUpdater.Start();
 
                 if (LoadingFinished != null)
                     LoadingFinished(this, null);
@@ -386,8 +387,8 @@ namespace SparklrWP
 
         public void Dispose()
         {
-            if (updateScheduler != null)
-                updateScheduler.Dispose();
+            if (chatUpdater != null)
+                chatUpdater.Dispose();
         }
     }
 }

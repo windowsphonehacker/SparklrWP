@@ -212,6 +212,7 @@
       <DependentUpon>TagsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\PeriodicTimer.cs" />
     <Compile Include="Utils\Caching\Image.cs" />
     <Compile Include="Utils\Converters\BoolToBubbleMarginConverter.cs" />
     <Compile Include="Utils\Converters\BoolToBubbleDirectionConverter.cs" />
