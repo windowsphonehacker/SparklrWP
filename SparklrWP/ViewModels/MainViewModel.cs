@@ -335,19 +335,16 @@ namespace SparklrWP
                 JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> uargs = await App.Client.GetUsernamesAsync(friends.ToArray());
                 foreach (int id in friends)
                 {
-                    var matching = from user in App.Client.Usernames where user.id == id select user;
-                    string username = string.Empty;
-                    if (matching.Any())
+                    string username = "";
+
+                    foreach (Username u in uargs.Object)
                     {
-                        if (matching.First().displayname != null)
+                        if (id == u.id)
                         {
-                            username = matching.First().displayname;
-                        }
-                        else if (matching.First().username != null)
-                        {
-                            username = matching.First().username;
+                            username = u.username;
                         }
                     }
+
                     AddFriend(new UserItemViewModel(id, username, "http://d.sparklr.me/i/t" + id + ".jpg"));
                 }
 

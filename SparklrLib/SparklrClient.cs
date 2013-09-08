@@ -57,7 +57,7 @@ namespace SparklrLib
         /// <value>
         /// The usernames.
         /// </value>
-        public List<Objects.Responses.Work.Username> Usernames { get; set; }
+        public Dictionary<int, SparklrLib.Objects.Responses.Work.Username> Usernames { get; set; }
         /// <summary>
         /// The base URI
         /// </summary>
@@ -68,7 +68,7 @@ namespace SparklrLib
         /// </summary>
         public SparklrClient()
         {
-            Usernames = new List<Objects.Responses.Work.Username>();
+            Usernames = new Dictionary<int, Objects.Responses.Work.Username>();
         }
 
         /// <summary>
@@ -511,71 +511,93 @@ namespace SparklrLib
             };
         }
 
+        private Dictionary<int, Task<JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]>>> pendingUsernameRequests = new Dictionary<int, Task<JSONRequestEventArgs<Objects.Responses.Work.Username[]>>>();
+
         /// <summary>
         /// Gets the usernames by the specified ids.
         /// </summary>
         /// <param name="ids">The ids.</param>
         public async Task<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> GetUsernamesAsync(int[] ids)
         {
+            TaskCompletionSource<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> thisPendingRequest = new TaskCompletionSource<JSONRequestEventArgs<Objects.Responses.Work.Username[]>>();
+
+            //Create a list of the non-cached usernames
             List<int> idsToRequest = new List<int>();
+
+            //However we'll ignore pending requests, we'll await their results instead
+            Dictionary<int, Task<JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]>>> awaitTheseRequests = new Dictionary<int, Task<JSONRequestEventArgs<Objects.Responses.Work.Username[]>>>();
+
+            //This list contains the usernames we'll return
+            List<SparklrLib.Objects.Responses.Work.Username> returnUsernames = new List<Objects.Responses.Work.Username>();
+
             foreach (int id in ids)
             {
-                if (!(from user in Usernames where user.id == id select user).Any())
+                if (!Usernames.ContainsKey(id))
                 {
-                    idsToRequest.Add(id);
+                    if (pendingUsernameRequests.ContainsKey(id))
+                    {
+                        awaitTheseRequests.Add(id, pendingUsernameRequests[id]);
+#if DEBUG
+                        if (System.Diagnostics.Debugger.IsLogging())
+                            System.Diagnostics.Debugger.Log(0, "SparklrLib", String.Format("Awaiting pending request for {0}", id));
+#endif
+                    }
+                    else
+                    {
+                        idsToRequest.Add(id);
+                        pendingUsernameRequests.Add(id, thisPendingRequest.Task);
+                    }
+                }
+                else
+                {
+                    returnUsernames.Add(Usernames[id]);
                 }
             }
+
+            //Now we request the usernames we have left in the idsToRequest
+
             if (idsToRequest.Count > 0)
             {
                 JSONRequestEventArgs<Objects.Responses.Work.Username[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in idsToRequest select id.ToString()).ToArray()));
 
                 if (args.IsSuccessful)
                 {
-                    foreach (Objects.Responses.Work.Username un in args.Object)
-                    {
-                        if (Usernames.Contains(un))
-                        {
-                            Usernames.Remove(un);
-                        }
-                        Usernames.Add(un);
-                    }
-                    List<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
-                    foreach (int id in idsToRequest)
-                    {
-                        var matching = from user in Usernames where user.id == id select user;
-                        if (matching.Any())
-                        {
-                            usrnms.Add(matching.First());
-                        }
-                    }
+                    //Notify the other function calls that we've resolved the names so that they can continue their work.
+                    thisPendingRequest.SetResult(args);
 
-                    return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
-                    {
-                        Error = null,
-                        IsSuccessful = true,
-                        Object = usrnms.ToArray()
-                    };
+                    //Add our requested usernames to the ones we return
+                    returnUsernames.AddRange(args.Object);
+                }
+                else
+                {
+#if DEBUG
+                    throw new Exception("Could not get usernames");
+#endif
                 }
             }
-            else
+
+            //Now we have to check if we still need to wait for pending requests
+            foreach (KeyValuePair<int, Task<JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]>>> kvp in awaitTheseRequests)
             {
-                IEnumerable<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
-                var matching = from user in Usernames where idsToRequest.Contains(user.id) select user;
-                if (matching.Any())
+                //The request is guaranteed to be succesful (see above)
+                JSONRequestEventArgs<Objects.Responses.Work.Username[]> result = await kvp.Value;
+
+                foreach (SparklrLib.Objects.Responses.Work.Username u in result.Object)
                 {
-                    usrnms = matching;
+                    ///We only have one awaited name
+                    if (u.id == kvp.Key)
+                    {
+                        returnUsernames.Add(u);
+                        break;
+                    }
                 }
-                return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
-                {
-                    Error = null,
-                    IsSuccessful = true,
-                    Object = usrnms.ToArray()
-                };
             }
+
             return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
             {
-                Error = new Exception("Invalid data was provided"),
-                IsSuccessful = false
+                IsSuccessful = true,
+                Error = null,
+                Object = returnUsernames.ToArray()
             };
         }
 

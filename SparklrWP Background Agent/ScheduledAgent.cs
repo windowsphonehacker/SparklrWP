@@ -134,7 +134,7 @@ namespace SparklrWP_Background_Agent
                                             data.BackgroundImage = new Uri("/Background.png", UriKind.Relative);
                                             //TODO?: change to not use external server? Update text only instead?
                                             //Known bug: client.Usernames[strm.notifications[0].from] causes a InvalidData exception
-                                            data.BackBackgroundImage = new Uri("http://til.eaterofcorps.es/?url=http%3A%2F%2Fd.sparklr.me%2Fi%2F" + strm.notifications[0].from + ".jpg&text=" + Uri.EscapeDataString(String.Format(textGenerator(strm.notifications[0]), client.Usernames[strm.notifications[0].from])));
+                                            //data.BackBackgroundImage = new Uri("http://til.eaterofcorps.es/?url=http%3A%2F%2Fd.sparklr.me%2Fi%2F" + strm.notifications[0].from + ".jpg&text=" + Uri.EscapeDataString(String.Format(textGenerator(strm.notifications[0]), client.Usernames[strm.notifications[0].from])));
                                             til.Update(data);
 
                                             //We can only have one primary tile --> break
@@ -146,7 +146,7 @@ namespace SparklrWP_Background_Agent
                                     {
                                         ShellToast notif = new ShellToast();
                                         notif.Title = "Sparklr*";
-                                        notif.Content = String.Format(textGenerator(not), client.Usernames[not.from]);
+                                        //notif.Content = String.Format(textGenerator(not), client.Usernames[not.from]);
                                         notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
                                         notif.Show();
                                     }
