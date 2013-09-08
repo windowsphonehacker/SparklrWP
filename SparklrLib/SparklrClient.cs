@@ -24,6 +24,8 @@ namespace SparklrLib
 
         public static event EventHandler<NotificationEventArgs> NotificationsReceived;
 
+        public static int lastNotificationTime { get; private set; }
+
         /// <summary>
         /// Gets or sets the authentication token.
         /// </summary>
@@ -401,7 +403,7 @@ namespace SparklrLib
         /// </summary>
         public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync()
         {
-            return GetBeaconStreamAsync(0, 20, 0);
+            return GetBeaconStreamAsync(0, lastNotificationTime, 0);
         }
 
         /// <summary>
@@ -410,7 +412,7 @@ namespace SparklrLib
         /// <param name="lastTime">The last time.</param>
         public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(int lastTime)
         {
-            return GetBeaconStreamAsync(lastTime, 0, 0);
+            return GetBeaconStreamAsync(lastTime, lastNotificationTime, 0);
         }
 
         /// <summary>
@@ -519,88 +521,133 @@ namespace SparklrLib
         /// <param name="ids">The ids.</param>
         public async Task<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> GetUsernamesAsync(int[] ids)
         {
-            TaskCompletionSource<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> thisPendingRequest = new TaskCompletionSource<JSONRequestEventArgs<Objects.Responses.Work.Username[]>>();
-
-            //Create a list of the non-cached usernames
-            List<int> idsToRequest = new List<int>();
-
-            //However we'll ignore pending requests, we'll await their results instead
-            Dictionary<int, Task<JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]>>> awaitTheseRequests = new Dictionary<int, Task<JSONRequestEventArgs<Objects.Responses.Work.Username[]>>>();
-
-            //This list contains the usernames we'll return
-            List<SparklrLib.Objects.Responses.Work.Username> returnUsernames = new List<Objects.Responses.Work.Username>();
-
-            foreach (int id in ids)
+            try
             {
-                if (!Usernames.ContainsKey(id))
+                //Remove all duplicates
+                ids = ids.Distinct().ToArray();
+
+
+                TaskCompletionSource<JSONRequestEventArgs<Objects.Responses.Work.Username[]>> thisPendingRequest = new TaskCompletionSource<JSONRequestEventArgs<Objects.Responses.Work.Username[]>>();
+
+                //Create a list of the non-cached usernames
+                List<int> idsToRequest = new List<int>();
+
+                //However we'll ignore pending requests, we'll await their results instead
+                Dictionary<int, Task<JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]>>> awaitTheseRequests = new Dictionary<int, Task<JSONRequestEventArgs<Objects.Responses.Work.Username[]>>>();
+
+                //This list contains the usernames we'll return
+                List<SparklrLib.Objects.Responses.Work.Username> returnUsernames = new List<Objects.Responses.Work.Username>();
+
+                foreach (int id in ids)
                 {
-                    if (pendingUsernameRequests.ContainsKey(id))
+                    if (!Usernames.ContainsKey(id))
                     {
-                        awaitTheseRequests.Add(id, pendingUsernameRequests[id]);
+                        if (pendingUsernameRequests.ContainsKey(id))
+                        {
+                            awaitTheseRequests.Add(id, pendingUsernameRequests[id]);
 #if DEBUG
 #if !PORTABLELIB
-                        if (System.Diagnostics.Debugger.IsLogging())
-                            System.Diagnostics.Debugger.Log(0, "SparklrLib", String.Format("Awaiting pending request for {0}", id));
+                            if (System.Diagnostics.Debugger.IsLogging())
+                                System.Diagnostics.Debugger.Log(0, "SparklrLib", String.Format("Awaiting pending request for {0}", id));
 #endif
 #endif
+                        }
+                        else
+                        {
+                            idsToRequest.Add(id);
+                            pendingUsernameRequests.Add(id, thisPendingRequest.Task);
+                        }
                     }
                     else
                     {
-                        idsToRequest.Add(id);
-                        pendingUsernameRequests.Add(id, thisPendingRequest.Task);
+                        returnUsernames.Add(Usernames[id]);
                     }
                 }
-                else
+
+                //Now we request the usernames we have left in the idsToRequest
+
+                if (idsToRequest.Count > 0)
                 {
-                    returnUsernames.Add(Usernames[id]);
-                }
-            }
+                    JSONRequestEventArgs<Objects.Responses.Work.Username[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in idsToRequest select id.ToString()).ToArray()));
 
-            //Now we request the usernames we have left in the idsToRequest
-
-            if (idsToRequest.Count > 0)
-            {
-                JSONRequestEventArgs<Objects.Responses.Work.Username[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in idsToRequest select id.ToString()).ToArray()));
-
-                if (args.IsSuccessful)
-                {
-                    //Notify the other function calls that we've resolved the names so that they can continue their work.
-                    thisPendingRequest.SetResult(args);
-
-                    //Add our requested usernames to the ones we return
-                    returnUsernames.AddRange(args.Object);
-                }
-                else
-                {
-#if DEBUG
-                    throw new Exception("Could not get usernames");
-#endif
-                }
-            }
-
-            //Now we have to check if we still need to wait for pending requests
-            foreach (KeyValuePair<int, Task<JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]>>> kvp in awaitTheseRequests)
-            {
-                //The request is guaranteed to be succesful (see above)
-                JSONRequestEventArgs<Objects.Responses.Work.Username[]> result = await kvp.Value;
-
-                foreach (SparklrLib.Objects.Responses.Work.Username u in result.Object)
-                {
-                    ///We only have one awaited name
-                    if (u.id == kvp.Key)
+                    if (args.IsSuccessful)
                     {
-                        returnUsernames.Add(u);
-                        break;
+                        //Notify the other function calls that we've resolved the names so that they can continue their work.
+                        thisPendingRequest.SetResult(args);
+
+                        //Add our requested usernames to the ones we return
+                        returnUsernames.AddRange(args.Object);
+
+                        //Add our usernames to the cached ones
+                        foreach (SparklrLib.Objects.Responses.Work.Username u in args.Object)
+                        {
+                            if (!Usernames.ContainsKey(u.id))
+                                Usernames.Add(u.id, u);
+
+                            //Remove ourself from the pending requests
+                            if (pendingUsernameRequests.ContainsKey(u.id))
+                                pendingUsernameRequests.Remove(u.id);
+                        }
+                    }
+                    else
+                    {
+#if DEBUG
+                        throw new Exception("Could not get usernames");
+#endif
                     }
                 }
-            }
 
-            return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
+                //Now we have to check if we still need to wait for pending requests
+                foreach (KeyValuePair<int, Task<JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]>>> kvp in awaitTheseRequests)
+                {
+                    //The request is guaranteed to be succesful (see above)
+                    JSONRequestEventArgs<Objects.Responses.Work.Username[]> result = await kvp.Value;
+
+                    foreach (SparklrLib.Objects.Responses.Work.Username u in result.Object)
+                    {
+                        ///We only have one awaited name
+                        if (u.id == kvp.Key)
+                        {
+                            returnUsernames.Add(u);
+                            break;
+                        }
+                    }
+                }
+
+                return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
+                {
+                    IsSuccessful = true,
+                    Error = null,
+                    Object = returnUsernames.ToArray()
+                };
+            }
+#if DEBUG
+#if !PORTABLELIB
+
+            catch (Exception ex)
             {
-                IsSuccessful = true,
-                Error = null,
-                Object = returnUsernames.ToArray()
-            };
+
+                System.Diagnostics.Debugger.Log(0, "ERROR", ex.Message);
+                System.Diagnostics.Debugger.Break();
+                return null;
+            }
+#else
+            catch(Exception)
+            {
+                throw;
+            }
+#endif
+#else
+            catch(Exception)
+            {
+                return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
+                {
+                    IsSuccessful = false,
+                    Error = null,
+                    Object = null
+                };
+            }
+#endif
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.OnlineFriends[]>> GetOnlineFriendsAsync()
@@ -692,9 +739,9 @@ namespace SparklrLib
             return requestJsonObjectAsync<Objects.Responses.Work.Chat[]>("/work/chat/" + otherid.ToString());
         }
 
-        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Chat>> GetBeaconChatAsync(int otherid, int since, int limit = 0)
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Chat>> GetBeaconChatAsync(int otherid, int since)
         {
-            return requestJsonObjectAsync<Objects.Responses.Beacon.Chat>("/beacon/chat/" + otherid.ToString() + "?since=" + since.ToString() + "&n=" + limit.ToString());
+            return requestJsonObjectAsync<Objects.Responses.Beacon.Chat>("/beacon/chat/" + otherid.ToString() + "?since=" + since.ToString() + "&n=" + lastNotificationTime.ToString());
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> PostChatMessageAsync(int recipient, string message)
@@ -711,6 +758,11 @@ namespace SparklrLib
             return requestJsonObjectAsync<Objects.Responses.Work.Tag[]>("/work/tag/" + tag);
         }
 
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Tag>> GetBeaconTagAsync(string tag, int lasttime)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Beacon.Tag>("/beacon/tag/" + tag + "?starttime=" + lasttime.ToString() + "&n=" + lastNotificationTime);
+        }
+
         private void raiseCredentialsExpired()
         {
             //Fire only once
@@ -724,6 +776,10 @@ namespace SparklrLib
 
         static internal void RaiseNotificationReceived(object sender, NotificationEventArgs e)
         {
+            foreach (SparklrLib.Objects.Responses.Beacon.Notification n in e.Notifications)
+                if (lastNotificationTime < n.time)
+                    lastNotificationTime = n.time;
+
             if (NotificationsReceived != null)
                 NotificationsReceived(sender, e);
         }

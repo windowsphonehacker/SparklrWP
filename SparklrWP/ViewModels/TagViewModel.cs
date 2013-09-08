@@ -1,5 +1,6 @@
 using SparklrLib.Objects;
 using SparklrLib.Objects.Responses.Work;
+using SparklrWP.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,9 +10,11 @@ namespace SparklrWP
     public class TagViewModel : INotifyPropertyChanged
     {
         //TODO?: loading overlay?
-        //TODO: implement beacon support
         //TODO: implement "load more"
         //public event EventHandler InitialLoadingComplete;
+
+        PeriodicTimer tagUpdater;
+        int lasttime = 0;
 
         //Designtime support
         public TagViewModel()
@@ -25,7 +28,47 @@ namespace SparklrWP
         public TagViewModel(string tag)
         {
             this.Tag = tag;
+            tagUpdater = new PeriodicTimer(10000, false);
+            tagUpdater.TimeoutElapsed += tagUpdater_TimeoutElapsed;
             LoadPosts();
+        }
+
+        private async void tagUpdater_TimeoutElapsed(object sender, EventArgs e)
+        {
+            GlobalLoading.Instance.IsLoading = true;
+
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Tag> result = await App.Client.GetBeaconTagAsync(this.Tag, lasttime);
+
+            if (result.IsSuccessful)
+            {
+                foreach (SparklrLib.Objects.Responses.Beacon.Datum t in result.Object.data)
+                {
+                    if (lasttime < t.time)
+                        lasttime = t.time;
+
+                    PostItemViewModel p = new PostItemViewModel(
+                            t.id,
+                            t.from,
+                            t.message,
+                            null,
+                            null,
+                            t.commentcount ?? 0,
+                            null,
+                            false,
+                            t.imageUrl,
+                            t.network,
+                            t.modified ?? t.time,
+                            t.time,
+                            t.via,
+                            null,
+                            null
+                            );
+
+                    insertPost(p);
+                }
+            }
+
+            GlobalLoading.Instance.IsLoading = false;
         }
 
         private ObservableCollection<PostItemViewModel> posts = new ObservableCollection<PostItemViewModel>();
@@ -83,6 +126,9 @@ namespace SparklrWP
             {
                 foreach (Tag t in result.Object)
                 {
+                    if (lasttime < t.time)
+                        lasttime = t.time;
+
                     PostItemViewModel post = new PostItemViewModel(
                         t.id,
                         t.from,
