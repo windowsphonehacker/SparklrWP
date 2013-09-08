@@ -10,6 +10,7 @@
 *.fsproj merge=union eol=crlf
 *.dbproj merge=union eol=crlf
 *.xml        eol=crlf
+*.xlf        eol=crlf
 *.xaml       eol=crlf
 *.config     eol=crlf
 *.resx       eol=crlf
