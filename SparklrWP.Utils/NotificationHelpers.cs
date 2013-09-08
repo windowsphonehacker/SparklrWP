@@ -36,5 +36,23 @@ namespace SparklrWP.Utils
 #endif
             }
         }
+
+        public static Uri GenerateActionUri(SparklrLib.Objects.Responses.Beacon.Notification n)
+        {
+            switch (n.type)
+            {
+                case 1:
+                case 2:
+                    return new Uri("/Pages/DetailsPage.xaml?id=" + n.action, UriKind.Relative);
+                case 3:
+                    return new Uri("/Pages/ChatPage.xaml?id=" + n.from, UriKind.Relative);
+                default:
+#if DEBUG
+                    throw new NotSupportedException("The type is not supported");
+#else
+                    return null;
+#endif
+            }
+        }
     }
 }

@@ -78,6 +78,9 @@ namespace SparklrWP
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public Uri NavigationUri;
+
         private void NotifyPropertyChanged(String propertyName)
         {
             PropertyChangedEventHandler handler = PropertyChanged;

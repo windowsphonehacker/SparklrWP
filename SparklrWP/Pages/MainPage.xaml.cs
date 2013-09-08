@@ -1,5 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using SparklrWP.Controls;
 using SparklrWP.Utils;
 using System;
 using System.Windows;
@@ -23,7 +24,6 @@ namespace SparklrWP.Pages
 
             App.MainViewModel.BeforeItemAdded += MainViewModel_BeforeItemAdded;
             App.MainViewModel.AfterItemAdded += MainViewModel_AfterItemAdded;
-            App.MainViewModel.Items.CollectionChanged += Items_CollectionChanged;
 
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
 
@@ -52,11 +52,6 @@ namespace SparklrWP.Pages
             this.ApplicationBar.MenuItems.Add(garbageCollect);
 #endif
             App.BackgroundTask = new Task();
-        }
-
-        void Items_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-
         }
 
         double distanceFromBottom = -1;
@@ -185,6 +180,18 @@ namespace SparklrWP.Pages
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Uri("/Pages/InboxPage.xaml", UriKind.Relative));
+        }
+
+        private void Notification_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            SparklrTextBlock control = sender as SparklrTextBlock;
+
+            if (control != null)
+            {
+                NotificationViewModel m = (NotificationViewModel)control.DataContext;
+                if (m.NavigationUri != null)
+                    NavigationService.Navigate(m.NavigationUri);
+            }
         }
     }
 }

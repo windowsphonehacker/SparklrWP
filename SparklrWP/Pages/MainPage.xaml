@@ -170,9 +170,7 @@
                 <ListBox ItemsSource="{Binding Notifications}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="5,3">
-                                <sparklrControls:SparklrText Text="{Binding Message}" Username="{Binding FromName}" UserbarLocation="Top" CommentCountVisibility="Collapsed" />
-                            </StackPanel>
+                            <sparklrControls:SparklrTextBlock Text="{Binding Message}" Margin="5,3" toolkit:TiltEffect.IsTiltEnabled="True" Tap="Notification_Tap" />
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                     <!-- Workaround used to stretch the child elements to the full width -> HorizontalContentAlignment won't work for some reason... -->
