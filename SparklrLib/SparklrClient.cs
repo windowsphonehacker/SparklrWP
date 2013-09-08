@@ -57,18 +57,18 @@ namespace SparklrLib
         /// <value>
         /// The usernames.
         /// </value>
-        public Dictionary<int, string> Usernames { get; set; }
+        public List<Objects.Responses.Work.Username> Usernames { get; set; }
         /// <summary>
         /// The base URI
         /// </summary>
-        public const string BaseURI = "http://sparklr.me/";
+        public const string BaseURI = "https://sparklr.me/";
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SparklrClient"/> class.
         /// </summary>
         public SparklrClient()
         {
-            Usernames = new Dictionary<int, string>();
+            Usernames = new List<Objects.Responses.Work.Username>();
         }
 
         /// <summary>
@@ -520,27 +520,32 @@ namespace SparklrLib
             List<int> idsToRequest = new List<int>();
             foreach (int id in ids)
             {
-                if (!Usernames.ContainsKey(id))
+                if (!(from user in Usernames where user.id == id select user).Any())
                 {
                     idsToRequest.Add(id);
                 }
             }
             if (idsToRequest.Count > 0)
             {
-                JSONRequestEventArgs<Objects.Responses.Work.Username[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in ids select id.ToString()).ToArray()));
+                JSONRequestEventArgs<Objects.Responses.Work.Username[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in idsToRequest select id.ToString()).ToArray()));
 
                 if (args.IsSuccessful)
                 {
                     foreach (Objects.Responses.Work.Username un in args.Object)
                     {
-                        Usernames[un.id] = un.username;
+                        if (Usernames.Contains(un))
+                        {
+                            Usernames.Remove(un);
+                        }
+                        Usernames.Add(un);
                     }
                     List<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
-                    foreach (int id in ids)
+                    foreach (int id in idsToRequest)
                     {
-                        if (Usernames.ContainsKey(id))
+                        var matching = from user in Usernames where user.id == id select user;
+                        if (matching.Any())
                         {
-                            usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
+                            usrnms.Add(matching.First());
                         }
                     }
 
@@ -554,13 +559,11 @@ namespace SparklrLib
             }
             else
             {
-                List<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
-                foreach (int id in ids)
+                IEnumerable<Objects.Responses.Work.Username> usrnms = new List<Objects.Responses.Work.Username>();
+                var matching = from user in Usernames where idsToRequest.Contains(user.id) select user;
+                if (matching.Any())
                 {
-                    if (Usernames.ContainsKey(id))
-                    {
-                        usrnms.Add(new Objects.Responses.Work.Username() { id = id, username = Usernames[id] });
-                    }
+                    usrnms = matching;
                 }
                 return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
                 {

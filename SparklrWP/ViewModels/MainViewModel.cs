@@ -174,7 +174,7 @@ namespace SparklrWP
 
             JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await App.Client.GetBeaconStreamAsync(LastTime);
 
-            if(args.IsSuccessful)
+            if (args.IsSuccessful)
                 import(args.Object.data);
 
             GlobalLoading.Instance.IsLoading = false;
@@ -337,7 +337,16 @@ namespace SparklrWP
                 JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> uargs = await App.Client.GetUsernamesAsync(friends.ToArray());
                 foreach (int id in friends)
                 {
-                    AddFriend(new UserItemViewModel(id, App.Client.Usernames[id], "http://d.sparklr.me/i/t" + id + ".jpg"));
+                    var matching = from user in App.Client.Usernames where user.id == id select user;
+                    string username = string.Empty;
+                    if(matching.Any()){
+                        if(matching.First().displayname != null){
+                            username = matching.First().displayname;
+                        }else if(matching.First().username != null){
+                            username = matching.First().username;
+                        }
+                    }
+                    AddFriend(new UserItemViewModel(id, username, "http://d.sparklr.me/i/t" + id + ".jpg"));
                 }
 
 #if DEBUG
