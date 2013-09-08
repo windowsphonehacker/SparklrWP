@@ -121,7 +121,7 @@ namespace SparklrWP.Controls
         /// <summary>
         /// Matches hashtags like #test and #123
         /// </summary>
-        private static Regex hashTagRegex = new Regex(@"(#[\w\b]*)", RegexOptions.Compiled);
+        private static Regex hashTagRegex = new Regex(@"(#[\w-]+)", RegexOptions.Compiled);
 
         /// <summary>
         /// Matches usernames like @test and @123
@@ -181,7 +181,7 @@ namespace SparklrWP.Controls
                         if (hashTagRegex.IsMatch(s))
                         {
                             //If the hashtag regex matches the substring, we only have a hashtag
-                            messageContentParagraph.Inlines.Add(getHighlightedInline(s));
+                            messageContentParagraph.Inlines.Add(getInlineAsTag(s));
                         }
                         else
                         {
@@ -299,6 +299,25 @@ namespace SparklrWP.Controls
             ret.Foreground = accentColor;
             ret.NavigateUri = target;
             ret.Inlines.Add(text);
+            return ret;
+        }
+
+        /// <summary>
+        /// Formats the given string as clickable hastag
+        /// </summary>
+        /// <param name="s">the hashtag to format</param>
+        /// <returns>the formatted hashtag</returns>
+        private Inline getInlineAsTag(string s)
+        {
+            Hyperlink ret = new Hyperlink();
+            ret.Foreground = accentColor;
+            ret.Inlines.Add(s);
+
+            ret.Click += (sender, e) =>
+            {
+                (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(String.Format("/Pages/TagsPage.xaml?tag={0}", s.EncodeUrl()), UriKind.Relative));
+            };
+
             return ret;
         }
 

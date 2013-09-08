@@ -682,6 +682,11 @@ namespace SparklrLib
                 }, "", "POST");
         }
 
+        public Task<JSONRequestEventArgs<Objects.Responses.Work.Tag[]>> GetTagPostsAsync(string tag)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Work.Tag[]>("/work/tag/" + tag);
+        }
+
         private void raiseCredentialsExpired()
         {
             //Fire only once
