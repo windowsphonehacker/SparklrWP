@@ -33,6 +33,7 @@ namespace SparklrWP
         /// </summary>
         public App()
         {
+            Globals.LoggingFunction = logger.log;
             // Global handler for uncaught exceptions. 
             UnhandledException += Application_UnhandledException;
 
@@ -71,7 +72,7 @@ namespace SparklrWP
 
         static internal bool SuppressNotifications = false;
         private int previousNotifications = 0;
-        void SparklrClient_NotificationsReceived(object sender, SparklrLib.Objects.NotificationEventArgs e)
+        async void SparklrClient_NotificationsReceived(object sender, SparklrLib.Objects.NotificationEventArgs e)
         {
             //TODO: fully implement, e.g. navigate to Notifications on tap, show content of notification, etc.
             if (e.Notifications.Length > 0)
@@ -79,7 +80,17 @@ namespace SparklrWP
                 if (e.Notifications.Length != previousNotifications)
                 {
                     if (!SuppressNotifications)
-                        Helpers.Notify(String.Format("You have {0} notifications.", e.Notifications.Length));
+                    {
+                        if (e.Notifications.Length == 1)
+                        {
+                            Helpers.Notify(await NotificationHelpers.Format(e.Notifications[0].type, e.Notifications[0].body, e.Notifications[0].from, App.Client));
+                        }
+                        else
+                        {
+                            Helpers.Notify(String.Format("You have {0} notifications.", e.Notifications.Length));
+                        }
+                    }
+
                     previousNotifications = e.Notifications.Length;
                 }
 

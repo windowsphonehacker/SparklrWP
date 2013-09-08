@@ -221,7 +221,7 @@ namespace SparklrWP.Pages
 
         private async void PinProfileMenuItem_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            if (!await Utils.TilesCreator.PinUserprofile(model.ID))
+            if (!await Utils.TilesCreator.PinUserprofile(model.ID, App.Client))
             {
                 MessageBox.Show("We could not create a tile for this user. Maybe he's already on your startscreen?", "We're sorry :(", MessageBoxButton.OK);
             }

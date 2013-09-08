@@ -1,6 +1,5 @@
-﻿extern alias ImageToolsDLL;
-using ImageToolsDLL::ImageTools.IO;
-using ImageToolsDLL::ImageTools.IO.Gif;
+﻿using ImageTools.IO;
+using  ImageTools.IO.Gif;
 
 namespace SparklrWP.Utils
 {

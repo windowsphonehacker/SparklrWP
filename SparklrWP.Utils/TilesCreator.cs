@@ -1,13 +1,14 @@
 ﻿using Microsoft.Phone.Shell;
 using SparklrLib.Objects;
+using SparklrLib.Objects.Responses.Beacon;
 using SparklrLib.Objects.Responses.Work;
 using System;
-using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+
 namespace SparklrWP.Utils
 {
     public enum TileSize
@@ -20,6 +21,10 @@ namespace SparklrWP.Utils
     public static class TilesCreator
     {
         private const string TilesFolder = @"Shared\ShellContent";
+
+        private const string PrimaryWideFilename = "PrimaryWide.jpg";
+        private const string PrimaryMediumFilename = "PrimaryMedium.jpg";
+
         private const int SmallWidth = 156;
         private const int SmallHeight = 156;
         private const int MediumWidth = 336;
@@ -39,16 +44,16 @@ namespace SparklrWP.Utils
                     {
                         string fileName = System.IO.Path.Combine(TilesFolder, file);
                         storage.DeleteFile(fileName);
-                        App.logger.log("Deleted tile file {0}", fileName);
+                        Globals.log("Deleted tile file {0}", fileName);
                     }
                 }
             }
 #endif
         }
 
-        public static async Task<bool> PinUserprofile(int userid)
+        public static async Task<bool> PinUserprofile(int userid, SparklrLib.SparklrClient client)
         {
-            JSONRequestEventArgs<User> userdata = await App.Client.GetUserAsync(userid);
+            JSONRequestEventArgs<User> userdata = await client.GetUserAsync(userid);
 
             if (userdata.IsSuccessful)
             {
@@ -72,6 +77,79 @@ namespace SparklrWP.Utils
                 }
             }
             return false;
+        }
+
+        public async static void UpdatePrimaryTile(bool updateImage, SparklrLib.SparklrClient client)
+        {
+            if (client.IsLoggedIn)
+            {
+                foreach (ShellTile tile in ShellTile.ActiveTiles)
+                {
+                    if (tile.NavigationUri.ToString() == "/")
+                    {
+                        if (updateImage)
+                        {
+                            string backgroundImage = "http://d.sparklr.me/i/" + client.UserId.ToString() + ".jpg";
+                            string backgroundImageWide = "http://d.sparklr.me/i/b" + client.UserId.ToString() + ".jpg";
+
+                            Rectangle r = new Rectangle();
+                            ImageBrush b = new ImageBrush();
+                            b.ImageSource = (BitmapImage)await Utils.Caching.Image.LoadCachedImageFromUrlAsync<BitmapImage>(backgroundImage);
+                            b.Opacity = 0.7;
+                            b.Stretch = Stretch.UniformToFill;
+                            r.Fill = b;
+
+                            using (IsolatedStorageFile isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+                            {
+                                string wideName = System.IO.Path.Combine(TilesFolder, PrimaryWideFilename);
+                                string mediumName = System.IO.Path.Combine(TilesFolder, PrimaryMediumFilename);
+
+                                if (isoStore.FileExists(wideName))
+                                    isoStore.DeleteFile(wideName);
+
+                                if (isoStore.FileExists(mediumName))
+                                    isoStore.DeleteFile(mediumName);
+
+                                saveTileImage(isoStore, mediumName, r, MediumWidth, MediumHeight);
+                                b.ImageSource = (BitmapImage)await Utils.Caching.Image.LoadCachedImageFromUrlAsync<BitmapImage>(backgroundImageWide);
+                                saveTileImage(isoStore, wideName, r, WideWidth, WideHeight);
+                            }
+                        }
+
+                        string notificationText = "";
+                        int? count = null;
+
+                        JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await client.GetBeaconStreamAsync(0, 1);
+                        if (args.IsSuccessful && args.Object.notifications != null && args.Object.notifications.Length > 0)
+                        {
+                            Notification not = args.Object.notifications[0];
+                            notificationText = await SparklrWP.Utils.NotificationHelpers.Format(not.type, not.body, not.from, client);
+                            count = args.Object.notifications.Length;
+                        }
+
+                        ShellTileData data = Mangopollo.Tiles.TilesCreator.CreateFlipTile(
+                            "",
+                            "",
+                            notificationText,
+                            notificationText,
+                            count,
+                            new Uri("/Assets/TileBackgrounds/Small.png", UriKind.Relative),
+                            new Uri("/Assets/TileBackgrounds/Medium.png", UriKind.Relative),
+                            new Uri("isostore:/" + System.IO.Path.Combine(TilesFolder, PrimaryMediumFilename).Replace(@"\", @"/"), UriKind.Absolute),
+                            new Uri("/Assets/TileBackgrounds/WidePrimary.png", UriKind.Relative),
+                            new Uri("isostore:/" + System.IO.Path.Combine(TilesFolder, PrimaryWideFilename).Replace(@"\", @"/"), UriKind.Absolute)
+                        );
+
+                        tile.Update(data);
+
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                throw new NotSupportedException("Client not logged in");
+            }
         }
 
         //TODO: make async
@@ -139,7 +217,7 @@ namespace SparklrWP.Utils
                 smallTile.SaveJpeg(fs, width, height, 0, 100);
 
 #if DEBUG
-                App.logger.log("Created tile image {0}", location);
+                Globals.log("Created tile image {0}", location);
 #endif
             }
         }
@@ -157,7 +235,7 @@ namespace SparklrWP.Utils
                     {
                         ret.SetSource(fs);
 #if DEBUG
-                        App.logger.log("loaded file {0}", location);
+                        Globals.log("loaded file {0}", location);
 #endif
                     }
                     return ret;

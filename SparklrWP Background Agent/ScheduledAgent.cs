@@ -60,33 +60,6 @@ namespace SparklrWP_Background_Agent
                 byte[] passbyts = ProtectedData.Unprotect((byte[])IsolatedStorageSettings.ApplicationSettings["password"], null);
                 string password = Encoding.UTF8.GetString(passbyts, 0, passbyts.Length);
 
-                Func<Notification, String> textGenerator = (not) =>
-                {
-                    if (not.type == 1)
-                    {
-                        if (not.body == "☝")
-                        {
-                            return "{0} likes this post.";
-                        }
-                        else
-                        {
-                            return "{0} commented " + not.body + ".";
-                        }
-                    }
-                    else if (not.type == 2)
-                    {
-                        return "{0} mentioned you.";
-                    }
-                    else if (not.type == 3)
-                    {
-                        return "{0} messaged you.";
-                    }
-                    else
-                    {
-                        return "{0} did something to you.";
-                    }
-                };
-
                 LoginEventArgs loginArgs = await client.LoginAsync(username, password);
                 if (loginArgs.IsSuccessful)
                 {
@@ -123,32 +96,17 @@ namespace SparklrWP_Background_Agent
                                 if (unargs.IsSuccessful)
                                 {
 
-                                    foreach (ShellTile til in ShellTile.ActiveTiles)
-                                    {
-                                        //Update only primary tile
-                                        if (til.NavigationUri.ToString() == "/")
-                                        {
-                                            Mangopollo.Tiles.FlipTileData data = new Mangopollo.Tiles.FlipTileData();
-                                            data.Title = "Sparklr*";
-                                            data.Title = "Sparklr*";
-                                            data.BackgroundImage = new Uri("/Background.png", UriKind.Relative);
-                                            //TODO?: change to not use external server? Update text only instead?
-                                            //Known bug: client.Usernames[strm.notifications[0].from] causes a Outofrange exception
-                                            //data.BackBackgroundImage = new Uri("http://til.eaterofcorps.es/?url=http%3A%2F%2Fd.sparklr.me%2Fi%2F" + strm.notifications[0].from + ".jpg&text=" + Uri.EscapeDataString(String.Format(textGenerator(strm.notifications[0]), client.Usernames[strm.notifications[0].from])));
-                                            til.Update(data);
-
-                                            //We can only have one primary tile --> break
-                                            break;
-                                        }
-                                    }
+                                    SparklrWP.Utils.TilesCreator.UpdatePrimaryTile(false, client);
 
                                     foreach (Notification not in strm.notifications)
                                     {
                                         ShellToast notif = new ShellToast();
                                         notif.Title = "Sparklr*";
-                                        //notif.Content = String.Format(textGenerator(not), client.Usernames[not.from]);
+                                        notif.Content = await SparklrWP.Utils.NotificationHelpers.Format(not.type, not.body, not.from, client);
                                         notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
-                                        notif.Show();
+
+                                        if (!String.IsNullOrEmpty(notif.Content))
+                                            notif.Show();
                                     }
                                 }
                                 else
@@ -157,9 +115,11 @@ namespace SparklrWP_Background_Agent
                                     {
                                         ShellToast notif = new ShellToast();
                                         notif.Title = "Sparklr*";
-                                        notif.Content = String.Format(textGenerator(not), "Someone");
+                                        notif.Content = await SparklrWP.Utils.NotificationHelpers.Format(not.type, not.body, not.from, client);
                                         notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
-                                        notif.Show();
+
+                                        if (!String.IsNullOrEmpty(notif.Content))
+                                            notif.Show();
                                     }
                                 }
                             }
@@ -169,7 +129,7 @@ namespace SparklrWP_Background_Agent
                                 {
                                     ShellToast notif = new ShellToast();
                                     notif.Title = "Sparklr*";
-                                    notif.Content = String.Format(textGenerator(not), "Someone");
+                                    notif.Content = await SparklrWP.Utils.NotificationHelpers.Format(not.type, not.body, not.from, client);
                                     notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
                                     notif.Show();
                                 }

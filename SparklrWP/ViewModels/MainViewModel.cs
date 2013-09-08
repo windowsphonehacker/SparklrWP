@@ -21,6 +21,8 @@ namespace SparklrWP
 
         public MainViewModel()
         {
+            TilesCreator.UpdatePrimaryTile(true, App.Client);
+
             Items = new ObservableCollectionWithItemNotification<PostItemViewModel>();
             GroupedItems = (new ObservableCollectionWithItemNotification<UserItemViewModel>()).GroupFriends();
 

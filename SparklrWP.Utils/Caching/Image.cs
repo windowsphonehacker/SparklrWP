@@ -1,10 +1,10 @@
-﻿extern alias ImageToolsDLL;
-using ImageToolsDLL::ImageTools;
+﻿using ImageTools;
 using System;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using SparklrWP.Utils;
 
 namespace SparklrWP.Utils.Caching
 {
@@ -68,7 +68,7 @@ namespace SparklrWP.Utils.Caching
                     if (true)
                     {
                         ClearImageCache();
-                        App.logger.log("Deleted cache content because DEBUG flag was set");
+                        Globals.log("Deleted cache content because DEBUG flag was set");
                     }
 #endif
 
@@ -77,11 +77,11 @@ namespace SparklrWP.Utils.Caching
                     {
                         storage.CreateDirectory(CacheFolder);
 #if DEBUG
-                        App.logger.log("Created folder {0}", CacheFolder);
+                        Globals.log("Created folder {0}", CacheFolder);
 #endif
                     }
 #if DEBUG
-                    App.logger.log("Isolated storage is using {0} of {1} bytes", storage.AvailableFreeSpace, storage.Quota);
+                    Globals.log("Isolated storage is using {0} of {1} bytes", storage.AvailableFreeSpace, storage.Quota);
 #endif
                 }
             }
@@ -103,7 +103,7 @@ namespace SparklrWP.Utils.Caching
                         string fileName = Path.Combine(CacheFolder, file);
                         storage.DeleteFile(fileName);
 #if DEBUG
-                        App.logger.log("Deleted cache file {0}", fileName);
+                        Globals.log("Deleted cache file {0}", fileName);
 #endif
                     }
                 }
@@ -131,7 +131,7 @@ namespace SparklrWP.Utils.Caching
                         {
                             storage.DeleteFile(fileName);
 #if DEBUG
-                            App.logger.log("Deleted {0} from cache because it expired.", fileName);
+                            Globals.log("Deleted {0} from cache because it expired.", fileName);
 #endif
                         }
                     }
@@ -143,7 +143,7 @@ namespace SparklrWP.Utils.Caching
                     {
                         storage.DeleteFile(filenames[i]);
 #if DEBUG
-                        App.logger.log("Deleted {0} from cache because we exceed our specified capacity.", filenames[i]);
+                        Globals.log("Deleted {0} from cache because we exceed our specified capacity.", filenames[i]);
 #endif
                     }
                 }
@@ -176,7 +176,7 @@ namespace SparklrWP.Utils.Caching
                 if (typeof(T) == typeof(ExtendedImage))
                 {
                     //We want to load a animated GIF file. These don't support caching so we can load it directly.
-                    return await Utils.Helpers.LoadExtendedImageFromUrlAsync(url);
+                    return await Imaging.Helpers.LoadExtendedImageFromUrlAsync(url);
                 }
                 else if (typeof(T) == typeof(BitmapImage))
                 {
@@ -192,14 +192,14 @@ namespace SparklrWP.Utils.Caching
                             {
                                 cachedImage.SetSource(cachedFile);
 #if DEBUG
-                                App.logger.log("Loaded image {0} from cached file {1}", url, file);
+                                Globals.log("Loaded image {0} from cached file {1}", url, file);
 #endif
                                 return cachedImage;
                             }
                         }
                         else
                         {
-                            BitmapImage loadedImage = await Helpers.LoadImageFromUrlAsync(url);
+                            BitmapImage loadedImage = await Imaging.Helpers.LoadImageFromUrlAsync(url);
                             saveImageToCache(loadedImage, file, storage);
                             return loadedImage;
                         }
@@ -215,7 +215,7 @@ namespace SparklrWP.Utils.Caching
                 if (e is IOException)
                 {
 #if DEBUG
-                    App.logger.log("Error loading from cache: {0}", url);
+                    Globals.log("Error loading from cache: {0}", url);
 #endif
                 }
 #if DEBUG
@@ -242,7 +242,7 @@ namespace SparklrWP.Utils.Caching
                     bitmap.SaveJpeg(cachedFile, bitmap.PixelWidth, bitmap.PixelHeight, 0, 80);
 
 #if DEBUG
-                    App.logger.log("Created cached file {0}", filename);
+                    Globals.log("Created cached file {0}", filename);
 #endif
                 }
             }
