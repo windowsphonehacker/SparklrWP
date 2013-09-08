@@ -12,6 +12,12 @@ namespace SparklrLib.Objects.Responses.Work
         {
             return id + ": " + displayname + " (@" + username + ")";
         }
+
+        public override int GetHashCode()
+        {
+            return id;
+        } 
+
         public override bool Equals(object obj)
         {
             // If parameter is null return false.
