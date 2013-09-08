@@ -538,8 +538,10 @@ namespace SparklrLib
                     {
                         awaitTheseRequests.Add(id, pendingUsernameRequests[id]);
 #if DEBUG
+#if !PORTABLELIB
                         if (System.Diagnostics.Debugger.IsLogging())
                             System.Diagnostics.Debugger.Log(0, "SparklrLib", String.Format("Awaiting pending request for {0}", id));
+#endif
 #endif
                     }
                     else

@@ -133,7 +133,7 @@ namespace SparklrWP_Background_Agent
                                             data.Title = "Sparklr*";
                                             data.BackgroundImage = new Uri("/Background.png", UriKind.Relative);
                                             //TODO?: change to not use external server? Update text only instead?
-                                            //Known bug: client.Usernames[strm.notifications[0].from] causes a InvalidData exception
+                                            //Known bug: client.Usernames[strm.notifications[0].from] causes a Outofrange exception
                                             //data.BackBackgroundImage = new Uri("http://til.eaterofcorps.es/?url=http%3A%2F%2Fd.sparklr.me%2Fi%2F" + strm.notifications[0].from + ".jpg&text=" + Uri.EscapeDataString(String.Format(textGenerator(strm.notifications[0]), client.Usernames[strm.notifications[0].from])));
                                             til.Update(data);
 
