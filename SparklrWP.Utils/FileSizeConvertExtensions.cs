@@ -4,7 +4,7 @@ namespace SparklrWP.Utils
     /// <summary>
     /// Contains extension methods to convert file sizes
     /// </summary>
-    static class FileSizeConvertExtensions
+    public static class FileSizeConvertExtensions
     {
         /// <summary>
         /// Converts the number of bytes to megabytes
@@ -13,7 +13,7 @@ namespace SparklrWP.Utils
         /// <returns>The number of megabytes</returns>
         public static double ConvertBytesToMegabytes(this long bytes)
         {
-            return (bytes / 1024L) / 1024L;
+            return (bytes / 1024d) / 1024d;
         }
 
         /// <summary>

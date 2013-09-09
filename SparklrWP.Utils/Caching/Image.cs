@@ -4,7 +4,6 @@ using System.IO;
 using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
-using SparklrWP.Utils;
 
 namespace SparklrWP.Utils.Caching
 {
@@ -18,7 +17,7 @@ namespace SparklrWP.Utils.Caching
         /// </summary>
         public const String CacheFolder = @"Cache\Images";
 
-        private static int maximumCacheSizeMB = 50;
+        private static int maximumCacheSizeMB = 100;
         /// <summary>
         /// Specifies the maximum cache size in MB
         /// </summary>
@@ -81,10 +80,32 @@ namespace SparklrWP.Utils.Caching
 #endif
                     }
 #if DEBUG
-                    Globals.log("Isolated storage is using {0} of {1} bytes", storage.AvailableFreeSpace, storage.Quota);
+                    Globals.log("Isolated storage is using {0} of {1} bytes", GetCacheFolderSize(), storage.Quota);
 #endif
                 }
             }
+        }
+
+        /// <summary>
+        /// Calculates the size of the cache folder
+        /// </summary>
+        /// <returns>The size in bytes</returns>
+        public static long GetCacheFolderSize()
+        {
+            long total = 0;
+
+            using (IsolatedStorageFile isoStore = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                foreach (string fileName in isoStore.GetFileNames(Path.Combine(CacheFolder, "*")))
+                {
+                    using (var file = isoStore.OpenFile(Path.Combine(CacheFolder,fileName), FileMode.Open))
+                    {
+                        total += file.Length;
+                    }
+                }
+            }
+
+            return total;
         }
 
         /// <summary>

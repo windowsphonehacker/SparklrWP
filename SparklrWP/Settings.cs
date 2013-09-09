@@ -2,11 +2,42 @@
 
 namespace SparklrWP
 {
+    /// <summary>
+    /// Provide bindable properties for Silverlight.
+    /// </summary>
+    public class BindableSettings
+    {
+        public double FontSize
+        {
+            get
+            {
+                return Settings.FontSize;
+            }
+        }
+    }
+
     public static class Settings
     {
         static Settings()
         {
             loadSettings();
+        }
+
+        private static double fontSize = 20;
+        public static double FontSize
+        {
+            get
+            {
+                return fontSize;
+            }
+            set
+            {
+                if (fontSize != value && value > 0)
+                {
+                    fontSize = value;
+                    saveAppSeting("fontSize", fontSize);
+                }
+            }
         }
 
         private static bool loadGIFsInStream = false;
@@ -45,6 +76,10 @@ namespace SparklrWP
             if (!System.ComponentModel.DesignerProperties.IsInDesignTool)
             {
                 IsolatedStorageSettings.ApplicationSettings.TryGetValue<bool>("loadGIFsInStream", out loadGIFsInStream);
+                IsolatedStorageSettings.ApplicationSettings.TryGetValue<double>("fontSize", out fontSize);
+
+                if (fontSize <= 0)
+                    fontSize = 20;
             }
         }
     }

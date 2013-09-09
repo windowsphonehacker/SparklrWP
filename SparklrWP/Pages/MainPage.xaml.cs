@@ -28,18 +28,6 @@ namespace SparklrWP.Pages
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
 
 #if DEBUG
-            //Debug items for cache cleaning. TODO: Implement them properly in a settings page
-            ApplicationBarMenuItem clearCache = new ApplicationBarMenuItem("DEBUG: Clear cache");
-            clearCache.Click += (sender, e) =>
-            {
-                Utils.Caching.Image.ClearImageCache();
-            };
-
-            ApplicationBarMenuItem cleanCache = new ApplicationBarMenuItem("DEBUG: Clean cache");
-            cleanCache.Click += (sender, e) =>
-            {
-                Utils.Caching.Image.CleanImageCache();
-            };
 
             ApplicationBarMenuItem garbageCollect = new ApplicationBarMenuItem("DEBUG: Run GC");
             garbageCollect.Click += (sender, e) =>
@@ -47,8 +35,6 @@ namespace SparklrWP.Pages
                 GC.Collect();
             };
 
-            this.ApplicationBar.MenuItems.Add(clearCache);
-            this.ApplicationBar.MenuItems.Add(cleanCache);
             this.ApplicationBar.MenuItems.Add(garbageCollect);
 #endif
             App.BackgroundTask = new Task();

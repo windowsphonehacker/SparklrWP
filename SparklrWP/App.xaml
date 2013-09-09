@@ -5,7 +5,8 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-    xmlns:resources="clr-namespace:AviarySDK.Resources;assembly=AviarySDK">
+    xmlns:resources="clr-namespace:AviarySDK.Resources;assembly=AviarySDK"
+    xmlns:local="clr-namespace:SparklrWP">
 
 
     <!--Application Resources-->
@@ -16,6 +17,7 @@
             </ResourceDictionary.MergedDictionaries>
             <resources:Images x:Key="ImageResources"/>
             <aviary:LocalizedStrings xmlns:aviary="clr-namespace:AviarySDK;assembly=AviarySDK" x:Key="LocalizedStrings" />
+            <local:BindableSettings x:Key="Settings" />
             
             <Style TargetType="phone:PhoneApplicationPage" x:Key="Animated">
                 <Setter Property="toolkit:TransitionService.NavigationInTransition">

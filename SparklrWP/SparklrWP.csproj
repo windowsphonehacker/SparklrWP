@@ -381,8 +381,6 @@
     <None Include="Properties\WMAppManifest.xml">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\packages.config" />
-    <None Include="SparklrWP_2013_09_09_15_02_47.sap" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationIcon.png">
