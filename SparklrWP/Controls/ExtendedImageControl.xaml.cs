@@ -1,6 +1,7 @@
 ﻿extern alias ImageToolsDLL;
-using ImageTools;
-using ImageTools.Controls;
+using ImageToolsDLL::ImageTools;
+using ImageToolsDLL::ImageTools.Controls;
+using SparklrWP.Utils;
 using System;
 using System.Net;
 using System.Windows;
@@ -24,6 +25,24 @@ namespace SparklrWP.Controls
         public DependencyProperty ImageSourceProperty = DependencyProperty.Register("ImageSource", typeof(String), typeof(FrameworkElement), new PropertyMetadata(imageSourceChanged));
         public DependencyProperty StretchProperty = DependencyProperty.Register("Stretch", typeof(Stretch), typeof(FrameworkElement), new PropertyMetadata(stretchChanged));
 
+        private bool forceGifLoading = false;
+        public bool ForceGIFLoading
+        {
+            get
+            {
+                return forceGifLoading;
+            }
+            set
+            {
+                if (forceGifLoading != value)
+                {
+                    forceGifLoading = value;
+                    refreshImage();
+                }
+            }
+        }
+        public static BitmapImage GIFplaceholder;
+
         private static void stretchChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ExtendedImageControl c = d as ExtendedImageControl;
@@ -46,6 +65,7 @@ namespace SparklrWP.Controls
             set
             {
                 unloadImage();
+                clearImage();
 
                 if (imageSource != value)
                 {
@@ -53,6 +73,7 @@ namespace SparklrWP.Controls
                     if (String.IsNullOrEmpty(value))
                     {
                         unloadImage();
+                        clearImage();
                     }
                     else
                     {
@@ -60,6 +81,12 @@ namespace SparklrWP.Controls
                     }
                 }
             }
+        }
+
+        private void refreshImage()
+        {
+            unloadImage();
+            loadImage();
         }
 
         private FrameworkElement imageDisplay = null;
@@ -119,19 +146,31 @@ namespace SparklrWP.Controls
                 {
                     if (loadedLocation.EndsWith("gif", StringComparison.InvariantCultureIgnoreCase))
                     {
-                        ExtendedImage loadedImage = (ExtendedImage)await Utils.Caching.Image.LoadCachedImageFromUrlAsync<ExtendedImage>(loadedLocation);
-
-                        if (ImageSource == loadedLocation)
+                        if (ForceGIFLoading || Settings.LoadGIFsInStream)
                         {
-                            AnimatedImage image = new AnimatedImage();
-                            image.Stretch = stretch;
-                            image.Source = loadedImage;
-                            LayoutRoot.Children.Add(image);
-                            CurrentImageMode = ExtendedImageMode.AnimatedImage;
+                            ExtendedImage loadedImage = (ExtendedImage)await Utils.Caching.Image.LoadCachedImageFromUrlAsync<ExtendedImage>(loadedLocation);
+
+                            if (ImageSource == loadedLocation)
+                            {
+                                AnimatedImage image = new AnimatedImage();
+                                image.Stretch = stretch;
+                                image.Source = loadedImage;
+                                LayoutRoot.Children.Add(image);
+                                CurrentImageMode = ExtendedImageMode.AnimatedImage;
+                                loadedImage = null;
 #if DEBUG
-                            App.logger.log("Loaded {0} as animated image", loadedLocation);
+                                App.logger.log("Loaded {0} as animated image", loadedLocation);
 #endif
-                            imageDisplay = image;
+                                imageDisplay = image;
+                                raiseImageUpdated();
+                            }
+                        }
+                        else
+                        {
+                            Image i = new Image();
+                            i.Source = GIFplaceholder;
+                            i.Stretch = System.Windows.Media.Stretch.UniformToFill;
+                            LayoutRoot.Children.Add(i);
                             raiseImageUpdated();
                         }
                     }
@@ -169,34 +208,53 @@ namespace SparklrWP.Controls
                 ImageUpdated(this, null);
         }
 
+        private void clearImage()
+        {
+            SmartDispatcher.BeginInvoke(() =>
+            {
+                LayoutRoot.Children.Clear();
+            });
+        }
+
         private void unloadImage()
         {
-            if (imageDisplay is AnimatedImage)
+            SmartDispatcher.BeginInvoke(() =>
             {
-                (imageDisplay as AnimatedImage).Stop();
+                if (imageDisplay != null)
+                {
+                    if (imageDisplay is AnimatedImage)
+                    {
+                        if ((imageDisplay as AnimatedImage).Source != null & (imageDisplay as AnimatedImage).Source.Frames != null)
+                            (imageDisplay as AnimatedImage).Source.Frames.Clear();
 
-                if ((imageDisplay as AnimatedImage).Source != null & (imageDisplay as AnimatedImage).Source.Frames != null)
-                    (imageDisplay as AnimatedImage).Source.Frames.Clear();
+                        (imageDisplay as AnimatedImage).Stop();
 
-                (imageDisplay as AnimatedImage).Source = null;
-            }
-            else if (imageDisplay is Image)
-            {
-                (imageDisplay as Image).Source = null;
-            }
+                        (imageDisplay as AnimatedImage).Source = null;
+                    }
+                    else if (imageDisplay is Image && ((Image)imageDisplay).Source != GIFplaceholder)
+                    {
+                        (imageDisplay as Image).Source = null;
+                    }
 
-            imageDisplay = null;
-            LayoutRoot.Children.Clear();
+                    imageDisplay = null;
+                }
+            });
         }
 
         public ExtendedImageControl()
         {
+            if (GIFplaceholder == null)
+            {
+                GIFplaceholder = new BitmapImage(new Uri("/Assets/GIF.png", UriKind.Relative));
+            }
+
             InitializeComponent();
         }
 
         public void Dispose()
         {
             unloadImage();
+            GC.SuppressFinalize(this);
         }
     }
 }

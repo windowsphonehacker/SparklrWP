@@ -8,6 +8,21 @@ namespace SparklrWP.Controls
     {
         public static DependencyProperty PostProperty = DependencyProperty.Register("Post", typeof(PostItemViewModel), typeof(SparklrPostControl), new PropertyMetadata(new PropertyChangedCallback(PostPropertyChanged)));
 
+        /// <summary>
+        /// Overrides the load animated gif setting
+        /// </summary>
+        public bool ForceGIFLoading
+        {
+            get
+            {
+                return mainControl.ForceGIFLoading;
+            }
+            set
+            {
+                mainControl.ForceGIFLoading = value;
+            }
+        }
+
         private static void PostPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             SparklrPostControl control = d as SparklrPostControl;

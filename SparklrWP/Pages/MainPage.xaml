@@ -190,6 +190,7 @@
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.feature.search.rest.png" IsEnabled="True" Text="Search" Click="SearchIconButton_Click"/>
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem IsEnabled="True" Text="About" Click="about_click"/>
+                <shell:ApplicationBarMenuItem IsEnabled="True" Text="Settings" Click="AboutMenuItem_Click" />
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

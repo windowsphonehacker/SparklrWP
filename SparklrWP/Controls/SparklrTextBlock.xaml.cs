@@ -146,6 +146,20 @@ namespace SparklrWP.Controls
         private SolidColorBrush accentBackgroundColor = new SolidColorBrush(Colors.White);
 
         /// <summary>
+        /// Overrides the load animated gif setting
+        /// </summary>
+        public bool ForceGIFLoading
+        {
+            get
+            {
+                return postImage.ForceGIFLoading;
+            }
+            set
+            {
+                postImage.ForceGIFLoading = value;
+            }
+        }
+        /// <summary>
         /// Rebuilts and rehighlights the post
         /// </summary>
         /// <param name="value">The post content</param>

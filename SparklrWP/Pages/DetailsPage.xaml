@@ -49,7 +49,7 @@
                             </DataTemplate>
                         </sparklrControls:ExtendedListBox.ItemTemplate>
                     </sparklrControls:ExtendedListBox>-->
-                    <sparklrControls:SparklrText Post="{Binding MainPost}" />
+                    <sparklrControls:SparklrPostControl Post="{Binding MainPost}" ForceGIFLoading="True" />
                     
                     <ListBox ItemsSource="{Binding Comments}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                         <ListBox.ItemContainerStyle>

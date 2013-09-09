@@ -208,6 +208,9 @@
     <Compile Include="Pages\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\TagsPage.xaml.cs">
       <DependentUpon>TagsPage.xaml</DependentUpon>
     </Compile>
@@ -218,6 +221,7 @@
       <DependentUpon>AppResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Resources.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Utils\Converters\BoolToBubbleDirectionConverter.cs" />
     <Compile Include="Utils\Converters\BoolToBubbleMarginConverter.cs" />
     <Compile Include="Utils\Converters\TimestampToRelativeTimeConverter.cs" />
@@ -230,6 +234,7 @@
     <Compile Include="Utils\PeriodicTimer.cs" />
     <Compile Include="Utils\Task.cs" />
     <Compile Include="ViewModels\CommentModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\TagViewModel.cs" />
     <Compile Include="ViewModels\UserItemViewModel.cs" />
     <Compile Include="ViewModels\InboxViewModel.cs" />
@@ -335,9 +340,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
+    <Page Include="Pages\SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\TagsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SampleData\SettingsViewModelSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SampleData\TagViewModelSampleData.xaml">
       <SubType>Designer</SubType>
@@ -390,6 +403,7 @@
     <Content Include="Assets\AppBar\appbar.refresh.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\GIF.png" />
     <Content Include="Assets\Message.png" />
     <Content Include="Assets\Search.png" />
     <Content Include="Assets\t163.jpg" />

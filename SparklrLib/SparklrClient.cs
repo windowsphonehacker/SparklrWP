@@ -776,11 +776,18 @@ namespace SparklrLib
 
         static internal void RaiseNotificationReceived(object sender, NotificationEventArgs e)
         {
-            foreach (SparklrLib.Objects.Responses.Beacon.Notification n in e.Notifications)
-                if (lastNotificationTime < n.time)
-                    lastNotificationTime = n.time;
+            bool raise = false;
 
-            if (NotificationsReceived != null)
+            foreach (SparklrLib.Objects.Responses.Beacon.Notification n in e.Notifications)
+            {
+                if (n != null && lastNotificationTime < n.time)
+                {
+                    lastNotificationTime = n.time;
+                    raise = true;
+                }
+            }
+
+            if (NotificationsReceived != null && raise)
                 NotificationsReceived(sender, e);
         }
     }
