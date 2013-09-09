@@ -34,7 +34,7 @@
         <!--TitlePanel enthält den Namen der Anwendung und den Seitentitel-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <StackPanel Orientation="Horizontal">
-                <sparklrControls:ExtendedImageControl Width="100" Height="100" ImageSource="{Binding Image}"  Stretch="UniformToFill" />
+                <sparklrControls:ExtendedImageControl Width="75" Height="75" ImageSource="{Binding Image}"  Stretch="UniformToFill" />
                 <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right"/>
             </StackPanel>
         </StackPanel>
@@ -49,13 +49,13 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <!-- TODO: solve virtualization errors Margin="{Binding CurrentUser, Converter={StaticResource boolToBubbleMarginConverter}}" -->
-                        <codingForFun:ChatBubble Background="White" BorderBrush="White" HorizontalContentAlignment="Stretch"  ChatBubbleDirection="{Binding CurrentUser, Converter={StaticResource boolToBubbleDirectionConverter}}" >
+                        <codingForFun:ChatBubble Background="White" BorderBrush="White" HorizontalContentAlignment="Stretch"  ChatBubbleDirection="{Binding CurrentUser, Converter={StaticResource boolToBubbleDirectionConverter}}">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <sparklrControls:SparklrTextBlock Grid.Row="0" Text="{Binding Message}" Margin="0"/>
+                                <sparklrControls:SparklrTextBlock Grid.Row="0" Text="{Binding Message}" Margin="0" />
                                 <TextBlock Grid.Row="1" Text="{Binding Time,Converter={StaticResource timestampToRelativeTimeConverter}}" Style="{StaticResource PhoneTextSmallStyle}" TextAlignment="Right" Foreground="#bbbbbb" />
                             </Grid>
                         </codingForFun:ChatBubble>

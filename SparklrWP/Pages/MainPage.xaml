@@ -73,7 +73,7 @@
             <controls:Pivot.TitleTemplate>
                 <DataTemplate>
                     <Grid>
-                        <TextBlock Text="{Binding}" HorizontalAlignment="Stretch" />
+                        <TextBlock Text="{Binding}" HorizontalAlignment="Stretch" FontSize="30" />
                         <Border x:Name="BorderNotification" Background="White" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,-20" Tap="BorderNotification_Tap" Height="60" Width="60">
                             <TextBlock Name="NotificationCount" Foreground="#FF2A2339" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
                         </Border>

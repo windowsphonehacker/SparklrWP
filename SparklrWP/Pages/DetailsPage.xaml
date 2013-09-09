@@ -25,9 +25,9 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,12,38">
-            <TextBlock x:Name="PageTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Margin="0,0,12,0"/>
+            <TextBlock x:Name="PageTitle" Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Margin="0,0,12,0" FontSize="28"/>
             <StackPanel Orientation="Horizontal">
-                <sparklrControls:ExtendedImageControl x:Name="ProfileImage" Width="100" Height="100"  Stretch="UniformToFill" ImageSource="{Binding MainPost.AuthorImage}" />
+                <sparklrControls:ExtendedImageControl x:Name="ProfileImage" Width="75" Height="75"  Stretch="UniformToFill" ImageSource="{Binding MainPost.AuthorImage}" />
                 <TextBlock x:Name="ListTitle" Text="{Binding MainPost.AuthorName}" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right"/>
             </StackPanel>
         </StackPanel>

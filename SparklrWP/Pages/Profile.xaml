@@ -23,7 +23,8 @@
             <shell:ApplicationBarIconButton Text="Follow" Click="FollowButton_Click" IconUri="/Assets/AppBar/ApplicationBar.Add.png"/>
             <shell:ApplicationBarIconButton Text="Mention" Click="MentionButton_Click" IconUri="/Assets/AppBar/appbar.reply.people.png"/>
             <shell:ApplicationBarIconButton Text="Message" Click="MessageButton_Click" IconUri="/Controls/appbar.message.send.png"/>
-		</shell:ApplicationBar>
+            <!--<shell:ApplicationBarIconButton Text="Pin to Start..." Click="PinProfileMenuItem_Click" IconUri="/Assets/AppBar/appbar.pin.rotated.315.png"/>-->
+        </shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
 <!--LayoutRoot contains the root grid where all other page content is placed-->
 	<Grid x:Name="LayoutRoot">
@@ -135,7 +136,7 @@
                 </sparklrControls:ExtendedListBox>
             </controls:PanoramaItem>
             
-            <controls:PanoramaItem Header="">
+            <controls:PanoramaItem Visibility="Visible" Header="">
                 <toolkit:WrapPanel>
                     <toolkit:HubTile Size="Large" Title="{Binding Handle}" x:Name="userProfileTile" Message="tap and hold to pin this user to your start screen." >
                         <toolkit:ContextMenuService.ContextMenu>
