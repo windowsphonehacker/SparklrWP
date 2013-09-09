@@ -39,7 +39,7 @@
 
                 <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Padding="0,25,0,0">Caching</TextBlock>
                 <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Text="{Binding UsedByApplicationText}" />
-                <TextBlock Style="{StaticResource PhoneTextNormalStyle}">Static images will be temporarly cached by SparklrWP. Cached files will be kept for a maximum of seven days. Te cache will also delete files, if 100MBs are exceeded. If you wish, you can clear/clean up the cache with the buttons below.</TextBlock>
+                <TextBlock Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap">Static images will be temporarly cached by SparklrWP. Cached files will be kept for a maximum of seven days. Te cache will also delete files, if 100MBs are exceeded. If you wish, you can clear/clean up the cache with the buttons below.</TextBlock>
                 <Button Click="ClearButton_Click">Delete cached files</Button>
                 <Button Click="CleanButton_Click">Clean cached files</Button>
                 <ListBox.ItemContainerStyle>
