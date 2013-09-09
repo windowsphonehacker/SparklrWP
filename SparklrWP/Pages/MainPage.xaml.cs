@@ -193,5 +193,10 @@ namespace SparklrWP.Pages
                     NavigationService.Navigate(m.NavigationUri);
             }
         }
+
+        private void AboutMenuItem_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/SettingsPage.xaml", UriKind.Relative));
+        }
     }
 }

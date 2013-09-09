@@ -8,7 +8,7 @@ namespace SparklrWP.Pages
     /// <summary>
     /// Provides pinch to zoom for an image. Can either be naviagted to with ?image=URLENCODED-LOCATION or instanciated with a location
     /// </summary>
-    public partial class PinchToZoom : PhoneApplicationPage
+    public sealed partial class PinchToZoom : PhoneApplicationPage
     {
         // these two fields fully define the zoom state:
         private double TotalImageScale = 1d;
@@ -23,6 +23,13 @@ namespace SparklrWP.Pages
         public PinchToZoom()
         {
             InitializeComponent();
+        }
+
+        protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            //Workaround for memory issues
+            ZoomableImage.Dispose();
+            base.OnNavigatedFrom(e);
         }
 
         public PinchToZoom(string location)
@@ -51,6 +58,7 @@ namespace SparklrWP.Pages
         void PinchToZoom_ImageUpdated(object sender, System.EventArgs e)
         {
             LoadingFinished.Begin();
+            ZoomableImage.ImageUpdated -= PinchToZoom_ImageUpdated;
         }
 
         private void GestureListener_PinchStarted(object sender, Microsoft.Phone.Controls.Updated.PinchStartedGestureEventArgs e)
@@ -85,7 +93,7 @@ namespace SparklrWP.Pages
             UpdateImagePosition(translationDelta);
         }
 
-        private void GestureListener_DragDelta(object sender, DragDeltaGestureEventArgs e)
+        private void GestureListener_DragDelta(object sender, Microsoft.Phone.Controls.Updated.DragDeltaGestureEventArgs e)
         {
             var translationDelta = new Point(e.HorizontalChange, e.VerticalChange);
 
@@ -93,10 +101,11 @@ namespace SparklrWP.Pages
                 UpdateImagePosition(translationDelta);
         }
 
-        private void GestureListener_DoubleTap(object sender, GestureEventArgs e)
+        private void GestureListener_DoubleTap(object sender, Microsoft.Phone.Controls.Updated.GestureEventArgs e)
         {
             ResetImagePosition();
         }
+
 
         #region Utils
 
