@@ -119,7 +119,7 @@ namespace SparklrWP.Utils
                         string notificationText = "";
                         int? count = null;
 
-                        JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await client.GetBeaconStreamAsync(0, 1);
+                        JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await client.GetBeaconStreamAsync("0", 0, 1);
                         if (args.IsSuccessful && args.Object.notifications != null && args.Object.notifications.Length > 0)
                         {
                             Notification not = args.Object.notifications[0];

@@ -186,5 +186,33 @@ namespace SparklrWP.Pages
         {
             NavigationService.Navigate(new Uri("/Pages/SettingsPage.xaml", UriKind.Relative));
         }
+
+        private void networkNameTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                navigateToNetwork(networkNameTextBox.Text);
+            }
+        }
+
+        private void networkNameTextBox_ActionIconTapped(object sender, EventArgs e)
+        {
+            navigateToNetwork(networkNameTextBox.Text);
+        }
+
+        private void NetworkTextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            TextBlock control = sender as TextBlock;
+            if (control != null)
+            {
+                navigateToNetwork(control.Text);
+            }
+        }
+
+        private void navigateToNetwork(string name)
+        {
+            name = NetworkHelpers.UnformatNetworkName(name);
+            NavigationService.Navigate(new Uri("/Pages/NetworkPage.xaml?network=" + name.EncodeUrl(), UriKind.Relative));
+        }
     }
 }

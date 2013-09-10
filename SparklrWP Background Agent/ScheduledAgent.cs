@@ -63,7 +63,7 @@ namespace SparklrWP_Background_Agent
                 LoginEventArgs loginArgs = await client.LoginAsync(username, password);
                 if (loginArgs.IsSuccessful)
                 {
-                    JSONRequestEventArgs<Stream> args = await client.GetBeaconStreamAsync(0, 1);
+                    JSONRequestEventArgs<Stream> args = await client.GetBeaconStreamAsync("0", 0, 1);
                     if (args.IsSuccessful)
                     {
                         Stream strm = args.Object;

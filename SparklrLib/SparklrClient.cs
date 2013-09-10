@@ -410,20 +410,29 @@ namespace SparklrLib
         }
 
         /// <summary>
-        /// Gets the beacon stream.
+        /// Gets the default beacon stream
         /// </summary>
+        /// <returns></returns>
         public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync()
         {
-            return GetBeaconStreamAsync(0, lastNotificationTime, 0);
+            return GetBeaconStreamAsync("0", 0, lastNotificationTime, 0);
+        }
+
+        /// <summary>
+        /// Gets the beacon stream.
+        /// </summary>
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(string stream)
+        {
+            return GetBeaconStreamAsync(stream, 0, lastNotificationTime, 0);
         }
 
         /// <summary>
         /// Gets the beacon stream.
         /// </summary>
         /// <param name="lastTime">The last time.</param>
-        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(int lastTime)
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(string stream, int lastTime)
         {
-            return GetBeaconStreamAsync(lastTime, lastNotificationTime, 0);
+            return GetBeaconStreamAsync(stream, lastTime, lastNotificationTime, 0);
         }
 
         /// <summary>
@@ -456,9 +465,9 @@ namespace SparklrLib
         /// </summary>
         /// <param name="lastTime">The last time.</param>
         /// <param name="lastNotificationTime">The last notification time.</param>
-        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(int lastTime, int lastNotificationTime)
+        public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(string stream, int lastTime, int lastNotificationTime)
         {
-            return GetBeaconStreamAsync(lastTime, lastNotificationTime, 0);
+            return GetBeaconStreamAsync(stream, lastTime, lastNotificationTime, 0);
         }
 
         /// <summary>
@@ -467,11 +476,10 @@ namespace SparklrLib
         /// <param name="lastTime">The last time.</param>
         /// <param name="lastNotificationTime">The last notification time.</param>
         /// <param name="network">The network.</param>
-        public async Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(int lastTime, int lastNotificationTime, int network)
+        public async Task<JSONRequestEventArgs<Objects.Responses.Beacon.Stream>> GetBeaconStreamAsync(string stream, int lastTime, int lastNotificationTime, int network)
         {
-            int stream = 0;
 #if DEBUG
-            stream = 2;
+            //stream = "2";
             network = 1;
 #endif
             JSONRequestEventArgs<Objects.Responses.Beacon.Stream> args = await requestJsonObjectAsync<Objects.Responses.Beacon.Stream>("/beacon/stream/" + stream + "?since=" + lastTime.ToString() + "&n=" + lastNotificationTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""));
@@ -645,7 +653,7 @@ namespace SparklrLib
             }
 #endif
 #else
-            catch(Exception)
+            catch (Exception)
             {
                 return new JSONRequestEventArgs<Objects.Responses.Work.Username[]>()
                 {

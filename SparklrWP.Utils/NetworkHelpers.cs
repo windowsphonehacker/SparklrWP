@@ -6,10 +6,21 @@ namespace SparklrWP.Utils
     {
         public static string FormatNetworkName(string name)
         {
-            if (name == "0")
+            if (name == null || name == "0")
                 return "/";
 
+            if (name.StartsWith("/"))
+                return name;
+
             return String.Format("/{0}", name);
+        }
+
+        public static string UnformatNetworkName(string name)
+        {
+            if (name.StartsWith("/"))
+                return name.TrimStart('/');
+
+            return name;
         }
     }
 }

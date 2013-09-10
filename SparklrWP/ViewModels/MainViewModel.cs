@@ -203,7 +203,7 @@ namespace SparklrWP
         {
             GlobalLoading.Instance.IsLoading = true;
 
-            JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await App.Client.GetBeaconStreamAsync(LastTime);
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await App.Client.GetBeaconStreamAsync("0", LastTime);
 
             if (args.IsSuccessful)
                 import(args.Object.data);
@@ -263,13 +263,6 @@ namespace SparklrWP
             }
 
             this.IsDataLoaded = true;
-#if DEBUG
-            foreach (PostItemViewModel i in Items)
-            {
-                if (i.ImageUrl != null)
-                    App.logger.log(i.ImageUrl);
-            }
-#endif
         }
 
         public async void UpdateNotifications(Notification[] notifications)
