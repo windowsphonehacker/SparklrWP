@@ -84,7 +84,7 @@
 
 
             <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
-            <controls:PivotItem Header="posts" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
+            <controls:PivotItem Header="world" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
                 <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                     <sparklrControls:ExtendedListBox x:Name="MainListBox" ItemsSource="{Binding Items}" UnderlyingSelectionChanged="MainListBox_SelectionChanged" TopRefresh="MainListBox_TopRefresh" LoadMore="MainListBox_LoadMore" Margin="-11,0,0,0">
                         <sparklrControls:ExtendedListBox.ItemTemplate>
@@ -155,8 +155,26 @@
                     </ListBox.ItemContainerStyle>
                 </ListBox>
             </controls:PivotItem>
-        </controls:Pivot>
 
+            <controls:PivotItem Header="networks">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <toolkit:PhoneTextBox Hint="Visit network..." ActionIcon="../Assets/Next.png" x:Name="networkNameTextBox" />
+                    <ListBox ItemsSource="{Binding TrackedNetworks}" Grid.Row="1">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <!-- todo: prettify -->
+                                <TextBlock Text="{Binding}" Style="{StaticResource PhoneTextTitle2Style}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </controls:PivotItem>
+        </controls:Pivot>
+        
         <Grid x:Name="NotificationPopup" Margin="0" Visibility="Collapsed" Background="#FF2A2339">
             <Grid.Projection>
                 <PlaneProjection RotationY="-90"/>

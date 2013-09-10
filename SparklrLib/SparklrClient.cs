@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace SparklrLib
@@ -200,6 +201,16 @@ namespace SparklrLib
                     {
                         JsonSerializer serializer = new JsonSerializer();
                         string response = await strReader.ReadToEndAsync();
+
+                        if (path == "/")
+                        {
+                            //Workaround to extract the JSON from the payload
+                            Regex payloadJson = new Regex(@"app\((.*)\);", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+
+                            Match m = payloadJson.Match(response);
+                            response = m.Groups[1].Value;
+                        }
+
                         desiredObject = JsonConvert.DeserializeObject<T>(response);
                     }
                     catch (Exception ex)
@@ -433,12 +444,8 @@ namespace SparklrLib
         /// <param name="stream"></param>
         /// <param name="network"></param>
         /// <returns></returns>
-        public async Task<JSONRequestEventArgs<Objects.Responses.Work.Stream[]>> GetMoreItems(int startTime, int stream = 0, int network = 0)
+        public async Task<JSONRequestEventArgs<Objects.Responses.Work.Stream[]>> GetMoreItems(int stream, int startTime = 0, int network = 1)
         {
-#if DEBUG
-            stream = 2;
-            network = 1;
-#endif
             //TODO: implement properly
             JSONRequestEventArgs<Objects.Responses.Work.Stream[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Stream[]>("/work/stream/" + stream + "?since=0?starttime=" + startTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""));
             return args;
@@ -632,7 +639,7 @@ namespace SparklrLib
                 return null;
             }
 #else
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }
@@ -761,6 +768,32 @@ namespace SparklrLib
         public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Tag>> GetBeaconTagAsync(string tag, int lasttime)
         {
             return requestJsonObjectAsync<Objects.Responses.Beacon.Tag>("/beacon/tag/" + tag + "?starttime=" + lasttime.ToString() + "&n=" + lastNotificationTime);
+        }
+
+        public async Task<JSONRequestEventArgs<SparklrLib.Objects.Responses.InitialPayload>> GetPayloadAsync()
+        {
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.InitialPayload> result = await requestJsonObjectAsync<SparklrLib.Objects.Responses.InitialPayload>("/");
+
+            if (result.Object.displayNames != null && result.Object.userHandles != null)
+            {
+                Dictionary<int, string> displayNames = JsonConvert.DeserializeObject<Dictionary<int, string>>(result.Object.displayNames.ToString());
+                Dictionary<int, string> userHandles = JsonConvert.DeserializeObject<Dictionary<int, string>>(result.Object.userHandles.ToString());
+
+                foreach (KeyValuePair<int, string> kvp in displayNames)
+                {
+                    if (userHandles.ContainsKey(kvp.Key) && !Usernames.ContainsKey(kvp.Key))
+                    {
+                        Usernames.Add(kvp.Key, new Objects.Responses.Work.Username()
+                            {
+                                id = kvp.Key,
+                                username = userHandles[kvp.Key],
+                                displayname = displayNames[kvp.Key]
+                            });
+                    }
+                }
+            }
+
+            return result;
         }
 
         private void raiseCredentialsExpired()

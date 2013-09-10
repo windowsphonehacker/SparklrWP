@@ -22,8 +22,8 @@ namespace SparklrWP.Pages
             // Set the data context of the listbox control to the sample data
             LayoutRoot.DataContext = App.MainViewModel;
 
-            App.MainViewModel.BeforeItemAdded += MainViewModel_BeforeItemAdded;
-            App.MainViewModel.AfterItemAdded += MainViewModel_AfterItemAdded;
+            //App.MainViewModel.BeforeItemAdded += MainViewModel_BeforeItemAdded;
+            //App.MainViewModel.AfterItemAdded += MainViewModel_AfterItemAdded;
 
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
 
@@ -40,6 +40,7 @@ namespace SparklrWP.Pages
             App.BackgroundTask = new Task();
         }
 
+        /*
         double distanceFromBottom = -1;
 
         void MainViewModel_AfterItemAdded(object sender, EventArgs e)
@@ -75,8 +76,8 @@ namespace SparklrWP.Pages
                 distanceFromBottom = -1;
             }
         }
+         * */
 
-        public bool didFriends = false;
         // Handle selection changed on ListBox
         private void MainListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -155,7 +156,8 @@ namespace SparklrWP.Pages
 
         private void MainListBox_LoadMore(object sender, EventArgs e)
         {
-            App.MainViewModel.LoadMore();
+            //TODO: Fix this
+            //App.MainViewModel.LoadMore();
         }
 
         private void SearchIconButton_Click(object sender, EventArgs e)

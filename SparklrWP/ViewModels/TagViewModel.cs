@@ -138,7 +138,7 @@ namespace SparklrWP
                         t.commentcount ?? 0,
                         null,
                         false,
-                        t.imageUrl,
+                        !String.IsNullOrEmpty(t.meta) ? String.Format("http://d.sparklr.me/i/t{0}", t.imageUrl) : null,
                         t.network,
                         t.modified ?? t.time,
                         t.time,

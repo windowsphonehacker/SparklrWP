@@ -87,6 +87,7 @@
     <Compile Include="Objects\Responses\Beacon\Stream.cs" />
     <Compile Include="Objects\Responses\Beacon\Tag.cs" />
     <Compile Include="Objects\Responses\Generic.cs" />
+    <Compile Include="Objects\Responses\InitialPayload.cs" />
     <Compile Include="Objects\Responses\Work\Chat.cs" />
     <Compile Include="Objects\Responses\Work\Friends.cs" />
     <Compile Include="Objects\Responses\Work\Inbox.cs" />

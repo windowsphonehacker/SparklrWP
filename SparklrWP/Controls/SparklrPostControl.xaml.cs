@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SparklrWP.Utils;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
@@ -59,7 +60,7 @@ namespace SparklrWP.Controls
                     mainControl.Text = value.Message;
                     mainControl.ImageLocation = value.ImageUrl;
                     notesText.Text = value.CommentCount.ToString();
-                    textNetwork.Text = "> /" + value.Network;
+                    textNetwork.Text = "> " + NetworkHelpers.FormatNetworkName(value.Network);
                     //TODO: Rewrite to not block the UI and use caching (use extendedimagecontrol)
                     imageProfile.Source = new BitmapImage(new Uri("http://d.sparklr.me/i/t" + value.AuthorId + ".jpg"));
                     textName.Text = "@" + value.AuthorName;
@@ -84,7 +85,7 @@ namespace SparklrWP.Controls
                     break;
 
                 case "Network":
-                    textNetwork.Text = "> /" + Post.Network;
+                    textNetwork.Text = "> " + NetworkHelpers.FormatNetworkName(Post.Network);
                     break;
 
                 case "AuthorName":

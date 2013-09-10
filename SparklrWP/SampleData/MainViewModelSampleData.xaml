@@ -1,6 +1,7 @@
 ﻿<local:MainViewModel 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:local="clr-namespace:SparklrWP" NewCount="12" Username="Chuck Norris" About="There is not really much you deserve to know about Chuck Norris. You just need to know that he'll find you.">
     
     <local:MainViewModel.Items>
@@ -12,4 +13,9 @@
     <local:MainViewModel.Notifications>
         <local:NotificationViewModel Message="Hello there :)" />
     </local:MainViewModel.Notifications>
+    <local:MainViewModel.TrackedNetworks>
+        <system:String>Network 1</system:String>
+        <system:String>Network 2</system:String>
+        <system:String>Network 3</system:String>
+    </local:MainViewModel.TrackedNetworks>
 </local:MainViewModel>

@@ -405,6 +405,7 @@
     </Content>
     <Content Include="Assets\GIF.png" />
     <Content Include="Assets\Message.png" />
+    <Content Include="Assets\Next.png" />
     <Content Include="Assets\Search.png" />
     <Content Include="Assets\t163.jpg" />
     <Content Include="Assets\t18.jpg" />

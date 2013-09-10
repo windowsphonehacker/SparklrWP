@@ -34,9 +34,29 @@ namespace SparklrWP
             //We do not start the updater here. It will be started by the callback of the reponse
             //Warning: Possible issue where a internet conenction is not stable
 
-            loadData(true);
+            loadPayload();
+            //loadData(true);
             loadFriends();
             loadUserDetails();
+        }
+
+        private async void loadPayload()
+        {
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.InitialPayload> result = await App.Client.GetPayloadAsync();
+
+            if (result.IsSuccessful)
+            {
+                import(result.Object.timelineStream);
+
+                if (result.Object.networks != null)
+                    foreach (string s in result.Object.networks)
+                        if (s != "0")
+                            TrackedNetworks.Add(NetworkHelpers.FormatNetworkName(s));
+            }
+#if DEBUG
+            App.logger.log("Networks: {0}", String.Join(", ", result.Object.networks));
+#endif
+            streamUpdater.Start();
         }
 
         void streamUpdater_TimeoutElapsed(object sender, EventArgs e)
@@ -100,6 +120,25 @@ namespace SparklrWP
             }
         }
 
+        private ObservableCollection<string> trackedNetworks = new ObservableCollection<string>();
+        /// <summary>
+        /// Contains a list of all tracked networks
+        /// </summary>
+        public ObservableCollection<string> TrackedNetworks
+        {
+            get
+            {
+                return trackedNetworks;
+            }
+            set
+            {
+                if (trackedNetworks != value)
+                {
+                    trackedNetworks = value;
+                    NotifyPropertyChanged("TrackedNetworks");
+                }
+            }
+        }
         private string _about;
         /// <summary>
         /// The name of the current logged in user
@@ -323,7 +362,7 @@ namespace SparklrWP
             GlobalLoading.Instance.IsLoading = true;
 
             //TODO: Implement properly
-            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Stream[]> moreItems = await App.Client.GetMoreItems(FirstTime);
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Stream[]> moreItems = await App.Client.GetMoreItems(0, FirstTime);
             import(moreItems.Object);
 
             GlobalLoading.Instance.IsLoading = false;

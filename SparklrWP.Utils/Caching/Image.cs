@@ -98,7 +98,7 @@ namespace SparklrWP.Utils.Caching
             {
                 foreach (string fileName in isoStore.GetFileNames(Path.Combine(CacheFolder, "*")))
                 {
-                    using (var file = isoStore.OpenFile(Path.Combine(CacheFolder,fileName), FileMode.Open))
+                    using (var file = isoStore.OpenFile(Path.Combine(CacheFolder, fileName), FileMode.Open))
                     {
                         total += file.Length;
                     }
@@ -181,7 +181,25 @@ namespace SparklrWP.Utils.Caching
         /// <returns></returns>
         public static Task<object> LoadCachedImageFromUrlAsync<T>(String url)
         {
-            return LoadCachedImageFromUrlAsync<T>(new Uri(url));
+            try
+            {
+                return LoadCachedImageFromUrlAsync<T>(new Uri(url));
+            }
+            catch (Exception e)
+            {
+                if (e is IOException)
+                {
+#if DEBUG
+                    Globals.log("Error loading from cache: {0}", url);
+#endif
+                }
+#if DEBUG
+                throw;
+#else
+                return null;
+
+#endif
+            }
         }
 
         /// <summary>
