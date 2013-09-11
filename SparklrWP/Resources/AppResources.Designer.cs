@@ -455,5 +455,133 @@ namespace SparklrWP.Resources {
                 return ResourceManager.GetString("MainWorldHeader", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press the &quot;Picture&quot; button down below to attach a picture.
+        /// </summary>
+        public static string NewPostAttachPictureHint {
+            get {
+                return ResourceManager.GetString("NewPostAttachPictureHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something horrible happend!
+        ///We couldn&apos;t post your message try again later!.
+        /// </summary>
+        public static string NewPostCouldNotPostMsg {
+            get {
+                return ResourceManager.GetString("NewPostCouldNotPostMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something horrible happend!
+        ///We couldn&apos;t post your message  and photo try again later!.
+        /// </summary>
+        public static string NewPostCouldNotPostMsgPic {
+            get {
+                return ResourceManager.GetString("NewPostCouldNotPostMsgPic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry!.
+        /// </summary>
+        public static string NewPostCouldNotPostMsgTitle {
+            get {
+                return ResourceManager.GetString("NewPostCouldNotPostMsgTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You need to say something! You can&apos;t post an empty message!.
+        /// </summary>
+        public static string NewPostEmptyMsgWarning {
+            get {
+                return ResourceManager.GetString("NewPostEmptyMsgWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There is an image editor!.
+        /// </summary>
+        public static string NewPostImageEditorHint {
+            get {
+                return ResourceManager.GetString("NewPostImageEditorHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to new post.
+        /// </summary>
+        public static string NewPostNewPostButton {
+            get {
+                return ResourceManager.GetString("NewPostNewPostButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to picture.
+        /// </summary>
+        public static string NewPostPictureButton {
+            get {
+                return ResourceManager.GetString("NewPostPictureButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Posted! :).
+        /// </summary>
+        public static string NewPostPostedMsg {
+            get {
+                return ResourceManager.GetString("NewPostPostedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to remove the attached image?.
+        /// </summary>
+        public static string NewPostRemoveImageText {
+            get {
+                return ResourceManager.GetString("NewPostRemoveImageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question.
+        /// </summary>
+        public static string NewPostRemoveImageTitle {
+            get {
+                return ResourceManager.GetString("NewPostRemoveImageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your status has been posted!.
+        /// </summary>
+        public static string NewPostSuccessText {
+            get {
+                return ResourceManager.GetString("NewPostSuccessText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yay!.
+        /// </summary>
+        public static string NewPostSuccessTitle {
+            get {
+                return ResourceManager.GetString("NewPostSuccessTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Post.
+        /// </summary>
+        public static string NewPostTitle {
+            get {
+                return ResourceManager.GetString("NewPostTitle", resourceCulture);
+            }
+        }
     }
 }

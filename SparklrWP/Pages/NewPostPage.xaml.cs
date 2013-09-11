@@ -4,6 +4,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using SparklrLib.Objects;
+using SparklrWP.Resources;
 using System;
 using System.IO;
 using System.Net;
@@ -25,6 +26,7 @@ namespace SparklrWP.Pages
         public NewPostPage()
         {
             InitializeComponent();
+            App.BuildLocalizedApplicationBar(ApplicationBar);
             _photoChooserTask = new PhotoChooserTask() { ShowCamera = true };
             _photoChooserTask.Completed += new EventHandler<PhotoResult>(photoChooserTask_Completed);
             if (sendButton == null)
@@ -57,7 +59,7 @@ namespace SparklrWP.Pages
             sendButton.IsEnabled = false;
             if (messageBox.Text == "" && _photoStr == null)
             {
-                Utils.Helpers.Notify("You need to say something! You can't post an empty message!");
+                Utils.Helpers.Notify(AppResources.NewPostEmptyMsgWarning);
                 App.logger.log(LogLevel.warn, "MessageBox Left Empty");
             }
             else
@@ -68,7 +70,7 @@ namespace SparklrWP.Pages
 
                 if (!args.IsSuccessful)
                 {
-                    MessageBox.Show("Something horrible happend!\nWe couldn't post your message" + (_photoStr == null ? "" : " and photo") + " try again later!", "Sorry", MessageBoxButton.OK);
+                    MessageBox.Show(_photoStr == null ? AppResources.NewPostCouldNotPostMsg : AppResources.NewPostCouldNotPostMsgPic, AppResources.NewPostCouldNotPostMsgTitle, MessageBoxButton.OK);
                 }
                 else
                 {
@@ -78,7 +80,7 @@ namespace SparklrWP.Pages
                     }
                     else
                     {
-                        Utils.Helpers.Notify("Yay!", "Your status has been posted!");
+                        Utils.Helpers.Notify(AppResources.NewPostSuccessTitle, AppResources.NewPostSuccessText);
                         NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
                     }
                 }
@@ -91,7 +93,7 @@ namespace SparklrWP.Pages
             GlobalLoading.Instance.IsLoading = true;
             if (_photoStr != null)
             {
-                if (MessageBox.Show("Do you want to remove the attached image?", "Question", MessageBoxButton.OKCancel) ==
+                if (MessageBox.Show(AppResources.NewPostRemoveImageText, AppResources.NewPostRemoveImageTitle, MessageBoxButton.OKCancel) ==
                     MessageBoxResult.OK)
                 {
                     _photoStr.Dispose();

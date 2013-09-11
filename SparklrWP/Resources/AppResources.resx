@@ -257,4 +257,48 @@
   <data name="MainWorldHeader" xml:space="preserve">
     <value>world</value>
   </data>
+  <data name="NewPostAttachPictureHint" xml:space="preserve">
+    <value>Press the "Picture" button down below to attach a picture</value>
+  </data>
+  <data name="NewPostCouldNotPostMsg" xml:space="preserve">
+    <value>Something horrible happend!
+We couldn't post your message try again later!</value>
+  </data>
+  <data name="NewPostCouldNotPostMsgPic" xml:space="preserve">
+    <value>Something horrible happend!
+We couldn't post your message  and photo try again later!</value>
+  </data>
+  <data name="NewPostCouldNotPostMsgTitle" xml:space="preserve">
+    <value>Sorry!</value>
+  </data>
+  <data name="NewPostEmptyMsgWarning" xml:space="preserve">
+    <value>You need to say something! You can't post an empty message!</value>
+  </data>
+  <data name="NewPostImageEditorHint" xml:space="preserve">
+    <value>There is an image editor!</value>
+  </data>
+  <data name="NewPostNewPostButton" xml:space="preserve">
+    <value>new post</value>
+  </data>
+  <data name="NewPostPictureButton" xml:space="preserve">
+    <value>picture</value>
+  </data>
+  <data name="NewPostPostedMsg" xml:space="preserve">
+    <value>Posted! :)</value>
+  </data>
+  <data name="NewPostRemoveImageText" xml:space="preserve">
+    <value>Do you want to remove the attached image?</value>
+  </data>
+  <data name="NewPostRemoveImageTitle" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="NewPostSuccessText" xml:space="preserve">
+    <value>Your status has been posted!</value>
+  </data>
+  <data name="NewPostSuccessTitle" xml:space="preserve">
+    <value>Yay!</value>
+  </data>
+  <data name="NewPostTitle" xml:space="preserve">
+    <value>New Post</value>
+  </data>
 </root>
