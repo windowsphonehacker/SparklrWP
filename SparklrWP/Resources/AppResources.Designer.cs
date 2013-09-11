@@ -68,5 +68,149 @@ namespace SparklrWP.Resources {
                 return ResourceManager.GetString("ApplicationTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter your user name and password used on Sparklr. If you don&apos;t have an account yet, sign up! It&apos;s free!.
+        /// </summary>
+        public static string FirstRunBasics1 {
+            get {
+                return ResourceManager.GetString("FirstRunBasics1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The power of the pivot! Slide over on the main page for more things to do! It&apos;s like having the power of Sparklr in your hands!.
+        /// </summary>
+        public static string FirstRunBasics2 {
+            get {
+                return ResourceManager.GetString("FirstRunBasics2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hello there :).
+        /// </summary>
+        public static string FirstRunHelloThere {
+            get {
+                return ResourceManager.GetString("FirstRunHelloThere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lets get started!.
+        /// </summary>
+        public static string FirstRunLetsGetStarted {
+            get {
+                return ResourceManager.GetString("FirstRunLetsGetStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login:.
+        /// </summary>
+        public static string FirstRunLogin {
+            get {
+                return ResourceManager.GetString("FirstRunLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Looks like it&apos;s the first time you&apos;ve used this app! We will take you through a small intro to show you around the app!.
+        /// </summary>
+        public static string FirstRunMsgBoxContent {
+            get {
+                return ResourceManager.GetString("FirstRunMsgBoxContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Have we met before?.
+        /// </summary>
+        public static string FirstRunMsgBoxTitle {
+            get {
+                return ResourceManager.GetString("FirstRunMsgBoxTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK!.
+        /// </summary>
+        public static string FirstRunOK {
+            get {
+                return ResourceManager.GetString("FirstRunOK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to other stuff.
+        /// </summary>
+        public static string FirstRunOtherStuff {
+            get {
+                return ResourceManager.GetString("FirstRunOtherStuff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On most pages you will see a bar with an icon! Those are passage ways to other parts in the app!.
+        /// </summary>
+        public static string FirstRunOtherStuff1 {
+            get {
+                return ResourceManager.GetString("FirstRunOtherStuff1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slide over.
+        /// </summary>
+        public static string FirstRunSlideOver {
+            get {
+                return ResourceManager.GetString("FirstRunSlideOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to the basics.
+        /// </summary>
+        public static string FirstRunTheBasics {
+            get {
+                return ResourceManager.GetString("FirstRunTheBasics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The dashboard:.
+        /// </summary>
+        public static string FirstRunTheDash {
+            get {
+                return ResourceManager.GetString("FirstRunTheDash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The login page:.
+        /// </summary>
+        public static string FirstRunTheLoginPage {
+            get {
+                return ResourceManager.GetString("FirstRunTheLoginPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The three dots!.
+        /// </summary>
+        public static string FirstRunThreeDots {
+            get {
+                return ResourceManager.GetString("FirstRunThreeDots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What are you waiting for?! Try it yourself!.
+        /// </summary>
+        public static string FirstRunWhatAreYouWaitingFor {
+            get {
+                return ResourceManager.GetString("FirstRunWhatAreYouWaitingFor", resourceCulture);
+            }
+        }
     }
 }

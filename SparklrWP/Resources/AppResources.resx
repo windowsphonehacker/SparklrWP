@@ -121,4 +121,57 @@
     <value>sparklr*</value>
     <comment>The title show on nearly all pages of the app</comment>
   </data>
+  <data name="FirstRunBasics1" xml:space="preserve">
+    <value>Enter your user name and password used on Sparklr. If you don't have an account yet, sign up! It's free!</value>
+    <comment>FirstRunPage</comment>
+  </data>
+  <data name="FirstRunBasics2" xml:space="preserve">
+    <value>The power of the pivot! Slide over on the main page for more things to do! It's like having the power of Sparklr in your hands!</value>
+  </data>
+  <data name="FirstRunHelloThere" xml:space="preserve">
+    <value>Hello there :)</value>
+    <comment>FirstRunPage</comment>
+  </data>
+  <data name="FirstRunLetsGetStarted" xml:space="preserve">
+    <value>Lets get started!</value>
+    <comment>FirstRunPage</comment>
+  </data>
+  <data name="FirstRunLogin" xml:space="preserve">
+    <value>Login:</value>
+  </data>
+  <data name="FirstRunMsgBoxContent" xml:space="preserve">
+    <value>Looks like it's the first time you've used this app! We will take you through a small intro to show you around the app!</value>
+  </data>
+  <data name="FirstRunMsgBoxTitle" xml:space="preserve">
+    <value>Have we met before?</value>
+  </data>
+  <data name="FirstRunOK" xml:space="preserve">
+    <value>OK!</value>
+  </data>
+  <data name="FirstRunOtherStuff" xml:space="preserve">
+    <value>other stuff</value>
+  </data>
+  <data name="FirstRunOtherStuff1" xml:space="preserve">
+    <value>On most pages you will see a bar with an icon! Those are passage ways to other parts in the app!</value>
+  </data>
+  <data name="FirstRunSlideOver" xml:space="preserve">
+    <value>Slide over</value>
+  </data>
+  <data name="FirstRunTheBasics" xml:space="preserve">
+    <value>the basics</value>
+    <comment>FirstRunPage</comment>
+  </data>
+  <data name="FirstRunTheDash" xml:space="preserve">
+    <value>The dashboard:</value>
+  </data>
+  <data name="FirstRunTheLoginPage" xml:space="preserve">
+    <value>The login page:</value>
+    <comment>FirstRunPage</comment>
+  </data>
+  <data name="FirstRunThreeDots" xml:space="preserve">
+    <value>The three dots!</value>
+  </data>
+  <data name="FirstRunWhatAreYouWaitingFor" xml:space="preserve">
+    <value>What are you waiting for?! Try it yourself!</value>
+  </data>
 </root>

@@ -15,7 +15,7 @@
         <Storyboard x:Name="HelloAni">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LayoutRoot">
                 <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0" />
                 <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
                 <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
             </DoubleAnimationUsingKeyFrames>
@@ -49,52 +49,52 @@
         </Grid.Background>
         <!--Pivot Control-->
         <!--Pivot Control-->
-        <TextBlock x:Name="textBlock" Margin="0,348,-685,170" TextWrapping="Wrap" Text="Hello There :)" FontFamily="Segoe WP Light" FontSize="64" HorizontalAlignment="Right" Width="654">
+        <TextBlock x:Name="textBlock" Margin="0,348,-685,170" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunHelloThere, Source={StaticResource LocalizedStrings}}" FontFamily="Segoe WP Light" FontSize="64" HorizontalAlignment="Right" Width="654">
             <TextBlock.Projection>
                 <PlaneProjection/>
             </TextBlock.Projection>
         </TextBlock>
         <controls:Pivot x:Name="pivot" Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Opacity="0.015" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
             <!--Pivot item one-->
-            <controls:PivotItem Header="The Basics">
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.FirstRunTheBasics, Source={StaticResource LocalizedStrings}}">
                 <Grid>
-                    <TextBlock x:Name="textBlock1" Margin="8,8,8,0" TextWrapping="Wrap" Text="Lets Get Started!" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="48" TextAlignment="Center" Height="66" VerticalAlignment="Top">
+                    <TextBlock x:Name="textBlock1" Margin="8,8,8,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunLetsGetStarted, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="48" TextAlignment="Center" Height="66" VerticalAlignment="Top">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                         </TextBlock.Foreground>
                     </TextBlock>
-                    <TextBlock x:Name="textBlock2" Height="50" Margin="-292,106,0,0" TextWrapping="Wrap" Text="The Login Page:" VerticalAlignment="Top" FontSize="26.667" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" HorizontalAlignment="Left" Width="255" Foreground="White" RenderTransformOrigin="0.5,0.5">
+                    <TextBlock x:Name="textBlock2" Height="50" Margin="-292,106,0,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunTheLoginPage, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Top" FontSize="26.667" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" HorizontalAlignment="Left" Width="255" Foreground="White" RenderTransformOrigin="0.5,0.5">
                         <TextBlock.RenderTransform>
                             <CompositeTransform/>
                         </TextBlock.RenderTransform>
                     </TextBlock>
-                    <TextBlock Margin="0,138,77,299" TextWrapping="Wrap" FontSize="29.333" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"><Run Text="Enter Your User Name And Password Used On Sparklr If You Don't  Have A Account Sign Up! Its Free!"/><LineBreak/><Run/></TextBlock>
-                    <TextBlock HorizontalAlignment="Left" Height="47" Margin="8,82,0,0" TextWrapping="Wrap" Text="Login:" VerticalAlignment="Top" Width="85" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-                    <TextBlock HorizontalAlignment="Left" Height="47" Margin="31,0,0,-80" TextWrapping="Wrap" Text="Login:" VerticalAlignment="Bottom" Width="85" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-                    <TextBlock Height="47" Margin="0,0,0,8" TextWrapping="Wrap" Text="Slide Over" VerticalAlignment="Bottom" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" HorizontalAlignment="Right" Width="171">
+                    <TextBlock Margin="0,138,77,299" TextWrapping="Wrap" FontSize="29.333" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"><Run Text="{Binding Path=LocalizedResources.FirstRunBasics1, Source={StaticResource LocalizedStrings}}"/><LineBreak/><Run/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Height="47" Margin="8,82,0,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunLogin, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Top" Width="85" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+                    <TextBlock HorizontalAlignment="Left" Height="47" Margin="31,0,0,-80" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunLogin, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Bottom" Width="85" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+                    <TextBlock Height="47" Margin="0,0,0,8" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunSlideOver, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Bottom" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" HorizontalAlignment="Right" Width="171">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                         </TextBlock.Foreground>
                     </TextBlock>
-                    <TextBlock Margin="0,0,94,210" TextWrapping="Wrap" Text="The Dashboard:" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="29.333" Height="63" VerticalAlignment="Bottom"/>
-                    <TextBlock Margin="0,0,42,64" TextWrapping="Wrap" Text="The Power Of The Pivot! Slide Over On The Main Page For More Things To Do! It's Like Having The Power Of Sparklr In Your Hands!" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="26.667" Height="146" VerticalAlignment="Bottom"/>
+                    <TextBlock Margin="0,0,94,210" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunTheDash, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="29.333" Height="63" VerticalAlignment="Bottom"/>
+                    <TextBlock Margin="0,0,42,64" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunBasics2, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="26.667" Height="146" VerticalAlignment="Bottom"/>
 
                 </Grid>
 
             </controls:PivotItem>
 
             <!--Pivot item two-->
-            <controls:PivotItem Header="Other Stuff">
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.FirstRunOtherStuff, Source={StaticResource LocalizedStrings}}">
                 <Grid>
-                    <TextBlock Margin="42,221,34,136" TextWrapping="Wrap" Text="What Are You Waiting For?! Try It Yourself!" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="64">
+                    <TextBlock Margin="42,221,34,136" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunWhatAreYouWaitingFor, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="64">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                         </TextBlock.Foreground>
                     </TextBlock>
-                    <TextBlock Height="63" Margin="8,8,86,0" TextWrapping="Wrap" Text="The Three Dots!" VerticalAlignment="Top" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="29.333"/>
-                    <TextBlock Margin="8,71,34,0" TextWrapping="Wrap" Text="On Most Pages You Will See A Bar With An Icon! Those Are Passage Ways To Other Parts In The App!" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="26.667" Height="146" VerticalAlignment="Top"/>
+                    <TextBlock Height="63" Margin="8,8,86,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunThreeDots, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Top" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="29.333"/>
+                    <TextBlock Margin="8,71,34,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunOtherStuff1, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="26.667" Height="146" VerticalAlignment="Top"/>
                     <Coding4Fun_Toolkit_Controls:RoundButton Margin="0,0,-68,-18" HorizontalAlignment="Right" Height="116" VerticalAlignment="Bottom" Width="204" Click="OK_Click"/>
-                    <TextBlock Height="40" Margin="0,0,-186,0" TextWrapping="Wrap" Text="OK!" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="236"/>
+                    <TextBlock Height="40" Margin="0,0,-186,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunOK, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="236"/>
                 </Grid>
             </controls:PivotItem>
         </controls:Pivot>

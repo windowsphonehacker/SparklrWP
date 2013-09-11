@@ -41,9 +41,6 @@ namespace SparklrWP.Pages
             if (!IsolatedStorageSettings.ApplicationSettings.Contains("firstruncheck"))
             {
                 App.logger.log(LogLevel.info, "First Time/First Run");
-                MessageBox.Show(
-                    "Looks like it's the first time you've used this app! We will take you through a small intro to show you around the app!",
-                    "Have we met before?", MessageBoxButton.OK);
 
                 NavigationService.Navigate(new Uri("/Pages/FirstRunPage.xaml", UriKind.Relative));
             }
