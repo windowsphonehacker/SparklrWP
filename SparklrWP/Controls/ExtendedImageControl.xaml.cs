@@ -22,8 +22,8 @@ namespace SparklrWP.Controls
     /// </summary>
     public sealed partial class ExtendedImageControl : UserControl, IDisposable
     {
-        public DependencyProperty ImageSourceProperty = DependencyProperty.Register("ImageSource", typeof(String), typeof(FrameworkElement), new PropertyMetadata(imageSourceChanged));
-        public DependencyProperty StretchProperty = DependencyProperty.Register("Stretch", typeof(Stretch), typeof(FrameworkElement), new PropertyMetadata(stretchChanged));
+        public static DependencyProperty ImageSourceProperty = DependencyProperty.Register("ImageSource", typeof(String), typeof(FrameworkElement), new PropertyMetadata(imageSourceChanged));
+        public static DependencyProperty StretchProperty = DependencyProperty.Register("Stretch", typeof(Stretch), typeof(FrameworkElement), new PropertyMetadata(stretchChanged));
 
         private bool forceGifLoading = false;
         public bool ForceGIFLoading
@@ -112,7 +112,6 @@ namespace SparklrWP.Controls
                         {
                             (imageDisplay as Image).Stretch = value;
                         }
-
                 }
             }
         }
@@ -134,9 +133,12 @@ namespace SparklrWP.Controls
         {
             if (System.ComponentModel.DesignerProperties.IsInDesignTool)
             {
-                Image b = new Image();
-                b.Source = new BitmapImage(new Uri(ImageSource));
-                imageDisplay = b;
+                if (ImageSource != null)
+                {
+                    Image b = new Image();
+                    b.Source = new BitmapImage(new Uri(ImageSource));
+                    imageDisplay = b;
+                }
             }
             else if (!String.IsNullOrEmpty(ImageSource))
             {

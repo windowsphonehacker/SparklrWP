@@ -14,45 +14,47 @@
     shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
 
     <!--LayoutRoot è la griglia radice in cui viene inserito tutto il contenuto della pagina-->
-    <Grid x:Name="LayoutRoot" Background="#FF454050">
+    <Grid x:Name="LayoutRoot" Background="{Binding Mode=OneWay, Source={StaticResource SparklrBackgroundBrush}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!--TitlePanel contiene il nome dell'applicazione e il titolo della pagina-->
-        <StackPanel Grid.Row="0" Margin="12,17,12,28">
-            <TextBlock Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Margin="0,0,12,0"/>
-            <TextBlock Text="About" Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+        <StackPanel Grid.Row="0" Margin="12,17,14,28">
+            <TextBlock Text="sparklr*" Style="{StaticResource SparklrTextNormalStyle}" Margin="0,0,12,0"/>
+            <TextBlock Text="About" Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - inserire ulteriore contenuto qui-->
-        <Grid x:Name="ContentPanel" Margin="12,130,12,0" Grid.RowSpan="2">
+        <Grid x:Name="ContentPanel" Margin="10" Grid.Row="1">
             <ListBox>
-				<TextBlock Text="{Binding Version}" VerticalAlignment="Top" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="29.333"/>
-                <TextBlock Height="105" TextWrapping="Wrap" Text="Sparklr Branding © Jonathan Warner" VerticalAlignment="Top" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="32"/>
-                <TextBlock Text="Application developement team:" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" HorizontalAlignment="Center" TextAlignment="Center" LineHeight="64"></TextBlock>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="95" VerticalAlignment="Top" Width="456" Margin="0,0,0,10">
-                    <Image Margin="0" Source="/Assets/t18.jpg" Stretch="Fill"/>
-                    <TextBlock Height="95" TextWrapping="Wrap" Text="Jessenic" VerticalAlignment="Top" Width="355" TextAlignment="Center" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="66.667"/>
+				<TextBlock Text="{Binding Version}" VerticalAlignment="Top" />
+                
+                <TextBlock TextWrapping="Wrap" Text="Sparklr Branding © Jonathan Warner" Style="{StaticResource PhoneTextSubtleStyle}" Padding="0,0,0,15"/>
+                
+                <TextBlock Text="Development-Team" Style="{StaticResource PhoneTextLargeStyle}" />
+
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ListBoxItemStackpanelStyle}">
+                    <Image Source="../Assets/t18.jpg" Style="{StaticResource SparklrProfileImageSmallStyle}" />
+                    <TextBlock Text="Jessenic" VerticalAlignment="Center" Style="{StaticResource SparklrTextLargeStyle}" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="95" VerticalAlignment="Top" Width="456" Margin="0,0,0,10">
-                    <Image Margin="0" Source="/Assets/t19.jpg" Stretch="Fill"/>
-                    <TextBlock Height="74" TextWrapping="Wrap" Text="TheInterframe" VerticalAlignment="Bottom" Width="355" TextAlignment="Center" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="48"/>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ListBoxItemStackpanelStyle}">
+                    <Image Source="../Assets/t19.jpg"  Style="{StaticResource SparklrProfileImageSmallStyle}" />
+                    <TextBlock Text="TheInterframe"  VerticalAlignment="Center" Style="{StaticResource SparklrTextLargeStyle}" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="95" VerticalAlignment="Top" Width="456" Margin="0,0,0,10">
-                    <Image Margin="0" Source="/Assets/t163.jpg" Stretch="Fill"/>
-                    <TextBlock Height="95" TextWrapping="Wrap" Text="Marocco2" VerticalAlignment="Top" Width="355" TextAlignment="Center" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="66.667"/>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ListBoxItemStackpanelStyle}">
+                    <Image Source="/Assets/t163.jpg"  Style="{StaticResource SparklrProfileImageSmallStyle}" />
+                    <TextBlock Text="Marocco2"  VerticalAlignment="Center" Style="{StaticResource SparklrTextLargeStyle}" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="95" VerticalAlignment="Top" Width="456" Margin="0,0,0,10">
-                    <Image Margin="0" Source="/Assets/t427.jpg" Stretch="Fill"/>
-                    <TextBlock Height="73" TextWrapping="Wrap" Text="EaterOfCorpses" VerticalAlignment="Top" Width="355" TextAlignment="Center" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="48" Margin="0,22,0,0"/>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ListBoxItemStackpanelStyle}">
+                    <Image  Source="/Assets/t427.jpg"  Style="{StaticResource SparklrProfileImageSmallStyle}" />
+                    <TextBlock Text="EaterOfCorpses"  VerticalAlignment="Center" Style="{StaticResource SparklrTextLargeStyle}" />
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="95" VerticalAlignment="Top" Width="456" Margin="0,0,0,10">
-                    <Image Margin="0" Source="/Assets/t591.jpg" Stretch="Fill"/>
-                    <TextBlock Height="95" TextWrapping="Wrap" Text="ChrisK" VerticalAlignment="Top" Width="355" TextAlignment="Center" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="66.667"/>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ListBoxItemStackpanelStyle}">
+                    <Image Source="/Assets/t591.jpg" Style="{StaticResource SparklrProfileImageSmallStyle}" />
+                    <TextBlock Text="ChrisK"  VerticalAlignment="Center" Style="{StaticResource SparklrTextLargeStyle}" />
                 </StackPanel>
-                <TextBlock TextWrapping="Wrap">This application uses some great third party libraries.<LineBreak/>
+                <TextBlock TextWrapping="Wrap" Padding="0,15,0,0" Style="{StaticResource PhoneTextSmallStyle}">This application uses some great third party libraries.<LineBreak/>
                     <Italic>Imagetools for Silverlight</Italic>, <Italic>The Windows Phone Toolkit</Italic>, <Italic>Mangopollo</Italic> and <Italic>WP7Contrib</Italic> wich are released under the MP-PL:<LineBreak/>
                     This license governs use of the accompanying software. If you use the software, you accept this license. If you do not accept the license, do not use the software.<LineBreak />
                     1. Definitions<LineBreak />
@@ -79,7 +81,7 @@
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" BackgroundColor="#FF2A2339" IsMenuEnabled="True">
+        <shell:ApplicationBar IsVisible="True" BackgroundColor="{StaticResource SparklrBackgroundDarkColor}" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.favs.rest.png" Text="Rate me!"/>
 
             <shell:ApplicationBar.MenuItems>

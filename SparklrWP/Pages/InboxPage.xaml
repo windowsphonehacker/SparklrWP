@@ -16,7 +16,7 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True" d:DataContext="{d:DesignData ../SampleData/InboxViewModelSampleData.xaml}" Style="{StaticResource Animated}">
 
-    <Grid x:Name="LayoutRoot" Background="#FF454050">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource SparklrBackgroundBrush}">
         <Grid.Resources>
             <ResourceDictionary>
                 <converters:TimestampToRelativeTimeConverter x:Key="timestampToRelativeTimeConverter" />
@@ -35,7 +35,7 @@
             <ListBox ItemsSource="{Binding Conversations}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid Height="75" Margin="0,2" Background="#FF2A2339" toolkit:TiltEffect.IsTiltEnabled="True" Tap="Grid_Tap">
+                        <Grid Height="75" Margin="0,2" Background="{StaticResource SparklrBackgroundDarkBrush}" toolkit:TiltEffect.IsTiltEnabled="True" Tap="Grid_Tap">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
@@ -46,7 +46,7 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
-                            <sparklrControls:ExtendedImageControl Height="74" Width="74" Margin="1" ImageSource="{Binding Image}" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" />
+                            <sparklrControls:ExtendedImageControl Margin="1" ImageSource="{Binding Image}" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Style="{Binding Mode=OneWay, Source={StaticResource SparklrProfileExtendedImageSmallStyle}}" />
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Bottom" />
                             <TextBlock Text="{Binding Time,Converter={StaticResource timestampToRelativeTimeConverter}}" Style="{StaticResource PhoneTextSmallStyle}" Grid.Column="2" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Right" />
                             <TextBlock Text="{Binding Message}" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" Padding="10,0" Style="{StaticResource PhoneTextNormalStyle}" />
@@ -64,7 +64,7 @@
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" BackgroundColor="#FF2A2339">
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="False" BackgroundColor="{StaticResource SparklrBackgroundDarkColor}">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.refresh.rest.png" Text="refresh" Click="RefreshIconButton_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

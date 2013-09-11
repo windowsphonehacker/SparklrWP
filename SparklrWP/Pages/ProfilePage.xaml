@@ -18,7 +18,7 @@
 	shell:SystemTray.IsVisible="False" Background="Black"
 	d:DataContext="{d:DesignData ../SampleData/UserProfileViewModelSampleData.xaml}" Style="{StaticResource Animated}">
 	<phone:PhoneApplicationPage.ApplicationBar>
-		<shell:ApplicationBar BackgroundColor="#FF2A2339">
+		<shell:ApplicationBar BackgroundColor="{StaticResource SparklrBackgroundDarkColor}">
             <shell:ApplicationBarIconButton Text="Follow" Click="FollowButton_Click" IconUri="/Assets/AppBar/ApplicationBar.Add.png"/>
             <shell:ApplicationBarIconButton Text="Mention" Click="MentionButton_Click" IconUri="/Assets/AppBar/appbar.reply.people.png"/>
             <shell:ApplicationBarIconButton Text="Message" Click="MessageButton_Click" IconUri="/Controls/appbar.message.send.png"/>

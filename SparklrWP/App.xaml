@@ -14,6 +14,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/AviarySDK;component/Themes/generic.xaml"/>
+                <ResourceDictionary Source="Resources/SparklrStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <resources:Images x:Key="ImageResources"/>
             <aviary:LocalizedStrings xmlns:aviary="clr-namespace:AviarySDK;assembly=AviarySDK" x:Key="LocalizedStrings" />

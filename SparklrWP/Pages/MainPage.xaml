@@ -15,7 +15,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True" Background="#FF454050" Style="{StaticResource Animated}">
+    shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
 	<phone:PhoneApplicationPage.Resources>
 		<Storyboard x:Name="NotificationAppear">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
@@ -68,12 +68,11 @@
 
     <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot" d:DataContext="{d:DesignData ../SampleData/MainViewModelSampleData.xaml}">
-        
-        <controls:Pivot Name="mainPivot" Title="sparklr*"  FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Background="#FF454050" Opacity="100" FontSize="20">
+        <controls:Pivot Name="mainPivot" Title="sparklr*" Background="{StaticResource SparklrBackgroundBrush}">
             <controls:Pivot.TitleTemplate>
                 <DataTemplate>
                     <Grid>
-                        <TextBlock Text="{Binding}" HorizontalAlignment="Stretch" FontSize="30" />
+                        <TextBlock Text="{Binding}" Style="{StaticResource SparklrTextTitle3Style}" />
                         <Border x:Name="BorderNotification" Background="White" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,-20" Tap="BorderNotification_Tap" Height="60" Width="60">
                             <TextBlock Name="NotificationCount" Foreground="#FF2A2339" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
                         </Border>
@@ -101,7 +100,7 @@
                     <!-- Template for the letters inside the list -->
                     <toolkit:LongListSelector.GroupHeaderTemplate>
                         <DataTemplate>
-                            <Border Height="75" Width="75" Background="#FF2A2339" HorizontalAlignment="Left" Margin="12,6">
+                            <Border Height="75" Width="75" Background="{StaticResource SparklrBackgroundDarkBrush}" HorizontalAlignment="Left" Margin="12,6">
                                 <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
                             </Border>
                         </DataTemplate>
@@ -110,9 +109,9 @@
                     <!-- Template for a single item inside the list -->
                     <toolkit:LongListSelector.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Tag="{Binding Id}" Orientation="Horizontal" Tap="StackPanel_Tap">
-                                <sparklrControls:ExtendedImageControl Height="75" Width="75" ImageSource="{Binding Image}" Margin="12,6" HorizontalAlignment="Left" />
-                                <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" VerticalAlignment="Center" Margin="0,15,12,15" />
+                            <StackPanel Tag="{Binding Id}" Orientation="Horizontal" Tap="StackPanel_Tap" Style="{StaticResource ListBoxItemStackpanelStyle}">
+                                <sparklrControls:ExtendedImageControl ImageSource="{Binding Image}" Style="{StaticResource SparklrProfileExtendedImageSmallStyle}" Margin="0,0,12,0" />
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
                             </StackPanel>
                         </DataTemplate>
                     </toolkit:LongListSelector.ItemTemplate>
@@ -127,7 +126,7 @@
                     <!-- Template for the popup letters -->
                     <toolkit:LongListSelector.GroupItemTemplate>
                         <DataTemplate>
-                            <Border Height="75" Width="75" Background="#FF2A2339" HorizontalAlignment="Left" Margin="12,6" IsHitTestVisible="{Binding HasItems}">
+                            <Border Height="75" Width="75" Background="{StaticResource SparklrBackgroundDarkBrush}" HorizontalAlignment="Left" Margin="12,6" IsHitTestVisible="{Binding HasItems}">
                                 <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
                             </Border>
                         </DataTemplate>
@@ -143,7 +142,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <sparklrControls:ExtendedImageControl ImageSource="{Binding ProfileImage}" Width="125" Height="125" Stretch="UniformToFill" Margin="17,0,0,0" Grid.Column="0" />
+                        <sparklrControls:ExtendedImageControl ImageSource="{Binding ProfileImage}" Style="{StaticResource SparklrProfileExtendedImageLargeStyle}" Margin="17,0,0,0" Grid.Column="0" />
                         <TextBlock Text="{Binding About}" TextWrapping="Wrap" Grid.Column="1" Padding="17,0,0,0" Style="{StaticResource PhoneTextSubtleStyle}" />
                     </Grid>
                     <!--<TextBlock Style="{StaticResource PhoneTextSubtleStyle}">Tap on any item to edit it.</TextBlock>-->
@@ -175,7 +174,7 @@
             </controls:PivotItem>
         </controls:Pivot>
         
-        <Grid x:Name="NotificationPopup" Margin="0" Visibility="Collapsed" Background="#FF2A2339">
+        <Grid x:Name="NotificationPopup" Margin="0" Visibility="Collapsed" Background="{StaticResource SparklrBackgroundDarkBrush}">
             <Grid.Projection>
                 <PlaneProjection RotationY="-90"/>
             </Grid.Projection>
@@ -203,7 +202,7 @@
     </Grid>
     
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="#FF2A2339">
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="{StaticResource SparklrBackgroundDarkColor}">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="New post" Click="ApplicationBarIconButton_Click"/>
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.feature.search.rest.png" IsEnabled="True" Text="Search" Click="SearchIconButton_Click"/>
             <shell:ApplicationBar.MenuItems>

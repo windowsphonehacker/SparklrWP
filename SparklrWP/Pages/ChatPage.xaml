@@ -17,7 +17,7 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True" d:DataContext="{d:DesignData ../SampleData/ChatViewModelSampleData.xaml}" Style="{StaticResource Animated}">
 
-    <Grid x:Name="LayoutRoot" Background="#FF454050">
+    <Grid x:Name="LayoutRoot">
         <Grid.Resources>
             <ResourceDictionary>
                 <converters:TimestampToRelativeTimeConverter x:Key="timestampToRelativeTimeConverter" />
@@ -25,7 +25,10 @@
                 <converters:BoolToBubbleDirectionConverter x:Key="boolToBubbleDirectionConverter" />
             </ResourceDictionary>
         </Grid.Resources>
-        
+        <Grid.Background>
+            <StaticResource ResourceKey="SparklrBackgroundBrush"/>
+        </Grid.Background>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -34,7 +37,7 @@
         <!--TitlePanel enthält den Namen der Anwendung und den Seitentitel-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
             <StackPanel Orientation="Horizontal">
-                <sparklrControls:ExtendedImageControl Width="75" Height="75" ImageSource="{Binding Image}"  Stretch="UniformToFill" />
+                <sparklrControls:ExtendedImageControl ImageSource="{Binding Image}" Style="{Binding Mode=OneWay, Source={StaticResource SparklrProfileExtendedImageSmallStyle}}" />
                 <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right"/>
             </StackPanel>
         </StackPanel>
@@ -61,7 +64,7 @@
                         </codingForFun:ChatBubble>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-                
+
                 <!-- use full width-->
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">

@@ -17,7 +17,7 @@
     shell:SystemTray.IsVisible="True" d:DataContext="{d:DesignData ../SampleData/SearchViewModelSampleData.xaml}" Style="{StaticResource Animated}">
 
 
-    <Grid x:Name="LayoutRoot" Background="#FF454050" Loaded="LayoutRoot_Loaded">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource SparklrBackgroundBrush}" Loaded="LayoutRoot_Loaded">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -39,12 +39,18 @@
                 <ListBox ItemsSource="{Binding Users}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Tag="{Binding Id}" Orientation="Horizontal" Tap="UserStackPanel_Tap" toolkit:TiltEffect.IsTiltEnabled="True">
-                                <sparklrControls:ExtendedImageControl Height="75" Width="75" ImageSource="{Binding Image, FallbackValue='http://d.sparklr.me/i/t1.jpg'}" Margin="12,6" HorizontalAlignment="Left" />
+                            <StackPanel Tag="{Binding Id}" Tap="UserStackPanel_Tap" toolkit:TiltEffect.IsTiltEnabled="True" Style="{Binding Mode=OneWay, Source={StaticResource ListBoxItemStackpanelStyle}}">
+                                <sparklrControls:ExtendedImageControl ImageSource="{Binding Image, FallbackValue='http://d.sparklr.me/i/t1.jpg'}" Style="{Binding Mode=OneWay, Source={StaticResource SparklrProfileExtendedImageSmallStyle}}" />
                                 <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" VerticalAlignment="Center" Margin="0,15,12,15" />
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    <!-- use full width-->
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                 </ListBox>
             </controls:PivotItem>
 

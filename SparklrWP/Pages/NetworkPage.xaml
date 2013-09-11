@@ -14,8 +14,11 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DataContext="{d:DesignData ../sampleData/NetworkViewModelSampleData.xaml}"
     shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar/>
+	</phone:PhoneApplicationPage.ApplicationBar>
 
-    <Grid x:Name="LayoutRoot" Background="#FF454050">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource SparklrBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>

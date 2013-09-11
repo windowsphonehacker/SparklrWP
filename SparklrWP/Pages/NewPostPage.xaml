@@ -16,7 +16,7 @@
 
 
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" Background="#FF454050">
+    <Grid x:Name="LayoutRoot" Background="{StaticResource SparklrBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.228*"/>
             <RowDefinition Height="0.772*"/>
@@ -64,7 +64,7 @@
         </Image>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" BackgroundColor="#FF2A2339" IsMenuEnabled="True">
+        <shell:ApplicationBar IsVisible="True" BackgroundColor="{StaticResource SparklrBackgroundDarkColor}" IsMenuEnabled="True">
             <shell:ApplicationBarIconButton x:Name="sendButton" IconUri="/Controls/appbar.message.send.png" Text="New Post" Click="postButton_Click" IsEnabled="False"/>
             <shell:ApplicationBarIconButton x:Name="attachButton" IconUri="/Assets/AppBar/appbar.feature.camera.rest.png" Text="Picture" Click="attachButton_Click"/>
             <shell:ApplicationBar.MenuItems>
