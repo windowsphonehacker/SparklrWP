@@ -292,7 +292,11 @@ namespace SparklrWP
         public static bool RemoveBackEntryOnNavigate { get; set; }
 
 
-        // Build a localized ApplicationBar
+        /// <summary>
+        /// Localize the given IApplicationBar by replacing it's strings with the corresponding values in AppResources.resx
+        /// For example <shell:ApplicationBarIconButton Text="SampleText" /> would replace the Text attribute with AppResources.SampleText
+        /// </summary>
+        /// <param name="appBar">The IApplicationBar</param>
         public static void BuildLocalizedApplicationBar(IApplicationBar appBar)
         {
             if (appBar != null)
