@@ -212,5 +212,77 @@ namespace SparklrWP.Resources {
                 return ResourceManager.GetString("FirstRunWhatAreYouWaitingFor", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About.
+        /// </summary>
+        public static string LoginAboutButton {
+            get {
+                return ResourceManager.GetString("LoginAboutButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to for Windows Phone.
+        /// </summary>
+        public static string LoginForWP {
+            get {
+                return ResourceManager.GetString("LoginForWP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string LoginLoginButton {
+            get {
+                return ResourceManager.GetString("LoginLoginButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please log in.
+        /// </summary>
+        public static string LoginPleaseLogin {
+            get {
+                return ResourceManager.GetString("LoginPleaseLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember Me.
+        /// </summary>
+        public static string LoginRememberMe {
+            get {
+                return ResourceManager.GetString("LoginRememberMe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sign up.
+        /// </summary>
+        public static string LoginSignUpButton {
+            get {
+                return ResourceManager.GetString("LoginSignUpButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sparklr*.
+        /// </summary>
+        public static string LoginSparklrLogo {
+            get {
+                return ResourceManager.GetString("LoginSparklrLogo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to WORK IN PROGRESS.
+        /// </summary>
+        public static string LoginWIP {
+            get {
+                return ResourceManager.GetString("LoginWIP", resourceCulture);
+            }
+        }
     }
 }

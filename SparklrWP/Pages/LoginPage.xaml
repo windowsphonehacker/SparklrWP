@@ -64,17 +64,17 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <Button x:Name="button" Margin="46,198,48,205" Grid.Row="1" BorderBrush="Transparent" FontFamily="Segoe WP Light" FontSize="48" Click="Login_Click" Content="Login">
+        <Button x:Name="button" Margin="46,198,48,205" Grid.Row="1" BorderBrush="Transparent" FontFamily="Segoe WP Light" FontSize="48" Click="Login_Click" Content="{Binding Path=LocalizedResources.LoginLoginButton, Source={StaticResource LocalizedStrings}}">
         	<Button.Background>
         		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
         	</Button.Background>
         </Button>
-        <Button x:Name="button1" Content="Sign Up" Margin="46,0,232,51" Grid.Row="1" Height="174" VerticalAlignment="Bottom" BorderBrush="Transparent" FontFamily="Segoe WP Light" FontSize="26.667" Click="Signup_click">
+        <Button x:Name="button1" Content="{Binding Path=LocalizedResources.LoginSignUpButton, Source={StaticResource LocalizedStrings}}" Margin="46,0,232,51" Grid.Row="1" Height="174" VerticalAlignment="Bottom" BorderBrush="Transparent" FontFamily="Segoe WP Light" FontSize="26.667" Click="Signup_click">
         	<Button.Background>
         		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
         	</Button.Background>
         </Button>
-        <Button x:Name="button2" Content="About" Margin="228,0,48,52" Grid.Row="1" Height="174" VerticalAlignment="Bottom" BorderBrush="Transparent" FontFamily="Segoe WP Light" FontSize="26.667" Click="about_Click">
+        <Button x:Name="button2" Content="{Binding Path=LocalizedResources.LoginAboutButton, Source={StaticResource LocalizedStrings}}" Margin="228,0,48,52" Grid.Row="1" Height="174" VerticalAlignment="Bottom" BorderBrush="Transparent" FontFamily="Segoe WP Light" FontSize="26.667" Click="about_Click">
         	<Button.Background>
         		<SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
         	</Button.Background>
@@ -82,7 +82,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28" VerticalAlignment="Bottom">
-        	<TextBlock Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" TextAlignment="Center" FontSize="96" Text="sparklr*" VerticalAlignment="Bottom"/>
+            <TextBlock Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" TextAlignment="Center" FontSize="96" Text="{Binding Path=LocalizedResources.LoginSparklrLogo, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Bottom"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -91,19 +91,19 @@
         		<PlaneProjection GlobalOffsetY="692"/>
         	</Grid.Projection>
             <ProgressBar HorizontalAlignment="Left" Height="10" VerticalAlignment="Top" Width="100" Foreground="{StaticResource PhoneAccentBrush}" Background="#001BA1E2"/>
-            <TextBox x:Name="usernameBox" HorizontalAlignment="Left" Height="72" Margin="0,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" ToolTipService.ToolTip="user" CacheMode="BitmapCache" KeyDown="checkEnter_KeyDown" TextChanged="usernameBox_TextChanged" />
-            <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="0,127,0,0" VerticalAlignment="Top" Width="456" ToolTipService.ToolTip="password" CacheMode="BitmapCache" KeyDown="checkEnter_KeyDown" PasswordChanged="passwordBox_PasswordChanged" />
-            <Button x:Name="loginButton" Content="Login" HorizontalAlignment="Left" Margin="0,259,0,0" VerticalAlignment="Top" Click="loginButton_Click" Width="456"/>
-            <TextBlock HorizontalAlignment="Left" Height="51" Margin="0,35,0,0" TextWrapping="Wrap" Text="Please login" VerticalAlignment="Top" Width="456" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
-            <CheckBox Content="Remember Me" Name="rememberBox" Margin="0,182,115,0" Height="77" VerticalAlignment="Top"/>
+            <TextBox x:Name="usernameBox" HorizontalAlignment="Left" Height="72" Margin="0,55,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="456" CacheMode="BitmapCache" KeyDown="checkEnter_KeyDown" TextChanged="usernameBox_TextChanged" />
+            <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="0,127,0,0" VerticalAlignment="Top" Width="456" CacheMode="BitmapCache" KeyDown="checkEnter_KeyDown" PasswordChanged="passwordBox_PasswordChanged" />
+            <Button x:Name="loginButton" Content="{Binding Path=LocalizedResources.LoginLoginButton, Source={StaticResource LocalizedStrings}}" HorizontalAlignment="Left" Margin="0,259,0,0" VerticalAlignment="Top" Click="loginButton_Click" Width="456"/>
+            <TextBlock HorizontalAlignment="Left" Height="51" Margin="0,35,0,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.LoginPleaseLogin, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Top" Width="456" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+            <CheckBox Content="{Binding Path=LocalizedResources.LoginRememberMe, Source={StaticResource LocalizedStrings}}" Name="rememberBox" Margin="0,182,115,0" Height="77" VerticalAlignment="Top"/>
         </Grid>
         <StackPanel HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="480">
         	<StackPanel.Background>
         		<ImageBrush Stretch="UniformToFill" ImageSource="../Assets/Senzanome.png"/>
         	</StackPanel.Background>
-        	<TextBlock HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="WORK IN PROGRESS" Width="480" FontSize="29.333" TextAlignment="Center" FontFamily="Segoe WP Semibold" Foreground="White"/>
+            <TextBlock HorizontalAlignment="Left" Height="40" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.LoginWIP, Source={StaticResource LocalizedStrings}}" Width="480" FontSize="29.333" TextAlignment="Center" FontFamily="Segoe WP Semibold" Foreground="White"/>
         </StackPanel>
-        <TextBlock Height="58" Margin="162,0,12,0" TextWrapping="Wrap" Text="For Windows Phone" VerticalAlignment="Bottom" FontFamily="Segoe WP Light" FontSize="24"/>
+        <TextBlock Height="58" Margin="162,0,12,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.LoginForWP, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Bottom" FontFamily="Segoe WP Light" FontSize="24"/>
 
         <sparklrControls:LoadingOverlay Grid.RowSpan="2" x:Name="loadingOverlay" Visibility="Collapsed" />
     </Grid>
