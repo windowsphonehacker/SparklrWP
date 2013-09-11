@@ -2,6 +2,7 @@
 using Microsoft.Phone.Tasks;
 using SparklrLib;
 using SparklrLib.Objects;
+using SparklrWP.Resources;
 using System;
 using System.IO.IsolatedStorage;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace SparklrWP.Pages
         {
             InitializeComponent();
             //#if DEBUG
-            App.logger.setParameter(usernameBox.Text.ToString(), "Username");
+            App.logger.setParameter("username", usernameBox.Text.ToString());
 
 
             //#endif
@@ -29,14 +30,6 @@ namespace SparklrWP.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (App.logger.hasCriticalLogged())
-            {
-                if (MessageBox.Show("Looks Like You Had A Crash The Last Time You Used The App. Would You Like To Send A Bug Report?", "Somthings Wrong Here...", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
-                {
-                    App.logger.emailReport();
-                    App.logger.clearEventsFromLog();
-                }
-            }
 
             if (!IsolatedStorageSettings.ApplicationSettings.Contains("firstruncheck"))
             {
@@ -105,14 +98,14 @@ namespace SparklrWP.Pages
                 if (loginargs.Response != null && loginargs.Response.StatusCode == HttpStatusCode.NotFound)
                 {
                     App.logger.log(LogLevel.warn, "Wrong Info Entered");
-                    MessageBox.Show("Wrong username or password");
+                    MessageBox.Show(AppResources.LoginWrongUserPass);
                 }
                 else
                 {
                     App.logger.log(LogLevel.error, "Unknown Error While Logging In");
                     App.logger.log(loginargs.Error);
 
-                    MessageBox.Show("Something horrible happend, try again later!", "Sorry", MessageBoxButton.OK);
+                    MessageBox.Show(AppResources.LoginUnknownLoginErrorMsgBoxContent, AppResources.LoginUnknownLoginErrorMsgBoxTitle, MessageBoxButton.OK);
 #if DEBUG
                     MessageBox.Show(loginargs.Error.Message);
 
@@ -181,7 +174,7 @@ namespace SparklrWP.Pages
 
         private void Signup_click(object sender, RoutedEventArgs e)
         {
-            if (MessageBox.Show("The sign up page will open in Internet Explorer, is that ok?", "Sparklr*", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            if (MessageBox.Show(AppResources.LoginBrowserOpenQuestionContent, AppResources.LoginBrowserOpenQuestionTitle , MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 new WebBrowserTask() { Uri = new Uri("http://sparklr.me") }.Show();
             }
@@ -212,7 +205,7 @@ namespace SparklrWP.Pages
             else if (NavigationService.CanGoBack)
             {
                 //We don't want anyone getting pass the login screen without logging in first
-                if (MessageBox.Show("Do you want to exit the app? Unsaved changes will be lost.", "Confirmation",
+                if (MessageBox.Show(AppResources.LoginExitConfirmationContent, AppResources.LoginExitConfirmationTitle,
                     MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
                     while (NavigationService.BackStack.Any())

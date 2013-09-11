@@ -117,9 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AppCrashReportText" xml:space="preserve">
+    <value>Looks like you had a crash the last time you used the app. Would you like to help us fix the bug and send a quick bug report?</value>
+  </data>
+  <data name="AppCrashReportTitle" xml:space="preserve">
+    <value>Something went wrong...</value>
+  </data>
   <data name="ApplicationTitle" xml:space="preserve">
     <value>sparklr*</value>
     <comment>The title show on nearly all pages of the app</comment>
+  </data>
+  <data name="AppNotificationText" xml:space="preserve">
+    <value>You have {0} notifications.</value>
+    <comment>{0} is a number indicating the count of notifications</comment>
   </data>
   <data name="FirstRunBasics1" xml:space="preserve">
     <value>Enter your user name and password used on Sparklr. If you don't have an account yet, sign up! It's free!</value>
@@ -177,6 +187,18 @@
   <data name="LoginAboutButton" xml:space="preserve">
     <value>About</value>
   </data>
+  <data name="LoginBrowserOpenQuestionContent" xml:space="preserve">
+    <value>The sign up page will open in Internet Explorer, is that OK?</value>
+  </data>
+  <data name="LoginBrowserOpenQuestionTitle" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="LoginExitConfirmationContent" xml:space="preserve">
+    <value>Do you want to exit the app? Unsaved changes will be lost.</value>
+  </data>
+  <data name="LoginExitConfirmationTitle" xml:space="preserve">
+    <value>Confirmation</value>
+  </data>
   <data name="LoginForWP" xml:space="preserve">
     <value>for Windows Phone</value>
   </data>
@@ -196,7 +218,16 @@
   <data name="LoginSparklrLogo" xml:space="preserve">
     <value>sparklr*</value>
   </data>
+  <data name="LoginUnknownLoginErrorMsgBoxContent" xml:space="preserve">
+    <value>Something horrible happend, try again later!</value>
+  </data>
+  <data name="LoginUnknownLoginErrorMsgBoxTitle" xml:space="preserve">
+    <value>Sorry!</value>
+  </data>
   <data name="LoginWIP" xml:space="preserve">
     <value>WORK IN PROGRESS</value>
+  </data>
+  <data name="LoginWrongUserPass" xml:space="preserve">
+    <value>Wrong username and/or password</value>
   </data>
 </root>

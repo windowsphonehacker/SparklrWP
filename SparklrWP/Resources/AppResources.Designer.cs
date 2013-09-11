@@ -61,11 +61,38 @@ namespace SparklrWP.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Looks like you had a crash the last time you used the app. Would you like to help us fix the bug and send a quick bug report?.
+        /// </summary>
+        public static string AppCrashReportText {
+            get {
+                return ResourceManager.GetString("AppCrashReportText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong....
+        /// </summary>
+        public static string AppCrashReportTitle {
+            get {
+                return ResourceManager.GetString("AppCrashReportTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to sparklr*.
         /// </summary>
         public static string ApplicationTitle {
             get {
                 return ResourceManager.GetString("ApplicationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have {0} notifications..
+        /// </summary>
+        public static string AppNotificationText {
+            get {
+                return ResourceManager.GetString("AppNotificationText", resourceCulture);
             }
         }
         
@@ -223,6 +250,42 @@ namespace SparklrWP.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The sign up page will open in Internet Explorer, is that OK?.
+        /// </summary>
+        public static string LoginBrowserOpenQuestionContent {
+            get {
+                return ResourceManager.GetString("LoginBrowserOpenQuestionContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question.
+        /// </summary>
+        public static string LoginBrowserOpenQuestionTitle {
+            get {
+                return ResourceManager.GetString("LoginBrowserOpenQuestionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you want to exit the app? Unsaved changes will be lost..
+        /// </summary>
+        public static string LoginExitConfirmationContent {
+            get {
+                return ResourceManager.GetString("LoginExitConfirmationContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmation.
+        /// </summary>
+        public static string LoginExitConfirmationTitle {
+            get {
+                return ResourceManager.GetString("LoginExitConfirmationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to for Windows Phone.
         /// </summary>
         public static string LoginForWP {
@@ -277,11 +340,38 @@ namespace SparklrWP.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Something horrible happend, try again later!.
+        /// </summary>
+        public static string LoginUnknownLoginErrorMsgBoxContent {
+            get {
+                return ResourceManager.GetString("LoginUnknownLoginErrorMsgBoxContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry!.
+        /// </summary>
+        public static string LoginUnknownLoginErrorMsgBoxTitle {
+            get {
+                return ResourceManager.GetString("LoginUnknownLoginErrorMsgBoxTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to WORK IN PROGRESS.
         /// </summary>
         public static string LoginWIP {
             get {
                 return ResourceManager.GetString("LoginWIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wrong username and/or password.
+        /// </summary>
+        public static string LoginWrongUserPass {
+            get {
+                return ResourceManager.GetString("LoginWrongUserPass", resourceCulture);
             }
         }
     }

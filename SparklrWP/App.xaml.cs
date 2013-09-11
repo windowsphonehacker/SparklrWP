@@ -1,6 +1,7 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SparklrLib;
+using SparklrWP.Resources;
 using SparklrWP.Utils;
 using SparklrWP.ViewModels;
 using System;
@@ -88,7 +89,7 @@ namespace SparklrWP
                         }
                         else
                         {
-                            Helpers.Notify(String.Format("You have {0} notifications.", e.Notifications.Length));
+                            Helpers.Notify(String.Format(AppResources.AppNotificationText, e.Notifications.Length));
                         }
                     }
 
@@ -132,6 +133,14 @@ namespace SparklrWP
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
+            if (App.logger.hasCriticalLogged())
+            {
+                if (MessageBox.Show(AppResources.AppCrashReportText, AppResources.AppCrashReportTitle, MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                {
+                    App.logger.emailReport();
+                    App.logger.clearEventsFromLog();
+                }
+            }
         }
 
         // Code to execute when the application is activated (brought to foreground)
