@@ -1,6 +1,7 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SparklrWP.Controls;
+using SparklrWP.Resources;
 using SparklrWP.Utils;
 using SparklrWP.ViewModels;
 using System;
@@ -27,6 +28,7 @@ namespace SparklrWP.Pages
             //App.MainViewModel.AfterItemAdded += MainViewModel_AfterItemAdded;
 
             this.Loaded += new RoutedEventHandler(MainPage_Loaded);
+            App.BuildLocalizedApplicationBar(ApplicationBar);
 
 #if DEBUG
 

@@ -290,5 +290,52 @@ namespace SparklrWP
         public static Uri LoginReturnUri { get; set; }
 
         public static bool RemoveBackEntryOnNavigate { get; set; }
+
+
+        // Build a localized ApplicationBar
+        public static void BuildLocalizedApplicationBar(IApplicationBar appBar)
+        {
+            if (appBar != null)
+            {
+                if (appBar.Buttons != null)
+                {
+                    foreach (ApplicationBarIconButton b in appBar.Buttons)
+                    {
+                        try
+                        {
+                            b.Text = AppResources.ResourceManager.GetString(b.Text);
+                        }
+                        catch
+#if DEBUG
+ (Exception ex)
+                        {
+                            App.logger.log("Failed to localize {0}: {1}", b.Text, ex.Message);
+                        }
+#else
+                        {}
+#endif
+                    }
+                }
+                if (appBar.MenuItems != null)
+                {
+                    foreach (ApplicationBarMenuItem m in appBar.MenuItems)
+                    {
+                        try
+                        {
+                            m.Text = AppResources.ResourceManager.GetString(m.Text);
+                        }
+                        catch
+#if DEBUG
+ (Exception ex)
+                        {
+                            App.logger.log("Failed to localize {0}: {1}", m.Text, ex.Message);
+                        }
+#else
+                        {}
+#endif
+                    }
+                }
+            }
+        }
     }
 }

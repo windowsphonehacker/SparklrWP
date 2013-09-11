@@ -374,5 +374,86 @@ namespace SparklrWP.Resources {
                 return ResourceManager.GetString("LoginWrongUserPass", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to about....
+        /// </summary>
+        public static string MainAboutButton {
+            get {
+                return ResourceManager.GetString("MainAboutButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to friends.
+        /// </summary>
+        public static string MainFriendsHeader {
+            get {
+                return ResourceManager.GetString("MainFriendsHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to new post.
+        /// </summary>
+        public static string MainNewPostButton {
+            get {
+                return ResourceManager.GetString("MainNewPostButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to notifications.
+        /// </summary>
+        public static string MainNotifications {
+            get {
+                return ResourceManager.GetString("MainNotifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to profile.
+        /// </summary>
+        public static string MainProfileHeader {
+            get {
+                return ResourceManager.GetString("MainProfileHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to search.
+        /// </summary>
+        public static string MainSearchButton {
+            get {
+                return ResourceManager.GetString("MainSearchButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to settings.
+        /// </summary>
+        public static string MainSettingsButton {
+            get {
+                return ResourceManager.GetString("MainSettingsButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Visit network....
+        /// </summary>
+        public static string MainVisitNetworkHint {
+            get {
+                return ResourceManager.GetString("MainVisitNetworkHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to world.
+        /// </summary>
+        public static string MainWorldHeader {
+            get {
+                return ResourceManager.GetString("MainWorldHeader", resourceCulture);
+            }
+        }
     }
 }
