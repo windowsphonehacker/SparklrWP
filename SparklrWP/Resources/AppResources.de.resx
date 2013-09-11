@@ -121,14 +121,14 @@
     <value>Looks like you had a crash the last time you used the app. Would you like to help us fix the bug and send a quick bug report?</value>
   </data>
   <data name="AppCrashReportTitle" xml:space="preserve">
-    <value>Jokin meni vikaan...</value>
+    <value>Something went wrong...</value>
   </data>
   <data name="ApplicationTitle" xml:space="preserve">
     <value>sparklr*</value>
     <comment>The title show on nearly all pages of the app</comment>
   </data>
   <data name="AppNotificationText" xml:space="preserve">
-    <value>Sinulla on {0} ilmoitusta.</value>
+    <value>You have {0} notifications.</value>
     <comment>{0} is a number indicating the count of notifications</comment>
   </data>
   <data name="FirstRunBasics1" xml:space="preserve">
@@ -139,167 +139,169 @@
     <value>The power of the pivot! Slide over on the main page for more things to do! It's like having the power of Sparklr in your hands!</value>
   </data>
   <data name="FirstRunHelloThere" xml:space="preserve">
-    <value>Hei siellä :)</value>
+    <value>Hello there :)</value>
     <comment>FirstRunPage</comment>
   </data>
   <data name="FirstRunLetsGetStarted" xml:space="preserve">
-    <value>Aloitetaan!</value>
+    <value>Lets get started!</value>
     <comment>FirstRunPage</comment>
   </data>
   <data name="FirstRunLogin" xml:space="preserve">
-    <value>Kirjautuminen:</value>
+    <value>Login:</value>
   </data>
   <data name="FirstRunMsgBoxContent" xml:space="preserve">
     <value>Looks like it's the first time you've used this app! We will take you through a small intro to show you around the app!</value>
   </data>
   <data name="FirstRunMsgBoxTitle" xml:space="preserve">
-    <value>Olemmeko jo tavanneet?</value>
+    <value>Have we met before?</value>
   </data>
   <data name="FirstRunOK" xml:space="preserve">
     <value>OK!</value>
   </data>
   <data name="FirstRunOtherStuff" xml:space="preserve">
-    <value>muuta</value>
+    <value>other stuff</value>
   </data>
   <data name="FirstRunOtherStuff1" xml:space="preserve">
     <value>On most pages you will see a bar with an icon! Those are passage ways to other parts in the app!</value>
   </data>
   <data name="FirstRunSlideOver" xml:space="preserve">
-    <value>Pyyhkäise</value>
+    <value>Slide over</value>
   </data>
   <data name="FirstRunTheBasics" xml:space="preserve">
-    <value>perusteet</value>
+    <value>the basics</value>
     <comment>FirstRunPage</comment>
   </data>
   <data name="FirstRunTheDash" xml:space="preserve">
     <value>The dashboard:</value>
   </data>
   <data name="FirstRunTheLoginPage" xml:space="preserve">
-    <value>Kirjautumissivu:</value>
+    <value>The login page:</value>
     <comment>FirstRunPage</comment>
   </data>
   <data name="FirstRunThreeDots" xml:space="preserve">
-    <value>Kolme pistettä!</value>
+    <value>The three dots!</value>
   </data>
   <data name="FirstRunWhatAreYouWaitingFor" xml:space="preserve">
-    <value>Mitä odotat? Kokeile itse!</value>
+    <value>What are you waiting for?! Try it yourself!</value>
   </data>
   <data name="LoginAboutButton" xml:space="preserve">
-    <value>Tietoja</value>
+    <value>About</value>
   </data>
   <data name="LoginBrowserOpenQuestionContent" xml:space="preserve">
     <value>The sign up page will open in Internet Explorer, is that OK?</value>
   </data>
   <data name="LoginBrowserOpenQuestionTitle" xml:space="preserve">
-    <value>Kysymys</value>
+    <value>Question</value>
   </data>
   <data name="LoginExitConfirmationContent" xml:space="preserve">
-    <value>Haluatko poistua sovelluksesta? Tallentamattomat tiedot menetetään.</value>
+    <value>Do you want to exit the app? Unsaved changes will be lost.</value>
   </data>
   <data name="LoginExitConfirmationTitle" xml:space="preserve">
-    <value>Vahvistus</value>
+    <value>Confirmation</value>
   </data>
   <data name="LoginForWP" xml:space="preserve">
-    <value>Windows Phonelle</value>
+    <value>for Windows Phone</value>
   </data>
   <data name="LoginLoginButton" xml:space="preserve">
-    <value>Kirjaudu</value>
+    <value>Login</value>
     <comment>LoginPage</comment>
   </data>
   <data name="LoginPleaseLogin" xml:space="preserve">
-    <value>Kirjaudu sisään</value>
+    <value>Please log in</value>
   </data>
   <data name="LoginRememberMe" xml:space="preserve">
-    <value>Muista minut</value>
+    <value>Remember Me</value>
   </data>
   <data name="LoginSignUpButton" xml:space="preserve">
-    <value>Rekisteröidy</value>
+    <value>Sign up</value>
   </data>
   <data name="LoginSparklrLogo" xml:space="preserve">
     <value>sparklr*</value>
   </data>
   <data name="LoginUnknownLoginErrorMsgBoxContent" xml:space="preserve">
-    <value>Jotakin kauheaa tapahtui, yritä myöhemmin uudelleen!</value>
+    <value>Something horrible happend, try again later!</value>
   </data>
   <data name="LoginUnknownLoginErrorMsgBoxTitle" xml:space="preserve">
-    <value>Pahoittelut!</value>
+    <value>Sorry!</value>
   </data>
   <data name="LoginWIP" xml:space="preserve">
-    <value>KESKENERÄINEN</value>
+    <value>WORK IN PROGRESS</value>
   </data>
   <data name="LoginWrongUserPass" xml:space="preserve">
-    <value>Väärä käyttäjänimi ja/tai salasana</value>
+    <value>Wrong username and/or password</value>
   </data>
   <data name="MainAboutButton" xml:space="preserve">
-    <value>tietoja...</value>
+    <value>about...</value>
   </data>
   <data name="MainFriendsHeader" xml:space="preserve">
-    <value>ystävät</value>
+    <value>friends</value>
   </data>
   <data name="MainNetworksHeader" xml:space="preserve">
-    <value>verkostot</value>
+    <value>networks</value>
   </data>
   <data name="MainNewPostButton" xml:space="preserve">
-    <value>uusi viesti</value>
+    <value>new post</value>
   </data>
   <data name="MainNotifications" xml:space="preserve">
-    <value>ilmoitukset</value>
+    <value>notifications</value>
   </data>
   <data name="MainProfileHeader" xml:space="preserve">
-    <value>profiili</value>
+    <value>profile</value>
   </data>
   <data name="MainSearchButton" xml:space="preserve">
-    <value>hae</value>
+    <value>search</value>
   </data>
   <data name="MainSettingsButton" xml:space="preserve">
-    <value>asetukset</value>
+    <value>settings</value>
   </data>
   <data name="MainVisitNetworkHint" xml:space="preserve">
-    <value>Vieraile verkostossa...</value>
+    <value>Visit network...</value>
   </data>
   <data name="MainWorldHeader" xml:space="preserve">
-    <value>maailma</value>
+    <value>world</value>
   </data>
   <data name="NewPostAttachPictureHint" xml:space="preserve">
-    <value>Paina "Kuva"-nappia alhaalta liittääksesi valokuvan</value>
+    <value>Press the "Picture" button down below to attach a picture</value>
   </data>
   <data name="NewPostCouldNotPostMsg" xml:space="preserve">
-    <value>Jotakin kauheaa tapahtui!\nEmme voineet lähettää viestiäsi, yritä myöhemmin uudelleen!</value>
+    <value>Something horrible happend!
+We couldn't post your message try again later!</value>
   </data>
   <data name="NewPostCouldNotPostMsgPic" xml:space="preserve">
-    <value>Jotakin kauheaa tapahtui!\nEmme voineet lähettää viestiäsi ja kuvaasi, yritä myöhemmin uudelleen!</value>
+    <value>Something horrible happend!
+We couldn't post your message  and photo try again later!</value>
   </data>
   <data name="NewPostCouldNotPostMsgTitle" xml:space="preserve">
-    <value>Pahoittelut!</value>
+    <value>Sorry!</value>
   </data>
   <data name="NewPostEmptyMsgWarning" xml:space="preserve">
-    <value>Sinun tulee sanoa jotain! Et voi lähettää tyhjää viestiä!</value>
+    <value>You need to say something! You can't post an empty message!</value>
   </data>
   <data name="NewPostImageEditorHint" xml:space="preserve">
-    <value>Sisältää kuvamuokkaimen!</value>
+    <value>There is an image editor!</value>
   </data>
   <data name="NewPostNewPostButton" xml:space="preserve">
-    <value>uusi viesti</value>
+    <value>new post</value>
   </data>
   <data name="NewPostPictureButton" xml:space="preserve">
-    <value>kuva</value>
+    <value>picture</value>
   </data>
   <data name="NewPostPostedMsg" xml:space="preserve">
-    <value>Lähetetty! :)</value>
+    <value>Posted! :)</value>
   </data>
   <data name="NewPostRemoveImageText" xml:space="preserve">
-    <value>Haluatko poistaa liitetyn kuvan?</value>
+    <value>Do you want to remove the attached image?</value>
   </data>
   <data name="NewPostRemoveImageTitle" xml:space="preserve">
-    <value>Kysymys</value>
+    <value>Question</value>
   </data>
   <data name="NewPostSuccessText" xml:space="preserve">
-    <value>Tilaviestisi lähetettiin!</value>
+    <value>Your status has been posted!</value>
   </data>
   <data name="NewPostSuccessTitle" xml:space="preserve">
-    <value>Jee!</value>
+    <value>Yay!</value>
   </data>
   <data name="NewPostTitle" xml:space="preserve">
-    <value>Uusi Viesti</value>
+    <value>New Post</value>
   </data>
 </root>
