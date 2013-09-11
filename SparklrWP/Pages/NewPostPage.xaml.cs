@@ -13,13 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 
 
-namespace SparklrWP
+namespace SparklrWP.Pages
 {
     public partial class NewPostPage : PhoneApplicationPage, IDisposable
     {
         readonly PhotoChooserTask _photoChooserTask;
         Stream _photoStr;
         bool setfocus = false;
+        private string network = "0";
 
         public NewPostPage()
         {
@@ -37,10 +38,17 @@ namespace SparklrWP
             base.OnNavigatedTo(e);
 
             string content = "";
+            string network = "0";
+
             if (NavigationContext.QueryString.TryGetValue("content", out content))
             {
                 messageBox.Text = String.Format("{0} ", HttpUtility.UrlDecode(content));
                 setfocus = true;
+            }
+
+            if (NavigationContext.QueryString.TryGetValue("network", out network))
+            {
+                this.network = network;
             }
         }
 
@@ -55,7 +63,7 @@ namespace SparklrWP
             else
             {
                 GlobalLoading.Instance.IsLoading = true;
-                SparklrEventArgs args = await App.Client.PostAsync(messageBox.Text, _photoStr);
+                SparklrEventArgs args = await App.Client.PostAsync(messageBox.Text, network, _photoStr);
                 GlobalLoading.Instance.IsLoading = false;
 
                 if (!args.IsSuccessful)

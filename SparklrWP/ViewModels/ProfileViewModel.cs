@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace SparklrWP
+namespace SparklrWP.ViewModels
 {
     public class ProfileViewModel : INotifyPropertyChanged
     {

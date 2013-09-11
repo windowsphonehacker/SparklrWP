@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SparklrWP.ViewModels;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 

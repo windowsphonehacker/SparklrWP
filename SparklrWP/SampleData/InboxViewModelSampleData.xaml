@@ -1,7 +1,7 @@
 ﻿<local:InboxViewModel 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:SparklrWP">
+    xmlns:local="clr-namespace:SparklrWP.ViewModels">
     <local:InboxViewModel.Conversations>
         <local:ConversationModel Time="1378304290" Message=":3" />
         <local:ConversationModel Time="1378298328" Message=":D" />

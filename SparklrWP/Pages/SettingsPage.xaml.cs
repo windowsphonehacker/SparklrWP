@@ -1,4 +1,5 @@
 ﻿using Microsoft.Phone.Controls;
+using SparklrWP.ViewModels;
 
 namespace SparklrWP.Pages
 {

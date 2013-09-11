@@ -1,6 +1,7 @@
 ﻿using Microsoft.Phone.Controls;
 using SparklrWP.Controls;
 using SparklrWP.Utils;
+using SparklrWP.ViewModels;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -45,7 +46,7 @@ namespace SparklrWP.Pages
             UserItemViewModel i = ((StackPanel)sender).DataContext as UserItemViewModel;
             if (i != null)
             {
-                NavigationService.Navigate(new System.Uri("/Pages/Profile.xaml?userId=" + i.Id.ToString(), System.UriKind.Relative));
+                NavigationService.Navigate(new System.Uri("/Pages/ProfilePage.xaml?userId=" + i.Id.ToString(), System.UriKind.Relative));
             }
         }
 

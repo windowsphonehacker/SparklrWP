@@ -2,6 +2,7 @@
 using Microsoft.Phone.Shell;
 using SparklrLib;
 using SparklrWP.Utils;
+using SparklrWP.ViewModels;
 using System;
 using System.IO;
 using System.IO.IsolatedStorage;
@@ -106,7 +107,7 @@ namespace SparklrWP
             RootFrame.Dispatcher.BeginInvoke(() =>
             {
                 LoginReturnUri = RootFrame.CurrentSource;
-                RootFrame.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+                RootFrame.Navigate(new Uri("/Pages/LoginPage.xaml", UriKind.Relative));
             });
         }
 
@@ -174,11 +175,11 @@ namespace SparklrWP
                 App.Client.ManualLogin(Encoding.UTF8.GetString(authBytes, 0, authBytes.Length),
                     (long)IsolatedStorageSettings.ApplicationSettings["userid"]);
             }
-            else if (!e.Uri.ToString().Contains("/LoginPage.xaml") && !e.Uri.ToString().Contains("/FirstRun.xaml") && !App.Client.IsLoggedIn)
+            else if (!e.Uri.ToString().Contains("/Pages/LoginPage.xaml") && !e.Uri.ToString().Contains("/Pages/FirstRunPage.xaml") && !App.Client.IsLoggedIn)
             {
                 e.Cancel = true;
                 LoginReturnUri = e.Uri;
-                RootFrame.Dispatcher.BeginInvoke(() => RootFrame.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative)));
+                RootFrame.Dispatcher.BeginInvoke(() => RootFrame.Navigate(new Uri("/Pages/LoginPage.xaml", UriKind.Relative)));
             }
         }
 

@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 
-namespace SparklrWP
+namespace SparklrWP.ViewModels
 {
     public sealed class MainViewModel : INotifyPropertyChanged, IDisposable
     {

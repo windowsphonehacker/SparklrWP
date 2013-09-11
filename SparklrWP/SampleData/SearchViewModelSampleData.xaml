@@ -1,7 +1,7 @@
 ﻿<local:SearchViewModel 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:SparklrWP" Keyword="Searchstring">
+    xmlns:local="clr-namespace:SparklrWP.ViewModels" Keyword="Searchstring">
     <local:SearchViewModel.Users>
         <local:UserItemViewModel Name="Test1" />
         <local:UserItemViewModel Name="Test2" />

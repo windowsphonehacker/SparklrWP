@@ -491,9 +491,10 @@ namespace SparklrLib
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="image">The image.</param>
-        public async Task<SparklrEventArgs> PostAsync(string message, Stream image)
+        public async Task<SparklrEventArgs> PostAsync(string message, string network = "0", Stream image = null)
         {
             string data64str = "";
+
             if (image != null)
             {
                 using (MemoryStream ms = new MemoryStream())
@@ -512,12 +513,11 @@ namespace SparklrLib
                     data64str = "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
                 }
             }
+
             JSONRequestEventArgs<Objects.Responses.Generic> args = await requestJsonObjectAsync<Objects.Responses.Generic>("/work/post", new Objects.Requests.Work.Post()
             {
                 body = message,
-#if DEBUG
-                network = 2,
-#endif
+                network = network,
                 img = data64str != ""
             }, data64str, "POST");
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace SparklrWP
+namespace SparklrWP.ViewModels
 {
     public class NotificationViewModel : INotifyPropertyChanged
     {

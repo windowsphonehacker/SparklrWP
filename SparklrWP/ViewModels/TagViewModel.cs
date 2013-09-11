@@ -5,7 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace SparklrWP
+namespace SparklrWP.ViewModels
 {
     public class TagViewModel : INotifyPropertyChanged
     {

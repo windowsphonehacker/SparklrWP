@@ -1,4 +1,5 @@
 ﻿extern alias ImageToolsDLL;
+using SparklrWP.ViewModels;
 using System;
 using System.ComponentModel;
 using System.Windows;

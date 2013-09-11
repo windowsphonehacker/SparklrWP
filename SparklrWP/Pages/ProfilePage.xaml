@@ -9,15 +9,14 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	xmlns:controlsPrimitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls" 
 	xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
-	x:Class="SparklrWP.Pages.Profile" 
+	x:Class="SparklrWP.Pages.ProfilePage" 
 	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
 	FontSize="{StaticResource PhoneFontSizeNormal}"
 	Foreground="{StaticResource PhoneForegroundBrush}"
 	SupportedOrientations="Portrait"  Orientation="Portrait"
 	shell:SystemTray.IsVisible="False" Background="Black"
-	d:DataContext="{d:DesignData ../SampleData/UserProfileViewModelSampleData.xaml}" Style="{StaticResource Animated}"
-	x:Name="ProfilePage">
+	d:DataContext="{d:DesignData ../SampleData/UserProfileViewModelSampleData.xaml}" Style="{StaticResource Animated}">
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar BackgroundColor="#FF2A2339">
             <shell:ApplicationBarIconButton Text="Follow" Click="FollowButton_Click" IconUri="/Assets/AppBar/ApplicationBar.Add.png"/>

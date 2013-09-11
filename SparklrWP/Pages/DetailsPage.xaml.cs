@@ -1,11 +1,12 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SparklrWP.Utils;
+using SparklrWP.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Navigation;
 
-namespace SparklrWP
+namespace SparklrWP.Pages
 {
     public partial class DetailsPage : PhoneApplicationPage
     {

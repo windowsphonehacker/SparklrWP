@@ -2,6 +2,7 @@
 using Microsoft.Phone.Shell;
 using SparklrWP.Controls;
 using SparklrWP.Utils;
+using SparklrWP.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -117,12 +118,12 @@ namespace SparklrWP.Pages
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("/NewPostPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/NewPostPage.xaml?network=0", UriKind.Relative));
         }
 
         private void about_click(object sender, System.EventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Pages/About.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/AboutPage.xaml", UriKind.Relative));
         }
 
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
@@ -137,7 +138,7 @@ namespace SparklrWP.Pages
 
         private void StackPanel_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Pages/Profile.xaml?userId=" + ((StackPanel)sender).Tag, UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/ProfilePage.xaml?userId=" + ((StackPanel)sender).Tag, UriKind.Relative));
         }
 
         private void BorderNotification_Tap(object sender, System.Windows.Input.GestureEventArgs e)

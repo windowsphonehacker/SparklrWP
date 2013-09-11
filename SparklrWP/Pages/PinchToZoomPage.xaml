@@ -8,7 +8,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
-    x:Class="SparklrWP.Pages.PinchToZoom"
+    x:Class="SparklrWP.Pages.PinchToZoomPage"
     SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="False" Style="{StaticResource Animated}">

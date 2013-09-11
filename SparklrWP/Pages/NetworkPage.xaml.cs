@@ -1,5 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 using SparklrWP.Controls;
+using SparklrWP.ViewModels;
 using System;
 using System.Windows.Navigation;
 

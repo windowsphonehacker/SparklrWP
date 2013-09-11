@@ -4,6 +4,7 @@ using SparklrLib.Objects;
 using SparklrLib.Objects.Responses;
 using SparklrLib.Objects.Responses.Work;
 using SparklrWP.Controls;
+using SparklrWP.ViewModels;
 using System;
 using System.Net;
 using System.Windows;
@@ -14,12 +15,12 @@ using System.Windows.Navigation;
 
 namespace SparklrWP.Pages
 {
-    public partial class Profile : Microsoft.Phone.Controls.PhoneApplicationPage
+    public partial class ProfilePage : Microsoft.Phone.Controls.PhoneApplicationPage
     {
         ProfileViewModel model;
         ListPicker filterModePicker;
 
-        public Profile()
+        public ProfilePage()
         {
             InitializeComponent();
 
@@ -177,7 +178,7 @@ namespace SparklrWP.Pages
 
         private void MentionButton_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri(String.Format("/NewPostPage.xaml?content={0}", HttpUtility.UrlEncode(String.Format(model.Handle))), UriKind.Relative));
+            NavigationService.Navigate(new Uri(String.Format("/Pages/NewPostPage.xaml?content={0}", HttpUtility.UrlEncode(String.Format(model.Handle))), UriKind.Relative));
         }
 
         private async void FollowButton_Click(object sender, EventArgs e)

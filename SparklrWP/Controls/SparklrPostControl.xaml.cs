@@ -1,4 +1,5 @@
 ﻿using SparklrWP.Utils;
+using SparklrWP.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Controls;

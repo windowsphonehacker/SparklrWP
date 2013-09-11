@@ -3,7 +3,7 @@ using SparklrLib.Objects.Responses.Work;
 using System;
 using System.ComponentModel;
 
-namespace SparklrWP
+namespace SparklrWP.ViewModels
 {
     public class UserItemViewModel : INotifyPropertyChanged
     {

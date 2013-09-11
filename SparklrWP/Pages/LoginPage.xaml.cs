@@ -12,7 +12,7 @@ using System.Windows;
 using System.Windows.Navigation;
 
 
-namespace SparklrWP
+namespace SparklrWP.Pages
 {
     public partial class LoginPage : PhoneApplicationPage
     {
@@ -45,7 +45,7 @@ namespace SparklrWP
                     "Looks like it's the first time you've used this app! We will take you through a small intro to show you around the app!",
                     "Have we met before?", MessageBoxButton.OK);
 
-                NavigationService.Navigate(new Uri("/FirstRun.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri("/Pages/FirstRunPage.xaml", UriKind.Relative));
             }
             else
             {
@@ -192,7 +192,7 @@ namespace SparklrWP
 
         private void about_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/Pages/About.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/AboutPage.xaml", UriKind.Relative));
         }
 
         private void checkEnter_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

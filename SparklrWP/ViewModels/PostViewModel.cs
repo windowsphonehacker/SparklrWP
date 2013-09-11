@@ -1,11 +1,10 @@
 ﻿using SparklrLib.Objects;
 using SparklrLib.Objects.Responses.Work;
 using SparklrWP.Utils;
-using SparklrWP.ViewModels;
 using System;
 using System.ComponentModel;
 
-namespace SparklrWP
+namespace SparklrWP.ViewModels
 {
     public sealed class PostViewModel : INotifyPropertyChanged
     {

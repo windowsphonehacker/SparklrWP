@@ -2,11 +2,11 @@
 using System;
 using System.IO.IsolatedStorage;
 
-namespace SparklrWP
+namespace SparklrWP.Pages
 {
-    public partial class FirstRun : PhoneApplicationPage
+    public partial class FirstRunPage : PhoneApplicationPage
     {
-        public FirstRun()
+        public FirstRunPage()
         {
             InitializeComponent();
             HelloAni.Begin();
@@ -26,7 +26,7 @@ namespace SparklrWP
             }
             else
             {
-                NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+                NavigationService.Navigate(new Uri("/Pages/LoginPage.xaml", UriKind.Relative));
             }
         }
     }

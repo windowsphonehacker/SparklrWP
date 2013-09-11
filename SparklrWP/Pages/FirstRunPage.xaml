@@ -8,7 +8,7 @@
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:Coding4Fun_Toolkit_Controls="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
 	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
-	x:Class="SparklrWP.FirstRun"
+	x:Class="SparklrWP.Pages.FirstRunPage"
 	SupportedOrientations="Portrait" Orientation="Portrait"
 	shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
     <phone:PhoneApplicationPage.Resources>
@@ -55,7 +55,7 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Opacity="0">
         <Grid.Background>
-            <ImageBrush Stretch="UniformToFill" ImageSource="Assets/bg.jpg"/>
+            <ImageBrush Stretch="UniformToFill" ImageSource="../Assets/bg.jpg"/>
         </Grid.Background>
         <!--Pivot Control-->
         <!--Pivot Control-->
@@ -67,11 +67,7 @@
         <controls:Pivot x:Name="pivot" Title="sparklr*" Opacity="0.015" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
             <!--Pivot item one-->
             <controls:PivotItem Header="The Basics">
-
-
-
                 <Grid>
-
                     <TextBlock x:Name="textBlock1" Margin="8,8,8,0" TextWrapping="Wrap" Text="Lets Get Started!" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="48" TextAlignment="Center" Height="66" VerticalAlignment="Top">
                         <TextBlock.Foreground>
                             <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>

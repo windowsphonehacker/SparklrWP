@@ -174,8 +174,8 @@
     <Compile Include="Controls\SparklrTextBlock.xaml.cs">
       <DependentUpon>SparklrTextBlock.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\About.xaml.cs">
-      <DependentUpon>About.xaml</DependentUpon>
+    <Compile Include="Pages\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ChatPage.xaml.cs">
       <DependentUpon>ChatPage.xaml</DependentUpon>
@@ -183,8 +183,8 @@
     <Compile Include="Pages\DetailsPage.xaml.cs">
       <DependentUpon>DetailsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="FirstRun.xaml.cs">
-      <DependentUpon>FirstRun.xaml</DependentUpon>
+    <Compile Include="Pages\FirstRunPage.xaml.cs">
+      <DependentUpon>FirstRunPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\InboxPage.xaml.cs">
       <DependentUpon>InboxPage.xaml</DependentUpon>
@@ -195,17 +195,17 @@
     <Compile Include="Pages\NetworkPage.xaml.cs">
       <DependentUpon>NetworkPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\PinchToZoom.xaml.cs">
-      <DependentUpon>PinchToZoom.xaml</DependentUpon>
+    <Compile Include="Pages\PinchToZoomPage.xaml.cs">
+      <DependentUpon>PinchToZoomPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Profile.xaml.cs">
-      <DependentUpon>Profile.xaml</DependentUpon>
+    <Compile Include="Pages\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="GlobalLoading.cs" />
-    <Compile Include="LoginPage.xaml.cs">
+    <Compile Include="Pages\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NewPostPage.xaml.cs">
+    <Compile Include="Pages\NewPostPage.xaml.cs">
       <DependentUpon>NewPostPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\SearchPage.xaml.cs">
@@ -280,11 +280,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="FirstRun.xaml">
+    <Page Include="Pages\FirstRunPage.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\About.xaml">
+    <Page Include="Pages\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -304,11 +304,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\PinchToZoom.xaml">
+    <Page Include="Pages\PinchToZoomPage.xaml">
       <Generator>MSBuild:MarkupCompilePass1</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\Profile.xaml">
+    <Page Include="Pages\ProfilePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -316,7 +316,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="LoginPage.xaml">
+    <Page Include="Pages\LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -324,7 +324,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
-    <Page Include="NewPostPage.xaml">
+    <Page Include="Pages\NewPostPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -456,7 +456,7 @@
     <Resource Include="Assets\Attachment.png" />
     <Resource Include="Assets\bg.jpg" />
     <Resource Include="Login-Arrow.png" />
-    <Resource Include="Pages\appbar.feature.search.rest.png" />
+    <Resource Include="Assets\appbar.feature.search.rest.png" />
   </ItemGroup>
   <ItemGroup>
     <BlendEmbeddedFont Include="Fonts\Courgette-Regular.ttf">

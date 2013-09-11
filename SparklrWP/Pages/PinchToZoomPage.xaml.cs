@@ -8,7 +8,7 @@ namespace SparklrWP.Pages
     /// <summary>
     /// Provides pinch to zoom for an image. Can either be naviagted to with ?image=URLENCODED-LOCATION or instanciated with a location
     /// </summary>
-    public sealed partial class PinchToZoom : PhoneApplicationPage
+    public sealed partial class PinchToZoomPage : PhoneApplicationPage
     {
         // these two fields fully define the zoom state:
         private double TotalImageScale = 1d;
@@ -20,7 +20,7 @@ namespace SparklrWP.Pages
         private Point _oldFinger2;
         private double _oldScaleFactor;
 
-        public PinchToZoom()
+        public PinchToZoomPage()
         {
             InitializeComponent();
         }
@@ -32,7 +32,7 @@ namespace SparklrWP.Pages
             base.OnNavigatedFrom(e);
         }
 
-        public PinchToZoom(string location)
+        public PinchToZoomPage(string location)
         {
             InitializeComponent();
             loadImage(location);

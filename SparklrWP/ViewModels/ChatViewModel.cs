@@ -6,7 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Windows;
 
-namespace SparklrWP
+namespace SparklrWP.ViewModels
 {
     public class ChatMessageModel : INotifyPropertyChanged
     {

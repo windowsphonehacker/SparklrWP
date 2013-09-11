@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 
-namespace SparklrWP
+namespace SparklrWP.ViewModels
 {
     public class SearchViewModel : INotifyPropertyChanged
     {

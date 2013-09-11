@@ -346,7 +346,7 @@ namespace SparklrWP.Controls
 
             ret.Click += (sender, e) =>
             {
-                (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(String.Format("/Pages/Profile.xaml?userId={0}", username), UriKind.Relative));
+                (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(String.Format("/Pages/ProfilePage.xaml?userId={0}", username), UriKind.Relative));
             };
 
             return ret;
@@ -459,7 +459,7 @@ namespace SparklrWP.Controls
 
             location = HttpUtility.UrlEncode(location);
 
-            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(String.Format("/Pages/PinchToZoom.xaml?image={0}", location), UriKind.Relative));
+            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(String.Format("/Pages/PinchToZoomPage.xaml?image={0}", location), UriKind.Relative));
         }
 
         private string text;
