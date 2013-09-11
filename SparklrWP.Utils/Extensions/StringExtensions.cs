@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 
-namespace SparklrWP.Utils
+namespace SparklrWP.Utils.Extensions
 {
     public static class StringExtensions
     {

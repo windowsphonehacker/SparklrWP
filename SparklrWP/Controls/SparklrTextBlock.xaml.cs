@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Media;
 using SparklrLib.Objects;
 using SparklrLib.Objects.Responses.Work;
 using SparklrWP.Utils;
+using SparklrWP.Utils.Extensions;
 using System;
 using System.IO;
 using System.Net;

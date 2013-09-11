@@ -1,5 +1,5 @@
 ﻿
-namespace SparklrWP.Utils
+namespace SparklrWP.Utils.Extensions
 {
     /// <summary>
     /// Contains extension methods to convert file sizes

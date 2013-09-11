@@ -97,16 +97,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Caching\Image.cs" />
-    <Compile Include="FileSizeConvertExtensions.cs" />
+    <Compile Include="Extensions\IntExtensions.cs" />
+    <Compile Include="Extensions\FileSizeConvertExtensions.cs" />
     <Compile Include="Globals.cs" />
-    <Compile Include="Helpers.cs" />
+    <Compile Include="Imaging\Helpers.cs" />
     <Compile Include="ImageToolsHelper.cs" />
     <Compile Include="NetworkHelpers.cs" />
     <Compile Include="NotificationHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ShellTileExtensions.cs" />
+    <Compile Include="Extensions\ShellTileExtensions.cs" />
     <Compile Include="SmartDispatcher.cs" />
-    <Compile Include="StringExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="TilesCreator.cs" />
   </ItemGroup>
   <ItemGroup>

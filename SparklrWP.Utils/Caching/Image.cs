@@ -1,4 +1,5 @@
 ﻿using ImageTools;
+using SparklrWP.Utils.Extensions;
 using System;
 using System.IO;
 using System.IO.IsolatedStorage;

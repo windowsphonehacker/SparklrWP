@@ -2,6 +2,7 @@
 using SparklrLib.Objects;
 using SparklrLib.Objects.Responses.Beacon;
 using SparklrLib.Objects.Responses.Work;
+using SparklrWP.Utils.Extensions;
 using System;
 using System.IO.IsolatedStorage;
 using System.Threading.Tasks;
@@ -72,14 +73,14 @@ namespace SparklrWP.Utils
                                             new Uri("isostore:/" + GetUserprofileTileLocation(userid, TileSize.Wide).Replace(@"\", @"/"), UriKind.Absolute)
                                             );
 
-                    ShellTileExtensions.CreateWideTile(new Uri("/Pages/Profile.xaml?userId=" + userid.ToString(), UriKind.Relative), data);
+                    ShellTileExtensions.CreateWideTile(new Uri("/Pages/ProfilePage.xaml?userId=" + userid.ToString(), UriKind.Relative), data);
                     return true;
                 }
             }
             return false;
         }
 
-        public async static void UpdatePrimaryTile(bool updateImage, SparklrLib.SparklrClient client)
+        public async static void UpdateTiles(bool updateImage, SparklrLib.SparklrClient client)
         {
             if (client.IsLoggedIn)
             {
@@ -87,6 +88,7 @@ namespace SparklrWP.Utils
                 {
                     if (tile.NavigationUri.ToString() == "/")
                     {
+                        //Update the primary tile
                         if (updateImage)
                         {
                             string backgroundImage = "http://d.sparklr.me/i/" + client.UserId.ToString() + ".jpg";
@@ -141,8 +143,45 @@ namespace SparklrWP.Utils
                         );
 
                         tile.Update(data);
+                    }
+                    else if (tile.NavigationUri.ToString().StartsWith("/Pages/ProfilePage.xaml?userId=", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        //Update a profile tile
+                        string idString = tile.NavigationUri.ToString().Remove(0, "/Pages/ProfilePage.xaml?userId=".Length);
+                        int id = -1;
 
-                        break;
+                        if (Int32.TryParse(idString, out id))
+                        {
+                            if (updateImage)
+                            {
+                                await CreateProfileTileImages(id);
+                            }
+
+                            JSONRequestEventArgs<User> result = await client.GetUserAsync(id);
+
+                            if (result.IsSuccessful)
+                            {
+                                string backContent = "";
+
+                                if (result.Object.timeline != null && result.Object.timeline.Count >= 1 && !String.IsNullOrEmpty(result.Object.timeline[0].message))
+                                    backContent = String.Format("{0} - {1}", result.Object.timeline[0].message, result.Object.timeline[0].time.FormatTime());
+
+                                ShellTileData data = Mangopollo.Tiles.TilesCreator.CreateFlipTile(
+                                                result.Object.name,
+                                                "",
+                                                backContent,
+                                                backContent,
+                                                null,
+                                                new Uri("/Assets/TileBackgrounds/Small.png", UriKind.Relative),
+                                                new Uri("/Assets/TileBackgrounds/Medium.png", UriKind.Relative),
+                                                new Uri("isostore:/" + GetUserprofileTileLocation(id, TileSize.Medium).Replace(@"\", @"/"), UriKind.Absolute),
+                                                new Uri("/Assets/TileBackgrounds/Wide.png", UriKind.Relative),
+                                                new Uri("isostore:/" + GetUserprofileTileLocation(id, TileSize.Wide).Replace(@"\", @"/"), UriKind.Absolute)
+                                                );
+
+                                tile.Update(data);
+                            }
+                        }
                     }
                 }
             }
@@ -172,6 +211,7 @@ namespace SparklrWP.Utils
                 ImageBrush image = new ImageBrush();
                 image.ImageSource = (BitmapImage)await Utils.Caching.Image.LoadCachedImageFromUrlAsync<BitmapImage>(location);
                 image.Stretch = Stretch.UniformToFill;
+                image.Opacity = 0.7;
                 r.Fill = image;
 
                 try

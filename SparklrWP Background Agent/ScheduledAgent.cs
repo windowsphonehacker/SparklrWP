@@ -96,7 +96,7 @@ namespace SparklrWP_Background_Agent
                                 if (unargs.IsSuccessful)
                                 {
 
-                                    SparklrWP.Utils.TilesCreator.UpdatePrimaryTile(false, client);
+                                    SparklrWP.Utils.TilesCreator.UpdateTiles(false, client);
 
                                     foreach (Notification not in strm.notifications)
                                     {

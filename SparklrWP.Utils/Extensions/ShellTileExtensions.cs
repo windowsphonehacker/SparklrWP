@@ -2,7 +2,7 @@
 using System;
 using System.Reflection;
 
-namespace SparklrWP.Utils
+namespace SparklrWP.Utils.Extensions
 {
     public static class ShellTileExtensions
     {

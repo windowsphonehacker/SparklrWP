@@ -1,4 +1,4 @@
-﻿using SparklrWP.Utils;
+﻿using SparklrWP.Utils.Extensions;
 using System;
 using System.ComponentModel;
 

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SparklrWP.Controls;
-using SparklrWP.Resources;
 using SparklrWP.Utils;
+using SparklrWP.Utils.Extensions;
 using SparklrWP.ViewModels;
 using System;
 using System.Windows;
