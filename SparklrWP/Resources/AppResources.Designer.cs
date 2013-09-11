@@ -394,6 +394,15 @@ namespace SparklrWP.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to networks.
+        /// </summary>
+        public static string MainNetworksHeader {
+            get {
+                return ResourceManager.GetString("MainNetworksHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to new post.
         /// </summary>
         public static string MainNewPostButton {

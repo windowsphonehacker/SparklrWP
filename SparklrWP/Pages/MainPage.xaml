@@ -155,7 +155,7 @@
                 </ListBox>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="networks">
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainNetworksHeader, Source={StaticResource LocalizedStrings}}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
