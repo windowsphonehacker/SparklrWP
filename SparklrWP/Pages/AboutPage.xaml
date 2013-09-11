@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contiene il nome dell'applicazione e il titolo della pagina-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <StackPanel Grid.Row="0" Margin="12,17,12,28">
             <TextBlock Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Margin="0,0,12,0"/>
             <TextBlock Text="About" Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
         </StackPanel>
@@ -30,7 +30,7 @@
         <Grid x:Name="ContentPanel" Margin="12,130,12,0" Grid.RowSpan="2">
             <ListBox>
 				<TextBlock Text="{Binding Version}" VerticalAlignment="Top" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="29.333"/>
-                <TextBlock HorizontalAlignment="Left" Height="105" TextWrapping="Wrap" Text="Sparklr Branding © Jonathan Warner" VerticalAlignment="Top" Width="456" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="32"/>
+                <TextBlock Height="105" TextWrapping="Wrap" Text="Sparklr Branding © Jonathan Warner" VerticalAlignment="Top" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="32"/>
                 <TextBlock Text="Application developement team:" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" HorizontalAlignment="Center" TextAlignment="Center" LineHeight="64"></TextBlock>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Height="95" VerticalAlignment="Top" Width="456" Margin="0,0,0,10">
                     <Image Margin="0" Source="/Assets/t18.jpg" Stretch="Fill"/>

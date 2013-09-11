@@ -5,6 +5,7 @@
 	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
 	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:codingForFun="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
 	xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
@@ -66,7 +67,7 @@
                 </StackPanel>
             </ScrollViewer>
             <!--<TextBox Grid.Row="2" x:Name="CommentTextbox" TextWrapping="Wrap" VerticalAlignment="Bottom" KeyDown="CommentTextBox_KeyDown" InputScope="Chat" AcceptsReturn="True" TextChanged="CommentTextbox_TextChanged" />-->
-            <toolkit:PhoneTextBox Grid.Row="2" x:Name="CommentTextbox" TextWrapping="Wrap" VerticalAlignment="Bottom" KeyDown="CommentTextBox_KeyDown" InputScope="Chat" AcceptsReturn="True" TextChanged="CommentTextbox_TextChanged" MaxLength="300" LengthIndicatorThreshold="230" DisplayedMaxLength="300" LengthIndicatorVisible="True" Hint="Comment" />
+            <codingForFun:ChatBubbleTextBox Grid.Row="2" x:Name="CommentTextbox" TextWrapping="Wrap" VerticalAlignment="Bottom" KeyDown="CommentTextBox_KeyDown" InputScope="Chat" AcceptsReturn="True" TextChanged="CommentTextbox_TextChanged" MaxLength="300" Hint="Comment" />
         </Grid>
     </Grid>
     <phone:PhoneApplicationPage.ApplicationBar>

@@ -69,7 +69,7 @@
     <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot" d:DataContext="{d:DesignData ../SampleData/MainViewModelSampleData.xaml}">
         
-        <controls:Pivot Name="mainPivot" Title="sparklr*"  FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Background="#FF454050" Opacity="100">
+        <controls:Pivot Name="mainPivot" Title="sparklr*"  FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Background="#FF454050" Opacity="100" FontSize="20">
             <controls:Pivot.TitleTemplate>
                 <DataTemplate>
                     <Grid>
@@ -86,7 +86,7 @@
             <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
             <controls:PivotItem Header="world" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
                 <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-                    <sparklrControls:ExtendedListBox x:Name="MainListBox" ItemsSource="{Binding Items}" UnderlyingSelectionChanged="MainListBox_SelectionChanged" TopRefresh="MainListBox_TopRefresh" LoadMore="MainListBox_LoadMore" Margin="-11,0,0,0">
+                    <sparklrControls:ExtendedListBox x:Name="MainListBox" ItemsSource="{Binding Items}" UnderlyingSelectionChanged="MainListBox_SelectionChanged" TopRefresh="MainListBox_TopRefresh" LoadMore="MainListBox_LoadMore" >
                         <sparklrControls:ExtendedListBox.ItemTemplate>
                             <DataTemplate>
                                 <sparklrControls:SparklrPostControl Margin="0,0,0,10" Post="{Binding}" toolkit:TiltEffect.IsTiltEnabled="True" />
