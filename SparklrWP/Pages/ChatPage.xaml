@@ -36,6 +36,7 @@
 
         <!--TitlePanel enthält den Namen der Anwendung und den Seitentitel-->
         <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <!-- <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"  Style="{StaticResource SparklrTextNormalStyle}" Margin="0,0,12,0"/> -->
             <StackPanel Orientation="Horizontal">
                 <sparklrControls:ExtendedImageControl ImageSource="{Binding Image}" Style="{Binding Mode=OneWay, Source={StaticResource SparklrProfileExtendedImageSmallStyle}}" />
                 <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right"/>

@@ -54,7 +54,7 @@
                 <PlaneProjection/>
             </TextBlock.Projection>
         </TextBlock>
-        <controls:Pivot x:Name="pivot" Title="sparklr*" Opacity="0.015" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
+        <controls:Pivot x:Name="pivot" Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Opacity="0.015" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
             <!--Pivot item one-->
             <controls:PivotItem Header="The Basics">
                 <Grid>
