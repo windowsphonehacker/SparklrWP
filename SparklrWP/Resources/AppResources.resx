@@ -304,4 +304,11 @@ We couldn't post your message  and photo try again later!</value>
   <data name="NewPostTitle" xml:space="preserve">
     <value>New Post</value>
   </data>
+  <data name="PinToStartCaption" xml:space="preserve">
+    <value>Pin</value>
+    <comment>Caption for a Application Bar "Pin" button, that creates a tile on the startscreen</comment>
+  </data>
+  <data name="NewPostNetworkCaption" xml:space="preserve">
+    <value>Network:</value>
+  </data>
 </root>

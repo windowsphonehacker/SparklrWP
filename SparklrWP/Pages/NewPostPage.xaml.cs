@@ -5,6 +5,7 @@ using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using SparklrLib.Objects;
 using SparklrWP.Resources;
+using SparklrWP.Utils;
 using System;
 using System.IO;
 using System.Net;
@@ -51,6 +52,7 @@ namespace SparklrWP.Pages
             if (NavigationContext.QueryString.TryGetValue("network", out network))
             {
                 this.network = network;
+                networkNameTextbox.Text = NetworkHelpers.FormatNetworkName(network);
             }
         }
 
@@ -81,7 +83,8 @@ namespace SparklrWP.Pages
                     else
                     {
                         Utils.Helpers.Notify(AppResources.NewPostSuccessTitle, AppResources.NewPostSuccessText);
-                        NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
+
+                        NavigationService.GoBack();
                     }
                 }
             }

@@ -210,6 +210,26 @@ namespace SparklrLib
                             Match m = payloadJson.Match(response);
                             response = m.Groups[1].Value;
                         }
+                        else if (path == "/work/post")
+                        {
+                            if (response == "\"\"")
+                            {
+                                return new JSONRequestEventArgs<T>()
+                                {
+                                    IsSuccessful = true,
+                                    Error = null
+                                };
+                            }
+                            else
+                            {
+                                //TODO: Change once API has JSON everywhere...
+                                return new JSONRequestEventArgs<T>()
+                                {
+                                    IsSuccessful = false,
+                                    Error = new Exception("Unexpected response")
+                                };
+                            }
+                        }
 
                         desiredObject = JsonConvert.DeserializeObject<T>(response);
                     }
@@ -491,7 +511,7 @@ namespace SparklrLib
         /// </summary>
         /// <param name="message">The message.</param>
         /// <param name="image">The image.</param>
-        public async Task<SparklrEventArgs> PostAsync(string message, string network = "0", Stream image = null)
+        public async Task<JSONRequestEventArgs<Objects.Responses.Generic>> PostAsync(string message, string network = "0", Stream image = null)
         {
             string data64str = "";
 
@@ -521,11 +541,7 @@ namespace SparklrLib
                 img = data64str != ""
             }, data64str, "POST");
 
-            return new SparklrEventArgs()
-            {
-                IsSuccessful = args.IsSuccessful && args.Object.error == null,
-                Error = args.IsSuccessful ? args.Object.error == true ? new Exception("Sparklr said noooooo") : null : args.Error
-            };
+            return args;
         }
 
         private Dictionary<int, Task<JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]>>> pendingUsernameRequests = new Dictionary<int, Task<JSONRequestEventArgs<Objects.Responses.Work.Username[]>>>();

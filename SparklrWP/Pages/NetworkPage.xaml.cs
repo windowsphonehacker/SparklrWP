@@ -1,5 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 using SparklrWP.Controls;
+using SparklrWP.Utils;
 using SparklrWP.ViewModels;
 using System;
 using System.Windows.Navigation;
@@ -12,6 +13,7 @@ namespace SparklrWP.Pages
         public NetworkPage()
         {
             InitializeComponent();
+            App.BuildLocalizedApplicationBar(this.ApplicationBar);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -39,6 +41,11 @@ namespace SparklrWP.Pages
             {
                 NavigationService.Navigate(new Uri("/Pages/DetailsPage.xaml?id=" + control.Post.Id, UriKind.Relative));
             }
+        }
+
+        private void NewPostApplicationBarButton_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/NewPostPage.xaml?network=" + NetworkHelpers.UnformatNetworkName(model.Name).EncodeUrl(), UriKind.Relative));
         }
     }
 }

@@ -15,7 +15,10 @@
     mc:Ignorable="d" d:DataContext="{d:DesignData ../sampleData/NetworkViewModelSampleData.xaml}"
     shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
 	<phone:PhoneApplicationPage.ApplicationBar>
-		<shell:ApplicationBar/>
+		<shell:ApplicationBar>
+			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" IsEnabled="True" Text="New post" x:Name="NewPostApplicationBarButton" Click="NewPostApplicationBarButton_Click" />
+			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.pin.rotated.315.png" IsEnabled="True" Text="Pin" x:Name="PinApplicationBarButton" />
+		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
 
     <Grid x:Name="LayoutRoot" Background="{StaticResource SparklrBackgroundBrush}">

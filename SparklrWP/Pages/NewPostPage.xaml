@@ -6,6 +6,7 @@
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -24,9 +25,13 @@
         <!--TitlePanel contains the name of the application and page title-->
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <StackPanel Grid.Row="0" Margin="12,17,0,0">
             <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
             <TextBlock Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="Segoe WP Light" Text="{Binding Path=LocalizedResources.NewPostTitle, Source={StaticResource LocalizedStrings}}"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding LocalizedResources.NewPostNetworkCaption, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextSubtleStyle}" />
+                <TextBlock x:Name="networkNameTextbox" Style="{StaticResource PhoneTextSubtleStyle}" Text="/" />
+            </StackPanel>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
@@ -41,17 +46,6 @@
             </Border>
             <TextBlock HorizontalAlignment="Left" Height="80" Margin="213,359,0,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.NewPostImageEditorHint, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Top" Width="233" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
         </Grid>
-        <Rectangle x:Name="rectangle" Height="64" VerticalAlignment="Top" Margin="-564,13,0,0" HorizontalAlignment="Left" Width="480" Opacity="0">
-            <Rectangle.Stroke>
-                <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-            </Rectangle.Stroke>
-            <Rectangle.Projection>
-                <PlaneProjection GlobalOffsetX="562" GlobalOffsetY="-15"/>
-            </Rectangle.Projection>
-            <Rectangle.Fill>
-                <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
-            </Rectangle.Fill>
-        </Rectangle>
         <TextBlock x:Name="textBlock" Height="82" Margin="-472,-5,0,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.NewPostPostedMsg, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Top" FontFamily="Segoe WP Light" FontSize="64" HorizontalAlignment="Left" Width="310" Opacity="0">
             <TextBlock.Projection>
                 <PlaneProjection GlobalOffsetX="562" GlobalOffsetY="-15"/>
