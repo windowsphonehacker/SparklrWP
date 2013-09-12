@@ -168,11 +168,11 @@ namespace SparklrWP.Utils
 
                                 if (result.Object.timeline != null && result.Object.timeline.Count >= 1 && !String.IsNullOrEmpty(result.Object.timeline[0].message))
                                     backContent = String.Format("{0} - {1}", result.Object.timeline[0].message, result.Object.timeline[0].time.FormatTime());
-
+                                string name = result.Object.name;
                                 result = null;
 
                                 ShellTileData data = Mangopollo.Tiles.TilesCreator.CreateFlipTile(
-                                                result.Object.name,
+                                                name,
                                                 "",
                                                 backContent,
                                                 backContent,
