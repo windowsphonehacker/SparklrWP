@@ -137,10 +137,11 @@ namespace SparklrWP_Background_Agent
                         }
                     }
 
-                    TilesCreator.UpdateTiles(false, client);
+                    await TilesCreator.UpdateTiles(false, client);
                 }
 
                 DebugOutputMemoryUsage("Task completed");
+                NotifyComplete();
             }
         }
 

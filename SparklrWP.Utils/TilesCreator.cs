@@ -80,7 +80,7 @@ namespace SparklrWP.Utils
             return false;
         }
 
-        public async static void UpdateTiles(bool updateImage, SparklrLib.SparklrClient client)
+        public async static Task UpdateTiles(bool updateImage, SparklrLib.SparklrClient client)
         {
             if (client.IsLoggedIn)
             {
