@@ -1,4 +1,5 @@
-﻿using SparklrWP.Utils.Extensions;
+﻿using SparklrWP.Utils;
+using SparklrWP.Utils.Extensions;
 using System;
 using System.ComponentModel;
 
@@ -18,6 +19,41 @@ namespace SparklrWP.ViewModels
                 {
                     Settings.LoadGIFsInStream = value;
                     NotifyPropertyChanged("LoadAnimatedGIFs");
+                }
+            }
+        }
+
+        public string LastExitReason
+        {
+            get
+            {
+                return TaskScheduler.LastExitReason;
+            }
+        }
+
+        private bool backgroundAgentEnabled = TaskScheduler.IsScheduled;
+        public bool BackgroundAgentEnabled
+        {
+            get
+            {
+                return backgroundAgentEnabled;
+            }
+            set
+            {
+                if (backgroundAgentEnabled != value)
+                {
+                    backgroundAgentEnabled = value;
+
+                    switch (backgroundAgentEnabled)
+                    {
+                        case true:
+                            TaskScheduler.ScheduleAgent();
+                            break;
+
+                        case false:
+                            TaskScheduler.UnscheduleAgent();
+                            break;
+                    }
                 }
             }
         }

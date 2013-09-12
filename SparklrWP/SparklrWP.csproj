@@ -234,7 +234,7 @@
     <Compile Include="Utils\MemoryDiagnosticsHelper.cs" />
     <Compile Include="Utils\ObservableCollectionWithItemNotification.cs" />
     <Compile Include="Utils\PeriodicTimer.cs" />
-    <Compile Include="Utils\Task.cs" />
+    <Compile Include="Utils\TaskScheduler.cs" />
     <Compile Include="ViewModels\CommentModel.cs" />
     <Compile Include="ViewModels\NetworkViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />

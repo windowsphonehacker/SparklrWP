@@ -122,12 +122,15 @@ namespace SparklrWP.Utils
                         int? count = null;
 
                         JSONRequestEventArgs<SparklrLib.Objects.Responses.Beacon.Stream> args = await client.GetBeaconStreamAsync("0", 0, 1);
+
                         if (args.IsSuccessful && args.Object.notifications != null && args.Object.notifications.Length > 0)
                         {
                             Notification not = args.Object.notifications[0];
                             notificationText = await SparklrWP.Utils.NotificationHelpers.Format(not.type, not.body, not.from, client);
                             count = args.Object.notifications.Length;
                         }
+
+                        args = null;
 
                         ShellTileData data = Mangopollo.Tiles.TilesCreator.CreateFlipTile(
                             "",
@@ -165,6 +168,8 @@ namespace SparklrWP.Utils
 
                                 if (result.Object.timeline != null && result.Object.timeline.Count >= 1 && !String.IsNullOrEmpty(result.Object.timeline[0].message))
                                     backContent = String.Format("{0} - {1}", result.Object.timeline[0].message, result.Object.timeline[0].time.FormatTime());
+
+                                result = null;
 
                                 ShellTileData data = Mangopollo.Tiles.TilesCreator.CreateFlipTile(
                                                 result.Object.name,

@@ -42,6 +42,14 @@
                 <TextBlock Style="{StaticResource PhoneTextNormalStyle}" TextWrapping="Wrap">Static images will be temporarly cached by SparklrWP. Cached files will be kept for a maximum of seven days. Te cache will also delete files, if 100MBs are exceeded. If you wish, you can clear/clean up the cache with the buttons below.</TextBlock>
                 <Button Click="ClearButton_Click">Delete cached files</Button>
                 <Button Click="CleanButton_Click">Clean cached files</Button>
+
+                <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Padding="0,25,0,0">Livetiles</TextBlock>
+                <toolkit:ToggleSwitch Header="update in background" IsChecked="{Binding BackgroundAgentEnabled, Mode=TwoWay}"/>
+                <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" TextWrapping="Wrap">You can pin users, networks and other stuff to your start screen. When you open sparklrWP, the tiles will get updated with content. If you want to update those tiles without running the App you need to enable the background agent above.</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Style="{StaticResource PhoneTextSmallStyle}">Last exit reason:</TextBlock>
+                    <TextBlock Style="{StaticResource PhoneTextSmallStyle}" Text="{Binding LastExitReason}" Padding="5,0,0,0" />
+                </StackPanel>
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch" />

@@ -40,7 +40,6 @@ namespace SparklrWP.Pages
 
             this.ApplicationBar.MenuItems.Add(garbageCollect);
 #endif
-            App.BackgroundTask = new Task();
         }
 
         /*

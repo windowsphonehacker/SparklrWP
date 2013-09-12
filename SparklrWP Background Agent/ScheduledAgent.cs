@@ -1,10 +1,12 @@
-﻿using Microsoft.Phone.Scheduler;
+﻿using Microsoft.Phone.Info;
+using Microsoft.Phone.Scheduler;
 using Microsoft.Phone.Shell;
 using SparklrLib;
 using SparklrLib.Objects;
 using SparklrLib.Objects.Responses.Beacon;
+using SparklrWP.Utils;
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO.IsolatedStorage;
 using System.Security.Cryptography;
 using System.Text;
@@ -31,6 +33,30 @@ namespace SparklrWP_Background_Agent
             }
         }
 
+        /// <summary>
+        /// Debugs memory usage. Will be ignored in the Release setting.
+        /// </summary>
+        /// <param name="label"></param>
+        [Conditional("DEBUG")]
+        protected void DebugOutputMemoryUsage(string label = null)
+        {
+            var limit = DeviceStatus.ApplicationMemoryUsageLimit;
+            var current = DeviceStatus.ApplicationCurrentMemoryUsage;
+            var remaining = limit - current;
+            var peak = DeviceStatus.ApplicationPeakMemoryUsage;
+            var safetyMargin = limit - peak;
+
+            if (label != null)
+            {
+                Debug.WriteLine(label);
+            }
+            Debug.WriteLine("Memory limit (bytes): " + limit);
+            Debug.WriteLine("Usual limit (bytes): 6291456");
+            Debug.WriteLine("Current memory usage: {0} bytes ({1} bytes remaining)", current, remaining);
+            Debug.WriteLine("Peak memory usage: {0} bytes ({1} bytes safety margin)", peak, safetyMargin);
+        }
+
+
         /// Code to execute on Unhandled Exceptions
         private void ScheduledAgent_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
         {
@@ -52,9 +78,10 @@ namespace SparklrWP_Background_Agent
         /// </remarks>
         protected async override void OnInvoke(ScheduledTask task)
         {
-            //TODO: Add code to perform your task in background
-            if (IsolatedStorageSettings.ApplicationSettings.Contains("username") && IsolatedStorageSettings.ApplicationSettings.Contains("password"))
+            if (task is PeriodicTask && IsolatedStorageSettings.ApplicationSettings.Contains("username") && IsolatedStorageSettings.ApplicationSettings.Contains("password"))
             {
+                DebugOutputMemoryUsage("Task started");
+
                 SparklrClient client = new SparklrClient();
                 string username = IsolatedStorageSettings.ApplicationSettings["username"].ToString();
                 byte[] passbyts = ProtectedData.Unprotect((byte[])IsolatedStorageSettings.ApplicationSettings["password"], null);
@@ -63,6 +90,8 @@ namespace SparklrWP_Background_Agent
                 LoginEventArgs loginArgs = await client.LoginAsync(username, password);
                 if (loginArgs.IsSuccessful)
                 {
+                    loginArgs = null;
+
                     JSONRequestEventArgs<Stream> args = await client.GetBeaconStreamAsync("0", 0, 1);
                     if (args.IsSuccessful)
                     {
@@ -82,63 +111,39 @@ namespace SparklrWP_Background_Agent
 #endif
                         if (strm.notifications != null && strm.notifications.Length > 0)
                         {
-
-                            List<int> userIds = new List<int>();
-                            foreach (Notification not in strm.notifications)
+                            if (strm.notifications.Length == 1)
                             {
-                                if (!userIds.Contains(not.from))
-                                {
-                                    userIds.Add(not.from);
-                                }
-                            }
-                            JSONRequestEventArgs<SparklrLib.Objects.Responses.Work.Username[]> unargs = await client.GetUsernamesAsync(userIds.ToArray()); if (unargs.IsSuccessful)
-                            {
-                                if (unargs.IsSuccessful)
-                                {
+                                //Show notification directly
+                                ShellToast notification = new ShellToast();
 
-                                    SparklrWP.Utils.TilesCreator.UpdateTiles(false, client);
+                                notification.Title = "Sparklr*";
+                                notification.Content = await NotificationHelpers.Format(strm.notifications[0].type, strm.notifications[0].body, strm.notifications[0].from, client);
+                                notification.NavigationUri = NotificationHelpers.GenerateActionUri(strm.notifications[0]);
 
-                                    foreach (Notification not in strm.notifications)
-                                    {
-                                        ShellToast notif = new ShellToast();
-                                        notif.Title = "Sparklr*";
-                                        notif.Content = await SparklrWP.Utils.NotificationHelpers.Format(not.type, not.body, not.from, client);
-                                        notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
-
-                                        if (!String.IsNullOrEmpty(notif.Content))
-                                            notif.Show();
-                                    }
-                                }
-                                else
-                                {
-                                    foreach (Notification not in strm.notifications)
-                                    {
-                                        ShellToast notif = new ShellToast();
-                                        notif.Title = "Sparklr*";
-                                        notif.Content = await SparklrWP.Utils.NotificationHelpers.Format(not.type, not.body, not.from, client);
-                                        notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
-
-                                        if (!String.IsNullOrEmpty(notif.Content))
-                                            notif.Show();
-                                    }
-                                }
+                                if (!String.IsNullOrEmpty(notification.Content))
+                                    notification.Show();
                             }
                             else
                             {
-                                foreach (Notification not in strm.notifications)
-                                {
-                                    ShellToast notif = new ShellToast();
-                                    notif.Title = "Sparklr*";
-                                    notif.Content = await SparklrWP.Utils.NotificationHelpers.Format(not.type, not.body, not.from, client);
-                                    notif.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + not.id, UriKind.Relative);
-                                    notif.Show();
-                                }
+                                //Show the notification count... Because 100 notifications suck...
+                                ShellToast notification = new ShellToast();
+
+                                notification.Title = "Sparklr*";
+                                notification.Content = String.Format("You have {0} notifications.", strm.notifications.Length);
+                                notification.NavigationUri = new Uri("/Pages/MainPage.xaml?notification=" + strm.notifications[0].id, UriKind.Relative);
+
+                                notification.Show();
                             }
                         }
                     }
+
+                    TilesCreator.UpdateTiles(false, client);
                 }
+
+                DebugOutputMemoryUsage("Task completed");
             }
-            NotifyComplete();
         }
+
+
     }
 }

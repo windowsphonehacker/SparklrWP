@@ -311,4 +311,12 @@ We couldn't post your message  and photo try again later!</value>
   <data name="NewPostNetworkCaption" xml:space="preserve">
     <value>Network:</value>
   </data>
+  <data name="BackgroundAgentDescription" xml:space="preserve">
+    <value>Updates tiles and notifications.</value>
+    <comment>A description of the background agent</comment>
+  </data>
+  <data name="BackgroundAgentName" xml:space="preserve">
+    <value>Sparklr*</value>
+    <comment>The name of the background agent</comment>
+  </data>
 </root>
