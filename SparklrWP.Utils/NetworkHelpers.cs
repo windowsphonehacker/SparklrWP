@@ -17,6 +17,9 @@ namespace SparklrWP.Utils
 
         public static string UnformatNetworkName(string name)
         {
+            if (String.IsNullOrEmpty(name) && name == "/")
+                return "0";
+
             if (name.StartsWith("/"))
                 return name.TrimStart('/');
 

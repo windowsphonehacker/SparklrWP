@@ -22,7 +22,6 @@ namespace SparklrWP.Pages
         readonly PhotoChooserTask _photoChooserTask;
         Stream _photoStr;
         bool setfocus = false;
-        private string network = "0";
 
         public NewPostPage()
         {
@@ -51,8 +50,7 @@ namespace SparklrWP.Pages
 
             if (NavigationContext.QueryString.TryGetValue("network", out network))
             {
-                this.network = network;
-                networkNameTextbox.Text = NetworkHelpers.FormatNetworkName(network);
+                NetworkTextBox.Text = NetworkHelpers.FormatNetworkName(network);
             }
         }
 
@@ -67,7 +65,7 @@ namespace SparklrWP.Pages
             else
             {
                 GlobalLoading.Instance.IsLoading = true;
-                SparklrEventArgs args = await App.Client.PostAsync(messageBox.Text, network, _photoStr);
+                SparklrEventArgs args = await App.Client.PostAsync(messageBox.Text, NetworkHelpers.UnformatNetworkName(NetworkTextBox.Text), _photoStr);
                 GlobalLoading.Instance.IsLoading = false;
 
                 if (!args.IsSuccessful)
@@ -102,6 +100,8 @@ namespace SparklrWP.Pages
                     _photoStr.Dispose();
                     _photoStr = null;
                     SetThumbnail(null);
+
+                    AttachPictureHintTextBlock.Visibility = Visibility.Visible;
                 }
             }
             else
@@ -118,10 +118,11 @@ namespace SparklrWP.Pages
             {
                 _photoStr = e.ChosenPhoto;
 
-                //Code to display the photo on the page in an image control named myImage.
                 var bmp = new System.Windows.Media.Imaging.BitmapImage();
                 bmp.SetSource(e.ChosenPhoto);
                 SetThumbnail(bmp);
+
+                AttachPictureHintTextBlock.Visibility = Visibility.Collapsed;
             }
             GlobalLoading.Instance.IsLoading = false;
         }
@@ -226,6 +227,14 @@ namespace SparklrWP.Pages
                 messageBox.Focus();
                 setfocus = false;
             }
+        }
+
+        private void PhoneApplicationPage_OrientationChanged(object sender, OrientationChangedEventArgs e)
+        {
+            if (e.Orientation == PageOrientation.LandscapeLeft || e.Orientation == PageOrientation.LandscapeRight)
+                titleContainer.Visibility = Visibility.Collapsed;
+            else
+                titleContainer.Visibility = Visibility.Visible;
         }
     }
 }
