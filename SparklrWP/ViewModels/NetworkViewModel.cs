@@ -181,5 +181,39 @@ namespace SparklrWP.ViewModels
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        public async void Track()
+        {
+            GlobalLoading.Instance.IsLoading = true;
+
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.Generic> result = await App.Client.TrackNetworkAsync(NetworkHelpers.UnformatNetworkName(this.Name));
+
+            if (result.IsSuccessful)
+            {
+                if (!App.MainViewModel.TrackedNetworks.Contains(NetworkHelpers.FormatNetworkName(Name)))
+                    App.MainViewModel.TrackedNetworks.Add(NetworkHelpers.FormatNetworkName(Name));
+
+                Helpers.NotifyFormatted(String.Format("tracked {0}", NetworkHelpers.FormatNetworkName(Name)));
+            }
+
+            GlobalLoading.Instance.IsLoading = false;
+        }
+
+        public async void Untrack()
+        {
+            GlobalLoading.Instance.IsLoading = true;
+
+            JSONRequestEventArgs<SparklrLib.Objects.Responses.Generic> result = await App.Client.UntrackNetworkAsync(NetworkHelpers.UnformatNetworkName(this.Name));
+
+            if (result.IsSuccessful)
+            {
+                if (App.MainViewModel.TrackedNetworks.Contains(NetworkHelpers.FormatNetworkName(Name)))
+                    App.MainViewModel.TrackedNetworks.Remove(NetworkHelpers.FormatNetworkName(Name));
+
+                Helpers.NotifyFormatted(String.Format("untracked {0}", NetworkHelpers.FormatNetworkName(Name)));
+            }
+
+            GlobalLoading.Instance.IsLoading = false;
+        }
     }
 }

@@ -17,6 +17,7 @@
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar>
 			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" IsEnabled="True" Text="New post" x:Name="NewPostApplicationBarButton" Click="NewPostApplicationBarButton_Click" />
+			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.favs.addto.rest.png" IsEnabled="True" Text="track/untrack" x:Name="TrackUntrackApplicationBarButton" Click="TrackUntrackApplicationBarButton_Click"  />
 			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.pin.rotated.315.png" IsEnabled="True" Text="Pin" x:Name="PinApplicationBarButton" />
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>

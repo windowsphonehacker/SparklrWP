@@ -24,6 +24,26 @@ namespace SparklrWP.Utils
         }
 
         /// <summary>
+        /// Displays a non intrusive toast notification. Thread safe.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="args"></param>
+        public static void NotifyFormatted(string format, params object[] args)
+        {
+            Notify(string.Format(format, args));
+        }
+
+        /// <summary>
+        /// Displays a non intrusive toast notification. Thread safe.
+        /// </summary>
+        /// <param name="format"></param>
+        /// <param name="args"></param>
+        public static void NotifyFormatted(string caption, string format, params object[] args)
+        {
+            Notify(caption, string.Format(format, args));
+        }
+
+        /// <summary>
         /// Displays a non intrusive toast notification
         /// </summary>
         /// <param name="text">The text to display</param>

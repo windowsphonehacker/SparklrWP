@@ -48,5 +48,17 @@ namespace SparklrWP.Pages
         {
             NavigationService.Navigate(new Uri("/Pages/NewPostPage.xaml?network=" + NetworkHelpers.UnformatNetworkName(model.Name).EncodeUrl(), UriKind.Relative));
         }
+
+        private void TrackUntrackApplicationBarButton_Click(object sender, EventArgs e)
+        {
+            if (App.MainViewModel.TrackedNetworks.Contains(NetworkHelpers.FormatNetworkName(model.Name)))
+            {
+                model.Untrack();
+            }
+            else
+            {
+                model.Track();
+            }
+        }
     }
 }

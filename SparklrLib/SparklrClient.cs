@@ -693,7 +693,7 @@ namespace SparklrLib
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserAsync(string username)
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + username);
+            return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + HttpUtility.UrlEncode(username));
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserAsync(int userid)
@@ -786,12 +786,22 @@ namespace SparklrLib
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.Tag[]>> GetTagPostsAsync(string tag)
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.Tag[]>("/work/tag/" + tag);
+            return requestJsonObjectAsync<Objects.Responses.Work.Tag[]>("/work/tag/" + HttpUtility.UrlEncode(tag));
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Tag>> GetBeaconTagAsync(string tag, int lasttime)
         {
-            return requestJsonObjectAsync<Objects.Responses.Beacon.Tag>("/beacon/tag/" + tag + "?starttime=" + lasttime.ToString() + "&n=" + lastNotificationTime);
+            return requestJsonObjectAsync<Objects.Responses.Beacon.Tag>("/beacon/tag/" + HttpUtility.UrlEncode(tag) + "?starttime=" + lasttime.ToString() + "&n=" + lastNotificationTime);
+        }
+
+        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> TrackNetworkAsync(string name)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/track/" + HttpUtility.UrlEncode(name));
+        }
+
+        public Task<JSONRequestEventArgs<Objects.Responses.Generic>> UntrackNetworkAsync(string name)
+        {
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/untrack/" + HttpUtility.UrlEncode(name));
         }
 
         public async Task<JSONRequestEventArgs<SparklrLib.Objects.Responses.InitialPayload>> GetPayloadAsync()

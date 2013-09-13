@@ -122,7 +122,7 @@ namespace SparklrWP.ViewModels
 
         private ObservableCollection<string> trackedNetworks = new ObservableCollection<string>();
         /// <summary>
-        /// Contains a list of all tracked networks
+        /// Contains a list of all tracked networks, with formatted names
         /// </summary>
         public ObservableCollection<string> TrackedNetworks
         {
