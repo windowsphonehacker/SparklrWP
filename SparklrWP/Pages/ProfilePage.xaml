@@ -16,7 +16,7 @@
 	Foreground="{StaticResource PhoneForegroundBrush}"
 	SupportedOrientations="Portrait"  Orientation="Portrait"
 	shell:SystemTray.IsVisible="False" Background="Black"
-	d:DataContext="{d:DesignData ../SampleData/UserProfileViewModelSampleData.xaml}" Style="{StaticResource Animated}">
+	d:DataContext="{d:DesignData ../SampleData/UserProfileViewModelSampleData.xaml}" Style="{StaticResource Animated}" x:Name="ProfilePageElement">
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar BackgroundColor="{StaticResource SparklrBackgroundDarkColor}">
             <shell:ApplicationBarIconButton Text="Follow" Click="FollowButton_Click" IconUri="/Assets/AppBar/ApplicationBar.Add.png"/>
@@ -73,7 +73,7 @@
 			<controls:Panorama.TitleTemplate>
 				<DataTemplate>
 					<StackPanel Orientation="Horizontal" Margin="0,85,0,0">
-						<Image x:Name="ProfileImage" Width="100" Height="100" Source="{Binding Path=DataContext.ProfileImageSource, ElementName=ProfilePage}"  Stretch="UniformToFill" Opacity="0" >
+						<Image x:Name="ProfileImage" Width="100" Height="100" Source="{Binding Path=DataContext.ProfileImageSource, ElementName=ProfilePageElement}"  Stretch="UniformToFill" Opacity="0" >
 							<Image.Triggers>
 								<EventTrigger RoutedEvent="Image.Loaded">
 									<BeginStoryboard>
@@ -88,7 +88,7 @@
 							</Image.Triggers>
 						</Image>
 						<StackPanel Margin="20,10,10,10">
-							<TextBlock Text="{Binding Path=DataContext.Handle, ElementName=ProfilePage}" FontSize="75" />
+							<TextBlock Text="{Binding Path=DataContext.Handle, ElementName=ProfilePageElement}" FontSize="75" />
 						</StackPanel>
 					</StackPanel>
 				</DataTemplate>
