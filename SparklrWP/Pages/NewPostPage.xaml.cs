@@ -3,6 +3,7 @@ using AviarySDKDLL::AviarySDK;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
+using Microsoft.Xna.Framework.Media;
 using SparklrLib.Objects;
 using SparklrWP.Resources;
 using SparklrWP.Utils;
@@ -41,11 +42,23 @@ namespace SparklrWP.Pages
 
             string content = "";
             string network = "0";
+            string fileToken = "";
 
             if (NavigationContext.QueryString.TryGetValue("content", out content))
             {
                 messageBox.Text = String.Format("{0} ", HttpUtility.UrlDecode(content));
                 setfocus = true;
+            }
+
+            if (NavigationContext.QueryString.TryGetValue("FileId", out fileToken))
+            {
+                MediaLibrary library = new MediaLibrary();
+                Picture picture = library.GetPictureFromToken(fileToken);
+                _photoStr = picture.GetImage();
+                BitmapImage image = new BitmapImage();
+                image.SetSource(_photoStr);
+                SetThumbnail(image);
+                AttachPictureHintTextBlock.Visibility = System.Windows.Visibility.Collapsed;
             }
 
             if (NavigationContext.QueryString.TryGetValue("network", out network))

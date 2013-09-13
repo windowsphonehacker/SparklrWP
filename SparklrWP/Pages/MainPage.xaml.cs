@@ -111,6 +111,13 @@ namespace SparklrWP.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+
+            if (this.NavigationContext.QueryString.ContainsKey("FileId"))
+            {
+                string fileToken = this.NavigationContext.QueryString["FileId"].EncodeUrl();
+                this.NavigationContext.QueryString.Remove("FileId");
+                NavigationService.Navigate(new Uri(String.Format("/Pages/NewPostPage.xaml?FileId={0}", fileToken), UriKind.Relative));
+            }
             if (this.NavigationContext.QueryString.ContainsKey("notification") && e.NavigationMode == NavigationMode.New)
             {
                 BorderNotification_Tap(this, new System.Windows.Input.GestureEventArgs());

@@ -138,6 +138,10 @@ namespace SparklrWP
                     App.logger.emailReport();
                     App.logger.clearEventsFromLog();
                 }
+                else
+                {
+                    App.logger.purgeLog();
+                }
             }
         }
 
