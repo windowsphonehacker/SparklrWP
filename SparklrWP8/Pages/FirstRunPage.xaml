@@ -1,0 +1,102 @@
+﻿<phone:PhoneApplicationPage 
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+	xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+	xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:Coding4Fun_Toolkit_Controls="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+	mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+	x:Class="SparklrWP.Pages.FirstRunPage"
+	SupportedOrientations="Portrait" Orientation="Portrait"
+	shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
+    <phone:PhoneApplicationPage.Resources>
+        <Storyboard x:Name="HelloAni">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="LayoutRoot">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.GlobalOffsetX)" Storyboard.TargetName="textBlock">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="-466"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="-493"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="-472"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.8" Value="-472"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="textBlock">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.8" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.8" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.4" Value="0.355"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.9" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="pivot">
+                <EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="0.015"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2.3" Value="0.495"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:3.2" Value="1"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </phone:PhoneApplicationPage.Resources>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Opacity="0">
+        <Grid.Background>
+            <ImageBrush Stretch="UniformToFill" ImageSource="../Assets/bg.jpg"/>
+        </Grid.Background>
+        <!--Pivot Control-->
+        <!--Pivot Control-->
+        <TextBlock x:Name="textBlock" Margin="0,348,-685,170" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunHelloThere, Source={StaticResource LocalizedStrings}}" FontFamily="Segoe WP Light" FontSize="64" HorizontalAlignment="Right" Width="654">
+            <TextBlock.Projection>
+                <PlaneProjection/>
+            </TextBlock.Projection>
+        </TextBlock>
+        <controls:Pivot x:Name="pivot" Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Opacity="0.015" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
+            <!--Pivot item one-->
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.FirstRunTheBasics, Source={StaticResource LocalizedStrings}}">
+                <Grid>
+                    <TextBlock x:Name="textBlock1" Margin="8,8,8,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunLetsGetStarted, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="48" TextAlignment="Center" Height="66" VerticalAlignment="Top">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock x:Name="textBlock2" Height="50" Margin="-292,106,0,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunTheLoginPage, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Top" FontSize="26.667" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" HorizontalAlignment="Left" Width="255" Foreground="White" RenderTransformOrigin="0.5,0.5">
+                        <TextBlock.RenderTransform>
+                            <CompositeTransform/>
+                        </TextBlock.RenderTransform>
+                    </TextBlock>
+                    <TextBlock Margin="0,138,77,299" TextWrapping="Wrap" FontSize="29.333" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"><Run Text="{Binding Path=LocalizedResources.FirstRunBasics1, Source={StaticResource LocalizedStrings}}"/><LineBreak/><Run/></TextBlock>
+                    <TextBlock HorizontalAlignment="Left" Height="47" Margin="8,82,0,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunLogin, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Top" Width="85" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+                    <TextBlock HorizontalAlignment="Left" Height="47" Margin="31,0,0,-80" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunLogin, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Bottom" Width="85" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+                    <TextBlock Height="47" Margin="0,0,0,8" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunSlideOver, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Bottom" FontSize="32" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" HorizontalAlignment="Right" Width="171">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Margin="0,0,94,210" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunTheDash, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="29.333" Height="63" VerticalAlignment="Bottom"/>
+                    <TextBlock Margin="0,0,42,64" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunBasics2, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="26.667" Height="146" VerticalAlignment="Bottom"/>
+
+                </Grid>
+
+            </controls:PivotItem>
+
+            <!--Pivot item two-->
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.FirstRunOtherStuff, Source={StaticResource LocalizedStrings}}">
+                <Grid>
+                    <TextBlock Margin="42,221,34,136" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunWhatAreYouWaitingFor, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="64">
+                        <TextBlock.Foreground>
+                            <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                        </TextBlock.Foreground>
+                    </TextBlock>
+                    <TextBlock Height="63" Margin="8,8,86,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunThreeDots, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Top" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="29.333"/>
+                    <TextBlock Margin="8,71,34,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunOtherStuff1, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" FontSize="26.667" Height="146" VerticalAlignment="Top"/>
+                    <Coding4Fun_Toolkit_Controls:RoundButton Margin="0,0,-68,-18" HorizontalAlignment="Right" Height="116" VerticalAlignment="Bottom" Width="204" Click="OK_Click"/>
+                    <TextBlock Height="40" Margin="0,0,-186,0" TextWrapping="Wrap" Text="{Binding Path=LocalizedResources.FirstRunOK, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="236"/>
+                </Grid>
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
+</phone:PhoneApplicationPage>

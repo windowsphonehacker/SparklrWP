@@ -1,0 +1,92 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="SparklrWP.Pages.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
+
+    <!--LayoutRoot è la griglia radice in cui viene inserito tutto il contenuto della pagina-->
+    <Grid x:Name="LayoutRoot" Background="{Binding Mode=OneWay, Source={StaticResource SparklrBackgroundBrush}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="12,17,14,28">
+            <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"  Style="{StaticResource SparklrTextNormalStyle}" Margin="0,0,12,0"/>
+            <TextBlock Text="About" Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+
+        <!--ContentPanel - inserire ulteriore contenuto qui-->
+        <Grid x:Name="ContentPanel" Margin="10" Grid.Row="1">
+            <ListBox>
+				<TextBlock Text="{Binding Version}" VerticalAlignment="Top" />
+                
+                <TextBlock TextWrapping="Wrap" Text="Sparklr Branding © Jonathan Warner" Style="{StaticResource PhoneTextSubtleStyle}" Padding="0,0,0,15"/>
+                
+                <TextBlock Text="Development-Team" Style="{StaticResource PhoneTextLargeStyle}" />
+
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ListBoxItemStackpanelStyle}">
+                    <Image Source="../Assets/t18.jpg" Style="{StaticResource SparklrProfileImageSmallStyle}" />
+                    <TextBlock Text="Jessenic" VerticalAlignment="Center" Style="{StaticResource SparklrTextLargeStyle}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ListBoxItemStackpanelStyle}">
+                    <Image Source="../Assets/t19.jpg"  Style="{StaticResource SparklrProfileImageSmallStyle}" />
+                    <TextBlock Text="TheInterframe"  VerticalAlignment="Center" Style="{StaticResource SparklrTextLargeStyle}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ListBoxItemStackpanelStyle}">
+                    <Image Source="/Assets/t163.jpg"  Style="{StaticResource SparklrProfileImageSmallStyle}" />
+                    <TextBlock Text="Marocco2"  VerticalAlignment="Center" Style="{StaticResource SparklrTextLargeStyle}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ListBoxItemStackpanelStyle}">
+                    <Image  Source="/Assets/t427.jpg"  Style="{StaticResource SparklrProfileImageSmallStyle}" />
+                    <TextBlock Text="EaterOfCorpses"  VerticalAlignment="Center" Style="{StaticResource SparklrTextLargeStyle}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Style="{StaticResource ListBoxItemStackpanelStyle}">
+                    <Image Source="/Assets/t591.jpg" Style="{StaticResource SparklrProfileImageSmallStyle}" />
+                    <TextBlock Text="ChrisK"  VerticalAlignment="Center" Style="{StaticResource SparklrTextLargeStyle}" />
+                </StackPanel>
+                <TextBlock TextWrapping="Wrap" Padding="0,15,0,0" Style="{StaticResource PhoneTextSmallStyle}">This application uses some great third party libraries.<LineBreak/>
+                    <Italic>Imagetools for Silverlight</Italic>, <Italic>The Windows Phone Toolkit</Italic>, <Italic>Mangopollo</Italic> and <Italic>WP7Contrib</Italic> wich are released under the MP-PL:<LineBreak/>
+                    This license governs use of the accompanying software. If you use the software, you accept this license. If you do not accept the license, do not use the software.<LineBreak />
+                    1. Definitions<LineBreak />
+                    The terms "reproduce," "reproduction," "derivative works," and "distribution" have the same meaning here as under U.S. copyright law.<LineBreak />
+                    A "contribution" is the original software, or any additions or changes to the software.<LineBreak />
+                    A "contributor" is any person that distributes its contribution under this license.<LineBreak />
+                    "Licensed patents" are a contributor's patent claims that read directly on its contribution.<LineBreak />
+                    2. Grant of Rights<LineBreak />
+                    (A) Copyright Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free copyright license to reproduce its contribution, prepare derivative works of its contribution, and distribute its contribution or any derivative works that you create.<LineBreak />
+                    (B) Patent Grant- Subject to the terms of this license, including the license conditions and limitations in section 3, each contributor grants you a non-exclusive, worldwide, royalty-free license under its licensed patents to make, have made, use, sell, offer for sale, import, and/or otherwise dispose of its contribution in the software or derivative works of the contribution in the software.<LineBreak />
+                    3. Conditions and Limitations<LineBreak />
+                    (A) No Trademark License- This license does not grant you rights to use any contributors' name, logo, or trademarks.<LineBreak />
+                    (B) If you bring a patent claim against any contributor over patents that you claim are infringed by the software, your patent license from such contributor to the software ends automatically.<LineBreak />
+                    (C) If you distribute any portion of the software, you must retain all copyright, patent, trademark, and attribution notices that are present in the software.<LineBreak />
+                    (D) If you distribute any portion of the software in source code form, you may do so only under this license by including a complete copy of this license with your distribution. If you distribute any portion of the software in compiled or object code form, you may only do so under a license that complies with this license.<LineBreak />
+                    (E) The software is licensed "as-is." You bear the risk of using it. The contributors give no express warranties, guarantees or conditions. You may have additional consumer rights under your local laws which this license cannot change. To the extent permitted under your local laws, the contributors exclude the implied warranties of merchantability, fitness for a particular purpose and non-infringement.<LineBreak /><LineBreak />
+                    We also use <Italic>JSON.NET</Italic>, which is released under the MIT license:<LineBreak />
+                    Copyright (c) 2007 James Newton-King<LineBreak />
+                    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:<LineBreak />
+                    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.<LineBreak />
+                    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+                </TextBlock>
+            </ListBox>
+        </Grid>
+    </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" BackgroundColor="{StaticResource SparklrBackgroundDarkColor}" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.favs.rest.png" Text="Rate me!"/>
+
+            <shell:ApplicationBar.MenuItems>
+
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+</phone:PhoneApplicationPage>

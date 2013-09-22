@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.0">
+  <CommandSet xml:lang="en-us">
+    <CommandPrefix>Sparklr</CommandPrefix>
+    <Example> post "Hello World!" </Example>
+
+    <Command Name="Post">
+      <Example> post "Hello World!" </Example>
+      <ListenFor> post {posttext} </ListenFor>
+      <ListenFor> send {posttext} </ListenFor>
+      <Feedback> Posting your message... </Feedback>
+      <Navigate />
+    </Command>
+
+  </CommandSet>
+</VoiceCommands>

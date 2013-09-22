@@ -1,0 +1,11 @@
+﻿<local:ChatViewModel 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=System"
+    xmlns:local="clr-namespace:SparklrWP.ViewModels" Name="Testuser">
+    <local:ChatViewModel.Messages>
+        <local:ChatMessageModel Message="Hello" Time="1377632100" From="0" To="1" />
+        <local:ChatMessageModel Message="How are you" Time="1377622100" From="0" To="1" />
+        <local:ChatMessageModel Message="Fine. And how about you? I'm just writing those long texts to see how the reflow is working. I think sparklr doesn't even allow texts this long :)" Time="1377622100" From="1" To="0" />
+    </local:ChatViewModel.Messages>
+</local:ChatViewModel>

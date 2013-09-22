@@ -1,0 +1,21 @@
+﻿<local:MainViewModel 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:local="clr-namespace:SparklrWP.ViewModels" NewCount="12" Username="Chuck Norris" About="There is not really much you deserve to know about Chuck Norris. You just need to know that he'll find you.">
+    
+    <local:MainViewModel.Items>
+        <local:PostItemViewModel AuthorName="ChrisK" Message="#hashtag @mention http://example.org" CommentCount="0" />
+        <local:PostItemViewModel AuthorName="Suraj G." Message="Small fix, you used to be able to post blank updates. Its now fixed ;)" CommentCount="4" ImageUrl="http://d.sparklr.me/i/thksgnhsl_6.jpg" />
+        <local:PostItemViewModel AuthorName="Jonathan" Message="Friendly reminder: Before you guys do any public releases, you need to contact me and make sure everything is aligning with Sparklr's strategy itself. Also, Sparklr is not public right now, so keep that in mind" CommentCount="1"/>
+        <local:PostItemViewModel AuthorName="EaterOfCorpses" Message="Well, Eater is amazed by the design!" ImageUrl="http://d.sparklr.me/i/thkr421a3_j.jpg" CommentCount="1"/>
+    </local:MainViewModel.Items>
+    <local:MainViewModel.Notifications>
+        <local:NotificationViewModel Message="Hello there :)" />
+    </local:MainViewModel.Notifications>
+    <local:MainViewModel.TrackedNetworks>
+        <system:String>Network 1</system:String>
+        <system:String>Network 2</system:String>
+        <system:String>Network 3</system:String>
+    </local:MainViewModel.TrackedNetworks>
+</local:MainViewModel>

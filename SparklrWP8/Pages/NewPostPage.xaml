@@ -1,0 +1,68 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="SparklrWP.Pages.NewPostPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait" OrientationChanged="PhoneApplicationPage_OrientationChanged"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True" d:DesignHeight="696" d:DesignWidth="480" Loaded="PhoneApplicationPage_Loaded" Style="{StaticResource Animated}">
+
+
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="{StaticResource SparklrBackgroundBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--TitlePanel contains the name of the application and page title-->
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,0" x:Name="titleContainer">
+            <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextNormalStyle}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette"/>
+            <TextBlock Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontFamily="Segoe WP Light" Text="{Binding Path=LocalizedResources.NewPostTitle, Source={StaticResource LocalizedStrings}}"/>
+        </StackPanel>
+
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="120" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding LocalizedResources.NewPostNetworkCaption, Mode=OneWay, Source={StaticResource LocalizedStrings}}" Style="{StaticResource PhoneTextSmallStyle}" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <TextBox Grid.Row="0" Grid.Column="1" FontSize="{StaticResource PhoneFontSizeSmall}" VerticalAlignment="Center" Text="/" x:Name="NetworkTextBox" />
+
+            <toolkit:PhoneTextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="messageBox" TextWrapping="Wrap" InputScope="Chat" TextChanged="messageBox_TextChanged" LengthIndicatorThreshold="300" LengthIndicatorVisible="True" DisplayedMaxLength="500" />
+
+            <TextBlock Grid.Row="2" Text="{Binding Path=LocalizedResources.NewPostAttachPictureHint, Source={StaticResource LocalizedStrings}}" MaxWidth="130" Margin="0" TextWrapping="Wrap" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" Style="{StaticResource PhoneTextSubtleStyle}" FontSize="14" x:Name="AttachPictureHintTextBlock" />
+            <Image Grid.Row="2" x:Name="PicThumbnail" Tap="PicThumbnail_Tap" />
+            <Border x:Name="EditBorder" Grid.Row="2" BorderThickness="0" Background="{StaticResource SparklrBackgroundDarkBrush}" VerticalAlignment="Bottom" Visibility="Collapsed" Tap="PicThumbnail_Tap">
+                <TextBlock Text="Edit" Style="{StaticResource SparklrTextSubtleStyle}" />
+            </Border>  
+            
+            <TextBlock Grid.Row="2" Grid.Column="1" Style="{Binding Mode=OneWay, Source={StaticResource SparklrTextTitle3Style}}" Text="{Binding Path=LocalizedResources.NewPostImageEditorHint, Source={StaticResource LocalizedStrings}}" VerticalAlignment="Center" />
+        </Grid>
+    </Grid>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" BackgroundColor="{StaticResource SparklrBackgroundDarkColor}" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="sendButton" IconUri="/Controls/appbar.message.send.png" Text="NewPostNewPostButton" Click="postButton_Click" IsEnabled="False"/>
+            <shell:ApplicationBarIconButton x:Name="attachButton" IconUri="/Assets/AppBar/appbar.feature.camera.rest.png" Text="NewPostPictureButton" Click="attachButton_Click"/>
+            <shell:ApplicationBar.MenuItems>
+
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

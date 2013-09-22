@@ -1,0 +1,82 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="SparklrWP.Pages.ChatPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:codingForFun="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+    xmlns:converters="clr-namespace:SparklrWP.Utils.Converters"
+    xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True" d:DataContext="{d:DesignData ../SampleData/ChatViewModelSampleData.xaml}" Style="{StaticResource Animated}">
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.Resources>
+            <ResourceDictionary>
+                <converters:TimestampToRelativeTimeConverter x:Key="timestampToRelativeTimeConverter" />
+                <converters:BoolToBubbleMarginConverter x:Key="boolToBubbleMarginConverter" />
+                <converters:BoolToBubbleDirectionConverter x:Key="boolToBubbleDirectionConverter" />
+            </ResourceDictionary>
+        </Grid.Resources>
+        <Grid.Background>
+            <StaticResource ResourceKey="SparklrBackgroundBrush"/>
+        </Grid.Background>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel enthält den Namen der Anwendung und den Seitentitel-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <!-- <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"  Style="{StaticResource SparklrTextNormalStyle}" Margin="0,0,12,0"/> -->
+            <StackPanel Orientation="Horizontal">
+                <sparklrControls:ExtendedImageControl ImageSource="{Binding Image}" Style="{Binding Mode=OneWay, Source={StaticResource SparklrProfileExtendedImageSmallStyle}}" />
+                <TextBlock Text="{Binding Name}" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!--ContentPanel - zusätzliche Inhalte hier platzieren-->
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListBox ItemsSource="{Binding Messages}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!-- TODO: solve virtualization errors Margin="{Binding CurrentUser, Converter={StaticResource boolToBubbleMarginConverter}}" -->
+                        <codingForFun:ChatBubble Background="White" BorderBrush="White" HorizontalContentAlignment="Stretch"  ChatBubbleDirection="{Binding CurrentUser, Converter={StaticResource boolToBubbleDirectionConverter}}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <sparklrControls:SparklrTextBlock Grid.Row="0" Text="{Binding Message}" Margin="0" />
+                                <TextBlock Grid.Row="1" Text="{Binding Time,Converter={StaticResource timestampToRelativeTimeConverter}}" Style="{StaticResource PhoneTextSmallStyle}" TextAlignment="Right" Foreground="#bbbbbb" />
+                            </Grid>
+                        </codingForFun:ChatBubble>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+                <!-- use full width-->
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+            <codingForFun:ChatBubbleTextBox Grid.Row="1" ChatBubbleDirection="LowerRight" Margin="75,0,0,5" KeyDown="ChatBubbleTextBox_KeyDown" Text="{Binding Message, Mode=TwoWay}" x:Name="chatBubbleTextBox" InputScope="Chat" />
+        </Grid>
+        <!-- Visibility set in code behind -->
+        <sparklrControls:LoadingOverlay x:Name="loadingOverlay" Grid.Row="0" Grid.RowSpan="2" Visibility="Collapsed" />
+    </Grid>
+
+</phone:PhoneApplicationPage>

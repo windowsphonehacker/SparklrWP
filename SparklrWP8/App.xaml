@@ -1,0 +1,62 @@
+﻿<Application 
+    x:Class="SparklrWP.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:resources="clr-namespace:AviarySDK.Resources;assembly=AviarySDK"
+    xmlns:local="clr-namespace:SparklrWP">
+
+
+    <!--Application Resources-->
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/AviarySDK;component/Themes/generic.xaml"/>
+                <ResourceDictionary Source="Resources/SparklrStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <resources:Images x:Key="ImageResources"/>
+            <!-- Aviary sucks, uncomment the next line to fix it's supposed multilinguality -->
+            <!-- <aviary:LocalizedStrings xmlns:aviary="clr-namespace:AviarySDK;assembly=AviarySDK" x:Key="LocalizedStrings" /> -->
+            <local:LocalizedStrings xmlns:local="clr-namespace:SparklrWP" x:Key="LocalizedStrings"/>
+            <local:BindableSettings x:Key="Settings" />
+            
+            <Style TargetType="phone:PhoneApplicationPage" x:Key="Animated">
+                <Setter Property="toolkit:TransitionService.NavigationInTransition">
+                    <Setter.Value>
+                        <toolkit:NavigationInTransition>
+                            <toolkit:NavigationInTransition.Backward>
+                                <toolkit:TurnstileTransition Mode="BackwardIn"/>
+                            </toolkit:NavigationInTransition.Backward>
+                            <toolkit:NavigationInTransition.Forward>
+                                <toolkit:TurnstileTransition Mode="ForwardIn"/>
+                            </toolkit:NavigationInTransition.Forward>
+                        </toolkit:NavigationInTransition>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="toolkit:TransitionService.NavigationOutTransition">
+                    <Setter.Value>
+                        <toolkit:NavigationOutTransition>
+                            <toolkit:NavigationOutTransition.Backward>
+                                <toolkit:TurnstileTransition Mode="BackwardOut"/>
+                            </toolkit:NavigationOutTransition.Backward>
+                            <toolkit:NavigationOutTransition.Forward>
+                                <toolkit:TurnstileTransition Mode="ForwardOut"/>
+                            </toolkit:NavigationOutTransition.Forward>
+                        </toolkit:NavigationOutTransition>
+                    </Setter.Value>
+                </Setter>
+
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.ApplicationLifetimeObjects>
+        <!--Required object that handles lifetime events for the application-->
+        <shell:PhoneApplicationService 
+            Launching="Application_Launching" Closing="Application_Closing" 
+            Activated="Application_Activated" Deactivated="Application_Deactivated"/>
+    </Application.ApplicationLifetimeObjects>
+
+</Application>
