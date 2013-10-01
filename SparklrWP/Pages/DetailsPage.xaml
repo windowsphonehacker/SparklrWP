@@ -26,7 +26,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,12,38">
-            <TextBlock x:Name="PageTitle" Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource SparklrTextNormalStyle}" />
+            <TextBlock x:Name="PageTitle" Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Style="{StaticResource SparklrTextNormalStyle}" Margin="0,0,12,0" FontSize="36" />
             <StackPanel Orientation="Horizontal">
                 <sparklrControls:ExtendedImageControl x:Name="ProfileImage" ImageSource="{Binding MainPost.AuthorImage}" Style="{StaticResource SparklrProfileExtendedImageSmallStyle}" />
                 <TextBlock x:Name="ListTitle" Text="{Binding MainPost.AuthorName}" Style="{StaticResource PhoneTextTitle1Style}" />
@@ -39,7 +39,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ScrollViewer Grid.Row="0">
+            <ScrollViewer Grid.Row="0" Margin="0,-27,0,0">
                 <StackPanel Orientation="Vertical">
                     <!--<sparklrControls:ExtendedListBox >
                         <sparklrControls:ExtendedListBox.ItemTemplate>
@@ -51,7 +51,7 @@
                         </sparklrControls:ExtendedListBox.ItemTemplate>
                     </sparklrControls:ExtendedListBox>-->
                     <sparklrControls:SparklrPostControl Post="{Binding MainPost}" ForceGIFLoading="True" />
-                    
+
                     <ListBox ItemsSource="{Binding Comments}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">

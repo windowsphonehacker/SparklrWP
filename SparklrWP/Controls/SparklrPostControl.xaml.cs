@@ -95,8 +95,29 @@ namespace SparklrWP.Controls
             }
         }
 
-        private void Like_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        private async void Like_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
+          //  PostViewModel p = this.DataContext as PostViewModel;
+          //  if (!p.Liked)
+            //{
+              //  GlobalLoading.Instance.IsLoading = true;
+                //SparklrLib.Objects.JSONRequestEventArgs<SparklrLib.Objects.Responses.Generic> response = await App.Client.LikePostAsync(p.MainPost.AuthorId, p.MainPost.Id);
+                //GlobalLoading.Instance.IsLoading = false;
+
+            //    if (response == null || !response.IsSuccessful)
+              //      MessageBox.Show("We were unable to like this post. Please try again later...", "Oops...", MessageBoxButton.OK);
+                
+           // }
+            // else
+          //  {
+            //    GlobalLoading.Instance.IsLoading = true;
+              //  SparklrLib.Objects.JSONRequestEventArgs<SparklrLib.Objects.Responses.Generic> response = await App.Client.DeleteCommentAsync(p.LikeID);
+             //   GlobalLoading.Instance.IsLoading = false;
+
+              //  if (response == null || !response.IsSuccessful)
+                //    MessageBox.Show("We were unable unlike this post. Please try again later...", "Oops...", MessageBoxButton.OK);
+
+            //  }
         }
     }
 }

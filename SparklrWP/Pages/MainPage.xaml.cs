@@ -223,5 +223,10 @@ namespace SparklrWP.Pages
             name = NetworkHelpers.UnformatNetworkName(name);
             NavigationService.Navigate(new Uri("/Pages/NetworkPage.xaml?network=" + name.EncodeUrl(), UriKind.Relative));
         }
+
+        private void Logout_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/LoginPage.xaml?logout=true", UriKind.Relative));
+        }
     }
 }

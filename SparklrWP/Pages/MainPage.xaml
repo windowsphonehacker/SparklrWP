@@ -15,7 +15,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
+    shell:SystemTray.IsVisible="False" Style="{StaticResource Animated}">
 	<phone:PhoneApplicationPage.Resources>
 		<Storyboard x:Name="NotificationAppear">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
@@ -72,8 +72,8 @@
             <controls:Pivot.TitleTemplate>
                 <DataTemplate>
                     <Grid>
-                        <TextBlock Text="{Binding}" Style="{StaticResource SparklrTextTitle3Style}" />
-                        <Border x:Name="BorderNotification" Background="White" CornerRadius="10" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,-20" Tap="BorderNotification_Tap" Height="60" Width="60">
+                        <TextBlock Text="{Binding}" Style="{StaticResource SparklrTextTitle3Style}" FontSize="36" Margin="0,0,12,0" />
+                        <Border x:Name="BorderNotification" Background="White" CornerRadius="90" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,-20" Tap="BorderNotification_Tap" Height="60" Width="60">
                             <TextBlock Name="NotificationCount" Foreground="#FF2A2339" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
                         </Border>
                     </Grid>
@@ -83,7 +83,7 @@
 
 
             <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
-            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainWorldHeader, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette">
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainWorldHeader, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Margin="12,0">
                 <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                     <sparklrControls:ExtendedListBox x:Name="MainListBox" ItemsSource="{Binding Items}" UnderlyingSelectionChanged="MainListBox_SelectionChanged" TopRefresh="MainListBox_TopRefresh" LoadMore="MainListBox_LoadMore" >
                         <sparklrControls:ExtendedListBox.ItemTemplate>
@@ -95,7 +95,7 @@
                 </Grid>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainFriendsHeader, Source={StaticResource LocalizedStrings}}">
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainFriendsHeader, Source={StaticResource LocalizedStrings}}" Margin="12,10,12,0">
                 <toolkit:LongListSelector Background="{x:Null}" ItemsSource="{Binding GroupedItems}">
                     <!-- Template for the letters inside the list -->
                     <toolkit:LongListSelector.GroupHeaderTemplate>
@@ -134,7 +134,7 @@
                 </toolkit:LongListSelector>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainProfileHeader, Source={StaticResource LocalizedStrings}}">
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainProfileHeader, Source={StaticResource LocalizedStrings}}" Margin="12,10,12,0">
                 <ListBox>
                     <TextBlock Text="{Binding Username}" Style="{StaticResource PhoneTextTitle1Style}" />
                     <Grid>
@@ -155,7 +155,7 @@
                 </ListBox>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainNetworksHeader, Source={StaticResource LocalizedStrings}}">
+            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainNetworksHeader, Source={StaticResource LocalizedStrings}}" Margin="12,10,12,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -208,6 +208,7 @@
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem IsEnabled="True" Text="MainAboutButton" Click="about_click"/>
                 <shell:ApplicationBarMenuItem IsEnabled="True" Text="MainSettingsButton" Click="AboutMenuItem_Click" />
+                <shell:ApplicationBarMenuItem IsEnabled="True" Text="LogoutButton" Click="Logout_Click" />
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

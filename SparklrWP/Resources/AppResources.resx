@@ -319,4 +319,7 @@ We couldn't post your message  and photo try again later!</value>
     <value>Sparklr*</value>
     <comment>The name of the background agent</comment>
   </data>
+  <data name="LogoutButton" xml:space="preserve">
+    <value>logout...</value>
+  </data>
 </root>
