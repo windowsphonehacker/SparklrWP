@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio Express 2012 for Windows Phone
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparklrWP", "SparklrWP\SparklrWP.csproj", "{50B5E547-901C-4CB3-A9CB-C889ED02974C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CC259C67-1B9F-4C88-917C-258DA840DE32}"
@@ -19,6 +19,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Phone.Controls.Toolkit.WP7", "Microsoft.Phone.Controls.Toolkit.WP7\Microsoft.Phone.Controls.Toolkit.WP7.csproj", "{0754458A-7AFC-463A-B27D-2F6980522119}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparklrWP.Utils", "SparklrWP.Utils\SparklrWP.Utils.csproj", "{B1D8510B-6F57-44A3-B6F3-191BB9F68BA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkSparklrWP", "LinkSparklrWP\LinkSparklrWP.csproj", "{4DE4B4EE-9518-434A-95CB-4BDA480D5AC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,6 +82,16 @@ Global
 		{B1D8510B-6F57-44A3-B6F3-191BB9F68BA0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1D8510B-6F57-44A3-B6F3-191BB9F68BA0}.Release|ARM.ActiveCfg = Release|Any CPU
 		{B1D8510B-6F57-44A3-B6F3-191BB9F68BA0}.Release|x86.ActiveCfg = Release|Any CPU
+		{4DE4B4EE-9518-434A-95CB-4BDA480D5AC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DE4B4EE-9518-434A-95CB-4BDA480D5AC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DE4B4EE-9518-434A-95CB-4BDA480D5AC0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{4DE4B4EE-9518-434A-95CB-4BDA480D5AC0}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{4DE4B4EE-9518-434A-95CB-4BDA480D5AC0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4DE4B4EE-9518-434A-95CB-4BDA480D5AC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DE4B4EE-9518-434A-95CB-4BDA480D5AC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DE4B4EE-9518-434A-95CB-4BDA480D5AC0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4DE4B4EE-9518-434A-95CB-4BDA480D5AC0}.Release|ARM.ActiveCfg = Release|Any CPU
+		{4DE4B4EE-9518-434A-95CB-4BDA480D5AC0}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

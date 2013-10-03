@@ -57,7 +57,7 @@
 						<CubicEase EasingMode="EaseIn"/>
 					</EasingDoubleKeyFrame.EasingFunction>
 				</EasingDoubleKeyFrame>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="-90">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="90">
 					<EasingDoubleKeyFrame.EasingFunction>
 						<CubicEase EasingMode="EaseIn"/>
 					</EasingDoubleKeyFrame.EasingFunction>
@@ -73,7 +73,7 @@
                 <DataTemplate>
                     <Grid>
                         <TextBlock Text="{Binding}" Style="{StaticResource SparklrTextTitle3Style}" FontSize="36" Margin="0,0,12,0" />
-                        <Border x:Name="BorderNotification" Background="White" CornerRadius="90" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,25,-20" Tap="BorderNotification_Tap" Height="60" Width="60">
+                        <Border x:Name="BorderNotification" Background="White" CornerRadius="90" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,-20,12,-20" Tap="BorderNotification_Tap" Height="60" Width="60">
                             <TextBlock Name="NotificationCount" Foreground="#FF2A2339" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
                         </Border>
                     </Grid>
