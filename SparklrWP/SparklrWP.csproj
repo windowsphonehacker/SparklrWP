@@ -421,6 +421,8 @@
     <Content Include="Assets\AppBar\appbar.refresh.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\b34edfca99432bd8a71c2883a61708d10de2c923.png" />
+    <Content Include="Assets\connessione-di-rete_318-10835.jpg" />
     <Content Include="Assets\GIF.png" />
     <Content Include="Assets\Message.png" />
     <Content Include="Assets\Next.png" />

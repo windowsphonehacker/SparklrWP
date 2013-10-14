@@ -65,25 +65,43 @@
 			</DoubleAnimationUsingKeyFrames>
 		</Storyboard>
 	</phone:PhoneApplicationPage.Resources>
+    
 
     <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot" d:DataContext="{d:DesignData ../SampleData/MainViewModelSampleData.xaml}">
         <controls:Pivot Name="mainPivot" Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Background="{StaticResource SparklrBackgroundBrush}">
             <controls:Pivot.TitleTemplate>
                 <DataTemplate>
-                    <Grid>
-                        <TextBlock Text="{Binding}" Style="{StaticResource SparklrTextTitle3Style}" FontSize="36" Margin="0,0,12,0" />
-                        <Border x:Name="BorderNotification" Background="White" CornerRadius="90" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,-20,12,-20" Tap="BorderNotification_Tap" Height="60" Width="60">
+                    <Grid Margin="0,0,17,0">
+                        <TextBlock Text="{Binding}" Style="{StaticResource SparklrTextTitle3Style}" FontSize="58" Margin="0,0,12,0" TextAlignment="Center" />
+                        <Border x:Name="BorderNotification" Background="White" CornerRadius="90" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" Tap="BorderNotification_Tap" Height="60" Width="60">
                             <TextBlock Name="NotificationCount" Foreground="#FF2A2339" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
                         </Border>
+						<StackPanel Orientation="Horizontal" Margin="0,70,0,0">
+                        <Button Width="108" Height="108" BorderBrush="{x:Null}" BorderThickness="0">
+                                <Button.Background>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/connessione-di-rete_318-10835.jpg"/>
+                                </Button.Background>
+                            </Button>
+                        <Button Width="108" Height="108" BorderBrush="{x:Null}">
+                                <Button.Background>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/b34edfca99432bd8a71c2883a61708d10de2c923.png"/>
+                                </Button.Background>
+                            </Button>
+                            <Button Width="108" Height="108" BorderBrush="{x:Null}">
+                                <Button.Background>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding ProfileImage}"/>
+                                </Button.Background>
+                            </Button>
+                        <Button Width="108" Height="108" BorderBrush="{x:Null}"/>
+						</StackPanel>
                     </Grid>
                 </DataTemplate>
+                
             </controls:Pivot.TitleTemplate>
             <!--TitlePanel contains the name of the application and page title-->
-
-
             <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
-            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainWorldHeader, Source={StaticResource LocalizedStrings}}" FontFamily="/SparklrWP;component/Fonts/Fonts.zip#Courgette" Margin="12,0">
+            <controls:PivotItem x:Name="world" Margin="12,12">
                 <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
                     <sparklrControls:ExtendedListBox x:Name="MainListBox" ItemsSource="{Binding Items}" UnderlyingSelectionChanged="MainListBox_SelectionChanged" TopRefresh="MainListBox_TopRefresh" LoadMore="MainListBox_LoadMore" >
                         <sparklrControls:ExtendedListBox.ItemTemplate>
@@ -95,7 +113,7 @@
                 </Grid>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainFriendsHeader, Source={StaticResource LocalizedStrings}}" Margin="12,10,12,0">
+            <controls:PivotItem x:Name="friends"  Margin="12,12,12,0">
                 <toolkit:LongListSelector Background="{x:Null}" ItemsSource="{Binding GroupedItems}">
                     <!-- Template for the letters inside the list -->
                     <toolkit:LongListSelector.GroupHeaderTemplate>
@@ -134,7 +152,7 @@
                 </toolkit:LongListSelector>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainProfileHeader, Source={StaticResource LocalizedStrings}}" Margin="12,10,12,0">
+            <controls:PivotItem x:Name="profile" Margin="12,12,12,0">
                 <ListBox>
                     <TextBlock Text="{Binding Username}" Style="{StaticResource PhoneTextTitle1Style}" />
                     <Grid>
@@ -155,7 +173,7 @@
                 </ListBox>
             </controls:PivotItem>
 
-            <controls:PivotItem Header="{Binding Path=LocalizedResources.MainNetworksHeader, Source={StaticResource LocalizedStrings}}" Margin="12,10,12,0">
+            <controls:PivotItem x:Name="network" Margin="12,12,12,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -172,6 +190,7 @@
                     </ListBox>
                 </Grid>
             </controls:PivotItem>
+            
         </controls:Pivot>
         
         <Grid x:Name="NotificationPopup" Margin="0" Visibility="Collapsed" Background="{StaticResource SparklrBackgroundDarkBrush}">
