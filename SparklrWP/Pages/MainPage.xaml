@@ -78,23 +78,27 @@
                             <TextBlock Name="NotificationCount" Foreground="#FF2A2339" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
                         </Border>
 						<StackPanel Orientation="Horizontal" Margin="0,70,0,0">
-                        <Button Width="108" Height="108" BorderBrush="{x:Null}" BorderThickness="0">
+                        <Button x:Name="world" Width="108" Height="108" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}">
                                 <Button.Background>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/connessione-di-rete_318-10835.jpg"/>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/iconic.png"/>
                                 </Button.Background>
                             </Button>
-                        <Button Width="108" Height="108" BorderBrush="{x:Null}">
+                            <Button x:Name="friends" Width="108" Height="108" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}">
                                 <Button.Background>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/b34edfca99432bd8a71c2883a61708d10de2c923.png"/>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/iconic.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button Width="108" Height="108" BorderBrush="{x:Null}">
+                            <Button x:Name="profile" Width="108" Height="108" BorderThickness="0" BorderBrush="{x:Null}" Foreground="{x:Null}">
                                 <Button.Background>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="{Binding ProfileImage}"/>
+                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/iconic.png"/>
                                 </Button.Background>
                             </Button>
-                        <Button Width="108" Height="108" BorderBrush="{x:Null}"/>
-						</StackPanel>
+                            <Button x:Name="network" Width="108" Height="108" BorderThickness="0" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                                <Button.Background>
+                                    <ImageBrush ImageSource="/Assets/iconic.png" Stretch="UniformToFill"/>
+                                </Button.Background>
+                            </Button>
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
                 
