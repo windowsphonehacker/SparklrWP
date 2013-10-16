@@ -16,55 +16,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="False" Style="{StaticResource Animated}">
-	<phone:PhoneApplicationPage.Resources>
-		<Storyboard x:Name="NotificationAppear">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
-				<DiscreteObjectKeyFrame KeyTime="0">
-					<DiscreteObjectKeyFrame.Value>
-						<Visibility>Visible</Visibility>
-					</DiscreteObjectKeyFrame.Value>
-				</DiscreteObjectKeyFrame>
-			</ObjectAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="NotificationPopup">
-				<EasingDoubleKeyFrame KeyTime="0" Value="-90">
-					<EasingDoubleKeyFrame.EasingFunction>
-						<CubicEase EasingMode="EaseInOut"/>
-					</EasingDoubleKeyFrame.EasingFunction>
-				</EasingDoubleKeyFrame>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
-					<EasingDoubleKeyFrame.EasingFunction>
-						<CircleEase EasingMode="EaseOut"/>
-					</EasingDoubleKeyFrame.EasingFunction>
-				</EasingDoubleKeyFrame>
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-		<Storyboard x:Name="NotificationDisappear">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
-				<DiscreteObjectKeyFrame KeyTime="0">
-					<DiscreteObjectKeyFrame.Value>
-						<Visibility>Visible</Visibility>
-					</DiscreteObjectKeyFrame.Value>
-				</DiscreteObjectKeyFrame>
-				<DiscreteObjectKeyFrame KeyTime="0:0:0.3">
-					<DiscreteObjectKeyFrame.Value>
-						<Visibility>Visible</Visibility>
-					</DiscreteObjectKeyFrame.Value>
-				</DiscreteObjectKeyFrame>
-			</ObjectAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="NotificationPopup">
-				<EasingDoubleKeyFrame KeyTime="0" Value="0">
-					<EasingDoubleKeyFrame.EasingFunction>
-						<CubicEase EasingMode="EaseIn"/>
-					</EasingDoubleKeyFrame.EasingFunction>
-				</EasingDoubleKeyFrame>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="90">
-					<EasingDoubleKeyFrame.EasingFunction>
-						<CubicEase EasingMode="EaseIn"/>
-					</EasingDoubleKeyFrame.EasingFunction>
-				</EasingDoubleKeyFrame>
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-	</phone:PhoneApplicationPage.Resources>
+	
     
 
     <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
@@ -73,27 +25,27 @@
             <controls:Pivot.TitleTemplate>
                 <DataTemplate>
                     <Grid Margin="0,0,17,0">
-                        <TextBlock Text="{Binding}" Style="{StaticResource SparklrTextTitle3Style}" FontSize="58" Margin="0,0,12,0" TextAlignment="Center" />
+                       
                         <Border x:Name="BorderNotification" Background="White" CornerRadius="90" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" Tap="BorderNotification_Tap" Height="60" Width="60">
                             <TextBlock Name="NotificationCount" Foreground="#FF2A2339" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
                         </Border>
-						<StackPanel Orientation="Horizontal" Margin="0,70,0,0">
-                        <Button x:Name="world" Width="108" Height="108" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}">
+						<StackPanel Orientation="Horizontal" Margin="0,00,0,0" HorizontalAlignment="Center">
+                        <Button x:Name="world" Width="60" Height="60" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}">
                                 <Button.Background>
                                     <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/iconic.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button x:Name="friends" Width="108" Height="108" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}">
+                            <Button x:Name="friends" Width="60" Height="60" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}">
                                 <Button.Background>
                                     <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/iconic.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button x:Name="profile" Width="108" Height="108" BorderThickness="0" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                            <Button x:Name="profile" Width="60" Height="60" BorderThickness="0" BorderBrush="{x:Null}" Foreground="{x:Null}">
                                 <Button.Background>
                                     <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/iconic.png"/>
                                 </Button.Background>
                             </Button>
-                            <Button x:Name="network" Width="108" Height="108" BorderThickness="0" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                            <Button x:Name="network" Width="60" Height="60" BorderThickness="0" BorderBrush="{x:Null}" Foreground="{x:Null}">
                                 <Button.Background>
                                     <ImageBrush ImageSource="/Assets/iconic.png" Stretch="UniformToFill"/>
                                 </Button.Background>
