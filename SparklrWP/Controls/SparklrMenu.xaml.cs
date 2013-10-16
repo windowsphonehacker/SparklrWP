@@ -19,7 +19,7 @@ namespace SparklrWP.Controls
             InitializeComponent();
         }
        
-        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        protected void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
             if (popupVisible)
             {

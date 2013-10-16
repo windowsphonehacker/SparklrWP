@@ -105,7 +105,7 @@
             <ListBox ItemsSource="{Binding Notifications}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <sparklrControls:SparklrTextBlock Text="{Binding Message}" Margin="5,3" toolkit:TiltEffect.IsTiltEnabled="True" Tap="Notification_Tap" />
+                        <sparklrControls:SparklrTextBlock Text="?" Margin="5,3" toolkit:TiltEffect.IsTiltEnabled="True"  />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
                 <!-- Workaround used to stretch the child elements to the full width -> HorizontalContentAlignment won't work for some reason... -->
