@@ -11,49 +11,80 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:utils="clr-namespace:SparklrWP.Utils"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696" 
+    
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="False" Style="{StaticResource Animated}">
-	
-    
+    shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
+    <phone:PhoneApplicationPage.Resources>
+        <Storyboard x:Name="NotificationAppear">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="NotificationPopup">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-90">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseInOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="NotificationDisappear">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.3">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="NotificationPopup">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseIn"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="90">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseIn"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </phone:PhoneApplicationPage.Resources>
+
 
     <!--Data context is set to sample data above and LayoutRoot contains the root grid where all other page content is placed-->
     <Grid x:Name="LayoutRoot" d:DataContext="{d:DesignData ../SampleData/MainViewModelSampleData.xaml}">
-        <controls:Pivot Name="mainPivot" Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Background="{StaticResource SparklrBackgroundBrush}">
+        <controls:Pivot Name="mainPivot" Title="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" Foreground="Black">
+            <controls:Pivot.Background>
+                <SolidColorBrush Color="{StaticResource SparklrBackgroundColor}"/>
+            </controls:Pivot.Background>
             <controls:Pivot.TitleTemplate>
                 <DataTemplate>
                     <Grid Margin="0,0,17,0">
-                       
-                        <Border x:Name="BorderNotification" Background="White" CornerRadius="90" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" Tap="BorderNotification_Tap" Height="60" Width="60">
-                            <TextBlock Name="NotificationCount" Foreground="#FF2A2339" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
+                        <sparklrControls:SparklrMenu Margin="-23,-17,-16,0"/>
+                        <Border x:Name="BorderNotification" Background="{StaticResource SparklrBackgroundDarkBrush}" CornerRadius="90" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-8,-11,0" Tap="BorderNotification_Tap" Height="60" Width="60">
+                            <TextBlock Name="NotificationCount" Foreground="White" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
                         </Border>
-						<StackPanel Orientation="Horizontal" Margin="0,00,0,0" HorizontalAlignment="Center">
-                        <Button x:Name="world" Width="60" Height="60" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}">
-                                <Button.Background>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/iconic.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button x:Name="friends" Width="60" Height="60" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}">
-                                <Button.Background>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/iconic.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button x:Name="profile" Width="60" Height="60" BorderThickness="0" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                                <Button.Background>
-                                    <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/iconic.png"/>
-                                </Button.Background>
-                            </Button>
-                            <Button x:Name="network" Width="60" Height="60" BorderThickness="0" BorderBrush="{x:Null}" Foreground="{x:Null}">
-                                <Button.Background>
-                                    <ImageBrush ImageSource="/Assets/iconic.png" Stretch="UniformToFill"/>
-                                </Button.Background>
-                            </Button>
-                        </StackPanel>
+
                     </Grid>
                 </DataTemplate>
-                
+
             </controls:Pivot.TitleTemplate>
             <!--TitlePanel contains the name of the application and page title-->
             <!--ContentPanel contains ListBox and ListBox ItemTemplate. Place additional content here-->
@@ -62,7 +93,7 @@
                     <sparklrControls:ExtendedListBox x:Name="MainListBox" ItemsSource="{Binding Items}" UnderlyingSelectionChanged="MainListBox_SelectionChanged" TopRefresh="MainListBox_TopRefresh" LoadMore="MainListBox_LoadMore" >
                         <sparklrControls:ExtendedListBox.ItemTemplate>
                             <DataTemplate>
-                                <sparklrControls:SparklrPostControl Margin="0,0,0,10" Post="{Binding}" toolkit:TiltEffect.IsTiltEnabled="True" />
+                                <sparklrControls:SparklrPostControl Post="{Binding}" toolkit:TiltEffect.IsTiltEnabled="True" Margin="0,0,0,20" />
                             </DataTemplate>
                         </sparklrControls:ExtendedListBox.ItemTemplate>
                     </sparklrControls:ExtendedListBox>
@@ -74,7 +105,7 @@
                     <!-- Template for the letters inside the list -->
                     <toolkit:LongListSelector.GroupHeaderTemplate>
                         <DataTemplate>
-                            <Border Height="75" Width="75" Background="{StaticResource SparklrBackgroundDarkBrush}" HorizontalAlignment="Left" Margin="12,6">
+                            <Border Height="75" Width="75" Background="{StaticResource SparklrBackgroundDarkBrush}" HorizontalAlignment="Left" Margin="13,6,12,6">
                                 <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
                             </Border>
                         </DataTemplate>
@@ -140,15 +171,15 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <!-- todo: prettify -->
-                                <TextBlock Text="{Binding}" Style="{StaticResource PhoneTextTitle2Style}" toolkit:TiltEffect.IsTiltEnabled="True" Tap="NetworkTextBlock_Tap" />
+                                <TextBlock Text="{Binding}" Style="{StaticResource PhoneTextTitle2Style}" toolkit:TiltEffect.IsTiltEnabled="True" Tap="NetworkTextBlock_Tap" Foreground="Black" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
             </controls:PivotItem>
-            
+
         </controls:Pivot>
-        
+
         <Grid x:Name="NotificationPopup" Margin="0" Visibility="Collapsed" Background="{StaticResource SparklrBackgroundDarkBrush}">
             <Grid.Projection>
                 <PlaneProjection RotationY="-90"/>
@@ -175,7 +206,7 @@
             </ScrollViewer>
         </Grid>
     </Grid>
-    
+
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" BackgroundColor="{StaticResource SparklrBackgroundDarkColor}">
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" Text="MainNewPostButton" Click="ApplicationBarIconButton_Click"/>

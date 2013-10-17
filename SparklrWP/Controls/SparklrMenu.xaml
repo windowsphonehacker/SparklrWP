@@ -10,112 +10,43 @@
     xmlns:utils="clr-namespace:SparklrWP.Utils"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
     xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
-             Height="60"
+             Height="80"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}">
 
     <UserControl.Resources>
-        <Storyboard x:Name="NotificationAppear">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
-                <DiscreteObjectKeyFrame KeyTime="0">
-                    <DiscreteObjectKeyFrame.Value>
-                        <Visibility>Visible</Visibility>
-                    </DiscreteObjectKeyFrame.Value>
-                </DiscreteObjectKeyFrame>
-            </ObjectAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="NotificationPopup">
-                <EasingDoubleKeyFrame KeyTime="0" Value="-90">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <CubicEase EasingMode="EaseInOut"/>
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <CircleEase EasingMode="EaseOut"/>
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Name="NotificationDisappear">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
-                <DiscreteObjectKeyFrame KeyTime="0">
-                    <DiscreteObjectKeyFrame.Value>
-                        <Visibility>Visible</Visibility>
-                    </DiscreteObjectKeyFrame.Value>
-                </DiscreteObjectKeyFrame>
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.3">
-                    <DiscreteObjectKeyFrame.Value>
-                        <Visibility>Visible</Visibility>
-                    </DiscreteObjectKeyFrame.Value>
-                </DiscreteObjectKeyFrame>
-            </ObjectAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="NotificationPopup">
-                <EasingDoubleKeyFrame KeyTime="0" Value="0">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <CubicEase EasingMode="EaseIn"/>
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="90">
-                    <EasingDoubleKeyFrame.EasingFunction>
-                        <CubicEase EasingMode="EaseIn"/>
-                    </EasingDoubleKeyFrame.EasingFunction>
-                </EasingDoubleKeyFrame>
-            </DoubleAnimationUsingKeyFrames>
-        </Storyboard>
+        
     </UserControl.Resources>
+    <UserControl.Background>
+        <StaticResource ResourceKey="SparklrBackgroundBrush"/>
+    </UserControl.Background>
     <Grid>
-        <Grid Margin="0,0,17,0">
-            <Border x:Name="BorderNotification" Background="White" CornerRadius="90" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,0,0" Tap="BorderNotification_Tap" Height="60" Width="60">
-                <TextBlock Name="NotificationCount" Foreground="#FF2A2339" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
-            </Border>
+        <Grid Margin="0,0,0,0" Background="{StaticResource SparklrBackgroundBrush}">
+            
             <StackPanel Orientation="Horizontal" Margin="0,00,0,0" HorizontalAlignment="Center">
-                <Button x:Name="home" Width="60" Height="60" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}">
+                <Button x:Name="home" Width="80" Height="80" BorderBrush="{x:Null}" BorderThickness="0">
                     <Button.Background>
-                        <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/appbar.home.Backg.png"/>
+                        <ImageBrush ImageSource="/Assets/home.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="friends" Width="60" Height="60" BorderBrush="{x:Null}" BorderThickness="0" Foreground="{x:Null}">
+                <Button x:Name="friends" Width="80" Height="80" BorderBrush="{x:Null}" BorderThickness="0">
                     <Button.Background>
-                        <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/iconic.png"/>
+                        <ImageBrush Stretch="Uniform" ImageSource="/Assets/friends.png"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="profile" Width="60" Height="60" BorderThickness="0" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                <Button x:Name="inbox" Width="80" Height="80" BorderThickness="0" BorderBrush="{x:Null}">
                     <Button.Background>
-                        <ImageBrush Stretch="UniformToFill" ImageSource="/Assets/iconic.png"/>
+                        <ImageBrush Stretch="Uniform" ImageSource="/Assets/inbox.png"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="network" Width="60" Height="60" BorderThickness="0" BorderBrush="{x:Null}" Foreground="{x:Null}">
+                <Button x:Name="network" Width="80" Height="80" BorderThickness="0" BorderBrush="{x:Null}">
                     <Button.Background>
                         <ImageBrush ImageSource="/Assets/iconic.png" Stretch="UniformToFill"/>
                     </Button.Background>
                 </Button>
             </StackPanel>
         </Grid>
-        <Grid x:Name="NotificationPopup" Margin="0" Visibility="Collapsed" Background="{StaticResource SparklrBackgroundDarkBrush}">
-        <Grid.Projection>
-            <PlaneProjection RotationY="-90"/>
-        </Grid.Projection>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Style="{StaticResource PhoneTextExtraLargeStyle}" Text="{Binding Path=LocalizedResources.MainNotifications, Source={StaticResource LocalizedStrings}}"/>
-        <ScrollViewer Grid.Row="1">
-            <ListBox ItemsSource="{Binding Notifications}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <sparklrControls:SparklrTextBlock Text="?" Margin="5,3" toolkit:TiltEffect.IsTiltEnabled="True"  />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <!-- Workaround used to stretch the child elements to the full width -> HorizontalContentAlignment won't work for some reason... -->
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-            </ListBox>
-        </ScrollViewer>
-    </Grid>
+        
     </Grid>
 </UserControl>

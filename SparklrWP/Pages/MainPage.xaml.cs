@@ -138,7 +138,7 @@ namespace SparklrWP.Pages
         {
             if (popupVisible)
             {
-                //NotificationDisappear.Begin();
+                NotificationDisappear.Begin();
                 popupVisible = false;
                 e.Cancel = true;
             }
@@ -153,7 +153,7 @@ namespace SparklrWP.Pages
         {
             if (!popupVisible)
             {
-                //NotificationAppear.Begin();
+                NotificationAppear.Begin();
                 popupVisible = true;
             }
         }
