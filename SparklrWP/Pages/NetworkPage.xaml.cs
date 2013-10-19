@@ -16,6 +16,38 @@ namespace SparklrWP.Pages
             InitializeComponent();
             App.BuildLocalizedApplicationBar(this.ApplicationBar);
         }
+        #region Notification
+        bool popupVisible = false;
+
+        private void Notification_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            SparklrTextBlock control = sender as SparklrTextBlock;
+
+            if (control != null)
+            {
+                NotificationViewModel m = (NotificationViewModel)control.DataContext;
+                if (m.NavigationUri != null)
+                    NavigationService.Navigate(m.NavigationUri);
+            }
+        }
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (popupVisible)
+            {
+                NotificationDisappear.Begin();
+                popupVisible = false;
+                e.Cancel = true;
+            }
+        }
+        private void BorderNotification_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            if (!popupVisible)
+            {
+                NotificationAppear.Begin();
+                popupVisible = true;
+            }
+        }
+        #endregion
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -26,7 +58,10 @@ namespace SparklrWP.Pages
                 model = new NetworkViewModel(network);
                 DataContext = model;
             }
-
+            if (this.NavigationContext.QueryString.ContainsKey("notification") && e.NavigationMode == NavigationMode.New)
+            {
+                BorderNotification_Tap(this, new System.Windows.Input.GestureEventArgs());
+            }
             base.OnNavigatedTo(e);
         }
 
