@@ -1,5 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using SparklrWP.Controls;
 using SparklrWP.Utils;
 using SparklrWP.ViewModels;
 using System;
@@ -23,6 +24,12 @@ namespace SparklrWP.Pages
         // When page is navigated to set data context to selected item in list
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            base.OnNavigatedTo(e);
+
+            if (this.NavigationContext.QueryString.ContainsKey("notification") && e.NavigationMode == NavigationMode.New)
+            {
+                BorderNotification_Tap(this, new System.Windows.Input.GestureEventArgs());
+            }
             string selectedIndex = "";
             if (NavigationContext.QueryString.TryGetValue("selectedItem", out selectedIndex))
             {
@@ -45,6 +52,41 @@ namespace SparklrWP.Pages
                 }
             }
         }
+
+
+        #region Notification
+        bool popupVisible = false;
+
+        private void Notification_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            SparklrTextBlock control = sender as SparklrTextBlock;
+
+            if (control != null)
+            {
+                NotificationViewModel m = (NotificationViewModel)control.DataContext;
+                if (m.NavigationUri != null)
+                    NavigationService.Navigate(m.NavigationUri);
+            }
+        }
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (popupVisible)
+            {
+                NotificationDisappear.Begin();
+                popupVisible = false;
+                e.Cancel = true;
+            }
+        }
+        private void BorderNotification_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            if (!popupVisible)
+            {
+                NotificationAppear.Begin();
+                popupVisible = true;
+            }
+        }
+        #endregion
+
 
         private void refreshComments()
         {

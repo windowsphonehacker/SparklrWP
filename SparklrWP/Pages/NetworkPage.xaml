@@ -14,8 +14,10 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DataContext="{d:DesignData ../sampleData/NetworkViewModelSampleData.xaml}"
     shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
-	<phone:PhoneApplicationPage.ApplicationBar>
-		<shell:ApplicationBar>
+    
+    
+    <phone:PhoneApplicationPage.ApplicationBar >
+		<shell:ApplicationBar BackgroundColor="{StaticResource SparklrBackgroundDarkColor}" >
 			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.add.rest.png" IsEnabled="True" Text="New post" x:Name="NewPostApplicationBarButton" Click="NewPostApplicationBarButton_Click" />
 			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.favs.addto.rest.png" IsEnabled="True" Text="track/untrack" x:Name="TrackUntrackApplicationBarButton" Click="TrackUntrackApplicationBarButton_Click"  />
 			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.pin.rotated.315.png" IsEnabled="True" Text="Pin" x:Name="PinApplicationBarButton" />
@@ -25,15 +27,24 @@
     <Grid x:Name="LayoutRoot" Background="{StaticResource SparklrBackgroundBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <!--COPY THE GRID (margin are modificable)-->
+        <Grid Grid.Row="0">
+            <sparklrControls:SparklrMenu HorizontalAlignment="Center"/>
+            <Border Visibility="Collapsed" x:Name="BorderNotification" Background="{StaticResource SparklrBackgroundDarkBrush}" CornerRadius="90" VerticalAlignment="center" HorizontalAlignment="Right" Tap="BorderNotification_Tap" Height="60" Width="60">
+                <TextBlock Name="NotificationCount" Foreground="White" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
+            </Border>
+        </Grid>
+        <!--COPY THE GRID (margin are modificable)-->
+        <StackPanel Grid.Row="1" Margin="12,17,0,28">
             <TextBlock Text="{Binding Name}" Margin="0,-7,10,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - zusätzliche Inhalte hier platzieren-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid x:Name="ContentPanel" Grid.Row="2" Margin="12,0,12,0">
             <sparklrControls:ExtendedListBox ItemsSource="{Binding Posts}" TopRefresh="postsExtendedListBox_TopRefresh">
                 <sparklrControls:ExtendedListBox.ItemTemplate>
                     <DataTemplate>

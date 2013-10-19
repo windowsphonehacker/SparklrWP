@@ -12,10 +12,62 @@
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True" d:DataContext="{d:DesignData ../SampleData/ChatViewModelSampleData.xaml}" Style="{StaticResource Animated}">
+
+
+    <!--COPY ALSO THIS!!!!!!!!!!!!-->
+    <phone:PhoneApplicationPage.Resources>
+        <Storyboard x:Name="NotificationAppear">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="NotificationPopup">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-90">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseInOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="NotificationDisappear">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.3">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="NotificationPopup">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseIn"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="90">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseIn"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </phone:PhoneApplicationPage.Resources>
+
 
     <Grid x:Name="LayoutRoot">
         <Grid.Resources>
@@ -31,11 +83,26 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        
+        
+        
+        <!--COPY THE GRID (margin are modificable)-->
+        <Grid Grid.Row="0" Margin="0,0,0,0">
+            <sparklrControls:SparklrMenu Margin="0,0,0,0"/>
+            <Border x:Name="BorderNotification" Background="{StaticResource SparklrBackgroundDarkBrush}" Visibility="Collapsed" CornerRadius="90" Margin="410,10,10,10" Tap="BorderNotification_Tap" Height="60" Width="60">
+                <TextBlock Name="NotificationCount" Foreground="White" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
+            </Border>
+        </Grid>
+        <!--COPY THE GRID (margin are modificable)-->
+        
+        
+        
+        
         <!--TitlePanel enthält den Namen der Anwendung und den Seitentitel-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <StackPanel Grid.Row="1" >
             <!-- <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"  Style="{StaticResource SparklrTextNormalStyle}" Margin="0,0,12,0"/> -->
             <StackPanel Orientation="Horizontal">
                 <sparklrControls:ExtendedImageControl ImageSource="{Binding Image}" Style="{Binding Mode=OneWay, Source={StaticResource SparklrProfileExtendedImageSmallStyle}}" />
@@ -44,7 +111,7 @@
         </StackPanel>
 
         <!--ContentPanel - zusätzliche Inhalte hier platzieren-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid x:Name="ContentPanel" Grid.Row="2" Margin="12,0,12,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -76,7 +143,7 @@
             <codingForFun:ChatBubbleTextBox Grid.Row="1" ChatBubbleDirection="LowerRight" Margin="75,0,0,5" KeyDown="ChatBubbleTextBox_KeyDown" Text="{Binding Message, Mode=TwoWay}" x:Name="chatBubbleTextBox" InputScope="Chat" />
         </Grid>
         <!-- Visibility set in code behind -->
-        <sparklrControls:LoadingOverlay x:Name="loadingOverlay" Grid.Row="0" Grid.RowSpan="2" Visibility="Collapsed" />
+        <sparklrControls:LoadingOverlay x:Name="loadingOverlay" Visibility="Collapsed" />
     </Grid>
 
 </phone:PhoneApplicationPage>

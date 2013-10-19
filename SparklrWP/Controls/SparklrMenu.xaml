@@ -25,22 +25,22 @@
         <Grid Margin="0,0,0,0" Background="{StaticResource SparklrBackgroundBrush}">
             
             <StackPanel Orientation="Horizontal" Margin="0,00,0,0" HorizontalAlignment="Center">
-                <Button x:Name="home" Width="80" Height="80" BorderBrush="{x:Null}" BorderThickness="0">
+                <Button x:Name="home" Width="80" Height="80" BorderBrush="{x:Null}" BorderThickness="0" Click="home_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Assets/home.png" Stretch="Uniform"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="friends" Width="80" Height="80" BorderBrush="{x:Null}" BorderThickness="0">
+                <Button x:Name="friends" Width="80" Height="80" BorderBrush="{x:Null}" BorderThickness="0" Click="friends_Click">
                     <Button.Background>
                         <ImageBrush Stretch="Uniform" ImageSource="/Assets/friends.png"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="inbox" Width="80" Height="80" BorderThickness="0" BorderBrush="{x:Null}">
+                <Button x:Name="inbox" Width="80" Height="80" BorderThickness="0" BorderBrush="{x:Null}" Click="inbox_Click">
                     <Button.Background>
                         <ImageBrush Stretch="Uniform" ImageSource="/Assets/inbox.png"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="network" Width="80" Height="80" BorderThickness="0" BorderBrush="{x:Null}">
+                <Button x:Name="network" Width="80" Height="80" BorderThickness="0" BorderBrush="{x:Null}" Click="network_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Assets/iconic.png" Stretch="UniformToFill"/>
                     </Button.Background>

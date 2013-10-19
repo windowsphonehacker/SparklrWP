@@ -14,8 +14,6 @@ namespace SparklrWP.Pages
     public partial class MainPage : PhoneApplicationPage
     {
 
-        bool popupVisible = false;
-
         // Constructor
         public MainPage()
         {
@@ -41,6 +39,56 @@ namespace SparklrWP.Pages
             this.ApplicationBar.MenuItems.Add(garbageCollect);
 #endif
         }
+
+        //!!!!!!!!IMPORTANT!!!!!!!
+        //IF YOU CREATE A NEW PAGE, YOU MUST ADD: SPARKLRMENU CONTROL, NOTIFICATION BORDER AND THIS REGION!!!!!!!!
+        #region Notification
+        bool popupVisible = false;
+
+        private void Notification_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            SparklrTextBlock control = sender as SparklrTextBlock;
+
+            if (control != null)
+            {
+                NotificationViewModel m = (NotificationViewModel)control.DataContext;
+                if (m.NavigationUri != null)
+                    NavigationService.Navigate(m.NavigationUri);
+            }
+        }
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (this.NavigationContext.QueryString.ContainsKey("FileId"))
+            {
+                string fileToken = this.NavigationContext.QueryString["FileId"].EncodeUrl();
+                this.NavigationContext.QueryString.Remove("FileId");
+                NavigationService.Navigate(new Uri(String.Format("/Pages/NewPostPage.xaml?FileId={0}", fileToken), UriKind.Relative));
+            }
+            if (this.NavigationContext.QueryString.ContainsKey("notification") && e.NavigationMode == NavigationMode.New)
+            {
+                BorderNotification_Tap(this, new System.Windows.Input.GestureEventArgs());
+            }
+        }
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (popupVisible)
+            {
+                NotificationDisappear.Begin();
+                popupVisible = false;
+                e.Cancel = true;
+            }
+        }
+        private void BorderNotification_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            if (!popupVisible)
+            {
+                NotificationAppear.Begin();
+                popupVisible = true;
+            }
+        }
+        #endregion
 
         /*
         double distanceFromBottom = -1;
@@ -108,21 +156,7 @@ namespace SparklrWP.Pages
             //}
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-            if (this.NavigationContext.QueryString.ContainsKey("FileId"))
-            {
-                string fileToken = this.NavigationContext.QueryString["FileId"].EncodeUrl();
-                this.NavigationContext.QueryString.Remove("FileId");
-                NavigationService.Navigate(new Uri(String.Format("/Pages/NewPostPage.xaml?FileId={0}", fileToken), UriKind.Relative));
-            }
-            if (this.NavigationContext.QueryString.ContainsKey("notification") && e.NavigationMode == NavigationMode.New)
-            {
-                BorderNotification_Tap(this, new System.Windows.Input.GestureEventArgs());
-            }
-        }
+        
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
@@ -133,30 +167,12 @@ namespace SparklrWP.Pages
         {
             NavigationService.Navigate(new Uri("/Pages/AboutPage.xaml", UriKind.Relative));
         }
-
-        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
-        {
-            if (popupVisible)
-            {
-                NotificationDisappear.Begin();
-                popupVisible = false;
-                e.Cancel = true;
-            }
-        }
-
         private void StackPanel_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             NavigationService.Navigate(new Uri("/Pages/ProfilePage.xaml?userId=" + ((StackPanel)sender).Tag, UriKind.Relative));
         }
 
-        private void BorderNotification_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            if (!popupVisible)
-            {
-                NotificationAppear.Begin();
-                popupVisible = true;
-            }
-        }
+       
 
         private void MainListBox_TopRefresh(object sender, EventArgs e)
         {
@@ -179,17 +195,7 @@ namespace SparklrWP.Pages
             NavigationService.Navigate(new Uri("/Pages/InboxPage.xaml", UriKind.Relative));
         }
 
-        private void Notification_Tap(object sender, System.Windows.Input.GestureEventArgs e)
-        {
-            SparklrTextBlock control = sender as SparklrTextBlock;
-
-            if (control != null)
-            {
-                NotificationViewModel m = (NotificationViewModel)control.DataContext;
-                if (m.NavigationUri != null)
-                    NavigationService.Navigate(m.NavigationUri);
-            }
-        }
+       
 
         private void AboutMenuItem_Click(object sender, EventArgs e)
         {
