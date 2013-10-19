@@ -80,7 +80,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" HorizontalAlignment="Center">
             <sparklrControls:SparklrMenu />
-            <Border x:Name="BorderNotification" Background="{StaticResource SparklrBackgroundDarkBrush}" CornerRadius="90" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,-75,0" Tap="BorderNotification_Tap" Height="60" Width="60">
+            <Border Visibility="Collapsed" x:Name="BorderNotification" Background="{StaticResource SparklrBackgroundDarkBrush}" CornerRadius="90" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,-75,0" Tap="BorderNotification_Tap" Height="60" Width="60">
                 <TextBlock Name="NotificationCount" Foreground="White" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
             </Border>
         </Grid>
