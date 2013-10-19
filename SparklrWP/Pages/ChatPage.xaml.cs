@@ -1,9 +1,11 @@
 ﻿using Microsoft.Phone.Controls;
+using SparklrWP.Controls;
 using SparklrWP.Utils;
 using SparklrWP.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace SparklrWP.Pages
 {
@@ -17,6 +19,40 @@ namespace SparklrWP.Pages
             InitializeComponent();
             loadingOverlay.Visibility = System.Windows.Visibility.Visible;
         }
+
+        #region Notification
+        bool popupVisible = false;
+
+        private void Notification_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            SparklrTextBlock control = sender as SparklrTextBlock;
+
+            if (control != null)
+            {
+                NotificationViewModel m = (NotificationViewModel)control.DataContext;
+                if (m.NavigationUri != null)
+                    NavigationService.Navigate(m.NavigationUri);
+            }
+        }
+        protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
+        {
+            if (popupVisible)
+            {
+                NotificationDisappear.Begin();
+                popupVisible = false;
+                e.Cancel = true;
+            }
+        }
+        private void BorderNotification_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            if (!popupVisible)
+            {
+                NotificationAppear.Begin();
+                popupVisible = true;
+            }
+        }
+        #endregion
+
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
@@ -53,6 +89,11 @@ namespace SparklrWP.Pages
             {
                 if (loadingOverlay.Visibility == System.Windows.Visibility.Visible)
                     loadingOverlay.FinishLoading();
+            }
+
+            if (this.NavigationContext.QueryString.ContainsKey("notification") && e.NavigationMode == NavigationMode.New)
+            {
+                BorderNotification_Tap(this, new System.Windows.Input.GestureEventArgs());
             }
         }
 

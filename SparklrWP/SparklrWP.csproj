@@ -163,6 +163,9 @@
       <DependentUpon>LoadingOverlay.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\SparklrMenu.xaml.cs">
+      <DependentUpon>SparklrMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SparklrPostControl.xaml.cs">
       <DependentUpon>SparklrPostControl.xaml</DependentUpon>
     </Compile>
@@ -264,6 +267,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LoadingOverlay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\SparklrMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -423,8 +430,11 @@
     </Content>
     <Content Include="Assets\b34edfca99432bd8a71c2883a61708d10de2c923.png" />
     <Content Include="Assets\connessione-di-rete_318-10835.jpg" />
+    <Content Include="Assets\friends.png" />
     <Content Include="Assets\GIF.png" />
+    <Content Include="Assets\home.png" />
     <Content Include="Assets\iconic.png" />
+    <Content Include="Assets\inbox.png" />
     <Content Include="Assets\Message.png" />
     <Content Include="Assets\Next.png" />
     <Content Include="Assets\Search.png" />
