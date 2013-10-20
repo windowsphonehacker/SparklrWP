@@ -16,7 +16,7 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
+    shell:SystemTray.IsVisible="True" >
     
      <!--test-->    
     <!--COPY ALSO THIS!!!!!!!!!!!!-->
@@ -159,7 +159,7 @@
                         <TextBlock Text="{Binding About}" TextWrapping="Wrap" Grid.Column="1" Padding="17,0,0,0" Style="{StaticResource PhoneTextSubtleStyle}" />
                     </Grid>
                     <!--<TextBlock Style="{StaticResource PhoneTextSubtleStyle}">Tap on any item to edit it.</TextBlock>-->
-                    <Button Click="Button_Click">Inbox</Button>
+                    <Button Visibility="Collapsed" Click="Button_Click">Inbox</Button>
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

@@ -21,22 +21,23 @@ namespace SparklrWP.Controls
 
         private void home_Click(object sender, EventArgs e)
         {
-            //NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
+            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
         }
 
         private void friends_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
+            
+            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/Pages/MainPage.xaml?page=1", UriKind.Relative));
         }
 
         private void inbox_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
+            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/Pages/InboxPage.xaml", UriKind.Relative));
         }
 
         private void network_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
+            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/Pages/MainPage.xaml?page=3", UriKind.Relative));
         }
        
         

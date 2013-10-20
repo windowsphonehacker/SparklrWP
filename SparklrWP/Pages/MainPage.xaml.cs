@@ -39,7 +39,6 @@ namespace SparklrWP.Pages
             this.ApplicationBar.MenuItems.Add(garbageCollect);
 #endif
         }
-
         //!!!!!!!!IMPORTANT!!!!!!!
         //IF YOU CREATE A NEW PAGE, YOU MUST ADD: SPARKLRMENU CONTROL, NOTIFICATION BORDER AND THIS REGION!!!!!!!!
         #region Notification
@@ -70,6 +69,14 @@ namespace SparklrWP.Pages
             {
                 BorderNotification_Tap(this, new System.Windows.Input.GestureEventArgs());
             }
+            string pivotIndex = "";
+
+            if (NavigationContext.QueryString.TryGetValue("page", out pivotIndex))
+            {
+                //-1 because the Pivot is 0-indexed, so pivot item 2 has an index of 1
+                mainPivot.SelectedIndex = Convert.ToInt32(pivotIndex);
+            }
+    
         }
         protected override void OnBackKeyPress(System.ComponentModel.CancelEventArgs e)
         {
