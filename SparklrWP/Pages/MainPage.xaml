@@ -18,7 +18,7 @@
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
     
-    
+     <!--test-->    
     <!--COPY ALSO THIS!!!!!!!!!!!!-->
     <phone:PhoneApplicationPage.Resources>
         <Storyboard x:Name="NotificationAppear">
