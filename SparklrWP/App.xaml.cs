@@ -12,6 +12,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using System.Windows.Resources;
 
 namespace SparklrWP
 {
@@ -32,7 +33,10 @@ namespace SparklrWP
         /// Constructor for the Application object.
         /// </summary>
         public App()
+        
         {
+            // Copy media to isolated storage.
+            CopyToIsolatedStorage();
             Globals.LoggingFunction = logger.log;
             // Global handler for uncaught exceptions. 
             UnhandledException += Application_UnhandledException;
@@ -69,7 +73,34 @@ namespace SparklrWP
             }
 
         }
+        private void CopyToIsolatedStorage()
+        {
+            using (IsolatedStorageFile storage = IsolatedStorageFile.GetUserStoreForApplication())
+            {
+                string[] files = new string[] { "easteregg.wma"};
 
+                foreach (var _fileName in files)
+                {
+                    if (!storage.FileExists(_fileName))
+                    {
+                        string _filePath = "Pages/" + _fileName;
+                        StreamResourceInfo resource = Application.GetResourceStream(new Uri(_filePath, UriKind.Relative));
+
+                        using (IsolatedStorageFileStream file = storage.CreateFile(_fileName))
+                        {
+                            int chunkSize = 4096;
+                            byte[] bytes = new byte[chunkSize];
+                            int byteCount;
+
+                            while ((byteCount = resource.Stream.Read(bytes, 0, chunkSize)) > 0)
+                            {
+                                file.Write(bytes, 0, byteCount);
+                            }
+                        }
+                    }
+                }
+            }
+        }
         static internal bool SuppressNotifications = false;
         private int previousNotifications = 0;
         async void SparklrClient_NotificationsReceived(object sender, SparklrLib.Objects.NotificationEventArgs e)
