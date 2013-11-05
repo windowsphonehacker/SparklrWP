@@ -168,7 +168,7 @@
                 </ListBox>
             </controls:PivotItem>
 
-            <controls:PivotItem x:Name="network" Margin="12,12,12,0">
+            <controls:PivotItem Visibility="Collapsed" x:Name="network" Margin="12,12,12,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
