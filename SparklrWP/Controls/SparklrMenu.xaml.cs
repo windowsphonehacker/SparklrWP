@@ -37,7 +37,7 @@ namespace SparklrWP.Controls
 
         private void network_Click(object sender, RoutedEventArgs e)
         {
-            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/Pages/MainPage.xaml?page=3", UriKind.Relative));
+            
         }
        
         
