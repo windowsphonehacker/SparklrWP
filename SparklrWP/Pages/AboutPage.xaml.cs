@@ -10,17 +10,12 @@ namespace SparklrWP.Pages
         {
             InitializeComponent();
         }
-
+#if RELEASEDEVELOPERS
         private void TextBlock_DoubleTap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            
-            new AudioTrack(new Uri("easteregg.wma", UriKind.Relative),
-                    "Easter Egg :)",
-                    "Easter Egg :)",
-                    "Easter Egg :)",
-                    null);
-
-            BackgroundAudioPlayer.Instance.Play();
+            NavigationService.Navigate(new Uri("/Pages/UOVODIPASQUA.xaml", UriKind.Relative));
         }
+#endif
+
     }
 }

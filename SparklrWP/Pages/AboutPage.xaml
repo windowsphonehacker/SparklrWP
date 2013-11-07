@@ -22,16 +22,15 @@
 
         <StackPanel Grid.Row="0" Margin="12,17,14,28">
             <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"  Style="{StaticResource SparklrTextNormalStyle}" Margin="0,0,12,0"/>
-            <TextBlock Text="About" Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" DoubleTap="TextBlock_DoubleTap"/>
+            <TextBlock Text="About" Margin="0,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" />
         </StackPanel>
 
         <!--ContentPanel - inserire ulteriore contenuto qui-->
         <Grid x:Name="ContentPanel" Margin="10" Grid.Row="1">
             <ListBox>
-				<TextBlock Text="{Binding Version}" VerticalAlignment="Top" />
-                
+				<TextBlock Text="{Binding Version}" VerticalAlignment="Top"  />
                 <TextBlock TextWrapping="Wrap" Text="Sparklr Branding © Jonathan Warner" Style="{StaticResource PhoneTextSubtleStyle}" Padding="0,0,0,15"/>
-                
+
                 <TextBlock Text="Development-Team" Style="{StaticResource PhoneTextLargeStyle}" />
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource ListBoxItemStackpanelStyle}">

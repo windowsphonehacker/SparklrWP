@@ -46,6 +46,17 @@
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>..\Bin\WP7\Release\Microsoft.Phone.Controls.Toolkit.Updated.xml</DocumentationFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseDEVELOPERS|AnyCPU'">
+    <OutputPath>bin\ReleaseDEVELOPERS\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;WP7</DefineConstants>
+    <DocumentationFile>..\Bin\WP7\Release\Microsoft.Phone.Controls.Toolkit.Updated.xml</DocumentationFile>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls" />
