@@ -9,6 +9,7 @@
     xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	shell:SystemTray.BackgroundColor="#FF454050"
     xmlns:utils="clr-namespace:SparklrWP.Utils"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696" 
     
@@ -16,9 +17,9 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
-    shell:SystemTray.IsVisible="True" >
-    
-     <!--test-->    
+    shell:SystemTray.IsVisible="True" Background="#FF454050" >
+
+    <!--test-->
     <!--COPY ALSO THIS!!!!!!!!!!!!-->
     <phone:PhoneApplicationPage.Resources>
         <Storyboard x:Name="NotificationAppear">
@@ -79,18 +80,21 @@
             </controls:Pivot.Background>
             <controls:Pivot.TitleTemplate>
                 <DataTemplate>
-                    
-                    
+
+
                     <!--COPY THE GRID (margin are modificable)-->
                     <Grid Margin="0,-12,24,0">
                         <sparklrControls:SparklrMenu HorizontalAlignment="Center"/>
-                        <Border x:Name="BorderNotification" Background="{StaticResource SparklrBackgroundDarkBrush}" CornerRadius="90" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,-16,0" Tap="BorderNotification_Tap" Height="60" Width="60">
+                        <Border x:Name="BorderNotification" CornerRadius="90" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,10,-16,0" Tap="BorderNotification_Tap" Height="60" Width="60">
+                            <Border.Background>
+                                <SolidColorBrush Color="{StaticResource SparklrBackgroundDarkColor}"/>
+                            </Border.Background>
                             <TextBlock Name="NotificationCount" Foreground="White" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
                         </Border>
                     </Grid>
                     <!--COPY THE GRID (margin are modificable)-->
-                    
-                    
+
+
                 </DataTemplate>
 
             </controls:Pivot.TitleTemplate>
@@ -113,7 +117,7 @@
                     <!-- Template for the letters inside the list -->
                     <toolkit:LongListSelector.GroupHeaderTemplate>
                         <DataTemplate>
-                            <Border Height="75" Width="75" Background="{StaticResource SparklrBackgroundDarkBrush}" HorizontalAlignment="Left" Margin="13,6,12,6">
+                            <Border Background="{StaticResource SparklrBackgroundDarkBrush}" HorizontalAlignment="Left" Margin="13,6,12,6">
                                 <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
                             </Border>
                         </DataTemplate>
@@ -139,7 +143,7 @@
                     <!-- Template for the popup letters -->
                     <toolkit:LongListSelector.GroupItemTemplate>
                         <DataTemplate>
-                            <Border Height="75" Width="75" Background="{StaticResource SparklrBackgroundDarkBrush}" HorizontalAlignment="Left" Margin="12,6" IsHitTestVisible="{Binding HasItems}">
+                            <Border Background="{StaticResource SparklrBackgroundDarkBrush}" HorizontalAlignment="Left" Margin="12,6" IsHitTestVisible="{Binding HasItems}">
                                 <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
                             </Border>
                         </DataTemplate>
@@ -168,7 +172,7 @@
                 </ListBox>
             </controls:PivotItem>
 
-            <controls:PivotItem Visibility="Collapsed" x:Name="network" Margin="12,12,12,0">
+            <!--<controls:PivotItem x:Name="network" Margin="12,12,12,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -178,13 +182,13 @@
                     <ListBox ItemsSource="{Binding TrackedNetworks}" Grid.Row="1">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <!-- todo: prettify -->
-                                <TextBlock Text="{Binding}" Style="{StaticResource PhoneTextTitle2Style}" toolkit:TiltEffect.IsTiltEnabled="True" Tap="NetworkTextBlock_Tap" Foreground="Black" />
+                                //todo: prettify
+                                <TextBlock Text="{Binding}" Style="{StaticResource PhoneTextTitle2Style}" toolkit:TiltEffect.IsTiltEnabled="True" Tap="NetworkTextBlock_Tap" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
-            </controls:PivotItem>
+            </controls:PivotItem>-->
 
         </controls:Pivot>
 

@@ -11,7 +11,7 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True">
+    shell:SystemTray.IsVisible="False">
 	<phone:PhoneApplicationPage.Resources>
 		<Storyboard x:Name="easteregg"/>
 	</phone:PhoneApplicationPage.Resources>
@@ -57,7 +57,7 @@
 		<TextBlock x:Name="_32" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe WP Black" FontSize="32" d:IsHidden="True">Nights</TextBlock>
 		<TextBlock x:Name="_33" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe WP Black" FontSize="32" d:IsHidden="True">like</TextBlock>
 		<TextBlock x:Name="_34" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe WP Black" FontSize="32" d:IsHidden="True">these</TextBlock>
-		<TextBlock x:Name="_35" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe WP Black" FontSize="32" d:IsHidden="True">leads</TextBlock>
+		<TextBlock x:Name="_35" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe WP Black" FontSize="32" d:IsHidden="True">lead</TextBlock>
 		<TextBlock x:Name="_36" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe WP Black" FontSize="32" d:IsHidden="True">to</TextBlock>
 		<TextBlock x:Name="_37" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe WP Black" FontSize="32" d:IsHidden="True">Love</TextBlock>
 		<TextBlock x:Name="_38" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Segoe WP Black" FontSize="32" d:IsHidden="True">like</TextBlock>

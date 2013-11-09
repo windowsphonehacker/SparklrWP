@@ -9,6 +9,7 @@
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
+	shell:SystemTray.BackgroundColor="#FF454050"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait" Style="{StaticResource Animated}"
     mc:Ignorable="d" d:DataContext="{d:DesignData ../SampleData/SettingsViewModelSampleData.xaml}"

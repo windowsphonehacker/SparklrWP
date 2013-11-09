@@ -17,7 +17,7 @@ namespace SparklrWP.Pages
         {
             InitializeComponent();
 			MediaPlayer.Stop();
-            Uri easteregg = new Uri("easteregg.wav");
+            Uri easteregg = new Uri("easteregg.wma");
 			Song song = Song.FromUri("easteregg", easteregg);
             MediaPlayer.Play(song);
         }

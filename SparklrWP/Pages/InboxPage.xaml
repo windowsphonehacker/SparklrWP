@@ -9,6 +9,7 @@
     xmlns:converters="clr-namespace:SparklrWP.Utils.Converters"
     xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
+	shell:SystemTray.BackgroundColor="#FF454050"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"

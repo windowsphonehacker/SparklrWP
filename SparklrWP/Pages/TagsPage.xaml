@@ -9,6 +9,7 @@
     xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
+	shell:SystemTray.BackgroundColor="#FF454050"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"

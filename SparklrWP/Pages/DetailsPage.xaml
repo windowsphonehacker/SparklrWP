@@ -14,6 +14,7 @@
 	FontFamily="{StaticResource PhoneFontFamilyNormal}"
 	FontSize="{StaticResource PhoneFontSizeNormal}"
 	Foreground="{StaticResource PhoneForegroundBrush}"
+    shell:SystemTray.BackgroundColor="#FF454050"
 	SupportedOrientations="Portrait"  Orientation="Portrait" 
 	shell:SystemTray.IsVisible="True" Style="{StaticResource Animated}">
 
@@ -108,7 +109,7 @@
                     <ListBox ItemsSource="{Binding Comments}" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
-                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
                             </Style>
                         </ListBox.ItemContainerStyle>
                         <ListBox.ItemTemplate>
