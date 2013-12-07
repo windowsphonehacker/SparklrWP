@@ -209,7 +209,7 @@ namespace SparklrWP.Pages
         {
             NavigationService.Navigate(new Uri("/Pages/SettingsPage.xaml", UriKind.Relative));
         }
-        /*
+        
         private void networkNameTextBox_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Enter)
@@ -237,7 +237,7 @@ namespace SparklrWP.Pages
             name = NetworkHelpers.UnformatNetworkName(name);
             NavigationService.Navigate(new Uri("/Pages/NetworkPage.xaml?network=" + name.EncodeUrl(), UriKind.Relative));
         }
-        */
+        
         private void Logout_Click(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/Pages/LoginPage.xaml?logout=true", UriKind.Relative));

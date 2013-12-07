@@ -88,9 +88,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        
-        
+
+        <!-- Visibility set in code behind -->
+        <sparklrControls:LoadingOverlay x:Name="loadingOverlay" Visibility="Collapsed" Margin="0,0,0,0" Grid.RowSpan="3"  />
+
         <!--COPY THE GRID (margin are modificable)-->
         <Grid Grid.Row="0" Margin="0,0,0,0">
             <sparklrControls:SparklrMenu Margin="0,0,0,0"/>
@@ -99,10 +100,10 @@
             </Border>
         </Grid>
         <!--COPY THE GRID (margin are modificable)-->
-        
-        
-        
-        
+
+
+
+
         <!--TitlePanel enthält den Namen der Anwendung und den Seitentitel-->
         <StackPanel Grid.Row="1" >
             <!-- <TextBlock Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"  Style="{StaticResource SparklrTextNormalStyle}" Margin="0,0,12,0"/> -->
@@ -144,8 +145,7 @@
             </ListBox>
             <codingForFun:ChatBubbleTextBox Grid.Row="1" ChatBubbleDirection="LowerRight" Margin="75,0,0,5" KeyDown="ChatBubbleTextBox_KeyDown" Text="{Binding Message, Mode=TwoWay}" x:Name="chatBubbleTextBox" InputScope="Chat" />
         </Grid>
-        <!-- Visibility set in code behind -->
-        <sparklrControls:LoadingOverlay x:Name="loadingOverlay" Visibility="Collapsed" />
+
     </Grid>
 
 </phone:PhoneApplicationPage>

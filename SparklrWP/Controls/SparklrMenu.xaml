@@ -16,13 +16,59 @@
     Foreground="{StaticResource PhoneForegroundBrush}">
 
     <UserControl.Resources>
-        
+        <Storyboard x:Name="NotificationAppear">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="NotificationPopup">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-90">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseInOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CircleEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Name="NotificationDisappear">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
+                <DiscreteObjectKeyFrame KeyTime="0">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.3">
+                    <DiscreteObjectKeyFrame.Value>
+                        <Visibility>Visible</Visibility>
+                    </DiscreteObjectKeyFrame.Value>
+                </DiscreteObjectKeyFrame>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" Storyboard.TargetName="NotificationPopup">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseIn"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="90">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <CubicEase EasingMode="EaseIn"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </UserControl.Resources>
     <UserControl.Background>
         <StaticResource ResourceKey="SparklrBackgroundBrush"/>
     </UserControl.Background>
     <Grid>
-        <Grid Margin="0,0,0,0" Background="{StaticResource SparklrBackgroundBrush}">
+        <Grid Margin="0,0,0,0" Background="{StaticResource SparklrBackgroundBrush}" d:DataContext="{d:DesignData ../SampleData/NotificationSampleData.xaml}">
             
             <StackPanel Orientation="Horizontal" Margin="0,00,0,0" HorizontalAlignment="Center">
                 <Button x:Name="home" Width="80" Height="80" BorderBrush="{x:Null}" BorderThickness="0" Click="home_Click">
@@ -40,13 +86,43 @@
                         <ImageBrush Stretch="Uniform" ImageSource="/Assets/inbox.png"/>
                     </Button.Background>
                 </Button>
-                <Button x:Name="network" Width="80" Height="80" BorderThickness="0" BorderBrush="{x:Null}" Click="network_Click">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/Assets/iconic.png" Stretch="UniformToFill"/>
-                    </Button.Background>
+                
+                <Button x:Name="profile" Width="80" Height="80" BorderThickness="0" BorderBrush="{x:Null}" Click="network_Click">
+                        <sparklrControls:ExtendedImageControl Width="60" Height="60" ImageSource="{Binding ProfileImage}" Style="{StaticResource SparklrProfileExtendedImageLargeStyle}" Margin="-12,-5,0,0" Grid.Column="0"/>
                 </Button>
+                
             </StackPanel>
+            <!--<Border x:Name="BorderNotification" CornerRadius="90" VerticalAlignment="Top" HorizontalAlignment="Right" Tap="BorderNotification_Tap" Height="60" Width="60" Margin="0,10,10,0">
+                <Border.Background>
+                    <SolidColorBrush Color="{StaticResource SparklrBackgroundDarkColor}"/>
+                </Border.Background>
+                <TextBlock Name="NotificationCount" Foreground="White" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
+            </Border>-->
         </Grid>
-        
+        <!--<Grid x:Name="NotificationPopup" Margin="0" Visibility="Collapsed" Background="{StaticResource SparklrBackgroundDarkBrush}">
+            <Grid.Projection>
+                <PlaneProjection RotationY="-90"/>
+            </Grid.Projection>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Style="{StaticResource PhoneTextExtraLargeStyle}" Text="{Binding Path=LocalizedResources.MainNotifications, Source={StaticResource LocalizedStrings}}"/>
+            <ScrollViewer Grid.Row="1">
+                <ListBox ItemsSource="{Binding Notifications}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <sparklrControls:SparklrTextBlock Text="{Binding Message}" Margin="5,3" toolkit:TiltEffect.IsTiltEnabled="True" Tap="Notification_Tap" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    Workaround used to stretch the child elements to the full width -> HorizontalContentAlignment won't work for some reason... 
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </ScrollViewer>
+        </Grid>-->
     </Grid>
 </UserControl>

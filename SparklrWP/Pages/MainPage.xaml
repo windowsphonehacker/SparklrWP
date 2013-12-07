@@ -117,7 +117,7 @@
                     <!-- Template for the letters inside the list -->
                     <toolkit:LongListSelector.GroupHeaderTemplate>
                         <DataTemplate>
-                            <Border Background="{StaticResource SparklrBackgroundDarkBrush}" HorizontalAlignment="Left" Margin="13,6,12,6">
+                            <Border Background="{StaticResource SparklrBackgroundDarkBrush}" Height="75" Width="75" HorizontalAlignment="Left" Margin="13,6,12,6">
                                 <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
                             </Border>
                         </DataTemplate>
@@ -128,7 +128,7 @@
                         <DataTemplate>
                             <StackPanel Tag="{Binding Id}" Orientation="Horizontal" Tap="StackPanel_Tap" Style="{StaticResource ListBoxItemStackpanelStyle}">
                                 <sparklrControls:ExtendedImageControl ImageSource="{Binding Image}" Style="{StaticResource SparklrProfileExtendedImageSmallStyle}" Margin="0,0,12,0" />
-                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" Style="{StaticResource PhoneTextExtraLargeStyle}" />
                             </StackPanel>
                         </DataTemplate>
                     </toolkit:LongListSelector.ItemTemplate>
@@ -143,8 +143,8 @@
                     <!-- Template for the popup letters -->
                     <toolkit:LongListSelector.GroupItemTemplate>
                         <DataTemplate>
-                            <Border Background="{StaticResource SparklrBackgroundDarkBrush}" HorizontalAlignment="Left" Margin="12,6" IsHitTestVisible="{Binding HasItems}">
-                                <TextBlock TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
+                            <Border Height="90" Width="90" Background="{StaticResource SparklrBackgroundDarkBrush}" HorizontalAlignment="Left" Margin="12,6" IsHitTestVisible="{Binding HasItems}">
+                                <TextBlock  TextWrapping="Wrap" Text="{Binding Title}" Style="{StaticResource PhoneTextExtraLargeStyle}" HorizontalAlignment="Left" Margin="3,0,12,0" VerticalAlignment="Bottom" />
                             </Border>
                         </DataTemplate>
                     </toolkit:LongListSelector.GroupItemTemplate>
@@ -172,7 +172,7 @@
                 </ListBox>
             </controls:PivotItem>
 
-            <!--<controls:PivotItem x:Name="network" Margin="12,12,12,0">
+            <controls:PivotItem x:Name="network" Margin="12,12,12,0">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -182,13 +182,13 @@
                     <ListBox ItemsSource="{Binding TrackedNetworks}" Grid.Row="1">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                //todo: prettify
+                                
                                 <TextBlock Text="{Binding}" Style="{StaticResource PhoneTextTitle2Style}" toolkit:TiltEffect.IsTiltEnabled="True" Tap="NetworkTextBlock_Tap" />
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Grid>
-            </controls:PivotItem>-->
+            </controls:PivotItem>
 
         </controls:Pivot>
 
