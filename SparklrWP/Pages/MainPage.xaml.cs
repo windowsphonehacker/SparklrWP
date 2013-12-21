@@ -8,6 +8,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using Telerik.Windows.Controls;
 
 namespace SparklrWP.Pages
 {
@@ -18,7 +19,7 @@ namespace SparklrWP.Pages
         public MainPage()
         {
             InitializeComponent();
-
+            
             // Set the data context of the listbox control to the sample data
             LayoutRoot.DataContext = App.MainViewModel;
 

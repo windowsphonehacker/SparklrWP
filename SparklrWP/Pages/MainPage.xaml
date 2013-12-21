@@ -5,12 +5,13 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
+    xmlns:telerikCore="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Core"
     xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	shell:SystemTray.BackgroundColor="#FF454050"
-    xmlns:utils="clr-namespace:SparklrWP.Utils"
+    xmlns:controls1="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+    xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="696" 
     
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
@@ -22,6 +23,7 @@
     <!--test-->
     <!--COPY ALSO THIS!!!!!!!!!!!!-->
     <phone:PhoneApplicationPage.Resources>
+        
         <Storyboard x:Name="NotificationAppear">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="NotificationPopup">
                 <DiscreteObjectKeyFrame KeyTime="0">
@@ -105,7 +107,7 @@
                     <sparklrControls:ExtendedListBox x:Name="MainListBox" ItemsSource="{Binding Items}" UnderlyingSelectionChanged="MainListBox_SelectionChanged" TopRefresh="MainListBox_TopRefresh" LoadMore="MainListBox_LoadMore" >
                         <sparklrControls:ExtendedListBox.ItemTemplate>
                             <DataTemplate>
-                                <sparklrControls:SparklrPostControl Post="{Binding}" toolkit:TiltEffect.IsTiltEnabled="True" Margin="0,0,0,20" />
+                                <sparklrControls:SparklrPostControl Post="{Binding}" controls1:TiltEffect.IsTiltEnabled="True" Margin="0,0,0,20" />
                             </DataTemplate>
                         </sparklrControls:ExtendedListBox.ItemTemplate>
                     </sparklrControls:ExtendedListBox>

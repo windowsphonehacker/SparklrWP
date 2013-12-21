@@ -13,6 +13,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using System.Windows.Resources;
+using Telerik.Windows.Controls;
 
 namespace SparklrWP
 {
@@ -262,19 +263,21 @@ namespace SparklrWP
 
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
-            RootFrame = new Microsoft.Phone.Controls.Updated.TransitionFrame()
-                {
-                    Background = new SolidColorBrush(Colors.Transparent)
-                };
-
+            RadTransition transition = new RadTransition();
+            transition.BackwardInAnimation = this.Resources["SparklrAnimationIn"] as RadFadeAnimation;
+            transition.BackwardOutAnimation = this.Resources["SparklrAnimationOut"] as RadFadeAnimation;
+            transition.ForwardInAnimation = this.Resources["SparklrAnimationIn"] as RadFadeAnimation;
+            transition.ForwardOutAnimation = this.Resources["SparklrAnimationOut"] as RadFadeAnimation;
+            transition.PlayMode = TransitionPlayMode.Consecutively;
+            RadPhoneApplicationFrame frame = new RadPhoneApplicationFrame();
+            frame.Transition = transition;
+            RootFrame = frame;
             RootFrame.Navigated += CompleteInitializePhoneApplication;
-            RootFrame.Navigating += RootFrame_Navigating;
-            GlobalLoading.Instance.Initialize(RootFrame);
-
             // Handle navigation failures
             RootFrame.NavigationFailed += RootFrame_NavigationFailed;
             // Ensure we don't initialize again
             phoneApplicationInitialized = true;
+
         }
 
         // Do not add any additional code to this method
