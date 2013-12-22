@@ -9,7 +9,7 @@
   <AppExtra xmlns="" AppPlatformVersion="8.0">
     <Extra Name="Tiles" />
   </AppExtra>
-  <App xmlns="" ProductID="{987368f0-9b7c-4f46-877e-08c564514e13}" Title="Sparklr*" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Sparklr Team" Description="Sample description" Publisher="Jonathan Warner" BitsPerPixel="32" PublisherID="{81b3069b-08dc-4546-9773-d6b124d73aef}">
+  <App xmlns="" ProductID="{987368f0-9b7c-4f46-877e-08c564514e13}" Title="Sparklr*" RuntimeType="Silverlight" Version="2.0.0.0" Genre="apps.normal" Author="Sparklr Team" Description="Sample description" Publisher="Jonathan Warner" BitsPerPixel="32" PublisherID="{81b3069b-08dc-4546-9773-d6b124d73aef}">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_IDENTITY_DEVICE" />
