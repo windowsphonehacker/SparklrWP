@@ -20,7 +20,7 @@
             <resources:Images x:Key="ImageResources"/>
             <!-- Aviary sucks, uncomment the next line to fix it's supposed multilinguality -->
             <!-- <aviary:LocalizedStrings xmlns:aviary="clr-namespace:AviarySDK;assembly=AviarySDK" x:Key="LocalizedStrings" /> -->
-            <local:LocalizedStrings xmlns:local="clr-namespace:SparklrWP" x:Key="LocalizedStrings"/>
+            <local:LocalizedStrings x:Key="LocalizedStrings"/>
             <local:BindableSettings x:Key="Settings" />
             
             

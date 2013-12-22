@@ -3,18 +3,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls.Updated;assembly=Microsoft.Phone.Controls.Toolkit.Updated"
-    xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
+             xmlns:sparklrControls="clr-namespace:SparklrWP.Controls"
     mc:Ignorable="d"
     xmlns:converters="clr-namespace:SparklrWP.Utils.Converters"
     xmlns:codingForFun="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+    xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     Background="White"
     d:DesignHeight="480" d:DesignWidth="480" Padding="12,0" Margin="0">
 
-    <Grid x:Name="LayoutRoot" toolkit:TiltEffect.IsTiltEnabled="True">
+    <Grid x:Name="LayoutRoot" codingForFun:TiltEffect.IsTiltEnabled="True">
         <Grid.Resources>
             <ResourceDictionary>
                 <converters:TimestampToRelativeTimeConverter x:Key="timestampToRelativeTimeConverter" />
@@ -48,9 +48,9 @@
          </Grid>
         </codingForFun:ChatBubble>
     </Grid>
-    <toolkit:ContextMenuService.ContextMenu>
-        <toolkit:ContextMenu x:Name="PostContextMenu">
-            <toolkit:MenuItem Header="Delete" x:Name="DeletePost" Click="DeletePost_Click" />
-        </toolkit:ContextMenu>
-    </toolkit:ContextMenuService.ContextMenu>
+    <telerikPrimitives:RadContextMenu.ContextMenu>
+        <telerikPrimitives:RadContextMenu x:Name="PostContextMenu">
+            <telerikPrimitives:RadContextMenuItem  Content="Delete" x:Name="DeletePost" Tapped="DeletePost_Click" />
+        </telerikPrimitives:RadContextMenu>
+    </telerikPrimitives:RadContextMenu.ContextMenu>
 </UserControl>
