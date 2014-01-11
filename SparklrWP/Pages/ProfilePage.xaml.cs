@@ -1,5 +1,4 @@
 ﻿extern alias ImageToolsDLL;
-using Microsoft.Phone.Controls.Updated;
 using SparklrLib.Objects;
 using SparklrLib.Objects.Responses;
 using SparklrLib.Objects.Responses.Work;
@@ -18,7 +17,7 @@ namespace SparklrWP.Pages
     public partial class ProfilePage : Microsoft.Phone.Controls.PhoneApplicationPage
     {
         ProfileViewModel model;
-        ListPicker filterModePicker;
+        Telerik.Windows.Controls.ListPicker filterModePicker;
 
         public ProfilePage()
         {
