@@ -6,3 +6,12 @@ The app is currently under heavy development, so it's not available in the marke
 ###http://ci.dy.fi/job/SparklrWP/
 to download an highly unstable development build. As usual, we are not responsible for any lost data or damages to your device. Also, we can't be held liable if you're getting addicted to either the sparklr network or our app.
 
+##How to open SparklrWP.sln?
+You must install the WP7.8 SDK and use VS2012 (DON'T USE THE 2013 VERSION!!!)
+
+##How to open the SparklriOSAndroid.sln?
+You need a Mac with xcode, Android SDK and Xamarin Studio to compile these.
+###The build server comes soon.
+
+##How can I help you?
+Star this repository and fork. If you want, add commits to your fork, then open a pull request talking about your changes. We evaluate your work and finally we merge your fork.
