@@ -36,5 +36,19 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSMainNibFile</key>
+	<string>FirstViewController_iPhone</string>
+	<key>NSMainNibFile~ipad</key>
+	<string>FirstViewController_iPad</string>
+	<key>UIPrerenderedIcon</key>
+	<true/>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>appicon57</string>
+		<string>appicon29</string>
+		<string>appicon58</string>
+		<string>appicon50</string>
+		<string>appicon40</string>
+	</array>
 </dict>
 </plist>
