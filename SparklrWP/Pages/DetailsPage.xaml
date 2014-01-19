@@ -81,7 +81,7 @@
         <!--TitlePanel contains the name of the application and page title-->
         <!--COPY THE GRID (margin are modificable)-->
         <Grid Grid.Row="0" Margin="0,0,0,0">
-            <sparklrControls:SparklrMenu />
+            <sparklrControls:SparklrMenu Visibility="Collapsed" />
             <Border Visibility="Collapsed" x:Name="BorderNotification" Background="{StaticResource SparklrBackgroundDarkBrush}" CornerRadius="90" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,6,0,0" Tap="BorderNotification_Tap" Height="60" Width="60">
                 <TextBlock Name="NotificationCount" Foreground="White" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
             </Border>

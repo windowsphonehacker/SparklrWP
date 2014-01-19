@@ -22,7 +22,7 @@ namespace SparklrWP.Pages
                 //Show the first run welcome message
                 MessageBox.Show(
                     AppResources.FirstRunMsgBoxContent,
-                    AppResources.FirstRunMsgBoxTitle, MessageBoxButton.OK);
+                    AppResources.FirstRunMsgBoxTitle, MessageBoxButton.OK, MessageBoxButton.OKCancel);
             }
             HelloAni.Begin();
         }

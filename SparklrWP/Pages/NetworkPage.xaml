@@ -86,14 +86,14 @@
 
         <!--COPY THE GRID (margin are modificable)-->
         <Grid Grid.Row="0">
-            <sparklrControls:SparklrMenu HorizontalAlignment="Center"/>
+            <sparklrControls:SparklrMenu Visibility="Collapsed" HorizontalAlignment="Center"/>
             <Border Visibility="Collapsed" x:Name="BorderNotification" Background="{StaticResource SparklrBackgroundDarkBrush}" CornerRadius="90" VerticalAlignment="center" HorizontalAlignment="Right" Tap="BorderNotification_Tap" Height="60" Width="60">
                 <TextBlock Name="NotificationCount" Foreground="White" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
             </Border>
         </Grid>
         <!--COPY THE GRID (margin are modificable)-->
         <StackPanel Grid.Row="1" Margin="12,17,0,28">
-            <TextBlock Text="{Binding Name}" Margin="0,-7,10,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock Text="{Binding Name}" Margin="0,-7,10,0" Style="{StaticResource PhoneTextTitle2Style}"/>
         </StackPanel>
 
         <!--ContentPanel - zusätzliche Inhalte hier platzieren-->

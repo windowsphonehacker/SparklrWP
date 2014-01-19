@@ -94,7 +94,7 @@
 
         <!--COPY THE GRID (margin are modificable)-->
         <Grid Grid.Row="0" Margin="0,0,0,0">
-            <sparklrControls:SparklrMenu Margin="0,0,0,0"/>
+            <sparklrControls:SparklrMenu Visibility="Collapsed" Margin="0,0,0,0"/>
             <Border x:Name="BorderNotification" Background="{StaticResource SparklrBackgroundDarkBrush}" Visibility="Collapsed" CornerRadius="90" Margin="410,10,10,10" Tap="BorderNotification_Tap" Height="60" Width="60">
                 <TextBlock Name="NotificationCount" Foreground="White" Text="{Binding  Path=DataContext.NewCount, ElementName=LayoutRoot}" HorizontalAlignment="Center" Margin="10,0,10,0" FontSize="36" VerticalAlignment="Center"></TextBlock>
             </Border>

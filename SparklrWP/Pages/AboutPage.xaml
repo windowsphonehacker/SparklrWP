@@ -28,11 +28,11 @@
 
         <!--ContentPanel - inserire ulteriore contenuto qui-->
         <Grid x:Name="ContentPanel" Margin="10" Grid.Row="1">
-            <ListBox>
+            <ListBox Margin="10,0">
 				<TextBlock Text="{Binding Version}" VerticalAlignment="Top"  />
-                <TextBlock TextWrapping="Wrap" Text="Sparklr Branding © Jonathan Warner" Style="{StaticResource PhoneTextSubtleStyle}" Padding="0,0,0,15"/>
+                <TextBlock TextWrapping="Wrap" Text="Sparklr Branding © Jonathan Warner" Style="{StaticResource PhoneTextSubtleStyle}" Padding="0,0,0,15" Margin="0"/>
 
-                <TextBlock Text="Development-Team" Style="{StaticResource PhoneTextLargeStyle}" />
+                <TextBlock Text="Development-Team" Style="{StaticResource PhoneTextLargeStyle}" Margin="0" />
 
                 <StackPanel Orientation="Horizontal" Style="{StaticResource ListBoxItemStackpanelStyle}">
                     <Image Source="../Assets/t18.jpg" Style="{StaticResource SparklrProfileImageSmallStyle}" />
@@ -54,7 +54,7 @@
                     <Image Source="/Assets/t591.jpg" Style="{StaticResource SparklrProfileImageSmallStyle}" />
                     <TextBlock Text="ChrisK"  VerticalAlignment="Center" Style="{StaticResource SparklrTextLargeStyle}" />
                 </StackPanel>
-                <TextBlock TextWrapping="Wrap" Padding="0,15,0,0" Style="{StaticResource PhoneTextSmallStyle}">This application uses some great third party libraries.<LineBreak/>
+                <TextBlock TextWrapping="Wrap" Padding="0,15,0,0" Style="{StaticResource PhoneTextSmallStyle}" Margin="0" Width="460">This application uses some great third party libraries.<LineBreak/>
                     <Italic>Imagetools for Silverlight</Italic>, <Italic>The Windows Phone Toolkit</Italic>, <Italic>Mangopollo</Italic> and <Italic>WP7Contrib</Italic> wich are released under the MP-PL:<LineBreak/>
                     This license governs use of the accompanying software. If you use the software, you accept this license. If you do not accept the license, do not use the software.<LineBreak />
                     1. Definitions<LineBreak />

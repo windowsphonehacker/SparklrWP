@@ -476,7 +476,6 @@
     <Content Include="Icons\appbar.apply.rest.png" />
     <Content Include="Icons\appbar.cancel.rest.png" />
     <Content Include="Icons\appbar.save.rest.png" />
-    <Content Include="Pages\easteregg.wma" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
