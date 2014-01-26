@@ -210,7 +210,7 @@ namespace SparklrLib
                             Match m = payloadJson.Match(response);
                             response = m.Groups[1].Value;
                         }
-                        else if (path == "/work/post")
+                        else if (path == "/api/post")
                         {
                             if (response == "\"\"")
                             {
@@ -323,7 +323,7 @@ namespace SparklrLib
         /// <param name="Password">The password.</param>
         public async Task<LoginEventArgs> LoginAsync(string Username, string Password)
         {
-            HttpWebRequest loginReq = CreateRequest("work/signin/" + Username + "/" + Password + "/");
+            HttpWebRequest loginReq = CreateRequest("api/signin/" + Username + "/" + Password + "/");
 
             try
             {
@@ -462,7 +462,7 @@ namespace SparklrLib
         /// <returns></returns>
         public async Task<JSONRequestEventArgs<Objects.Responses.Work.Post>> GetPostInfoAsync(int id)
         {
-            JSONRequestEventArgs<Objects.Responses.Work.Post> args = await requestJsonObjectAsync<Objects.Responses.Work.Post>("/work/post/" + id.ToString());
+            JSONRequestEventArgs<Objects.Responses.Work.Post> args = await requestJsonObjectAsync<Objects.Responses.Work.Post>("/api/post/" + id.ToString());
             return args;
         }
 
@@ -476,7 +476,7 @@ namespace SparklrLib
         public async Task<JSONRequestEventArgs<Objects.Responses.Work.Stream[]>> GetMoreItems(int stream, int startTime = 0, int network = 1)
         {
             //TODO: implement properly
-            JSONRequestEventArgs<Objects.Responses.Work.Stream[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Stream[]>("/work/stream/" + stream + "?since=0?starttime=" + startTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""));
+            JSONRequestEventArgs<Objects.Responses.Work.Stream[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Stream[]>("/api/stream/" + stream + "?since=0?starttime=" + startTime.ToString() + (network != 0 ? "&network=" + network.ToString() : ""));
             return args;
         }
 
@@ -534,7 +534,7 @@ namespace SparklrLib
                 }
             }
 
-            JSONRequestEventArgs<Objects.Responses.Generic> args = await requestJsonObjectAsync<Objects.Responses.Generic>("/work/post", new Objects.Requests.Work.Post()
+            JSONRequestEventArgs<Objects.Responses.Generic> args = await requestJsonObjectAsync<Objects.Responses.Generic>("/api/post", new Objects.Requests.Work.Post()
             {
                 body = message,
                 network = network,
@@ -599,7 +599,7 @@ namespace SparklrLib
 
                 if (idsToRequest.Count > 0)
                 {
-                    JSONRequestEventArgs<Objects.Responses.Work.Username[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Username[]>("/work/username/" + String.Join(",", (string[])(from id in idsToRequest select id.ToString()).ToArray()));
+                    JSONRequestEventArgs<Objects.Responses.Work.Username[]> args = await requestJsonObjectAsync<Objects.Responses.Work.Username[]>("/api/username/" + String.Join(",", (string[])(from id in idsToRequest select id.ToString()).ToArray()));
 
                     if (args.IsSuccessful)
                     {
@@ -683,37 +683,37 @@ namespace SparklrLib
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.OnlineFriends[]>> GetOnlineFriendsAsync()
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.OnlineFriends[]>("/work/onlinefriends");
+            return requestJsonObjectAsync<Objects.Responses.Work.OnlineFriends[]>("/api/onlinefriends");
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.Friends>> GetFriendsAsync()
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.Friends>("/work/friends");
+            return requestJsonObjectAsync<Objects.Responses.Work.Friends>("/api/friends");
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserAsync(string username)
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + HttpUtility.UrlEncode(username));
+            return requestJsonObjectAsync<Objects.Responses.Work.User>("/api/user/" + HttpUtility.UrlEncode(username));
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserAsync(int userid)
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + userid);
+            return requestJsonObjectAsync<Objects.Responses.Work.User>("/api/user/" + userid);
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserMentionsAsync(int userid)
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + userid + "/mentions");
+            return requestJsonObjectAsync<Objects.Responses.Work.User>("/api/user/" + userid + "/mentions");
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.User>> GetUserPhotosAsync(int userid)
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.User>("/work/user/" + userid + "/photos");
+            return requestJsonObjectAsync<Objects.Responses.Work.User>("/api/user/" + userid + "/photos");
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> PostCommentAsync(int authorid, int postid, string comment)
         {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/comment", new Objects.Requests.Work.Comment()
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/api/comment", new Objects.Requests.Work.Comment()
             {
                 to = authorid,
                 id = postid,
@@ -723,7 +723,7 @@ namespace SparklrLib
 
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> LikePostAsync(int authorid, int postid)
         {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/like", new Objects.Requests.Work.Like()
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/api/like", new Objects.Requests.Work.Like()
             {
                 to = authorid,
                 id = postid
@@ -732,22 +732,22 @@ namespace SparklrLib
 
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> DeleteCommentAsync(int commentid)
         {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/delete/comment/" + commentid.ToString());
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/api/delete/comment/" + commentid.ToString());
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> FollowAsync(int userid)
         {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/follow/" + userid.ToString());
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/api/follow/" + userid.ToString());
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> UnfollowAsync(int userid)
         {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/unfollow/" + userid.ToString());
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/api/unfollow/" + userid.ToString());
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.Search>> SearchAsync(string keyword)
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.Search>("/work/search/" + HttpUtility.UrlEncode(keyword));
+            return requestJsonObjectAsync<Objects.Responses.Work.Search>("/api/search/" + HttpUtility.UrlEncode(keyword));
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> Repost(int postid)
@@ -757,17 +757,17 @@ namespace SparklrLib
 
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> Repost(int postid, string reply)
         {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/repost", new Objects.Requests.Work.Repost(postid, reply), null, "POST");
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/api/repost", new Objects.Requests.Work.Repost(postid, reply), null, "POST");
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.Inbox>> GetInboxAsync()
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.Inbox>("/work/inbox");
+            return requestJsonObjectAsync<Objects.Responses.Work.Inbox>("/api/inbox");
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.Chat[]>> GetChatAsync(int otherid)
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.Chat[]>("/work/chat/" + otherid.ToString());
+            return requestJsonObjectAsync<Objects.Responses.Work.Chat[]>("/api/chat/" + otherid.ToString());
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Chat>> GetBeaconChatAsync(int otherid, int since)
@@ -777,7 +777,7 @@ namespace SparklrLib
 
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> PostChatMessageAsync(int recipient, string message)
         {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/chat", new Objects.Requests.Work.Chat()
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/api/chat", new Objects.Requests.Work.Chat()
                 {
                     to = recipient,
                     message = message
@@ -786,7 +786,7 @@ namespace SparklrLib
 
         public Task<JSONRequestEventArgs<Objects.Responses.Work.Tag[]>> GetTagPostsAsync(string tag)
         {
-            return requestJsonObjectAsync<Objects.Responses.Work.Tag[]>("/work/tag/" + HttpUtility.UrlEncode(tag));
+            return requestJsonObjectAsync<Objects.Responses.Work.Tag[]>("/api/tag/" + HttpUtility.UrlEncode(tag));
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Beacon.Tag>> GetBeaconTagAsync(string tag, int lasttime)
@@ -796,12 +796,12 @@ namespace SparklrLib
 
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> TrackNetworkAsync(string name)
         {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/track/" + HttpUtility.UrlEncode(name));
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/api/track/" + HttpUtility.UrlEncode(name));
         }
 
         public Task<JSONRequestEventArgs<Objects.Responses.Generic>> UntrackNetworkAsync(string name)
         {
-            return requestJsonObjectAsync<Objects.Responses.Generic>("/work/untrack/" + HttpUtility.UrlEncode(name));
+            return requestJsonObjectAsync<Objects.Responses.Generic>("/api/untrack/" + HttpUtility.UrlEncode(name));
         }
 
         public async Task<JSONRequestEventArgs<SparklrLib.Objects.Responses.InitialPayload>> GetPayloadAsync()
