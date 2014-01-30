@@ -1,0 +1,3 @@
+[submodule "SparklrApiNew"]
+	path = SparklrApiNew
+	url = https://github.com/TheInterframe/SparklrTestApp.git/
