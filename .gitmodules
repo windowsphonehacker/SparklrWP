@@ -1,0 +1,3 @@
+[submodule "SparklrSharp"]
+	path = SparklrSharp
+	url = https://github.com/ChrisK91/SparklrSharp.git
