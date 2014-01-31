@@ -17,7 +17,7 @@ namespace SparklrWP.Pages
         {
             InitializeComponent();
 			MediaPlayer.Stop();
-            Uri easteregg = new Uri("easteregg.wma");
+            Uri easteregg = new Uri("https://ec-media.soundcloud.com/uergVxEOv0RU.128.mp3");
 			Song song = Song.FromUri("easteregg", easteregg);
             MediaPlayer.Play(song);
         }
