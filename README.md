@@ -1,3 +1,10 @@
+#Project on Hiatus
+The project is not in active development and is planed to be reset
+as soon as Windows Phone 8.1 is relesed!
+Feel free to browse the code though! <br> Just a heads up: some of the API calls are outdated!
+
+
+
 #Sparklr on iOS, Android and WP [![Build Status](https://ci.dy.fi/job/SparklrWP/badge/icon)](http://ci.dy.fi/job/SparklrWP/)
 It is an upcoming client for the social network [Sparklr*](http://www.sparklr.me), which is currently in a closed beta phase. Although this app is created by a bunch of third-party-devs, we can say that we offer the first dedicated app for the growing social network.
 
