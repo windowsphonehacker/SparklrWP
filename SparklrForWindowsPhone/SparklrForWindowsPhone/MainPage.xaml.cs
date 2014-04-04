@@ -8,11 +8,13 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SparklrForWindowsPhone.Resources;
+using SparklrForWindowsPhone.Clients;
 
 namespace SparklrForWindowsPhone
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        HousekeeperClient Housekeeper = new HousekeeperClient();
         // Constructor
         public MainPage()
         {
@@ -31,6 +33,15 @@ namespace SparklrForWindowsPhone
             if (!App.ViewModel.IsDataLoaded)
             {
                 App.ViewModel.LoadData();
+            }
+        }
+
+        private void Mainpage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Housekeeper.CheckCreds();
+            if(Housekeeper.HasLoggedin == false)
+            {
+                NavigationService.Navigate(new Uri("/Pages/Login.xaml", UriKind.Relative));
             }
         }
 
