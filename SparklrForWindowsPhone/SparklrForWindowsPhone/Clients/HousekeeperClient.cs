@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Navigation;
+using SparklrSharp;
+using SparklrSharp.Sparklr;
+
 
 namespace SparklrForWindowsPhone.Clients
 {
@@ -25,5 +28,6 @@ namespace SparklrForWindowsPhone.Clients
             }
             
         }
+
     }
 }
