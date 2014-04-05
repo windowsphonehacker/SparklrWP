@@ -15,7 +15,6 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar Opacity="0.94">
-            <shell:ApplicationBarIconButton Text="guest" IconUri="/Assets1/AppBar/appbar.people.png" Click="ApplicationBarIconButton_Click"/>
             <shell:ApplicationBarIconButton Text="Register" IconUri="/Assets1/AppBar/appbar.door.enter.png"/>
             <shell:ApplicationBarIconButton IconUri="/Assets1/AppBar/next.png" IsEnabled="True" Text="Login" Click="Login_Click"/>
         </shell:ApplicationBar>
@@ -23,6 +22,9 @@
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.Background>
             <ImageBrush Stretch="UniformToFill" ImageSource="/SparklrForWindowsPhone;component/Assets/Images/bg.jpg"/>
         </Grid.Background>
@@ -33,7 +35,11 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0">
-            <TextBlock Text="LOG IN" Style="{StaticResource PhoneTextNormalStyle}" FontWeight="Bold" FontSize="29.333"/>
+            <TextBlock Text="LOGIN" Style="{StaticResource PhoneTextNormalStyle}" FontWeight="Bold" FontSize="29.333" Margin="10,0,12,0" RenderTransformOrigin="0.5,0.5">
+            	<TextBlock.RenderTransform>
+            		<CompositeTransform TranslateY="10"/>
+            	</TextBlock.RenderTransform>
+            </TextBlock>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
