@@ -11,11 +11,11 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True" BackKeyPress="OnBackKey" Loaded="Loaded" shell:SystemTray.Opacity="0">
+    shell:SystemTray.IsVisible="True" BackKeyPress="OnBackKey" Loaded="Loaded" >
     
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar Opacity="0.94">
-            <shell:ApplicationBarIconButton Text="guest" IconUri="/Assets1/AppBar/appbar.people.png"/>
+            <shell:ApplicationBarIconButton Text="guest" IconUri="/Assets1/AppBar/appbar.people.png" Click="ApplicationBarIconButton_Click"/>
             <shell:ApplicationBarIconButton Text="Register" IconUri="/Assets1/AppBar/appbar.door.enter.png"/>
             <shell:ApplicationBarIconButton IconUri="/Assets1/AppBar/next.png" IsEnabled="True" Text="Login" Click="Login_Click"/>
 		</shell:ApplicationBar>

@@ -76,5 +76,10 @@ namespace SparklrForWindowsPhone.Pages
            
         }
 
+        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+        }
+
     }
 }

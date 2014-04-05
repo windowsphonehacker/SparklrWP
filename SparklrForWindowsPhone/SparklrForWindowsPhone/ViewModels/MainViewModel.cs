@@ -41,14 +41,7 @@ namespace SparklrForWindowsPhone.ViewModels
         /// <summary>
         /// Sample property that returns a localized string
         /// </summary>
-        public string LocalizedSampleProperty
-        {
-            get
-            {
-                return AppResources.SampleProperty;
-            }
-        }
-
+        
         public bool IsDataLoaded
         {
             get;

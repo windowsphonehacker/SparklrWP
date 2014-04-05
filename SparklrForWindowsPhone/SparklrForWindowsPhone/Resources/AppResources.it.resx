@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -118,208 +118,191 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppCrashReportText" xml:space="preserve">
-    <value>Looks like you had a crash the last time you used the app. Would you like to help us fix the bug and send a quick bug report?</value>
+    <value>Sembra che hai avuto un problema l'ultima volta che hai usato l'app. Vorresti aiutarci a mandare un bug report?</value>
   </data>
   <data name="AppCrashReportTitle" xml:space="preserve">
-    <value>Something went wrong...</value>
+    <value>Qualcosa è andato storto...</value>
   </data>
   <data name="ApplicationTitle" xml:space="preserve">
     <value>sparklr*</value>
     <comment>The title show on nearly all pages of the app</comment>
   </data>
   <data name="AppNotificationText" xml:space="preserve">
-    <value>You have {0} notifications.</value>
+    <value>Hai {0} notifiche.</value>
     <comment>{0} is a number indicating the count of notifications</comment>
   </data>
   <data name="FirstRunBasics1" xml:space="preserve">
-    <value>Enter your user name and password used on Sparklr. If you don't have an account yet, sign up! It's free!</value>
+    <value>Metti il tuo username e la password usati su Sparklr. Se non hai un account, registrati! È gratis!</value>
     <comment>FirstRunPage</comment>
   </data>
   <data name="FirstRunBasics2" xml:space="preserve">
-    <value>The power of the pivot! Slide over on the main page for more things to do! It's like having the power of Sparklr in your hands!</value>
+    <value>La potenza del formato Pivot! Scorri nella Home Page per fare molte più cose! È come avere il potere di Sparklr nelle tue mani!</value>
   </data>
   <data name="FirstRunHelloThere" xml:space="preserve">
-    <value>Hello there :)</value>
+    <value>Ciao :)</value>
     <comment>FirstRunPage</comment>
   </data>
   <data name="FirstRunLetsGetStarted" xml:space="preserve">
-    <value>Lets get started!</value>
+    <value>Partiamo!</value>
     <comment>FirstRunPage</comment>
   </data>
   <data name="FirstRunLogin" xml:space="preserve">
     <value>Login:</value>
   </data>
   <data name="FirstRunMsgBoxContent" xml:space="preserve">
-    <value>Looks like it's the first time you've used this app! We will take you through a small intro to show you around the app!</value>
+    <value>Sembra che sia la prima volta che usi questa app! Ti illustreremo le nozioni fondamentali per utilizzare l'app!</value>
   </data>
   <data name="FirstRunMsgBoxTitle" xml:space="preserve">
-    <value>Have we met before?</value>
+    <value>Ci siamo conosciuti prima?</value>
   </data>
   <data name="FirstRunOK" xml:space="preserve">
     <value>OK!</value>
   </data>
   <data name="FirstRunOtherStuff" xml:space="preserve">
-    <value>other stuff</value>
+    <value>Altra roba</value>
   </data>
   <data name="FirstRunOtherStuff1" xml:space="preserve">
-    <value>On most pages you will see a bar with an icon! Those are passage ways to other parts in the app!</value>
+    <value>In molte pagine vedrai una barra con delle icone. Queste ti porteranno in altre parti dell'app!</value>
   </data>
   <data name="FirstRunSlideOver" xml:space="preserve">
-    <value>Slide over</value>
+    <value>Scorri</value>
   </data>
   <data name="FirstRunTheBasics" xml:space="preserve">
-    <value>the basics</value>
+    <value>Nozioni di base</value>
     <comment>FirstRunPage</comment>
   </data>
   <data name="FirstRunTheDash" xml:space="preserve">
-    <value>The dashboard:</value>
+    <value>La dashboard:</value>
   </data>
   <data name="FirstRunTheLoginPage" xml:space="preserve">
-    <value>The login page:</value>
+    <value>Login</value>
     <comment>FirstRunPage</comment>
   </data>
   <data name="FirstRunThreeDots" xml:space="preserve">
-    <value>The three dots!</value>
+    <value>I tre punti!</value>
   </data>
   <data name="FirstRunWhatAreYouWaitingFor" xml:space="preserve">
-    <value>What are you waiting for?! Try it yourself!</value>
+    <value>Cosa stai aspettando?! Provalo tu stesso!</value>
   </data>
   <data name="LoginAboutButton" xml:space="preserve">
-    <value>About</value>
+    <value>Info</value>
   </data>
   <data name="LoginBrowserOpenQuestionContent" xml:space="preserve">
-    <value>The sign up page will open in Internet Explorer, is that OK?</value>
+    <value>La pagina di registrazione si aprirà in Internet Explorer. Va bene?</value>
   </data>
   <data name="LoginBrowserOpenQuestionTitle" xml:space="preserve">
-    <value>Question</value>
+    <value>Domanda</value>
   </data>
   <data name="LoginExitConfirmationContent" xml:space="preserve">
-    <value>Do you want to exit the app? Unsaved changes will be lost.</value>
+    <value>Vuoi uscire dall'applicazione? I dati non salvati saranno persi.</value>
   </data>
   <data name="LoginExitConfirmationTitle" xml:space="preserve">
-    <value>Confirmation</value>
+    <value>Conferma</value>
   </data>
   <data name="LoginForWP" xml:space="preserve">
-    <value>for Windows Phone</value>
+    <value>per Windows Phone</value>
   </data>
   <data name="LoginLoginButton" xml:space="preserve">
     <value>Login</value>
     <comment>LoginPage</comment>
   </data>
   <data name="LoginPleaseLogin" xml:space="preserve">
-    <value>Please log in</value>
+    <value>Per favore accedi</value>
   </data>
   <data name="LoginRememberMe" xml:space="preserve">
-    <value>Remember Me</value>
+    <value>Ricordami</value>
   </data>
   <data name="LoginSignUpButton" xml:space="preserve">
-    <value>Sign up</value>
+    <value>Registrati</value>
   </data>
   <data name="LoginSparklrLogo" xml:space="preserve">
     <value>sparklr*</value>
   </data>
   <data name="LoginUnknownLoginErrorMsgBoxContent" xml:space="preserve">
-    <value>Something horrible happend, try again later!</value>
+    <value>Qualcosa di terribile è successo, prova più tardi!</value>
   </data>
   <data name="LoginUnknownLoginErrorMsgBoxTitle" xml:space="preserve">
-    <value>Sorry!</value>
+    <value>Ci dispiace!</value>
   </data>
   <data name="LoginWIP" xml:space="preserve">
-    <value>WORK IN PROGRESS</value>
+    <value>LAVORI IN CORSO</value>
   </data>
   <data name="LoginWrongUserPass" xml:space="preserve">
-    <value>Wrong username and/or password</value>
+    <value>Username e/o password sbagliati</value>
   </data>
   <data name="MainAboutButton" xml:space="preserve">
-    <value>about...</value>
+    <value>info...</value>
   </data>
   <data name="MainFriendsHeader" xml:space="preserve">
-    <value>friends</value>
+    <value>amici</value>
   </data>
   <data name="MainNetworksHeader" xml:space="preserve">
-    <value>networks</value>
+    <value>reti</value>
   </data>
   <data name="MainNewPostButton" xml:space="preserve">
-    <value>new post</value>
+    <value>nuovo post</value>
   </data>
   <data name="MainNotifications" xml:space="preserve">
-    <value>notifications</value>
+    <value>notifiche</value>
   </data>
   <data name="MainProfileHeader" xml:space="preserve">
-    <value>profile</value>
+    <value>profilo</value>
   </data>
   <data name="MainSearchButton" xml:space="preserve">
-    <value>search</value>
+    <value>cerca</value>
   </data>
   <data name="MainSettingsButton" xml:space="preserve">
-    <value>settings</value>
+    <value>impostazioni</value>
   </data>
   <data name="MainVisitNetworkHint" xml:space="preserve">
-    <value>Visit network...</value>
+    <value>Visualizza rete</value>
   </data>
   <data name="MainWorldHeader" xml:space="preserve">
-    <value>world</value>
+    <value>mondo</value>
   </data>
   <data name="NewPostAttachPictureHint" xml:space="preserve">
-    <value>Press the "Picture" button down below to attach a picture</value>
+    <value>Premi il pulsante "Immagine" per attaccare una foto.</value>
   </data>
   <data name="NewPostCouldNotPostMsg" xml:space="preserve">
-    <value>Something horrible happend!
-We couldn't post your message try again later!</value>
+    <value>Qualcosa di terribile è successo! Non possiamo inviare il tuo messaggio, riprova più tardi!</value>
   </data>
   <data name="NewPostCouldNotPostMsgPic" xml:space="preserve">
-    <value>Something horrible happend!
-We couldn't post your message  and photo try again later!</value>
+    <value>Qualcosa di terribile è successo! Non possiamo inviare la foto e il tuo messaggio, riprova più tardi!</value>
   </data>
   <data name="NewPostCouldNotPostMsgTitle" xml:space="preserve">
-    <value>Sorry!</value>
+    <value>Ci dispiace!</value>
   </data>
   <data name="NewPostEmptyMsgWarning" xml:space="preserve">
-    <value>You need to say something! You can't post an empty message!</value>
+    <value>Devi dire qualcosa! Ti hanno rubato le parole dalla bocca?</value>
   </data>
   <data name="NewPostImageEditorHint" xml:space="preserve">
-    <value>There is an image editor!</value>
+    <value>C'è un editor di immagini!</value>
   </data>
   <data name="NewPostNewPostButton" xml:space="preserve">
-    <value>new post</value>
+    <value>nuovo post</value>
   </data>
   <data name="NewPostPictureButton" xml:space="preserve">
-    <value>picture</value>
+    <value>foto</value>
   </data>
   <data name="NewPostPostedMsg" xml:space="preserve">
-    <value>Posted! :)</value>
+    <value>Inviato! :)</value>
   </data>
   <data name="NewPostRemoveImageText" xml:space="preserve">
-    <value>Do you want to remove the attached image?</value>
+    <value>Vuoi rimuovere l'immagine selezionata </value>
   </data>
   <data name="NewPostRemoveImageTitle" xml:space="preserve">
-    <value>Question</value>
+    <value>Domanda</value>
   </data>
   <data name="NewPostSuccessText" xml:space="preserve">
-    <value>Your status has been posted!</value>
+    <value>Il tuo stato è stato pubblicato!</value>
   </data>
   <data name="NewPostSuccessTitle" xml:space="preserve">
-    <value>Yay!</value>
+    <value>Alè!</value>
   </data>
   <data name="NewPostTitle" xml:space="preserve">
-    <value>New Post</value>
-  </data>
-  <data name="PinToStartCaption" xml:space="preserve">
-    <value>Pin</value>
-    <comment>Caption for a Application Bar "Pin" button, that creates a tile on the startscreen</comment>
-  </data>
-  <data name="NewPostNetworkCaption" xml:space="preserve">
-    <value>Network:</value>
-  </data>
-  <data name="BackgroundAgentDescription" xml:space="preserve">
-    <value>Updates tiles and notifications.</value>
-    <comment>A description of the background agent</comment>
-  </data>
-  <data name="BackgroundAgentName" xml:space="preserve">
-    <value>Sparklr*</value>
-    <comment>The name of the background agent</comment>
+    <value>Nuovo Post</value>
   </data>
   <data name="LogoutButton" xml:space="preserve">
-    <value>logout...</value>
+    <value>esci...</value>
   </data>
 </root>

@@ -10,7 +10,8 @@
     d:DataContext="{d:DesignData SampleData/MainViewModelSampleData.xaml}"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
+    Background="{StaticResource PhoneContrastBackgroundBrush}"
+    Foreground="{StaticResource PhoneContrastForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True" Loaded="Mainpage_Loaded">
 
@@ -37,16 +38,24 @@
          -->
 
         <!--Pivot Control-->
-        <phone:Pivot Title="sparklr*" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette">
+        <phone:Pivot Foreground="{StaticResource PhoneContrastForegroundBrush}" Background="{StaticResource PhoneContrastBackgroundBrush}" >
+            <phone:Pivot.Title>
+                <StackPanel>
+                    <TextBlock FontSize="30" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette" VerticalAlignment="Top" Margin="0,0,0,4">sparklr*</TextBlock>        
+                </StackPanel>
+            </phone:Pivot.Title>
             <!--Pivot item one-->
-            <phone:PivotItem Header="first" FontSize="10" >
+            <phone:PivotItem FontSize="10" FontFamily="Segoe WP" Background="{StaticResource PhoneContrastBackgroundBrush}" BorderThickness="0" >
+                <phone:PivotItem.Header>
+                    <TextBlock FontSize="30" FontFamily="Segoe WP" FontWeight="Bold">EVERYTHING</TextBlock>
+                </phone:PivotItem.Header>
                 <!--Double line list with text wrapping-->
-                <phone:LongListSelector Margin="0,0,-12,0" ItemsSource="{Binding Items}">
+                <phone:LongListSelector ItemsSource="{Binding Items}" Foreground="{StaticResource PhoneContrastForegroundBrush}" BorderThickness="0">
                     <phone:LongListSelector.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="0,0,0,17">
-                                <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
-                                <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
+                            <StackPanel Margin="0,-5,0,1">
+                                <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" Foreground="{StaticResource PhoneContrastForegroundBrush}"/>
+                                <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource PhoneContrastForegroundBrush}"/>
                             </StackPanel>
                         </DataTemplate>
                     </phone:LongListSelector.ItemTemplate>
@@ -54,15 +63,19 @@
             </phone:PivotItem>
 
             <!--Pivot item two-->
-            <phone:PivotItem Header="second" FontSize="10">
+            <phone:PivotItem FontSize="10">
+                <phone:PivotItem.Header>
+                    <TextBlock FontSize="30" FontFamily="Segoe WP" FontWeight="Bold">FOLLOWING</TextBlock>
+                </phone:PivotItem.Header>
+
                 <!--Double line list no text wrapping-->
-                <phone:LongListSelector Margin="0,0,-12,0" ItemsSource="{Binding Items}">
+                <phone:LongListSelector  ItemsSource="{Binding Items}">
                     <phone:LongListSelector.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Margin="0,0,0,17">
-                                    <TextBlock Text="{Binding LineOne}" TextWrapping="NoWrap" Margin="12,0,0,0" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
-                                    <TextBlock Text="{Binding LineThree}" TextWrapping="NoWrap" Margin="12,-6,0,0" Style="{StaticResource PhoneTextSubtleStyle}"/>
-                                </StackPanel>
+                                <StackPanel Margin="0,-5,0,1">
+                                <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" Foreground="{StaticResource PhoneContrastForegroundBrush}"/>
+                                <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}" Foreground="{StaticResource PhoneContrastForegroundBrush}"/>
+                            </StackPanel>
                             </DataTemplate>
                     </phone:LongListSelector.ItemTemplate>
                 </phone:LongListSelector>
@@ -75,7 +88,11 @@
             if the System Tray is hidden.
 
             Before shipping remove this XAML and the image itself.-->
-        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" IsHitTestVisible="False" />-->
+        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" IsHitTestVisible="True" />-->
     </Grid>
+
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+         
+    </phone:PhoneApplicationPage.ApplicationBar>-->
 
 </phone:PhoneApplicationPage>

@@ -38,11 +38,12 @@ namespace SparklrForWindowsPhone
 
         private void Mainpage_Loaded(object sender, RoutedEventArgs e)
         {
+            
             Housekeeper.CheckCreds();
             if(Housekeeper.HasLoggedin == false)
             {
                 NavigationService.Navigate(new Uri("/Pages/Login.xaml", UriKind.Relative));
-            }
+            } 
         }
 
         // Sample code for building a localized ApplicationBar

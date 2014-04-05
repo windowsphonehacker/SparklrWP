@@ -226,7 +226,6 @@ namespace SparklrForWindowsPhone
                 //
                 // If a compiler error is hit then ResourceLanguage is missing from
                 // the resource file.
-                RootFrame.Language = XmlLanguage.GetLanguage(AppResources.ResourceLanguage);
 
                 // Set the FlowDirection of all elements under the root frame based
                 // on the ResourceFlowDirection resource string for each
@@ -234,8 +233,6 @@ namespace SparklrForWindowsPhone
                 //
                 // If a compiler error is hit then ResourceFlowDirection is missing from
                 // the resource file.
-                FlowDirection flow = (FlowDirection)Enum.Parse(typeof(FlowDirection), AppResources.ResourceFlowDirection);
-                RootFrame.FlowDirection = flow;
             }
             catch
             {
