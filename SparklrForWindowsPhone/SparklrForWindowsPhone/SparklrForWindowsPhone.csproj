@@ -205,7 +205,7 @@
     </Reference>
     <Reference Include="SparklrSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\SparklrSharp\Sparklr Library\SparklrSharp\bin\Debug\SparklrSharp.dll</HintPath>
+      <HintPath>..\..\..\SparklrSharp\Sparklr Library\SparklrSharp\bin\Debug\SparklrSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
