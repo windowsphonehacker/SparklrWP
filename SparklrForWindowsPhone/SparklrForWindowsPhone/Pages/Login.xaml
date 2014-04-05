@@ -15,7 +15,7 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar Opacity="0.94">
-            <shell:ApplicationBarIconButton Text="Register" IconUri="/Assets1/AppBar/appbar.door.enter.png"/>
+            <shell:ApplicationBarIconButton Text="Register" IconUri="/Assets1/AppBar/appbar.door.enter.png" Click="Register_Click"/>
             <shell:ApplicationBarIconButton IconUri="/Assets1/AppBar/next.png" IsEnabled="True" Text="Login" Click="Login_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>

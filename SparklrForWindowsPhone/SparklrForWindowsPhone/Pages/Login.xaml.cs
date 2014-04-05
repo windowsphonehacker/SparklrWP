@@ -81,5 +81,10 @@ namespace SparklrForWindowsPhone.Pages
             NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
         }
 
+        private void Register_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/Register.xaml", UriKind.Relative));
+        }
+
     }
 }
