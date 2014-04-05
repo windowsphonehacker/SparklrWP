@@ -61,7 +61,7 @@ namespace SparklrForWindowsPhone.Pages
             // Set the text on the toast. 
             // The first line of text in the ToastText02 template is treated as header text, and will be bold.
             toastTextElements[0].AppendChild(toastXml.CreateTextNode("Sparklr"));
-            toastTextElements[1].AppendChild(toastXml.CreateTextNode("Runninng, this is a test of the WP action center"));
+            toastTextElements[1].AppendChild(toastXml.CreateTextNode("Runninng, this is a test of the WP action center\nIt works"));
 
             // Set the duration on the toast
             IXmlNode toastNode = toastXml.SelectSingleNode("/toast");

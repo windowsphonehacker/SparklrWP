@@ -11,10 +11,13 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
-    shell:SystemTray.IsVisible="True" BackKeyPress="OnBackKey" Loaded="Loaded">
+    shell:SystemTray.IsVisible="True" BackKeyPress="OnBackKey" Loaded="Loaded" shell:SystemTray.Opacity="0">
+    
 	<phone:PhoneApplicationPage.ApplicationBar>
 		<shell:ApplicationBar Opacity="0.94">
-			<shell:ApplicationBarIconButton IconUri="/Assets1/AppBar/next.png" IsEnabled="True" Text="Login" Click="Login_Click"/>
+            <shell:ApplicationBarIconButton Text="guest" IconUri="/Assets1/AppBar/appbar.people.png"/>
+            <shell:ApplicationBarIconButton Text="Register" IconUri="/Assets1/AppBar/appbar.door.enter.png"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets1/AppBar/next.png" IsEnabled="True" Text="Login" Click="Login_Click"/>
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
 
@@ -29,7 +32,8 @@
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+        <StackPanel Grid.Row="0">
+            <TextBlock Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontSize="29.333" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette"/>
             <TextBlock Text="LOG IN" Style="{StaticResource PhoneTextNormalStyle}" FontWeight="Bold" FontSize="29.333"/>
         </StackPanel>
 
