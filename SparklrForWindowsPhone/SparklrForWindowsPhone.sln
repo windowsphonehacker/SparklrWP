@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{65DCC2
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SparklrSharp", "..\SparklrSharp\Sparklr Library\SparklrSharp\SparklrSharp.csproj", "{A9122034-0867-4837-9228-5322024335BB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,14 @@ Global
 		{2299A0FB-3C44-4936-B713-D3C083720B25}.Release|x86.ActiveCfg = Release|x86
 		{2299A0FB-3C44-4936-B713-D3C083720B25}.Release|x86.Build.0 = Release|x86
 		{2299A0FB-3C44-4936-B713-D3C083720B25}.Release|x86.Deploy.0 = Release|x86
+		{A9122034-0867-4837-9228-5322024335BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9122034-0867-4837-9228-5322024335BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9122034-0867-4837-9228-5322024335BB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A9122034-0867-4837-9228-5322024335BB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A9122034-0867-4837-9228-5322024335BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9122034-0867-4837-9228-5322024335BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9122034-0867-4837-9228-5322024335BB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A9122034-0867-4837-9228-5322024335BB}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

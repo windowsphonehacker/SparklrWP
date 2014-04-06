@@ -17,9 +17,11 @@ namespace SparklrForWindowsPhone.Pages
     public partial class Login : PhoneApplicationPage
     {
         Connection conn = new Connection();
+
         public Login()
         {
             InitializeComponent();
+            conn.CurrentUserIdentified += conn_CurrentUserIdentified;
         }
 
         private void OnBackKey(object sender, System.ComponentModel.CancelEventArgs e)
@@ -32,11 +34,23 @@ namespace SparklrForWindowsPhone.Pages
         {
             LoadToast();
             Debugger.Log(1, "Sparklr", SparklrUsername.Text + " " + SparklrPassword.Password);
-            await conn.SigninAsync(SparklrUsername.Text, SparklrPassword.Password);
-            MessageBox.Show(conn.CurrentUser.Handle.ToString(),"It Worked!",MessageBoxButton.OK);
+            if(await conn.SigninAsync(SparklrUsername.Text, SparklrPassword.Password))
+            {
+                MessageBox.Show("User is logged in");
+                //The information about the currently logged in user will be retreived in the background. It will be available, once the event below has fired.
+            }
+            else
+            {
+                MessageBox.Show("Invalid credentials");
+            }
         }
 
-        private void Loaded(object sender, RoutedEventArgs e)
+        void conn_CurrentUserIdentified(object sender, SparklrSharp.Sparklr.UserIdentifiedEventArgs e)
+        {
+            MessageBox.Show(conn.CurrentUser.Handle.ToString(), "User identified", MessageBoxButton.OK);
+        }
+
+        private new void Loaded(object sender, RoutedEventArgs e)
         {
 
           

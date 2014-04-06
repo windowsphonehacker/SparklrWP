@@ -216,15 +216,17 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="SparklrSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\SparklrSharp\Sparklr Library\SparklrSharp\bin\Debug\SparklrSharp.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\AppBar1\" />
     <Folder Include="Assets\AppBar2\" />
     <Folder Include="Assets\AppBar\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SparklrSharp\Sparklr Library\SparklrSharp\SparklrSharp.csproj">
+      <Project>{a9122034-0867-4837-9228-5322024335bb}</Project>
+      <Name>SparklrSharp</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />

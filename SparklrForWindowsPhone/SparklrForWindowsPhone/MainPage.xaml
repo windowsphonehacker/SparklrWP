@@ -209,10 +209,14 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar Opacity="1" BackgroundColor="{StaticResource SparklrBackground}">
-			<shell:ApplicationBarIconButton Text="New post" IconUri="/Assets1/AppBar/add.png" Click="Register_Click"/>
+			<!--
+            The project did not compile. I think someone didn't commit the correct file.
+            Just remove the comment later. I just wanted to see if the updated submodule works. ~~Chris
+            
+            <shell:ApplicationBarIconButton Text="New post" IconUri="/Assets1/AppBar/add.png" Click="Register_Click"/>
             <shell:ApplicationBarIconButton Text="People" IconUri="/Assets1/AppBar/appbar.people.png" Click="Register_Click"/>
             <shell:ApplicationBarIconButton IconUri="/Assets3/AppBar/feature.email.png" IsEnabled="True" Text="Inbox" Click="Login_Click"/>
-            <shell:ApplicationBarIconButton Text="search" IconUri="/Assets4/AppBar/feature.search.png" Click="Register_Click"/>       
+            <shell:ApplicationBarIconButton Text="search" IconUri="/Assets4/AppBar/feature.search.png" Click="Register_Click"/>      --> 
 		<shell:ApplicationBar.MenuItems>
 			<shell:ApplicationBarMenuItem Text="Settings..."/>
 			<shell:ApplicationBarMenuItem Text="About..."/>
