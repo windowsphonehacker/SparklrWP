@@ -98,6 +98,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Clients\HousekeeperClient.cs" />
+    <Compile Include="Helpers\GlobalLoadingIndicator.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
