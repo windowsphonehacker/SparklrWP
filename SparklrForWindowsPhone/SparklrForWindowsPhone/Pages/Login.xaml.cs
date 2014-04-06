@@ -38,6 +38,7 @@ namespace SparklrForWindowsPhone.Pages
             {
                 MessageBox.Show("User is logged in");
                 //The information about the currently logged in user will be retreived in the background. It will be available, once the event below has fired.
+                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
             }
             else
             {

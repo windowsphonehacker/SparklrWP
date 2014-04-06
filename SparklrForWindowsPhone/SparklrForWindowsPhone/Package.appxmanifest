@@ -15,7 +15,7 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="AGHost.exe" EntryPoint="MainPage.xaml">
+    <Application Id="App" Executable="AGHost.exe" EntryPoint="/Pages/Login.xaml">
       <m3:VisualElements DisplayName="Sparklr For WindowsPhone" Square150x150Logo="Assets\SquareTile150x150.png" Square44x44Logo="Assets\Logo.png" Description="Sparklr For WindowsPhone" ForegroundText="light" BackgroundColor="#464646" ToastCapable="true">
         <m3:DefaultTile Square71x71Logo="Assets\SquareTile71x71.png">
         </m3:DefaultTile>
