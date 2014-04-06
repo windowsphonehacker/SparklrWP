@@ -14,7 +14,7 @@
     shell:SystemTray.IsVisible="True" BackKeyPress="OnBackKey" Loaded="Loaded" >
 
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar Opacity="0.94">
+        <shell:ApplicationBar Opacity="0">
             <shell:ApplicationBarIconButton Text="Register" IconUri="/Assets1/AppBar/appbar.door.enter.png" Click="Register_Click"/>
             <shell:ApplicationBarIconButton IconUri="/Assets1/AppBar/next.png" IsEnabled="True" Text="Login" Click="Login_Click"/>
         </shell:ApplicationBar>
@@ -29,26 +29,29 @@
             <ImageBrush Stretch="UniformToFill" ImageSource="/SparklrForWindowsPhone;component/Assets/Images/bg.jpg"/>
         </Grid.Background>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" MinHeight="157"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
-        <StackPanel Grid.Row="0">
-            <TextBlock Text="LOGIN" Style="{StaticResource PhoneTextNormalStyle}" FontWeight="Bold" FontSize="29.333" Margin="10,0,12,0" RenderTransformOrigin="0.5,0.5">
-            	<TextBlock.RenderTransform>
-            		<CompositeTransform TranslateY="10"/>
-            	</TextBlock.RenderTransform>
+        <StackPanel Grid.Row="0" VerticalAlignment="Top" >
+            <TextBlock Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock Text="LOGIN" Style="{StaticResource PhoneTextNormalStyle}" FontWeight="Bold"  RenderTransformOrigin="0.5,0.5" FontSize="{StaticResource PhoneFontSizeLarge}">
+                <TextBlock.RenderTransform>
+                    <CompositeTransform TranslateY="10"/>
+                </TextBlock.RenderTransform>
             </TextBlock>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <TextBox x:Name="SparklrUsername" HorizontalAlignment="Left" Height="75" Margin="10,201,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="436"/>
-            <PasswordBox x:Name="SparklrPassword" HorizontalAlignment="Left" Height="74" Margin="10,304,0,0" VerticalAlignment="Top" Width="436"/>
-            <TextBlock x:Name="UISparklrUsername" HorizontalAlignment="Left" Height="30" Margin="24,164,0,0" TextWrapping="Wrap" Text="Username:" VerticalAlignment="Top" Width="174"/>
-            <TextBlock x:Name="UISparklrPassword" HorizontalAlignment="Left" Height="30" Margin="24,274,0,0" TextWrapping="Wrap" Text="Password:" VerticalAlignment="Top" Width="174"/>
-            <TextBlock Text="*" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{StaticResource PhoneFontSizeHuge}" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette" Margin="10,10,10,583" TextAlignment="Center"/>
+        <Grid x:Name="ContentPanel" Grid.Row="1" VerticalAlignment="Top" Height="198">
+
+            <StackPanel VerticalAlignment="Top" HorizontalAlignment="Center" >
+                <TextBlock x:Name="UISparklrUsername" HorizontalAlignment="Left"  TextWrapping="Wrap" Text="Username:" VerticalAlignment="Top" Width="174"/>
+                <TextBox x:Name="SparklrUsername" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Top" Width="436"/>
+                <TextBlock x:Name="UISparklrPassword" HorizontalAlignment="Left"   TextWrapping="Wrap" Text="Password:" VerticalAlignment="Top" Width="174"/>
+                <PasswordBox x:Name="SparklrPassword" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="436"/>
+            </StackPanel>
 
         </Grid>
     </Grid>
