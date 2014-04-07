@@ -14,13 +14,14 @@
     Foreground="{StaticResource PhoneContrastForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True" Loaded="Mainpage_Loaded">
-    <phone:PhoneApplicationPage.Resources>
-        <Color x:Key="SparklrBackground">#FF454050</Color>
-    </phone:PhoneApplicationPage.Resources>
+    
 
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <!-- LOCALIZATION NOTE:
             To localize the displayed strings copy their values to appropriately named
             keys in the app's neutral language resource file (AppResources.resx) then
@@ -41,20 +42,18 @@
          -->
 
         <!--Pivot Control-->
-        
-        <phone:Pivot Foreground="{StaticResource PhoneContrastForegroundBrush}" >
+        <StackPanel  Background="#FF454050" Grid.Row="1">
+            <TextBlock FontSize="36" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette" Foreground="{StaticResource PhoneForegroundBrush}" Margin="24,12,0,0">sparklr*</TextBlock>
+        </StackPanel>
+        <phone:Pivot Foreground="{StaticResource PhoneContrastForegroundBrush}" Grid.Row="2" Margin="0,80,0,0" >
             <phone:Pivot.Background>
                 <SolidColorBrush Color="{StaticResource PhoneContrastBackgroundColor}"/>
             </phone:Pivot.Background>
-            <phone:Pivot.Title>
-                <StackPanel>
-                    <TextBlock FontSize="30" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette" VerticalAlignment="Top" Margin="0,0,0,4">sparklr*</TextBlock>
-                </StackPanel>
-            </phone:Pivot.Title>
+            
             <!--Pivot item one-->
-            <phone:PivotItem FontSize="10" FontFamily="Segoe WP" Background="{StaticResource PhoneContrastBackgroundBrush}" BorderThickness="0" >
+            <phone:PivotItem FontFamily="Segoe WP" Background="{StaticResource PhoneContrastBackgroundBrush}" BorderThickness="0" >
                 <phone:PivotItem.Header>
-                    <TextBlock FontSize="30" FontFamily="Segoe WP" FontWeight="Bold">EVERYTHING</TextBlock>
+                    <TextBlock FontSize="30" FontFamily="Segoe WP Semibold">EVERYTHING</TextBlock>
                 </phone:PivotItem.Header>
                 <!--Double line list with text wrapping-->
                 <phone:LongListSelector ItemsSource="{Binding Items}" Foreground="{StaticResource PhoneContrastForegroundBrush}" BorderThickness="0">
@@ -72,7 +71,7 @@
             <!--Pivot item two-->
             <phone:PivotItem FontSize="10">
                 <phone:PivotItem.Header>
-                    <TextBlock FontSize="30" FontFamily="Segoe WP" FontWeight="Bold">FOLLOWING</TextBlock>
+                    <TextBlock FontSize="30" FontFamily="Segoe WP Semibold">FOLLOWING</TextBlock>
                 </phone:PivotItem.Header>
 
                 <!--Double line list no text wrapping-->
@@ -90,7 +89,7 @@
 
             <phone:PivotItem FontSize="10">
                 <phone:PivotItem.Header>
-                    <TextBlock FontSize="30" FontFamily="Segoe WP" FontWeight="Bold">MUSIC</TextBlock>
+                    <TextBlock FontSize="30" FontFamily="Segoe WP Semibold" >MUSIC</TextBlock>
                 </phone:PivotItem.Header>
 
                 <!--Double line list no text wrapping-->
@@ -108,7 +107,7 @@
 
             <phone:PivotItem FontSize="10">
                 <phone:PivotItem.Header>
-                    <TextBlock FontSize="30" FontFamily="Segoe WP" FontWeight="Bold">FUNNY</TextBlock>
+                    <TextBlock FontSize="30" FontFamily="Segoe WP Semibold">FUNNY</TextBlock>
                 </phone:PivotItem.Header>
 
                 <!--Double line list no text wrapping-->
@@ -126,7 +125,7 @@
 
             <phone:PivotItem FontSize="10">
                 <phone:PivotItem.Header>
-                    <TextBlock FontSize="30" FontFamily="Segoe WP" FontWeight="Bold">TECH</TextBlock>
+                    <TextBlock FontSize="30" FontFamily="Segoe WP Semibold">TECH</TextBlock>
                 </phone:PivotItem.Header>
 
                 <!--Double line list no text wrapping-->
@@ -144,7 +143,7 @@
 
             <phone:PivotItem FontSize="10">
                 <phone:PivotItem.Header>
-                    <TextBlock FontSize="30" FontFamily="Segoe WP" FontWeight="Bold">GAMING</TextBlock>
+                    <TextBlock FontSize="30" FontFamily="Segoe WP Semibold">GAMING</TextBlock>
                 </phone:PivotItem.Header>
 
                 <!--Double line list no text wrapping-->
@@ -162,7 +161,7 @@
 
             <phone:PivotItem FontSize="10">
                 <phone:PivotItem.Header>
-                    <TextBlock FontSize="30" FontFamily="Segoe WP" FontWeight="Bold">ART</TextBlock>
+                    <TextBlock FontSize="30" FontFamily="Segoe WP Semibold">ART</TextBlock>
                 </phone:PivotItem.Header>
 
                 <!--Double line list no text wrapping-->
@@ -180,7 +179,7 @@
 
             <phone:PivotItem FontSize="10">
                 <phone:PivotItem.Header>
-                    <TextBlock FontSize="30" FontFamily="Segoe WP" FontWeight="Bold">MISC</TextBlock>
+                    <TextBlock FontSize="30" FontFamily="Segoe WP Semibold">MISC</TextBlock>
                 </phone:PivotItem.Header>
 
                 <!--Double line list no text wrapping-->
@@ -203,20 +202,16 @@
             if the System Tray is hidden.
 
             Before shipping remove this XAML and the image itself.-->
-        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" IsHitTestVisible="True" />-->
+        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="1" IsHitTestVisible="True" />-->
     
 </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar Opacity="1" BackgroundColor="{StaticResource SparklrBackground}">
-			<!--
-            The project did not compile. I think someone didn't commit the correct file.
-            Just remove the comment later. I just wanted to see if the updated submodule works. ~~Chris
-            
-            <shell:ApplicationBarIconButton Text="New post" IconUri="/Assets1/AppBar/add.png" Click="Register_Click"/>
-            <shell:ApplicationBarIconButton Text="People" IconUri="/Assets1/AppBar/appbar.people.png" Click="Register_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Assets3/AppBar/feature.email.png" IsEnabled="True" Text="Inbox" Click="Login_Click"/>
-            <shell:ApplicationBarIconButton Text="search" IconUri="/Assets4/AppBar/feature.search.png" Click="Register_Click"/>      --> 
+        <shell:ApplicationBar Opacity="1">            
+            <shell:ApplicationBarIconButton Text="New post" IconUri="/Assets1/AppBar/add.png"/>
+            <shell:ApplicationBarIconButton Text="People" IconUri="/Assets1/AppBar/appbar.people.png"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets3/AppBar/feature.email.png" IsEnabled="True" Text="Inbox" />
+            <shell:ApplicationBarIconButton Text="search" IconUri="/Assets4/AppBar/feature.search.png" />   
 		<shell:ApplicationBar.MenuItems>
 			<shell:ApplicationBarMenuItem Text="Settings..."/>
 			<shell:ApplicationBarMenuItem Text="About..."/>

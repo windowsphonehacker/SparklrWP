@@ -8,7 +8,7 @@
     <!--Application Resources-->
     <Application.Resources>
         <local:LocalizedStrings xmlns:local="clr-namespace:SparklrForWindowsPhone" x:Key="LocalizedStrings"/>
-        <Color x:Key="SparklrBackground">#FF454050</Color>
+        <!--<ResourceDictionary Source="/Resources/SparklrStyles.xaml"/>-->
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

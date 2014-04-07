@@ -14,7 +14,7 @@
     shell:SystemTray.IsVisible="True" BackKeyPress="OnBackKey" Loaded="Loaded" >
 
     <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar Opacity="0">
+        <shell:ApplicationBar Opacity="1">
             <shell:ApplicationBarIconButton Text="Register" IconUri="/Assets1/AppBar/appbar.door.enter.png" Click="Register_Click"/>
             <shell:ApplicationBarIconButton IconUri="/Assets1/AppBar/next.png" IsEnabled="True" Text="Login" Click="Login_Click"/>
         </shell:ApplicationBar>
