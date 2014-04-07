@@ -98,7 +98,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Clients\HousekeeperClient.cs" />
+    <Compile Include="Helpers\Housekeeper.cs" />
     <Compile Include="Helpers\GlobalLoadingIndicator.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -227,9 +227,10 @@
     <Folder Include="Assets\AppBar1\" />
     <Folder Include="Assets\AppBar2\" />
     <Folder Include="Assets\AppBar\" />
+    <Folder Include="Clients\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SparklrSharp\Sparklr Library\SparklrSharp\SparklrSharp.csproj">
+    <ProjectReference Include="..\..\Sparklr Library\SparklrSharp\SparklrSharp.csproj">
       <Project>{a9122034-0867-4837-9228-5322024335bb}</Project>
       <Name>SparklrSharp</Name>
     </ProjectReference>

@@ -11,13 +11,14 @@ using SparklrSharp;
 using System.Diagnostics;
 using Windows.UI.Notifications;
 using Windows.Data.Xml.Dom;
+using SparklrForWindowsPhone.Helpers;
 
 namespace SparklrForWindowsPhone.Pages
 {
     public partial class Login : PhoneApplicationPage
     {
         Connection conn = new Connection();
-
+        Housekeeper houseKeeper = new Housekeeper();
         public Login()
         {
             InitializeComponent();
@@ -50,6 +51,10 @@ namespace SparklrForWindowsPhone.Pages
         void conn_CurrentUserIdentified(object sender, SparklrSharp.Sparklr.UserIdentifiedEventArgs e)
         {
             MessageBox.Show(conn.CurrentUser.Handle.ToString(), "User identified", MessageBoxButton.OK);
+            //Saves the info into the app settings -Suraj
+            houseKeeper.SaveCreds(SparklrUsername.Text, SparklrPassword.Password);
+            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+             
         }
 
         private new void Loaded(object sender, RoutedEventArgs e)

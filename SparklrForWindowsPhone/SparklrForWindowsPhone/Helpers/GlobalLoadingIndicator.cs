@@ -25,6 +25,7 @@ namespace SparklrForWindowsPhone.Helpers
         /// </summary>
         public static void Start()
         {
+            
             loadingCount++;
             refreshVisibility();
         }

@@ -8,18 +8,21 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SparklrForWindowsPhone.Resources;
-using SparklrForWindowsPhone.Clients;
+using SparklrForWindowsPhone.Helpers;
+using System.Windows.Media;
+using System.Diagnostics;
+using SparklrSharp;
 
 namespace SparklrForWindowsPhone
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        HousekeeperClient Housekeeper = new HousekeeperClient();
+        Housekeeper Housekeeper = new Housekeeper();
+        Connection conn = new Connection();
         // Constructor
         public MainPage()
         {
             InitializeComponent();
-
             // Set the data context of the listbox control to the sample data
             DataContext = App.ViewModel;
 
@@ -36,14 +39,30 @@ namespace SparklrForWindowsPhone
             }
         }
 
-        private void Mainpage_Loaded(object sender, RoutedEventArgs e)
+        private async void Mainpage_Loaded(object sender, RoutedEventArgs e)
         {
             
             Housekeeper.CheckCreds();
             if(Housekeeper.HasLoggedin == false)
             {
+                Debugger.Log(1, "\n\nSparklr", Housekeeper.HasLoggedin.ToString());
                 NavigationService.Navigate(new Uri("/Pages/Login.xaml", UriKind.Relative));
             } 
+            else
+            {
+                //Gets Login Info
+                Housekeeper.GetCreds();
+                Helpers.GlobalLoadingIndicator.Start();
+                await conn.SigninAsync(Housekeeper.SparklrUsername, Housekeeper.SparklrPassword);
+                conn.CurrentUserIdentified += conn_CurrentUserIdentified;
+            }
+        }
+
+       
+
+        void conn_CurrentUserIdentified(object sender, SparklrSharp.Sparklr.UserIdentifiedEventArgs e)
+        {
+            Helpers.GlobalLoadingIndicator.Stop();
         }
 
         // Sample code for building a localized ApplicationBar
