@@ -35,7 +35,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" VerticalAlignment="Top" Height="90" >
-            <TextBlock Text="sparklr*" Style="{StaticResource PhoneTextNormalStyle}" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="109,0" />
+            <TextBlock Text="sparklr*" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="109,0" />
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
