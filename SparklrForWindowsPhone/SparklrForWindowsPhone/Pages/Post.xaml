@@ -1,0 +1,42 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="SparklrForWindowsPhone.Pages.Post"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+	<phone:PhoneApplicationPage.ApplicationBar>
+		<shell:ApplicationBar Opacity="0.925">
+			<shell:ApplicationBarIconButton IconUri="/Assets5/AppBar/check.png" IsEnabled="True" Text="post"/>
+		</shell:ApplicationBar>
+	</phone:PhoneApplicationPage.ApplicationBar>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" MinHeight="77"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+         <StackPanel  Background="#FF454050" Margin="0,0,0,77" Grid.RowSpan="2">
+            <TextBlock FontSize="36" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette" Foreground="{StaticResource PhoneForegroundBrush}" Margin="25,12,0,0">sparklr*</TextBlock>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Background="White" Grid.Row="1">
+        	<TextBlock FontSize="30" FontFamily="Segoe WP Semibold" Margin="10,10,10,639" Text="NEW POST">
+        		<TextBlock.Foreground>
+        			<SolidColorBrush Color="{StaticResource PhoneBackgroundColor}"/>
+        		</TextBlock.Foreground></TextBlock>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

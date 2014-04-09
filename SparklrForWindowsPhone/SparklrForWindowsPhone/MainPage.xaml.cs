@@ -65,6 +65,11 @@ namespace SparklrForWindowsPhone
             Helpers.GlobalLoadingIndicator.Stop();
         }
 
+        private void NewPost_Click(object sender, System.EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/Post.xaml", UriKind.Relative));
+        }
+
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
         //{

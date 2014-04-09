@@ -209,7 +209,7 @@
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar Opacity="1">            
             <shell:ApplicationBarIconButton Text="Friends" IconUri="/Assets1/AppBar/appbar.people.png"/>            
-            <shell:ApplicationBarIconButton Text="New post" IconUri="/Assets1/AppBar/add.png"/>
+            <shell:ApplicationBarIconButton Text="New post" IconUri="/Assets2/AppBar/add.png" Click="NewPost_Click"/>
             <shell:ApplicationBarIconButton Text="search" IconUri="/Assets4/AppBar/feature.search.png" />   
 		<shell:ApplicationBar.MenuItems>
 			<shell:ApplicationBarMenuItem IsEnabled="True" Text="Inbox"/>
