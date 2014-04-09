@@ -17,6 +17,7 @@ namespace SparklrForWindowsPhone
 {
     public partial class MainPage : PhoneApplicationPage
     {
+       
         Housekeeper Housekeeper = new Housekeeper();
         Connection conn = new Connection();
         // Constructor
