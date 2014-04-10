@@ -44,6 +44,7 @@
         <!--Pivot Control-->
         <StackPanel  Background="#FF454050" Grid.Row="1">
             <TextBlock FontSize="36" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette" Foreground="{StaticResource PhoneForegroundBrush}" Margin="24,12,0,0">sparklr*</TextBlock>
+            
         </StackPanel>
         <phone:Pivot Foreground="{StaticResource PhoneContrastForegroundBrush}" Grid.Row="2" Margin="0,80,0,0" >
             <phone:Pivot.Background>
