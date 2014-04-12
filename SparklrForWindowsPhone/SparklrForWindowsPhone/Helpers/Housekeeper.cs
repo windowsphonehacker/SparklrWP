@@ -7,6 +7,7 @@ using System.Windows.Navigation;
 using SparklrSharp;
 using SparklrSharp.Sparklr;
 using System.IO.IsolatedStorage;
+using System.Security.Cryptography;
 
 
 namespace SparklrForWindowsPhone.Helpers
@@ -44,7 +45,7 @@ namespace SparklrForWindowsPhone.Helpers
             try
             {
                 System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Add("username", SparklrUsername);
-                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Add("password", SparklrPassword);
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Add("password", EncryptionHelper.EncryptString(SparklrPassword));
             }
             catch
             {
@@ -55,7 +56,7 @@ namespace SparklrForWindowsPhone.Helpers
         public void GetCreds()
         {
             SparklrUsername = (string)appSettings["username"];
-            SparklrPassword = (string)appSettings["password"];
+            SparklrPassword = (byte[])appSettings["password"] == null ? null : EncryptionHelper.DecryptToString((byte[])appSettings["password"]);
         }
     }
 }
