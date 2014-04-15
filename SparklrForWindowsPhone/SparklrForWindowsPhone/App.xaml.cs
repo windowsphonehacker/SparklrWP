@@ -129,6 +129,11 @@ namespace SparklrForWindowsPhone
                 // An unhandled exception has occurred; break into the debugger
                 Debugger.Break();
             }
+            else
+            {
+                MessageBox.Show("Looks like the app ran into a problem that wasn't handled!\n\nIf you see our highly trained team of monkeys show them this:\n\n"+e.ExceptionObject.Message+"\nStack Trace:\n"+e.ExceptionObject.StackTrace, "Uh Oh!", MessageBoxButton.OK);
+                App.Current.Terminate();
+            }
         }
 
         #region Phone application initialization
