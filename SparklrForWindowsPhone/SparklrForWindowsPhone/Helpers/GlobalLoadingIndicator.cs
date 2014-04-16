@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Phone.Shell;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,19 @@ namespace SparklrForWindowsPhone.Helpers
     /// </summary>
     public static class GlobalLoadingIndicator
     {
-        static GlobalLoadingIndicator()
+        private static ProgressIndicator progressIndicator
         {
-            if (Microsoft.Phone.Shell.SystemTray.ProgressIndicator == null)
-                Microsoft.Phone.Shell.SystemTray.ProgressIndicator = new Microsoft.Phone.Shell.ProgressIndicator();
-            Microsoft.Phone.Shell.SystemTray.ProgressIndicator.IsIndeterminate = true;
+            get
+            {
+                if(Microsoft.Phone.Shell.SystemTray.ProgressIndicator == null)
+                {
+                    ProgressIndicator p = new ProgressIndicator();
+                    p.IsIndeterminate = true;
+                    Microsoft.Phone.Shell.SystemTray.ProgressIndicator = p;
+                }
+
+                return Microsoft.Phone.Shell.SystemTray.ProgressIndicator;
+            }
         }
 
         private static int loadingCount = 0;
@@ -41,7 +50,7 @@ namespace SparklrForWindowsPhone.Helpers
 
         private static void refreshVisibility()
         {
-            Microsoft.Phone.Shell.SystemTray.ProgressIndicator.IsVisible = (loadingCount != 0);
+            progressIndicator.IsVisible = (loadingCount != 0);
         }
     }
 }
