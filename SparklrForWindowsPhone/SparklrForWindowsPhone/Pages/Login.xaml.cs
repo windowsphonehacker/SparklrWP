@@ -35,7 +35,7 @@ namespace SparklrForWindowsPhone.Pages
         {
             LoadToast();
             Debugger.Log(1, "Sparklr", SparklrUsername.Text + " " + SparklrPassword.Password);
-            Helpers.GlobalLoadingIndicator.Start();
+            SparklrForWindowsPhone.Helpers.GlobalLoadingIndicator.Start();
             if(await conn.SigninAsync(SparklrUsername.Text, SparklrPassword.Password))
             {
                 MessageBox.Show("User is logged in");
@@ -45,7 +45,7 @@ namespace SparklrForWindowsPhone.Pages
             {
                 MessageBox.Show("Invalid credentials");
             }
-            Helpers.GlobalLoadingIndicator.Stop();
+            SparklrForWindowsPhone.Helpers.GlobalLoadingIndicator.Stop();
         }
 
         void conn_CurrentUserIdentified(object sender, SparklrSharp.Sparklr.UserIdentifiedEventArgs e)

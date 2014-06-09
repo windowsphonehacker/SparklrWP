@@ -13,8 +13,8 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
 	<phone:PhoneApplicationPage.ApplicationBar>
-		<shell:ApplicationBar Opacity="0.925">
-			<shell:ApplicationBarIconButton IconUri="/Assets5/AppBar/check.png" IsEnabled="True" Text="post"/>
+        <shell:ApplicationBar BackgroundColor="#FF454050">
+			<shell:ApplicationBarIconButton IconUri="/Assets/AppBar/check.png" IsEnabled="True" Text="post"/>
 		</shell:ApplicationBar>
 	</phone:PhoneApplicationPage.ApplicationBar>
 
@@ -32,9 +32,9 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Background="White" Grid.Row="1">
-        	<TextBlock FontSize="30" FontFamily="Segoe WP Semibold" Margin="10,10,10,639" Text="NEW POST">
+        	<TextBlock FontSize="30" FontFamily="Segoe WP Semibold" Text="NEW POST" Margin="25,0">
         		<TextBlock.Foreground>
-        			<SolidColorBrush Color="{StaticResource PhoneBackgroundColor}"/>
+        			<SolidColorBrush Color="Black"/>
         		</TextBlock.Foreground></TextBlock>
         </Grid>
     </Grid>

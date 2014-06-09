@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="d911d91d-7df4-426e-820d-6b330c50291e" Publisher="CN=Suraj G" Version="0.1.0.0" />
+  <Identity Name="d911d91d-7df4-426e-820d-6b330c50291e" Publisher="CN=Suraj G" Version="0.0.1.0" />
   <mp:PhoneIdentity PhoneProductId="2299a0fb-3c44-4936-b713-d3c083720b25" PhonePublisherId="51f93a9c-ff36-4291-8339-b4d07815d916" />
   <Properties>
     <DisplayName>Sparklr For WindowsPhone</DisplayName>

@@ -1,0 +1,13 @@
+﻿
+<viewModels:MainDataViewModel
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:viewModels="clr-namespace:SparklrForWindowsPhone.ViewModels">
+    <viewModels:MainDataViewModel.Items>
+        <viewModels:DataItemViewModel Title="Title 1" Information="Information 1" ImageThumbnailSource="/SparklrForWindowsPhone;component/Pages/Images/FrameThumbnail.png" ImageSource="/SparklrForWindowsPhone;component/Pages/Images/Frame.png" Group="ODD" />
+        <viewModels:DataItemViewModel Title="Title 2" Information="Information 2" ImageThumbnailSource="/SparklrForWindowsPhone;component/Pages/Images/FrameThumbnail.png" ImageSource="/SparklrForWindowsPhone;component/Pages/Images/Frame.png" Group="EVEN" />
+        <viewModels:DataItemViewModel Title="Title 3" Information="Information 3" ImageThumbnailSource="/SparklrForWindowsPhone;component/Pages/Images/FrameThumbnail.png" ImageSource="/SparklrForWindowsPhone;component/Pages/Images/Frame.png" Group="ODD" />
+        <viewModels:DataItemViewModel Title="Title 4" Information="Information 4" ImageThumbnailSource="/SparklrForWindowsPhone;component/Pages/Images/FrameThumbnail.png" ImageSource="/SparklrForWindowsPhone;component/Pages/Images/Frame.png" Group="EVEN" />
+        <viewModels:DataItemViewModel Title="Title 5" Information="Information 5" ImageThumbnailSource="/SparklrForWindowsPhone;component/Pages/Images/FrameThumbnail.png" ImageSource="/SparklrForWindowsPhone;component/Pages/Images/Frame.png" Group="ODD" />
+    </viewModels:MainDataViewModel.Items>
+</viewModels:MainDataViewModel>    

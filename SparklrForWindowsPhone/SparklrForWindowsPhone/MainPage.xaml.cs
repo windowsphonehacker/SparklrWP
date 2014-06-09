@@ -71,6 +71,11 @@ namespace SparklrForWindowsPhone
             NavigationService.Navigate(new Uri("/Pages/Post.xaml", UriKind.Relative));
         }
 
+        private void ApplicationBarMenuItem_Click(object sender, EventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Pages/About.xaml", UriKind.Relative));
+        }
+
         // Sample code for building a localized ApplicationBar
         //private void BuildLocalizedApplicationBar()
         //{

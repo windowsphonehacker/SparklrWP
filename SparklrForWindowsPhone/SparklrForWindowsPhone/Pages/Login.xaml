@@ -15,8 +15,8 @@
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar Opacity="0.765">
-            <shell:ApplicationBarIconButton Text="Register" IconUri="/Assets1/AppBar/appbar.door.enter.png" Click="Register_Click"/>
-            <shell:ApplicationBarIconButton IconUri="/Assets1/AppBar/next.png" IsEnabled="True" Text="Login" Click="Login_Click"/>
+            <shell:ApplicationBarIconButton Text="Register" IconUri="/Assets/AppBar/appbar.door.enter.png" Click="Register_Click"/>
+            <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/next.png" IsEnabled="True" Text="Login" Click="Login_Click"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 
@@ -35,7 +35,7 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" VerticalAlignment="Top" Height="90" >
-            <TextBlock Text="sparklr*" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="109,0" />
+            <TextBlock Text="2spark*" FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}" FontFamily="/SparklrForWindowsPhone;component/Fonts/Fonts.zip#Courgette" TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="109,0" />
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
