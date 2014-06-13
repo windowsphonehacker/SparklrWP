@@ -49,7 +49,11 @@ namespace SparklrForWindowsPhone.Helpers
             }
             catch
             {
-                //ToDo: Add logic to delete and re-enter the key
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Remove("username");
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Remove("password");
+                //Then re-enter info
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Add("username", SparklrUsername);
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Add("password", EncryptionHelper.EncryptString(SparklrPassword));
             }
         }
 

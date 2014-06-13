@@ -100,6 +100,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\EncryptionHelper.cs" />
+    <Compile Include="Helpers\ExceptionHandler.cs" />
     <Compile Include="Helpers\GlobalLoadingIndicator.cs" />
     <Compile Include="Helpers\Housekeeper.cs" />
     <Compile Include="LocalizedStrings.cs" />
@@ -111,9 +112,6 @@
     </Compile>
     <Compile Include="Pages\Post.xaml.cs">
       <DependentUpon>Post.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Register.xaml.cs">
-      <DependentUpon>Register.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AppResources.Designer.cs">
@@ -144,10 +142,6 @@
     <Page Include="Pages\Post.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\Register.xaml">
-      <Generator>MSBuild:MarkupCompilePass1</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Resources\SparklrStyles.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -8,11 +8,13 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using SparklrForWindowsPhone.Resources;
 using SparklrForWindowsPhone.ViewModels;
+using SparklrForWindowsPhone.Helpers;
 
 namespace SparklrForWindowsPhone
 {
     public partial class App : Application
     {
+        ExceptionHandler exphdl = new ExceptionHandler();
         private static MainViewModel viewModel = null;
 
         /// <summary>
@@ -119,6 +121,10 @@ namespace SparklrForWindowsPhone
                 // A navigation has failed; break into the debugger
                 Debugger.Break();
             }
+            else
+            {
+                exphdl.Message(ExceptionHandler.MessageTypes.Error, e.Exception);
+            }
         }
 
         // Code to execute on Unhandled Exceptions
@@ -131,8 +137,7 @@ namespace SparklrForWindowsPhone
             }
             else
             {
-                MessageBox.Show("Looks like the app ran into a problem that wasn't handled!\n\nIf you see our highly trained team of monkeys show them this:\n\n"+e.ExceptionObject.Message+"\nStack Trace:\n"+e.ExceptionObject.StackTrace, "Uh Oh!", MessageBoxButton.OK);
-                App.Current.Terminate();
+                exphdl.Message(ExceptionHandler.MessageTypes.Error, e.ExceptionObject);
             }
         }
 
