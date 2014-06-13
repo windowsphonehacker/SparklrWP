@@ -19,11 +19,11 @@
     mc:Ignorable="d" d:DesignHeight="728" d:DesignWidth="480"
     shell:SystemTray.IsVisible="False" Background="#FF454050">
 
-    <UserControl.DataContext Background="#FF454050">
+    <UserControl.DataContext>
         <viewModels:MessagesViewModel/>
     </UserControl.DataContext>
 
-    <UserControl.Resources Background="#FF454050">
+    <UserControl.Resources>
         <helpers:IdToPictureConverter x:Key="IdToPictureConverter"/>
         <helpers:MessageGroupTemplateSelector x:Key="MessageGroupTemplateSelector">
             <helpers:MessageGroupTemplateSelector.IncomingTemplate>
