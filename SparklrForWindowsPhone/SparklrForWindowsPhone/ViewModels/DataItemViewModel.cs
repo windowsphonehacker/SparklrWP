@@ -35,7 +35,7 @@ namespace SparklrForWindowsPhone.ViewModels
                 if (this.imageSource != value)
                 {
                     this.imageSource = value;
-                    this.OnPropertyChanged("ImageSource");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -54,7 +54,7 @@ namespace SparklrForWindowsPhone.ViewModels
                 if (this.imageThumbnailSource != value)
                 {
                     this.imageThumbnailSource = value;
-                    this.OnPropertyChanged("ImageThumbnailSource");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace SparklrForWindowsPhone.ViewModels
                 if (this.title != value)
                 {
                     this.title = value;
-                    this.OnPropertyChanged("Title");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -92,7 +92,7 @@ namespace SparklrForWindowsPhone.ViewModels
                 if (this.information != value)
                 {
                     this.information = value;
-                    this.OnPropertyChanged("Information");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -111,7 +111,7 @@ namespace SparklrForWindowsPhone.ViewModels
                 if (this.group != value)
                 {
                     this.group = value;
-                    this.OnPropertyChanged("Group");
+                    NotifyPropertyChanged();
                 }
             }
         }

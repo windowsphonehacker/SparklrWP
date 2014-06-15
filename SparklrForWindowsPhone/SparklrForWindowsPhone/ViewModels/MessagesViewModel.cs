@@ -88,7 +88,7 @@ namespace SparklrForWindowsPhone.ViewModels
             set
             {
                 this.you = value;
-                this.OnPropertyChanged("You");
+                NotifyPropertyChanged();
             }
         }
 
@@ -101,7 +101,7 @@ namespace SparklrForWindowsPhone.ViewModels
             set
             {
                 this.conversationBuddy = value;
-                this.OnPropertyChanged("ConversationBuddy");
+                NotifyPropertyChanged();
             }
         }
 
@@ -239,7 +239,7 @@ namespace SparklrForWindowsPhone.ViewModels
                 if (this.personId != value)
                 {
                     this.personId = value;
-                    this.OnPropertyChanged("PersonId");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -255,7 +255,7 @@ namespace SparklrForWindowsPhone.ViewModels
                 if (this.name != value)
                 {
                     this.name = value;
-                    this.OnPropertyChanged("Name");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -271,7 +271,7 @@ namespace SparklrForWindowsPhone.ViewModels
                 if (this.picture != value)
                 {
                     this.picture = value;
-                    this.OnPropertyChanged("Picture");
+                    NotifyPropertyChanged();
                 }
             }
         }
