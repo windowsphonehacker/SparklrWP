@@ -42,11 +42,8 @@ namespace SparklrForWindowsPhone
 
         private async void Mainpage_Loaded(object sender, RoutedEventArgs e)
         {
-            
-            Housekeeper.CheckCreds();
-            if(Housekeeper.HasLoggedin == false)
+            if(Housekeeper.LoginDataAvailable == false)
             {
-                Debugger.Log(1, "\n\nSparklr", Housekeeper.HasLoggedin.ToString());
                 NavigationService.Navigate(new Uri("/Pages/Login.xaml", UriKind.Relative));
             } 
             else

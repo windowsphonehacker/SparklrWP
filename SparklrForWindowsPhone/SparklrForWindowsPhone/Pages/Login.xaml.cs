@@ -43,7 +43,7 @@ namespace SparklrForWindowsPhone.Pages
             }
             else
             {
-                MessageBox.Show("Invalid credentials");
+                MessageBox.Show("Something went wrong :( Pleas check your username, password and make sure you're connected to the internet.", "login failed", MessageBoxButton.OK);
             }
             SparklrForWindowsPhone.Helpers.GlobalLoadingIndicator.Stop();
         }
@@ -59,9 +59,15 @@ namespace SparklrForWindowsPhone.Pages
 
         private new void Loaded(object sender, RoutedEventArgs e)
         {
+            if (houseKeeper.LoginDataAvailable)
+            {
+                houseKeeper.GetCreds();
 
-          
+                SparklrUsername.Text = houseKeeper.SparklrUsername;
+                SparklrPassword.Password = houseKeeper.SparklrPassword;
+            }
         }
+
         private void LoadToast()
         {
             /* TESTING TOAST NOTIFICATIONS ON WP 8.1 IGNORE THIS

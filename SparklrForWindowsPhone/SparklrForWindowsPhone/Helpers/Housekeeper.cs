@@ -19,24 +19,17 @@ namespace SparklrForWindowsPhone.Helpers
 
         public static Connection ServiceConnection = new Connection();
 
-        public bool HasLoggedin { get; set; }
+        public bool LoginDataAvailable
+        {
+            get
+            {
+                return appSettings.Contains("username") && appSettings.Contains("password");
+            }
+        }
+
         public string SparklrUsername{ get; set; }
         public string SparklrPassword { get; set; }
-        /// <summary>
-        /// Checks if the user has logged in
-        /// </summary>
-        public void CheckCreds()
-        {
-            if(System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Contains("username") && System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Contains("password"))
-            {
-                HasLoggedin = true;
-            }
-            else
-            {
-                HasLoggedin = false;
-            }
-            
-        }
+
         /// <summary>
         /// A helper to save the Sparklr login info -Suraj
         /// </summary>
@@ -44,15 +37,23 @@ namespace SparklrForWindowsPhone.Helpers
         /// <param name="SparklrPassword">The User's Password</param>
         public void SaveCreds(string SparklrUsername, string SparklrPassword)
         {
-            try
-            {
-                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Add("username", SparklrUsername);
-                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Add("password", EncryptionHelper.EncryptString(SparklrPassword));
-            }
-            catch
-            {
-                //ToDo: Add logic to delete and re-enter the key
-            }
+            RemoveCreds();
+
+            appSettings.Add("username", SparklrUsername);
+            appSettings.Add("password", EncryptionHelper.EncryptString(SparklrPassword));
+
+            appSettings.Save();
+        }
+
+        public void RemoveCreds()
+        {
+            if (appSettings.Contains("username"))
+                appSettings.Remove("username");
+
+            if (appSettings.Contains("password"))
+                appSettings.Remove("password");
+
+            appSettings.Save();
         }
 
         public void GetCreds()
