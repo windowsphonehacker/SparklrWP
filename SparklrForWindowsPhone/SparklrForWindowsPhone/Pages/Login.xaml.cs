@@ -38,7 +38,7 @@ namespace SparklrForWindowsPhone.Pages
             SparklrForWindowsPhone.Helpers.GlobalLoadingIndicator.Start();
             if (await Housekeeper.ServiceConnection.SigninAsync(SparklrUsername.Text, SparklrPassword.Password))
             {
-                MessageBox.Show("User is logged in");
+                DebugHelper.LogDebugMessage("User is logged in");
                 //The information about the currently logged in user will be retreived in the background. It will be available, once the event below has fired.
             }
             else
@@ -50,7 +50,7 @@ namespace SparklrForWindowsPhone.Pages
 
         void conn_CurrentUserIdentified(object sender, SparklrSharp.Sparklr.UserIdentifiedEventArgs e)
         {
-            MessageBox.Show(Housekeeper.ServiceConnection.CurrentUser.Handle.ToString(), "User identified", MessageBoxButton.OK);
+            DebugHelper.LogDebugMessage("User identified as @{0}", Housekeeper.ServiceConnection.CurrentUser.Handle);
             //Saves the info into the app settings -Suraj
             houseKeeper.SaveCreds(SparklrUsername.Text, SparklrPassword.Password);
             NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
