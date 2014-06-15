@@ -17,6 +17,8 @@ namespace SparklrForWindowsPhone.Helpers
         private IsolatedStorageSettings appSettings =
            IsolatedStorageSettings.ApplicationSettings;
 
+        public static Connection ServiceConnection = new Connection();
+
         public bool HasLoggedin { get; set; }
         public string SparklrUsername{ get; set; }
         public string SparklrPassword { get; set; }

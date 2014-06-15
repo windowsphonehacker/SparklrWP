@@ -17,12 +17,12 @@ namespace SparklrForWindowsPhone.Pages
 {
     public partial class Login : PhoneApplicationPage
     {
-        Connection conn = new Connection();
         Housekeeper houseKeeper = new Housekeeper();
+
         public Login()
         {
             InitializeComponent();
-            conn.CurrentUserIdentified += conn_CurrentUserIdentified;
+            Housekeeper.ServiceConnection.CurrentUserIdentified += conn_CurrentUserIdentified;
         }
 
         private void OnBackKey(object sender, System.ComponentModel.CancelEventArgs e)
@@ -36,7 +36,7 @@ namespace SparklrForWindowsPhone.Pages
             LoadToast();
             Debugger.Log(1, "Sparklr", SparklrUsername.Text + " " + SparklrPassword.Password);
             SparklrForWindowsPhone.Helpers.GlobalLoadingIndicator.Start();
-            if(await conn.SigninAsync(SparklrUsername.Text, SparklrPassword.Password))
+            if (await Housekeeper.ServiceConnection.SigninAsync(SparklrUsername.Text, SparklrPassword.Password))
             {
                 MessageBox.Show("User is logged in");
                 //The information about the currently logged in user will be retreived in the background. It will be available, once the event below has fired.
@@ -50,10 +50,10 @@ namespace SparklrForWindowsPhone.Pages
 
         void conn_CurrentUserIdentified(object sender, SparklrSharp.Sparklr.UserIdentifiedEventArgs e)
         {
-            MessageBox.Show(conn.CurrentUser.Handle.ToString(), "User identified", MessageBoxButton.OK);
+            MessageBox.Show(Housekeeper.ServiceConnection.CurrentUser.Handle.ToString(), "User identified", MessageBoxButton.OK);
             //Saves the info into the app settings -Suraj
             houseKeeper.SaveCreds(SparklrUsername.Text, SparklrPassword.Password);
-            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
              
         }
 
@@ -99,7 +99,7 @@ namespace SparklrForWindowsPhone.Pages
 
         private void ApplicationBarIconButton_Click(object sender, EventArgs e)
         {
-            NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("/Pages/MainPage.xaml", UriKind.Relative));
         }
 
         private void Register_Click(object sender, EventArgs e)
