@@ -10,7 +10,7 @@ using System.Windows.Media.Animation;
 
 namespace SparklrForWindowsPhone.ViewModels
 {
-    public class ItemViewModel : INotifyPropertyChanged
+    public class ItemViewModel : ViewModelBase
     {
         private string _lineOne;
         /// <summary>
@@ -28,7 +28,7 @@ namespace SparklrForWindowsPhone.ViewModels
                 if (value != _lineOne)
                 {
                     _lineOne = value;
-                    NotifyPropertyChanged("LineOne");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -49,7 +49,7 @@ namespace SparklrForWindowsPhone.ViewModels
                 if (value != _lineTwo)
                 {
                     _lineTwo = value;
-                    NotifyPropertyChanged("LineTwo");
+                    NotifyPropertyChanged();
                 }
             }
         }
@@ -70,18 +70,8 @@ namespace SparklrForWindowsPhone.ViewModels
                 if (value != _lineThree)
                 {
                     _lineThree = value;
-                    NotifyPropertyChanged("LineThree");
+                    NotifyPropertyChanged();
                 }
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(String propertyName)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (null != handler)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }
