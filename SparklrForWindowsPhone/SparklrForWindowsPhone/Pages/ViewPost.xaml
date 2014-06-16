@@ -253,7 +253,7 @@
                                 <Setter Property="ButtonType"
                                                 Value="Custom"/>
                                 <Setter Property="RestStateImageSource"
-                                                Value="/Images/SendIcon.png"/>
+                                                Value="Images/SendIcon.png"/>
                             </Style>
                         </telerikPrimitives:RadTextBox.ActionButtonStyle>
                     </telerikPrimitives:RadTextBox>

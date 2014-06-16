@@ -4,6 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:telerikData="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Data"
+    xmlns:telerikPrimitivesNamespace="clr-namespace:Telerik.Windows.Controls.Primitives;assembly=Telerik.Windows.Controls.Primitives"
+    xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Primitives"
+    xmlns:telerikTextBox="clr-namespace:Telerik.Windows.Controls.PhoneTextBox;assembly=Telerik.Windows.Controls.Primitives"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -49,12 +53,35 @@
         <phone:Pivot Foreground="{StaticResource PhoneContrastForegroundBrush}" Grid.Row="2" Margin="0,80,0,0" Background="White" >
 
             <!--Pivot item one-->
-            <phone:PivotItem FontFamily="Segoe WP" BorderThickness="0" Background="White" >
+            <phone:PivotItem FontFamily="Segoe WP" BorderThickness="0" Background="White" Margin="12,7,12,0" >
                 <phone:PivotItem.Header>
                     <TextBlock FontSize="30" FontFamily="Segoe WP Semibold" Foreground="Black">EVERYTHING</TextBlock>
                 </phone:PivotItem.Header>
                 <!--Double line list with text wrapping-->
-                <phone:LongListSelector ItemsSource="{Binding Items}" BorderThickness="0" Background="White">
+                <ScrollViewer>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0" />
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="1">
+                            <telerikPrimitivesNamespace:RadPointerContentControl TargetPoint="197, 100">
+                                <telerikPrimitives:RadTextBox x:Name="PART_TextBox"
+                                                          Watermark="Write a post"
+                                                          AcceptsReturn="True"
+                                                          ActionButtonVisibility="Visible" BorderBrush="#BF000000" Background="#BF000000" Foreground="White" SelectionForeground="Black" MinHeight="100" VerticalAlignment="Center" BorderThickness="0">
+                            <telerikPrimitives:RadTextBox.ActionButtonStyle>
+                                <Style TargetType="telerikTextBox:TextBoxActionButton">
+                                    <Setter Property="ButtonType"
+                                                Value="Custom"/>
+                                    <Setter Property="RestStateImageSource"
+                                                Value="Images/SendIcon.png"/>
+                                </Style>
+                            </telerikPrimitives:RadTextBox.ActionButtonStyle>
+                        </telerikPrimitives:RadTextBox>
+                    </telerikPrimitivesNamespace:RadPointerContentControl>
+                        </StackPanel>
+                        <phone:LongListSelector Grid.Row="2" ItemsSource="{Binding Items}" BorderThickness="0" Background="White" VerticalAlignment="Bottom">
                     <phone:LongListSelector.Foreground>
                         <SolidColorBrush Color="Black"/>
                     </phone:LongListSelector.Foreground>
@@ -71,6 +98,8 @@
                         </DataTemplate>
                     </phone:LongListSelector.ItemTemplate>
                 </phone:LongListSelector>
+                    </Grid>
+                </ScrollViewer>
             </phone:PivotItem>
 
             <phone:PivotItem FontSize="10">
@@ -103,25 +132,48 @@
                 <phone:PivotItem.Header>
                     <TextBlock FontSize="30" FontFamily="Segoe WP Semibold" Foreground="Black">FOLLOWING</TextBlock>
                 </phone:PivotItem.Header>
-
-                <!--Double line list no text wrapping-->
-                <phone:LongListSelector ItemsSource="{Binding Items}" BorderThickness="0" Background="White">
-                    <phone:LongListSelector.Foreground>
-                        <SolidColorBrush Color="Black"/>
-                    </phone:LongListSelector.Foreground>
-                    <phone:LongListSelector.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,-5,0,1">
-                                <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" Foreground="Black"/>
-                                <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}">
-                                    <TextBlock.Foreground>
-                                        <SolidColorBrush Color="Black"/>
-                                    </TextBlock.Foreground>
-                                </TextBlock>
-                            </StackPanel>
-                        </DataTemplate>
-                    </phone:LongListSelector.ItemTemplate>
-                </phone:LongListSelector>
+                <ScrollViewer>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="0" />
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="1">
+                            <telerikPrimitivesNamespace:RadPointerContentControl TargetPoint="197, 100">
+                                <telerikPrimitives:RadTextBox x:Name="PART2_TextBox"
+                                                          Watermark="Write a post"
+                                                          AcceptsReturn="True"
+                                                          ActionButtonVisibility="Visible" BorderBrush="#BF000000" Background="#BF000000" Foreground="White" SelectionForeground="Black" MinHeight="100" VerticalAlignment="Center" BorderThickness="0">
+                                    <telerikPrimitives:RadTextBox.ActionButtonStyle>
+                                        <Style TargetType="telerikTextBox:TextBoxActionButton">
+                                            <Setter Property="ButtonType"
+                                                Value="Custom"/>
+                                            <Setter Property="RestStateImageSource"
+                                                Value="Images/SendIcon.png"/>
+                                        </Style>
+                                    </telerikPrimitives:RadTextBox.ActionButtonStyle>
+                                </telerikPrimitives:RadTextBox>
+                            </telerikPrimitivesNamespace:RadPointerContentControl>
+                        </StackPanel>
+                        <phone:LongListSelector Grid.Row="2" ItemsSource="{Binding Items}" BorderThickness="0" Background="White" VerticalAlignment="Bottom">
+                            <phone:LongListSelector.Foreground>
+                                <SolidColorBrush Color="Black"/>
+                            </phone:LongListSelector.Foreground>
+                            <phone:LongListSelector.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Margin="0,-5,0,1">
+                                        <TextBlock Text="{Binding LineOne}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}" Foreground="Black"/>
+                                        <TextBlock Text="{Binding LineTwo}" TextWrapping="Wrap" Margin="12,-6,12,0" Style="{StaticResource PhoneTextSubtleStyle}">
+                                            <TextBlock.Foreground>
+                                                <SolidColorBrush Color="Black"/>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </phone:LongListSelector.ItemTemplate>
+                        </phone:LongListSelector>
+                    </Grid>
+                </ScrollViewer>
             </phone:PivotItem>
 
             <phone:PivotItem FontSize="10">
@@ -281,14 +333,14 @@
             if the System Tray is hidden.
 
             Before shipping remove this XAML and the image itself.-->
-        <!--<Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="1" IsHitTestVisible="True" />-->
+        <Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="1" IsHitTestVisible="True" />
 
     </Grid>
 
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar BackgroundColor="#FF454050" Opacity="1" ForegroundColor="White">
             <shell:ApplicationBarIconButton Text="Friends" IconUri="/Assets/AppBar/appbar.people.png"/>
-            <shell:ApplicationBarIconButton Text="New post" IconUri="/Assets/AppBar/add.png" Click="NewPost_Click"/>
+            <!--<shell:ApplicationBarIconButton Text="New post" IconUri="/Assets/AppBar/add.png" Click="NewPost_Click"/>-->
             <shell:ApplicationBarIconButton Text="search" IconUri="/Assets/AppBar/feature.search.png" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem IsEnabled="True" Text="Inbox"/>
